@@ -3,13 +3,12 @@ import path from 'path';
 import { defineConfig } from 'vitepress';
 import { author, description, homepage, repository } from '../../package.json';
 
-const baseURL = new URL(homepage);
-
 const site = {
   title: 'Realtime hooks',
   description,
+  url: new URL(homepage),
   logo: '/realtime-hooks-logo.svg',
-  og: `${baseURL}/og.png`
+  og: new URL('/og.png', homepage).href
 };
 
 function getHooksSectionItems() {
@@ -25,9 +24,9 @@ function getHooksSectionItems() {
 export default defineConfig({
   title: site.title,
   description: site.description,
-  base: baseURL.pathname,
+  base: site.url.pathname,
   head: [
-    ['link', { rel: 'icon', href: baseURL.pathname + site.logo, type: 'image/svg+xml' }],
+    ['link', { rel: 'icon', href: site.url.pathname + site.logo, type: 'image/svg+xml' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: site.title }],
     ['meta', { property: 'og:description', content: site.description }],
