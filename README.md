@@ -1,6 +1,6 @@
 # realtime-hooks 🦯✨
 
-> A React conditional components block that simplifies the classic react conditions
+> The ultimate react hooks library that can saves you a lot of work
 
 ## License
 
