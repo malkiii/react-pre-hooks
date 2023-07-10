@@ -1,0 +1,75 @@
+{
+  "name": "realtime-hooks",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "The ultimate react hooks library that can saves you a lot of work",
+  "author": {
+    "name": "Malki Abdurrahman",
+    "email": "malki.abdurrahmane@gmail.com"
+  },
+  "license": "MIT",
+  "main": "dist/realtime-hooks.umd.js",
+  "module": "dist/realtime-hooks.es.js",
+  "types": "dist/index.d.ts",
+  "homepage": "https://github.com/malkiii/realtime-hooks#readme",
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/malkiii/realtime-hooks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/malkiii/realtime-hooks/issues"
+  },
+  "scripts": {
+    "build": "rm -rf dist/ && tsc && vite build",
+    "test": "vitest run --coverage",
+    "test:dev": "vitest watch",
+    "format": "prettier --write src",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives",
+    "prepublish": "node -pe \"require('./package.json').version\" | echo \"v$(cat)\" | xargs -I {} git tag {} && git push --tags"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.3",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "@vitest/coverage-v8": "^0.32.2",
+    "eslint": "^8.38.0",
+    "jsdom": "^22.1.0",
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.9",
+    "vite-plugin-banner": "^0.7.0",
+    "vite-plugin-dts": "^3.0.2",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.32.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "packageManager": "pnpm@8.6.2",
+  "keywords": [
+    "hooks",
+    "react-hooks",
+    "react-use",
+    "use",
+    "library",
+    "react",
+    "next",
+    "frontend",
+    "ts",
+    "js"
+  ],
+  "engines": {
+    "node": ">=16"
+  }
+}
