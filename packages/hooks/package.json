@@ -1,0 +1,41 @@
+{
+  "name": "realtime-hooks",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "The ultimate react hooks library that can saves you a lot of work",
+  "author": {
+    "name": "Malki Abdurrahman",
+    "email": "malki.abdurrahmane@gmail.com"
+  },
+  "license": "MIT",
+  "main": "dist/realtime-hooks.umd.js",
+  "module": "dist/realtime-hooks.es.js",
+  "types": "dist/index.d.ts",
+  "homepage": "https://github.com/malkiii/realtime-hooks#readme",
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/malkiii/realtime-hooks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/malkiii/realtime-hooks/issues"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
+  },
+  "keywords": [
+    "hooks",
+    "react-hooks",
+    "react-use",
+    "use",
+    "library",
+    "react",
+    "next",
+    "frontend",
+    "ts",
+    "js"
+  ]
+}

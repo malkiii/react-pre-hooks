@@ -13,7 +13,7 @@ export default defineConfig({
   build: {
     lib: {
       name,
-      entry: path.resolve(__dirname, 'src/index.tsx'),
+      entry: [path.resolve(__dirname, 'packages/hooks')],
       formats: ['es', 'umd'],
       fileName: format => `${name}.${format}.js`
     }
