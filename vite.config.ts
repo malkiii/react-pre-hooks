@@ -1,9 +1,9 @@
 import path from 'path';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
-import dts from 'vite-plugin-dts';
 import banner from 'vite-plugin-banner';
-import { name, version, author } from './packages/hooks/package.json';
+import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vitest/config';
+import { author, name, version } from './packages/hooks/package.json';
 
 const bannerText = `${name} v${version} Copyright 2023 ${author.name}`;
 
@@ -13,11 +13,11 @@ export default defineConfig({
   build: {
     lib: {
       name,
-      entry: [path.resolve(__dirname, 'packages/hooks')],
+      entry: [path.resolve(__dirname, 'packages/hooks/src/index.ts')],
       formats: ['es', 'umd'],
       fileName: format => `${name}.${format}.js`
     },
-    rollupOptions: {}
+    outDir: './packages/hooks/dist'
   },
   test: {
     environment: 'jsdom',
