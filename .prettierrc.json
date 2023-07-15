@@ -1,8 +1,30 @@
 {
-  "semi": true,
   "tabWidth": 2,
   "printWidth": 100,
   "singleQuote": true,
   "arrowParens": "avoid",
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "quoteProps": "preserve",
+  "semi": true,
+  "importOrder": [
+    "^(react/(.*)$)|^(react$)",
+    "^(next/(.*)$)|^(next$)",
+    "<THIRD_PARTY_MODULES>",
+    "^types$",
+    "^@/env(.*)$",
+    "^@/types(.*)$",
+    "^@/config(.*)$",
+    "^@/utils(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/components/ui/(.*)$",
+    "^@/components/(.*)$",
+    "^@/styles/(.*)$",
+    "^@/app/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": true,
+  "importOrderBuiltinModulesToTop": true,
+  "importOrderMergeDuplicateImports": true,
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"]
 }
