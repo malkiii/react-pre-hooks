@@ -1,13 +1,12 @@
 import { RefObject, useRef, useState } from 'react';
 import { useEventListener } from './useEventListener';
-import { useToggle } from './useToggle';
 
 export const useScroll = <T extends HTMLElement>(ref?: RefObject<T>) => {
   const targetRef = ref;
   const options = { ref: targetRef || useRef(document.body) } as any;
 
-  const [isScrollDown, toggleIsScrollDown] = useToggle();
-  const [isScrollRight, toggleIsScrollRight] = useToggle();
+  const [isScrollDown, setIsScrollDown] = useState<boolean>();
+  const [isScrollRight, setIsScrollRight] = useState<boolean>();
   const [prevPosition, setPrevPosition] = useState<typeof scrollPosition>();
   const [scrollPosition, setScrollPosition] = useState({
     scrollX: 0,
@@ -17,7 +16,7 @@ export const useScroll = <T extends HTMLElement>(ref?: RefObject<T>) => {
   });
 
   const handleScrolling = () => {
-    if (targetRef && !targetRef.current) return;
+    if (ref && !ref.current) return;
 
     const element = options.ref.current as HTMLElement;
     const scrollX = targetRef?.current?.scrollLeft || window.scrollX;
@@ -32,11 +31,11 @@ export const useScroll = <T extends HTMLElement>(ref?: RefObject<T>) => {
       const distanceX = scrollPosition.scrollX - prevPosition.scrollX;
       const distanceY = scrollPosition.scrollY - prevPosition.scrollY;
 
-      if (distanceX > 0) toggleIsScrollRight(true);
-      else if (distanceX < 0) toggleIsScrollRight(false);
+      if (distanceX > 0) setIsScrollRight(true);
+      else if (distanceX < 0) setIsScrollRight(false);
 
-      if (distanceY > 0) toggleIsScrollDown(true);
-      else if (distanceY < 0) toggleIsScrollDown(false);
+      if (distanceY > 0) setIsScrollDown(true);
+      else if (distanceY < 0) setIsScrollDown(false);
     }
 
     setPrevPosition(scrollPosition);

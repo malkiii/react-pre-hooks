@@ -7,8 +7,8 @@ type StorageType = 'localStorage' | 'sessionStorage';
 
 declare global {
   interface WindowEventMap {
-    'local-storage': CustomEvent;
-    'session-storage': CustomEvent;
+    'storage:local': CustomEvent;
+    'storage:session': CustomEvent;
   }
 }
 
@@ -23,7 +23,7 @@ function parseJSON<T>(value: string | null): T | undefined {
 
 const useStorage = <T extends any>(type: StorageType, key: string, initialValue: T) => {
   const storage = type === 'localStorage' ? window.localStorage : window.sessionStorage;
-  const storageEvent = type === 'localStorage' ? 'local-storage' : 'session-storage';
+  const storageEvent = type === 'localStorage' ? 'storage:local' : 'storage:session';
 
   const getStoredValue = useCallback((): T => {
     if (typeof window === 'undefined') return initialValue;

@@ -4,7 +4,7 @@ import type { WithRef } from './types';
 export const useEventListener = <T extends HTMLElement, K extends keyof HTMLElementEventMap>(
   event: K | K[],
   handler: (event: HTMLElementEventMap[K]) => any,
-  options?: boolean | WithRef<T, AddEventListenerOptions>
+  options?: boolean | WithRef<AddEventListenerOptions, T>
 ) => {
   const ref = (typeof options !== 'boolean' && options?.ref) || useRef<T>();
   const hasMultipleEvents = Array.isArray(event);
