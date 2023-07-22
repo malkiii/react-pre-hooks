@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { useEffectOnce } from './useEffectOnce';
+import { useEffect, useState } from 'react';
 
-type GeoLocationSensorState = {
+export type GeoLocationSensorState = {
   loading: boolean;
   accuracy: number | null;
   altitude: number | null;
@@ -27,7 +26,7 @@ export const useGeolocation = (options?: PositionOptions) => {
     timestamp: null
   });
 
-  useEffectOnce(() => {
+  useEffect(() => {
     const successCallback: PositionCallback = ({ coords, timestamp }) => {
       setState({
         loading: false,
@@ -52,7 +51,7 @@ export const useGeolocation = (options?: PositionOptions) => {
     return () => {
       navigator.geolocation.clearWatch(watch);
     };
-  });
+  }, []);
 
   return state;
 };

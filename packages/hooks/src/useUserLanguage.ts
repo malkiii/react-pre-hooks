@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react';
-import { useEffectOnce } from './useEffectOnce';
+import { useCallback, useEffect, useState } from 'react';
 import { useWindowEvents } from './useWindowEvents';
 
 const languageCodes = {
@@ -231,7 +230,7 @@ export const useLanguage = (defaultLang?: LanguageName) => {
     setLanguages(perferredLanguages);
   }, []);
 
-  useEffectOnce(setCurrentUserLanguage);
+  useEffect(setCurrentUserLanguage, []);
   useWindowEvents('languagechange', setCurrentUserLanguage);
 
   return { language, perferredLanguages: languages };

@@ -1,6 +1,5 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StateSetter } from './types';
-import { useEffectOnce } from './useEffectOnce';
 import { useWindowEvents } from './useWindowEvents';
 
 type StorageType = 'localStorage' | 'sessionStorage';
@@ -67,7 +66,7 @@ const useStorage = <T extends any>(type: StorageType, key: string, initialValue:
     [key, getStoredValue]
   );
 
-  useEffectOnce(setCurrentStoredValue);
+  useEffect(setCurrentStoredValue, []);
 
   useWindowEvents('storage', handleStorageChange);
   useWindowEvents(storageEvent, handleStorageChange);
