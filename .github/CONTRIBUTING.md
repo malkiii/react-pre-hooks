@@ -1,113 +1,56 @@
-# Contributing Guide
+# Contributing to daisyUI
 
-## Suggesting Features
+Thank you for your contribution 🤝
 
-Feature requests are tracked as [GitHub issues](https://guides.github.com/features/issues/). Create an issue on that repository and provide the following information:
+## Reporting issues
 
-- **Use a clear and descriptive title** for the issue to identify the suggestion.
-- **Provide a in detail description of the suggested enhancement** in as many details as possible.
-- **Explain why this enhancement would be useful** to the project and the community.
+- Before opening a new issue, first [search for existing issues](https://github.com/malkiii/realtime-hooks/issues?q=) to avoid duplications.
+- Provide detailed reports to make things easier for maintainers.
 
-## Creating Pull Requests
+## Fixing existing issues
 
-### Fork the repository.
+- You can help by [fixing existing issues](https://github.com/malkiii/realtime-hooks/issues?q=)
+- Don't work on issues assigned to others (to avoid duplicate efforts)
+- Before starting to work on an issue, please first add a comment and ask to get assigned to that issue. This way everyone will know you're working on that and it avoids duplicate efforts.
+- Commit messages must start with: `fix: #<issue number> <description>`, so the issue will close automatically and it gets added to changelog file on a release.
 
-Click on the fork button on the top of the page. This will create a copy of this repository in your account. Instead click [here](https://github.com/malkiii/realtime-hooks/fork) to fork the repository.
+## Feature requests
 
-### Clone the forked repository.
+- For feature requests, [open a new issue](https://github.com/saadeghi/daisyui/issues/new)
+- All feature requests may not fit this library and some may get rejected. Don't take it personally.
 
+## Pull requests
+
+- A pull request must fix **an open issue** assigned to you. If there's no issue, please create one first. If it's not assigned to you, please ask for it in the comments. This is for avoiding duplicate efforts.
+- Fixing typos doesn't need to be an issue. You can just open a pull request.
+
+## Building on local
+
+### To build the realtime-hooks package on local:
+
+1. **Fork** and **clone** the repo on local
+1. Install package dependencies:
+   ```bash
+   pnpm install
+   ```
+1. Build the package:
+   ```bash
+   pnpm build
+   ```
+1. Now you can import `realtime-hooks`:
+   ```ts
+   import * as hooks from "/path/to/dist/directory"
+   ```
+
+### To run the **documentation site** on local:
 ```bash
-git clone https://github.com/<your-username>/realtime-hooks.git
+pnpm dev
 ```
 
-or if use the Github CLI
+## Adding a new hook
 
-```bash
-gh repo clone <your-username>/realtime-hooks
-```
+### File structure
 
-### Navigate to the project directory.
+All the hooks are in [`/src`](https://github.com/malkiii/realtime-hooks/tree/master/packages/hooks/src) folder, you must follow this file structure:
 
-```bash
-cd realtime-hooks
-```
-
-### Create a new branch
-
-You could follow this convention. Some ideas to get you started:
-
-- Feature Updates: `feat-<brief 2-3 words-Description>`
-- Bug Fixes: `fix-<brief 2-3 words-Description>`
-- Documentation: `docs-<brief 2-3 words-Description>`
-
-Here is some branch names examples:
-
-- `feat-feature-1`
-- `fix-some-bug`
-- `docs-update-template`
-
-To create a new branch, use the following command:
-
-```bash
-git checkout -b your-branch-name
-```
-
-### Make your changes.
-
-> if you want to add **New hook** make sure you create it in its own file like the others.
-
-### Stage your changes and commit.
-
-```bash
-git add .
-git commit -m "<commit_message>"
-```
-
-The commit message should be structured as follows:
-
-```
-<type>(optional scope): <description>
-```
-
-> This is adapted from [Angular's commit convention](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular).
-
-Before you push your local commits to the remote repository.
-
-```bash
-pnpm format && pnpm lint
-pnpm build
-pnpm test
-```
-
-Push your local commits to the remote repository.
-
-```bash
-git push origin your-branch-name
-```
-
-### Create a new [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request) from `your-branch-name`
-
-🎉 Congratulations! You've made your first pull request! Now, you should just wait until the maintainers review your pull request.
-
-### `test` folder
-
-This folder contains the code for the tests for the implementation of realtime-hooks. The test use the [Vitest](https://vitest.dev/).
-
-To run the test locally:
-
-```bash
-pnpm install # Install dependencies
-pnpm test # Run all tests
-```
-
-## Create A Dev Playground
-
-To test your changes on `realtime-hooks` locally, make sure you have an already any existing **React.js** project. Open your local project and do the following:
-
-- after runing `pnpm build` Go to the parts of your project where you are importing the library and then change the paths to absolute paths that are links to the realtime-hooks codebase you have on your machine. For example:
-
-```ts
-import ifb from '<absolute path>/realtime-hooks/dist/realtime-hooks';
-```
-
-_The template for this contributing guideline was copied from [FrancescoXX/4c-site](https://github.com/FrancescoXX/4c-site). Thank you for the amazing guidelines._
+### An example

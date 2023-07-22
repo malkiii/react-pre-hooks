@@ -10,11 +10,7 @@ Ensure that your `pull request` has followed all the steps below:
 
 - [ ] Code compilation
 - [ ] All tests passing
-- [ ] Extended the documentation, if applicable
-
-### Description
-
-> Please include a summary of the changes of your `pull request`.
+- [ ] Extended the documentation
 
 ### Types of changes
 
@@ -23,3 +19,7 @@ Ensure that your `pull request` has followed all the steps below:
 - [ ] ✨ New feature for an existing hook
 - [ ] 💥 Breaking change (fix or feature that would cause existing functionality)
 - [ ] 📚 Documentation update
+
+### Description
+
+> Please include a summary of the changes in your `pull request`.
