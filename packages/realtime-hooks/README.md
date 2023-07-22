@@ -10,6 +10,8 @@
 [![GitHub issues](https://img.shields.io/github/issues/malkiii/realtime-hooks)](https://github.com/malkiii/realtime-hooks/issues)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
+<!-- Add this https://packagequality.com/ -->
+
 </div>
 
 ## Table of contents
@@ -33,4 +35,4 @@ Please read [CONTRIBUTING.md](https://github.com/malkiii/realtime-hooks/blob/mas
 
 ## License
 
-Distributed under [MIT License](https://github.com/malkiii/realtime-hooks/blob/master/LICENSE).
+Distributed under [MIT License](https://github.com/malkiii/realtime-hooks/blob/master/LICENSE)
