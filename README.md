@@ -1,1 +1,1 @@
-packages/hooks/README.md
+packages/realtime-hooks/README.md
