@@ -1,6 +1,5 @@
 node_modules
 dist
-dist-ssr
 *.local
 
 # testing
@@ -8,11 +7,6 @@ coverage
 
 # Editor directories and files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
 
 # Logs
 logs
