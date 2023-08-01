@@ -1,0 +1,19 @@
+{
+  "root": true,
+  "env": { "browser": true, "es2020": true },
+  "extends": ["eslint:recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "project": ["./tsconfig.json"] },
+  "overrides": [
+    {
+      "files": ["**/src/use*.ts"],
+      "rules": {
+        "func-style": ["error", "expression"]
+      }
+    }
+  ],
+  "rules": {
+    "no-undef": "off",
+    "no-unused-vars": "off"
+  }
+}
