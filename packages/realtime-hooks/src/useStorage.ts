@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useWindowEvents } from '.';
 import { StateSetter } from './types';
-import { useWindowEvents } from './useWindowEvents';
 
 type StorageType = 'localStorage' | 'sessionStorage';
 
@@ -11,14 +11,14 @@ declare global {
   }
 }
 
-function parseJSON<T>(value: string | null): T | undefined {
+const parseJSON = <T>(value: string | null): T | undefined => {
   try {
     return value === 'undefined' ? undefined : JSON.parse(value ?? '');
   } catch {
     console.log('parsing error on', { value });
     return undefined;
   }
-}
+};
 
 const useStorage = <T extends any>(type: StorageType, key: string, initialValue: T) => {
   const storage = type === 'localStorage' ? window.localStorage : window.sessionStorage;

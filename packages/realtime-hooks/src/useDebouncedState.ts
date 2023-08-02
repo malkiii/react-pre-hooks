@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTimeout } from './useTimeout';
+import { useTimeout } from '.';
 
 export const useDebouncedState = <T extends any = any>(initial: T, delay: number = 500) => {
   const [value, setValue] = useState<T>(initial);

@@ -1,10 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 
-export const useUnmount = (callback: () => void) => {
-  const callbackRef = useRef(callback);
+export const useUnmount = (callback: () => any) => {
+  const callbackFunction = useCallback(callback, [callback]);
 
-  useEffect(() => callbackRef.current, []);
-  useEffect(() => {
-    callbackRef.current = callback;
-  }, [callback]);
+  useEffect(() => callbackFunction, []);
 };

@@ -1,9 +1,9 @@
-import { RefObject, useRef, useState } from 'react';
-import { useEventListener } from './useEventListener';
+import { RefObject, useState } from 'react';
+import { useEventListener, useOrCreateRef } from '.';
 
-export const useScroll = <T extends HTMLElement>(ref?: RefObject<T>) => {
-  const targetRef = ref;
-  const options = { ref: targetRef || useRef(document.body) } as any;
+export const useScroll = <T extends HTMLElement = HTMLElement>(ref?: RefObject<T>) => {
+  const targetRef = useOrCreateRef<T>(ref || (document.body as any));
+  const options = { element: targetRef.current };
 
   const [isScrollDown, setIsScrollDown] = useState<boolean>();
   const [isScrollRight, setIsScrollRight] = useState<boolean>();
@@ -16,11 +16,11 @@ export const useScroll = <T extends HTMLElement>(ref?: RefObject<T>) => {
   });
 
   const handleScrolling = () => {
-    if (ref && !ref.current) return;
+    if (!targetRef.current) return;
 
-    const element = options.ref.current as HTMLElement;
-    const scrollX = targetRef?.current?.scrollLeft || window.scrollX;
-    const scrollY = targetRef?.current?.scrollTop || window.scrollY;
+    const element = targetRef.current;
+    const scrollX = element.scrollLeft || window.scrollX;
+    const scrollY = element.scrollTop || window.scrollY;
 
     const maxScrollX = element.scrollWidth - element.clientWidth;
     const maxScrollY = element.scrollHeight - element.clientHeight;

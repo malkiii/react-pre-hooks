@@ -1,24 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useWindowEvents } from './useWindowEvents';
+import { useEffect, useRef } from 'react';
+import { useEventListener } from '.';
 
 export const useSelectedText = () => {
-  const [selectedText, setSelectedText] = useState<string | null>(null);
-  const [isSelecting, setIsSelecting] = useState<boolean>(false);
+  const selectionRef = useRef<Selection | null>(null);
 
   const handleSelectionChange = () => {
-    setSelectedText(document.getSelection()?.toString() || null);
+    selectionRef.current = document.getSelection();
   };
 
-  useWindowEvents('mouseup', () => setIsSelecting(false));
-  useWindowEvents('mousedown', () => setIsSelecting(!!selectedText));
+  const selection = selectionRef.current;
+  useEffect(handleSelectionChange, []);
+  useEventListener('selectionchange', handleSelectionChange, { element: document });
 
-  useEffect(() => {
-    handleSelectionChange();
-    document.addEventListener('selectionchange', handleSelectionChange);
-    return () => {
-      document.removeEventListener('selectionchange', handleSelectionChange);
-    };
-  }, []);
-
-  return { text: selectedText, isSelecting };
+  return {
+    text: selection?.toString() || null,
+    target: selection?.focusNode?.parentElement || null,
+    isSelecting: !selection?.isCollapsed
+  };
 };

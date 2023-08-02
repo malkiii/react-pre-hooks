@@ -1,11 +1,11 @@
-import { KeyboardEventHandler, useCallback, useEffect } from 'react';
-import hotkeys from 'hotkeys-js';
+import { useCallback, useEffect } from 'react';
+import hotkeys, { KeyHandler } from 'hotkeys-js';
 
-export const useKeyboard = (keysRecord: Record<string, KeyboardEventHandler>) => {
+export const useKeyboard = (keysRecord: Record<string, KeyHandler>) => {
   const keys = Object.keys(keysRecord);
 
   const bindAllKeys = useCallback(() => {
-    keys.forEach(key => hotkeys(key, keysRecord[key] as any));
+    keys.forEach(key => hotkeys(key, keysRecord[key]));
     return () => keys.forEach(key => hotkeys.unbind(key));
   }, [keysRecord]);
 

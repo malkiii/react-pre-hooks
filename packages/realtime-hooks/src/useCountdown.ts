@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { useCounter } from './useCounter';
-import { useInterval } from './useInterval';
+import { useCounter, useInterval } from '.';
 
 type CountdownOptions = {
   seconds: number;
@@ -46,5 +45,5 @@ export const useCountdown = (options: CountdownOptions) => {
     stop: interval.stop,
     loops,
     reset
-  } as const;
+  };
 };

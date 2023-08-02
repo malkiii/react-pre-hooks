@@ -5,7 +5,7 @@
 <div align=center>
 
 [![npm](https://img.shields.io/npm/v/realtime-hooks?label=latest%20version&logo=npm)](https://www.npmjs.com/package/realtime-hooks)
-[![Workflow](https://github.com/malkiii/realtime-hooks/actions/workflows/release.yml/badge.svg)](https://github.com/malkiii/realtime-hooks/actions/workflows/release.yml)
+[![Workflow](https://github.com/malkiii/realtime-hooks/actions/workflows/ci.yml/badge.svg)](https://github.com/malkiii/realtime-hooks/actions/workflows/release.yml)
 [![Contribution](https://img.shields.io/badge/-Contribution-db089e)](https://github.com/malkiii/realtime-hooks/blob/master/.github/CONTRIBUTING.md)
 [![GitHub issues](https://img.shields.io/github/issues/malkiii/realtime-hooks)](https://github.com/malkiii/realtime-hooks/issues)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)

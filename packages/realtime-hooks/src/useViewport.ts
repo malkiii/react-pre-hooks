@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useWindowEvents } from './useWindowEvents';
+import { useEventListener, useWindowEvents } from '.';
 
 export const useViewport = () => {
   const [size, setSize] = useState({ width: 0, height: 0 });
+  const [orientation, setOrientation] = useState<OrientationType>();
 
   const getWindowSize = () => {
     setSize({ width: window.innerWidth || 0, height: window.innerHeight || 0 });
+    setOrientation(screen.orientation.type);
   };
 
   useEffect(getWindowSize, []);
-  useWindowEvents(['resize', 'orientationchange'], getWindowSize, { passive: true });
+  useWindowEvents('resize', getWindowSize, { passive: true });
+  useEventListener('change', getWindowSize, { element: screen.orientation });
 
-  return size;
+  return { ...size, orientation };
 };

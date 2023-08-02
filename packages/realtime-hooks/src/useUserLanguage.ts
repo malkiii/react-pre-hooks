@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useWindowEvents } from './useWindowEvents';
+import { useWindowEvents } from '.';
 
 const languageCodes = {
   'Abkhazian': ['ab'],
@@ -196,26 +196,27 @@ const languageCodes = {
 };
 
 type LanguageName = keyof typeof languageCodes;
+const languageNames = Object.keys(languageCodes) as LanguageName[];
+
 type Language = {
   name: LanguageName;
   codes: string[];
 };
 
-function isLanguageCode(lang: LanguageName, code: string) {
+const isLanguageCode = (lang: LanguageName, code: string) => {
   return new RegExp(`^(${languageCodes[lang].join('|')})`, 'i').test(code);
-}
+};
 
-function getUserLanguages(): Language[] {
-  const languageNames = Object.keys(languageCodes) as LanguageName[];
+const getUserLanguages = (): Language[] => {
   return languageNames
     .map(name => ({
       name,
       codes: [...new Set(navigator.languages.filter(code => isLanguageCode(name, code)))]
     }))
     .filter(lang => !!lang.codes);
-}
+};
 
-export const useLanguage = (defaultLang?: LanguageName) => {
+export const useUserLanguage = (defaultLang?: LanguageName) => {
   const [languages, setLanguages] = useState<Language[]>();
   const [language, setLanguage] = useState<Language | undefined>(
     defaultLang && {
@@ -226,12 +227,12 @@ export const useLanguage = (defaultLang?: LanguageName) => {
 
   const setCurrentUserLanguage = useCallback(() => {
     const perferredLanguages = getUserLanguages();
-    setLanguage(perferredLanguages.find(({ name }) => isLanguageCode(name, navigator.language)));
     setLanguages(perferredLanguages);
+    setLanguage(perferredLanguages.find(({ name }) => isLanguageCode(name, navigator.language)));
   }, []);
 
   useEffect(setCurrentUserLanguage, []);
   useWindowEvents('languagechange', setCurrentUserLanguage);
 
-  return { language, perferredLanguages: languages };
+  return { language, userLanguages: languages };
 };

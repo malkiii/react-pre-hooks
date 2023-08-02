@@ -1,5 +1,4 @@
-import { useEffectOnce } from './useEffectOnce';
-import { useUpdateEffect } from './useUpdateEffect';
+import { useEffectOnce, useUpdateEffect } from '.';
 
 export const useLogger = (...params: any[]) => {
   const log = () => {

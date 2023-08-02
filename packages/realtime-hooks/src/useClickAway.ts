@@ -1,24 +1,26 @@
-import { RefObject, useEffect, useRef } from 'react';
-import { useEventListener } from './useEventListener';
+import { RefObject, useCallback } from 'react';
+import { useOrCreateRef, useWindowEvents } from '.';
 
-export const useClickAway = <T extends HTMLElement>(
-  handler: (event: HTMLElementEventMap['click']) => any,
+type ClickEvent = HTMLElementEventMap['click'];
+
+export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
+  handler: (event: ClickEvent) => any,
   ref?: RefObject<T>
 ) => {
-  const callback = useRef((event: MouseEvent) => {
-    const element = targetElementRef.current;
-    element && !element.contains(event.target as any) && handler(event);
-  });
+  const targetRef = useOrCreateRef(ref);
+  const callback = useCallback(
+    (event: MouseEvent) => {
+      const element = targetRef.current;
+      element && !element.contains(event.target as Node) && handler(event);
+    },
+    [handler]
+  );
 
-  const targetElementRef = useEventListener('click', callback.current, { ref });
-
-  useEffect(() => {
-    callback.current = handler;
-  }, [handler]);
+  useWindowEvents('click', callback);
 
   return {
-    ref: targetElementRef,
-    cancelEvent(event: Event) {
+    ref: targetRef,
+    cancelEvent(event: MouseEvent) {
       event.preventDefault();
       event.stopPropagation();
     }

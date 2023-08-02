@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useAsync } from './useAsync';
-
-type FetchResponse = Pick<Response, 'headers' | 'ok' | 'status' | 'type' | 'url'>;
+import { useAsync } from '.';
 
 type RequestOptions = RequestInit & {
   query?: Record<string, string | number | null | undefined>;
 };
+
+type FetchResponse = Pick<Response, 'headers' | 'ok' | 'status' | 'type' | 'url'>;
 
 export const useFetch = <T extends any>(url: string, options?: RequestOptions) => {
   const [response, setResponse] = useState<FetchResponse>();

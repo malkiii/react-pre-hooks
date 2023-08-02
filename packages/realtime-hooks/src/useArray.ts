@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 export const useArray = <T extends any = any>(initial: T[] = []) => {
-  const [array, setArray] = useState<T[]>(initial);
+  const [array, setArray] = useState<Array<T>>(initial);
   return {
     length: array.length,
-    value: () => array,
+    value: array,
     at: array.at,
     set(index: number, element: T) {
-      index = Math.floor(index + (index < 0 ? array.length : 0));
-      setArray(arr => arr.map((el, i) => (i == index ? element : el)));
+      const resolvedIndex = Math.floor(index + (index < 0 ? array.length : 0));
+      setArray(arr => arr.map((el, i) => (i == resolvedIndex ? element : el)));
     },
     push(element: T) {
       setArray(arr => [...arr, element]);
@@ -21,10 +21,10 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
     insert(index: number, element: T) {
       setArray(arr => [...arr.slice(0, index), element, ...arr.slice(index + 1, arr.length)]);
     },
-    concat(...elements: (T | T[])[]) {
+    concat(...elements: Array<T | T[]>) {
       setArray(arr => arr.concat(elements.flat() as T[]));
     },
-    merge(...elements: (T | T[])[]) {
+    merge(...elements: Array<T | T[]>) {
       setArray(arr => [...new Set(arr.concat(elements.flat() as T[]))]);
     },
     filter(callback: (value: T, index: number, array: T[]) => any) {

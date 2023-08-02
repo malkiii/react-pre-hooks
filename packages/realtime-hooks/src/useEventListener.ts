@@ -1,16 +1,19 @@
-import { useEffect, useRef } from 'react';
-import type { WithRef } from './types';
+import { useEffect } from 'react';
+import { useOrCreateRef } from '.';
 
-export const useEventListener = <T extends HTMLElement, K extends keyof HTMLElementEventMap>(
-  event: K | K[],
-  handler: (event: HTMLElementEventMap[K]) => any,
-  options?: boolean | WithRef<AddEventListenerOptions, T>
+export const useEventListener = <
+  T extends Document | EventTarget,
+  E extends keyof HTMLElementEventMap
+>(
+  event: E | E[],
+  handler: (event: HTMLElementEventMap[E] | Event) => any,
+  options?: AddEventListenerOptions & { element?: T | null }
 ) => {
-  const ref = (typeof options !== 'boolean' && options?.ref) || useRef<T>();
+  const targetRef = useOrCreateRef(options?.element || undefined);
   const hasMultipleEvents = Array.isArray(event);
 
   useEffect(() => {
-    const element = ref.current;
+    const element = targetRef.current;
     if (!element) return;
     if (hasMultipleEvents) event.forEach(e => element.addEventListener(e, handler, options));
     else element.addEventListener(event, handler, options);
@@ -21,5 +24,5 @@ export const useEventListener = <T extends HTMLElement, K extends keyof HTMLElem
     };
   }, [event, handler, options]);
 
-  return ref;
+  return targetRef;
 };

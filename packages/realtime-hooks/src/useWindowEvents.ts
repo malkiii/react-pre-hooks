@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-type WindowEventsHook = <K extends keyof WindowEventMap>(
-  event: K | K[],
-  handler: (event: WindowEventMap[K]) => any,
-  options?: boolean | AddEventListenerOptions
+type WindowEventsHook = <E extends keyof WindowEventMap>(
+  event: E | E[],
+  handler: (event: WindowEventMap[E]) => any,
+  options?: AddEventListenerOptions
 ) => void;
 
 export const useWindowEvents: WindowEventsHook = (event, handler, options) => {

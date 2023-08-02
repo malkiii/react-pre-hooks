@@ -1,12 +1,14 @@
 import { useCallback, useRef } from 'react';
-import { useIsomorphicEffect } from './useIsomorphicEffect';
+import { useIsomorphicEffect } from '.';
 
-const MIME_TYPES = {
+const faviconTypes = {
   gif: 'image/gif',
   ico: 'image/x-icon',
   png: 'image/png',
   svg: 'image/svg+xml'
 };
+
+type FaviconExtention = keyof typeof faviconTypes;
 
 export const useFavicon = (url: string) => {
   const link = useRef<HTMLLinkElement>();
@@ -26,8 +28,8 @@ export const useFavicon = (url: string) => {
     if (!url) return;
     if (!link.current) link.current = createIconLink();
 
-    const iconType = url.split(/[#?]/)[0].split('.').pop()!.trim().toLowerCase();
-    link.current.setAttribute('type', MIME_TYPES[iconType as keyof typeof MIME_TYPES]);
+    const iconExtention = url.split(/[#?]/)[0].split('.').pop()!.trim().toLowerCase();
+    link.current.setAttribute('type', faviconTypes[iconExtention as FaviconExtention]);
     link.current.setAttribute('href', url);
   }, [url]);
 };

@@ -26,6 +26,7 @@ export const useStateHistory = <T extends any>(initial: T, limit = 10) => {
         const overflow = historyRef.current.length - limit;
         historyRef.current = historyRef.current.slice(overflow > 0 ? overflow : 0);
         pointerRef.current = historyRef.current.length - 1;
+
         return resolvedValue;
       });
     },
