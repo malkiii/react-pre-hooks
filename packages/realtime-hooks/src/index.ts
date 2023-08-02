@@ -1,5 +1,3 @@
-import { useOrCreateRef } from './useOrCreateRef';
-
 export { useArray } from './useArray';
 export { useAsync } from './useAsync';
 export { useClickAway } from './useClickAway';
@@ -19,6 +17,7 @@ export { useLogger } from './useLogger';
 export { useMount } from './useMount';
 export { useMouseCursor } from './useMouseCursor';
 export { useNetwork } from './useNetwork';
+export { useOrCreateRef } from './useOrCreateRef';
 export { useScroll } from './useScroll';
 export { useScrollEnd } from './useScrollEnd';
 export { useSelectedText } from './useSelectedText';
@@ -33,4 +32,3 @@ export { useUserAgent } from './useUserAgent';
 export { useUserLanguage } from './useUserLanguage';
 export { useViewport } from './useViewport';
 export { useWindowEvents } from './useWindowEvents';
-export { useOrCreateRef } from './useOrCreateRef';
