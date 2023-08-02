@@ -1,8 +1,8 @@
 {
   "root": true,
   "env": { "browser": true, "es2020": true },
-  "extends": ["eslint:recommended"],
   "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint/eslint-plugin"],
   "parserOptions": { "project": ["./tsconfig.json"] },
   "overrides": [
     {
@@ -11,9 +11,5 @@
         "func-style": ["error", "expression"]
       }
     }
-  ],
-  "rules": {
-    "no-undef": "off",
-    "no-unused-vars": "off"
-  }
+  ]
 }
