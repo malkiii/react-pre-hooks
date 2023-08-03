@@ -11,7 +11,10 @@
     "noEmitOnError": true,
     "allowJs": true,
     "noEmit": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./packages/realtime-hooks/*"]
+    }
   },
   "exclude": ["node_modules", "dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
