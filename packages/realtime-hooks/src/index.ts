@@ -1,3 +1,4 @@
+/** @run "pnpm prebuild" to modify this file */
 export { useArray } from './useArray';
 export { useAsync } from './useAsync';
 export { useClickAway } from './useClickAway';

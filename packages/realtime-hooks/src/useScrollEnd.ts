@@ -1,21 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useOrCreateRef, useScroll } from '.';
+import { useScroll } from '.';
 import { WithRef } from './types';
 
-type Options = WithRef<Partial<{ horizontal: boolean; offset: number }>>;
+type Options<T> = WithRef<Partial<{ horizontal: boolean; offset: number }>, T>;
 
-export const useScrollEnd = ({ horizontal = false, offset = 0, ref }: Options) => {
-  const targetRef = useOrCreateRef(ref || document.body);
-
-  const { scrollX, scrollY } = useScroll(targetRef);
+export const useScrollEnd = <T extends HTMLElement>(options?: Options<T>) => {
+  const { ref: targetRef, scrollX, scrollY } = useScroll<T>(options?.ref);
   const [isScrollEnd, setIsScrollEnd] = useState<boolean>(false);
 
   const handleScrolling = useCallback(() => {
     if (!targetRef.current) return;
 
     const { clientWidth, clientHeight, scrollWidth, scrollHeight } = targetRef.current;
+    const offset = options?.offset || 5;
 
-    const isCloseToEnd = horizontal
+    const isCloseToEnd = options?.horizontal
       ? scrollX + clientWidth >= scrollWidth - offset
       : scrollY + clientHeight >= scrollHeight - offset;
 
@@ -24,5 +23,5 @@ export const useScrollEnd = ({ horizontal = false, offset = 0, ref }: Options) =
 
   useEffect(handleScrolling, [scrollX, scrollY]);
 
-  return isScrollEnd;
+  return { ref: targetRef, isScrollEnd };
 };

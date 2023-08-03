@@ -44,5 +44,5 @@ export const useScroll = <T extends HTMLElement = HTMLElement>(ref?: RefObject<T
 
   useEventListener('scroll', handleScrolling, options);
 
-  return { ...scrollPosition, isScrollRight, isScrollDown };
+  return { ref: targetRef, ...scrollPosition, isScrollRight, isScrollDown };
 };

@@ -1,46 +1,46 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 
 export const useArray = <T extends any = any>(initial: T[] = []) => {
-  const [array, setArray] = useState<Array<T>>(initial);
+  const [array, setArray] = useState<T[]>(initial);
+  const getResolvedIndex = (i: number) => parseInt(i.toString()) + (i < 0 ? array.length : 0);
+
   return {
-    length: array.length,
     value: array,
-    at: array.at,
+    length: array.length,
+    get: array.at,
     set(index: number, element: T) {
-      const resolvedIndex = Math.floor(index + (index < 0 ? array.length : 0));
-      setArray(arr => arr.map((el, i) => (i == resolvedIndex ? element : el)));
+      setArray(arr => {
+        const copy = [...arr];
+        copy[getResolvedIndex(index)] = element;
+        return copy;
+      });
     },
-    push(element: T) {
-      setArray(arr => [...arr, element]);
+    push(...elements: T[]) {
+      setArray(arr => [...arr, ...elements]);
     },
-    pop(index = array.length - 1) {
-      if (index == -1) index = array.length - 1;
-      setArray(arr => [...arr.slice(0, index), ...arr.slice(index + 1, arr.length)]);
-      return array[index];
+    pop(index?: number) {
+      const i = getResolvedIndex(index || array.length - 1);
+      setArray(arr => [...arr.slice(0, i), ...arr.slice(i + 1)]);
+      return array[i];
     },
-    insert(index: number, element: T) {
-      setArray(arr => [...arr.slice(0, index), element, ...arr.slice(index + 1, arr.length)]);
+    insert(index: number, ...elements: T[]) {
+      const i = getResolvedIndex(index);
+      setArray(arr => [...arr.slice(0, i), ...elements, ...arr.slice(i)]);
     },
-    concat(...elements: Array<T | T[]>) {
-      setArray(arr => arr.concat(elements.flat() as T[]));
+    remove(...elements: T[]) {
+      setArray(arr => arr.filter(el => !elements.includes(el)));
     },
-    merge(...elements: Array<T | T[]>) {
-      setArray(arr => [...new Set(arr.concat(elements.flat() as T[]))]);
+    concat(...elements: Array<T | ConcatArray<T>>) {
+      setArray(arr => arr.concat(...elements));
     },
-    filter(callback: (value: T, index: number, array: T[]) => any) {
-      setArray(arr => arr.filter(callback));
-    },
-    sort(fn?: (a: T, b: T) => number) {
-      setArray(this.copy().sort(fn));
-    },
-    reverse() {
-      setArray(this.copy().reverse());
+    merge(...elements: Array<T | ConcatArray<T>>) {
+      setArray(arr => [...new Set(arr.concat(...elements))]);
     },
     copy() {
       return [...array];
     },
-    reset(arr: T[] = []) {
+    reset(arr: SetStateAction<T[]> = []) {
       setArray(arr);
     }
-  } as const;
+  };
 };
