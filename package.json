@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "pnpm prebuild && tsc && vite build",
-    "format": "prettier --write packages",
+    "format": "prettier --write packages/**/*.{ts,tsx}",
     "lint": "eslint packages --ext ts,tsx --cache",
     "prebuild": "rm -rf dist/ && bash packages/realtime-hooks/export-hooks.sh",
     "test": "pnpm lint && vitest run --coverage",
