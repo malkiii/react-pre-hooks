@@ -1,5 +1,6 @@
 import { RefObject, useCallback } from 'react';
-import { useOrCreateRef, useWindowEvents } from '@/src';
+import { useWindowEvents } from '@/src';
+import { useOrCreateRef } from '@/src/utils/hooks/useOrCreateRef';
 
 type ClickEvent = HTMLElementEventMap['click'];
 

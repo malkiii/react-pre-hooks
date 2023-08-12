@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useState } from 'react';
-import { useOrCreateRef } from '@/src';
+import { useOrCreateRef } from '@/src/utils/hooks/useOrCreateRef';
 
 export const useSize = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
   const targetRef = useOrCreateRef(ref);

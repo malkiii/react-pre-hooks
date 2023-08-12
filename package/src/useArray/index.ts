@@ -15,6 +15,9 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
         return copy;
       });
     },
+    has(element: T) {
+      return array.includes(element);
+    },
     push(...elements: T[]) {
       setArray(arr => [...arr, ...elements]);
     },

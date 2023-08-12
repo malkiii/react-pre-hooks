@@ -1,6 +1,6 @@
-# realtime-hooks 🦯✨
+# realtime-hooks 👁
 
-> The ultimate react hooks library that can saves you a lot of work
+> The ultimate react hooks library that can save you a lot of time.
 
 <div align=center>
 

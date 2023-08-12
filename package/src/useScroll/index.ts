@@ -1,5 +1,6 @@
 import { RefObject, useState } from 'react';
-import { useEventListener, useOrCreateRef } from '@/src';
+import { useEventListener } from '@/src';
+import { useOrCreateRef } from '@/src/utils/hooks/useOrCreateRef';
 
 export const useScroll = <T extends HTMLElement = HTMLElement>(ref?: RefObject<T>) => {
   const targetRef = useOrCreateRef<T>(ref || (document.body as any));
