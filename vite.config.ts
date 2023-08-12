@@ -13,7 +13,7 @@ export default defineConfig({
   build: {
     lib: {
       name,
-      entry: [path.resolve(__dirname, 'packages/hooks/src/index.ts')],
+      entry: [path.resolve(__dirname, 'package/src/index.ts')],
       formats: ['es', 'umd'],
       fileName: format => `${name}.${format}.js`
     }
