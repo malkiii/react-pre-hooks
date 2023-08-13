@@ -24,12 +24,12 @@
     "url": "https://github.com/malkiii/realtime-hooks/issues"
   },
   "scripts": {
-    "build": "pnpm prebuild && tsc && vite build",
-    "format": "prettier --write packages/**/*.{ts,tsx}",
-    "lint": "eslint packages --ext ts,tsx --cache",
-    "prebuild": "rm -rf dist/ && bash packages/realtime-hooks/export-hooks.sh",
-    "test": "pnpm lint && vitest run --coverage",
-    "test:watch": "vitest watch",
+    "build": "rm -rf dist/ && pnpm prebuild && tsc && vite build",
+    "format": "prettier --write package/**/*.{ts,tsx}",
+    "lint": "eslint package --ext ts,tsx --cache",
+    "prebuild": "pnpm lint && bash package/export-hooks.sh",
+    "test": "vitest run --coverage",
+    "test:watch": "clear && vitest watch",
     "prepublish": "node -pe \"require('./package.json').version\" | echo \"v$(cat)\" | xargs -I {} git tag {} && git push --tags"
   },
   "sideEffects": false,
@@ -39,6 +39,8 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/node": "^20.3.3",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
