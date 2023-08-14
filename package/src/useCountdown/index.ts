@@ -1,36 +1,50 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCounter, useInterval } from '@/src';
 
 type CountdownOptions = {
   seconds: number;
+  initial?: number;
   increment?: boolean;
-  delay?: number;
+  timeout?: number;
   loop?: boolean;
   step?: number;
 };
 export const useCountdown = (options: CountdownOptions) => {
   const loops = useCounter();
-  const counter = options.increment
-    ? useCounter(0, { max: options.seconds, step: options.step })
-    : useCounter(options.seconds, { min: 0, step: options.step });
+  const seconds = Math.abs(Math.abs(options.seconds));
+  const initial = options.initial != undefined ? options.initial : options.increment ? 0 : seconds;
+  const stopValue = options.increment ? initial + seconds : initial - seconds;
+  const counterOptions = { max: stopValue, step: options.step };
+
+  const counter = useCounter(initial, counterOptions);
+  const [isCounting, setIsCounting] = useState<boolean>(true);
 
   const interval = useInterval(() => {
-    const shouldStop =
-      (options.increment && counter.value() == options.seconds) || counter.value() == 0;
-    if (shouldStop) {
-      if (options.loop) {
-        counter.reset();
-        loops.inc();
-        return;
-      } else {
-        return interval.stop();
-      }
+    if (counter.value === stopValue) {
+      if (options.loop) return loop();
+      else return interval.stop();
     }
+
     options.increment ? counter.inc() : counter.dec();
-  }, options.delay);
+  }, options.timeout || 1000);
+
+  const loop = () => {
+    loops.inc();
+    counter.reset();
+  };
 
   const reset = () => {
     counter.reset();
+    interval.start();
+  };
+
+  const start = () => {
+    setIsCounting(true);
+    interval.start();
+  };
+
+  const stop = () => {
+    setIsCounting(false);
     interval.start();
   };
 
@@ -41,9 +55,11 @@ export const useCountdown = (options: CountdownOptions) => {
 
   return {
     value: counter.value,
-    start: interval.start,
-    stop: interval.stop,
-    loops,
+    loops: loops.value,
+    isCounting,
+    start,
+    stop,
+    loop,
     reset
-  };
+  } as const;
 };

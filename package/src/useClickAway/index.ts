@@ -1,14 +1,10 @@
 import { RefObject, useCallback } from 'react';
-import { useWindowEvents } from '@/src';
-import { useOrCreateRef } from '@/src/utils/hooks/useOrCreateRef';
-
-type ClickEvent = HTMLElementEventMap['click'];
+import { useEventListener } from '@/src';
 
 export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
-  handler: (event: ClickEvent) => any,
-  ref?: RefObject<T>
+  targetRef: RefObject<T>,
+  handler: (event: MouseEvent) => any
 ) => {
-  const targetRef = useOrCreateRef(ref);
   const callback = useCallback(
     (event: MouseEvent) => {
       const element = targetRef.current;
@@ -17,13 +13,5 @@ export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
     [handler]
   );
 
-  useWindowEvents('click', callback);
-
-  return {
-    ref: targetRef,
-    cancelEvent(event: MouseEvent) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  };
+  useEventListener('click', callback);
 };

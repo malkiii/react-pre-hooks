@@ -2,6 +2,7 @@
 export { useArray } from './useArray';
 export { useAsync } from './useAsync';
 export { useClickAway } from './useClickAway';
+export { useClipboard } from './useClipboard';
 export { useColorScheme } from './useColorScheme';
 export { useCountdown } from './useCountdown';
 export { useCounter } from './useCounter';
@@ -29,6 +30,4 @@ export { useToggle } from './useToggle';
 export { useUnmount } from './useUnmount';
 export { useUpdateEffect } from './useUpdateEffect';
 export { useUserAgent } from './useUserAgent';
-export { useUserLanguage } from './useUserLanguage';
 export { useViewport } from './useViewport';
-export { useWindowEvents } from './useWindowEvents';

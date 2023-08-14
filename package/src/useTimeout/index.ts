@@ -3,13 +3,13 @@ import { DependencyList, useCallback, useEffect, useRef } from 'react';
 export const useTimeout = (callback: () => void, ms?: number, deps: DependencyList = []) => {
   const timeout = useRef<ReturnType<typeof setTimeout>>();
 
-  const callbackFunction = useCallback(callback, [callback]);
+  const callbackMemo = useCallback(callback, [callback]);
   const clear = (): void => timeout.current && clearTimeout(timeout.current);
 
-  const startTimeout = useCallback(() => {
+  const startTimeout = () => {
     clear();
-    timeout.current = setTimeout(callbackFunction, ms);
-  }, [ms]);
+    timeout.current = setTimeout(callbackMemo, ms);
+  };
 
   useEffect(() => {
     startTimeout();

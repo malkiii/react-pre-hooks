@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { StateSetter } from '@/src/types';
-import { useWindowEvents } from '@/src';
+import { SetStateAction, useCallback, useEffect, useState } from 'react';
+import { useEventListener } from '@/src';
 
 type StorageType = 'localStorage' | 'sessionStorage';
 
@@ -42,7 +41,7 @@ const useStorage = <T extends any>(type: StorageType, key: string, initialValue:
     setStoredValue(getStoredValue);
   };
 
-  const updateStoredValue: StateSetter<T> = useCallback(value => {
+  const updateStoredValue = useCallback((value: SetStateAction<T>) => {
     if (typeof window === 'undefined') {
       console.warn(`Tried setting localStorage key “${key}” even in the server`);
     }
@@ -68,8 +67,8 @@ const useStorage = <T extends any>(type: StorageType, key: string, initialValue:
 
   useEffect(setCurrentStoredValue, []);
 
-  useWindowEvents('storage', handleStorageChange);
-  useWindowEvents(storageEvent, handleStorageChange);
+  useEventListener('storage', handleStorageChange);
+  useEventListener(storageEvent, handleStorageChange);
 
   return [storedValue, updateStoredValue] as const;
 };

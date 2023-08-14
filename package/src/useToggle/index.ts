@@ -1,12 +1,21 @@
-import { SetStateAction, useReducer } from 'react';
+import { SetStateAction, useCallback, useState } from 'react';
 
-export const useToggle = <T extends any = boolean>(options: T[] = [false, true] as T[]) => {
-  const [[option], toggle] = useReducer((state: T[], action: SetStateAction<T>) => {
-    const value = action instanceof Function ? action(state[0]) : action;
-    const index = Math.abs(state.indexOf(value));
+export const useToggle = <T extends any = boolean>(options: T[] = [false, true] as any) => {
+  const [option, setOption] = useState<T>(options[0]);
+  const toggle = useCallback(
+    (value?: SetStateAction<T>) => {
+      if (!options.length) return;
+      setOption(current => {
+        const resolvedValue = value instanceof Function ? value(current) : value;
+        if (resolvedValue) return options.includes(resolvedValue) ? (resolvedValue as T) : current;
 
-    return state.slice(index).concat(state.slice(0, index));
-  }, options);
+        const currentIndex = options.indexOf(current);
+        const lastIndex = options.length - 1;
+        return currentIndex == lastIndex ? options[0] : options[currentIndex + 1];
+      });
+    },
+    [options]
+  );
 
-  return [option, toggle as (value?: SetStateAction<T>) => void] as const;
+  return [option, toggle] as const;
 };

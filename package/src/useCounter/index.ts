@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 
 type CounterOptions = {
   min: number;
@@ -6,16 +6,34 @@ type CounterOptions = {
   step: number;
 };
 export const useCounter = (value: number = 0, options?: Partial<CounterOptions>) => {
-  const [counter, setCounter] = useState<typeof value>(Math.floor(value));
-  const min = Math.min(counter, Math.floor(options?.min || -Infinity));
-  const max = Math.max(counter, Math.floor(options?.max || Infinity));
-  const step = Math.abs(options?.step || 1);
+  const initialValue = Math.floor(value);
+  const [counter, setCounter] = useState<number>(initialValue);
+
+  const [min, max] = [options?.min, options?.max];
+  const counterMin = Math.min(counter, Math.floor(min != undefined ? min : -Infinity));
+  const counterMax = Math.max(counter, Math.floor(max != undefined ? max : Infinity));
+  const step = Math.abs(Math.floor(options?.step || 1));
 
   return {
-    value: () => counter,
-    set: (value: number) => setCounter(value > max ? max : value < min ? min : value),
-    inc: () => counter < max && setCounter(c => c + step),
-    dec: () => counter > min && setCounter(c => c - step),
-    reset: () => setCounter(Math.floor(value))
+    value: counter,
+    inc() {
+      return counter < counterMax && setCounter(c => c + step);
+    },
+    dec() {
+      return counter > counterMin && setCounter(c => c - step);
+    },
+    reset() {
+      return setCounter(initialValue);
+    },
+    set(value: SetStateAction<number>) {
+      return setCounter(v => {
+        const resolvedValue = value instanceof Function ? value(v) : value;
+        return resolvedValue > counterMax
+          ? counterMax
+          : resolvedValue < counterMin
+          ? counterMin
+          : resolvedValue;
+      });
+    }
   } as const;
 };

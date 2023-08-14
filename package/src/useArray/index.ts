@@ -1,4 +1,5 @@
 import { SetStateAction, useState } from 'react';
+import { NonEmptyArray } from '../types';
 
 export const useArray = <T extends any = any>(initial: T[] = []) => {
   const [array, setArray] = useState<T[]>(initial);
@@ -7,7 +8,9 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
   return {
     value: array,
     length: array.length,
-    get: array.at,
+    get(index: number) {
+      return array.at(index);
+    },
     set(index: number, element: T) {
       setArray(arr => {
         const copy = [...arr];
@@ -18,19 +21,19 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
     has(element: T) {
       return array.includes(element);
     },
-    push(...elements: T[]) {
+    push(...elements: NonEmptyArray<T>) {
       setArray(arr => [...arr, ...elements]);
     },
-    pop(index?: number) {
-      const i = getResolvedIndex(index || array.length - 1);
+    pop(index: number = -1) {
+      const i = getResolvedIndex(index);
       setArray(arr => [...arr.slice(0, i), ...arr.slice(i + 1)]);
       return array[i];
     },
-    insert(index: number, ...elements: T[]) {
+    insert(index: number, ...elements: NonEmptyArray<T>) {
       const i = getResolvedIndex(index);
       setArray(arr => [...arr.slice(0, i), ...elements, ...arr.slice(i)]);
     },
-    remove(...elements: T[]) {
+    remove(...elements: NonEmptyArray<T>) {
       setArray(arr => arr.filter(el => !elements.includes(el)));
     },
     concat(...elements: Array<T | ConcatArray<T>>) {

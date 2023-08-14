@@ -1,10 +1,9 @@
-import { RefObject, useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
-import { useOrCreateRef } from '@/src/utils/hooks/useOrCreateRef';
 
 export const useMouseCursor = <T extends HTMLElement = HTMLElement>(ref?: RefObject<T>) => {
-  const targetRef = useOrCreateRef<T>(ref || (document.body as any));
-  const options = { element: targetRef.current };
+  const targetRef = ref || useRef<T>(document.body as any);
+  const options = { target: targetRef.current };
 
   const [isOut, setIsOut] = useState<boolean>();
   const [isDown, setIsDown] = useState<boolean>();

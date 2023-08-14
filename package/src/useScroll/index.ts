@@ -1,10 +1,9 @@
-import { RefObject, useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
-import { useOrCreateRef } from '@/src/utils/hooks/useOrCreateRef';
 
 export const useScroll = <T extends HTMLElement = HTMLElement>(ref?: RefObject<T>) => {
-  const targetRef = useOrCreateRef<T>(ref || (document.body as any));
-  const options = { element: targetRef.current };
+  const targetRef = ref || useRef<T>(document.body as any);
+  const options = { target: targetRef.current };
 
   const [isScrollDown, setIsScrollDown] = useState<boolean>();
   const [isScrollRight, setIsScrollRight] = useState<boolean>();
@@ -45,5 +44,5 @@ export const useScroll = <T extends HTMLElement = HTMLElement>(ref?: RefObject<T
 
   useEventListener('scroll', handleScrolling, options);
 
-  return { ref: targetRef, ...scrollPosition, isScrollRight, isScrollDown };
+  return { ...scrollPosition, isScrollRight, isScrollDown };
 };

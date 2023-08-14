@@ -1,28 +1,27 @@
 import { useEffect } from 'react';
-import { useOrCreateRef } from '@/src';
+
+type EventMap<T> = T extends Window ? WindowEventMap : HTMLElementEventMap;
 
 export const useEventListener = <
-  T extends Document | EventTarget,
-  E extends keyof HTMLElementEventMap
+  E extends keyof EventMap<T> & string,
+  T extends Document | EventTarget = Window
 >(
   event: E | E[],
-  handler: (event: HTMLElementEventMap[E] | Event) => any,
-  options?: AddEventListenerOptions & { element?: T | null }
+  handler: (event: EventMap<T>[E]) => any,
+  options?: AddEventListenerOptions & { target?: T | null }
 ) => {
-  const targetRef = useOrCreateRef(options?.element || undefined);
-  const hasMultipleEvents = Array.isArray(event);
-
   useEffect(() => {
-    const element = targetRef.current;
-    if (!element) return;
-    if (hasMultipleEvents) event.forEach(e => element.addEventListener(e, handler, options));
-    else element.addEventListener(event, handler, options);
+    const target = options?.target !== undefined ? options.target : window;
+    if (!target) return;
+
+    const addEvent = (e: string) => target.addEventListener(e, handler as any, options);
+    const removeEvent = (e: string) => target.removeEventListener(e, handler as any, options);
+
+    const hasMultipleEvents = Array.isArray(event);
+    hasMultipleEvents ? event.forEach(addEvent) : addEvent(event);
 
     return () => {
-      if (hasMultipleEvents) event.forEach(e => element.removeEventListener(e, handler, options));
-      else element.removeEventListener(event, handler, options);
+      hasMultipleEvents ? event.forEach(removeEvent) : removeEvent(event);
     };
   }, [event, handler, options]);
-
-  return targetRef;
 };

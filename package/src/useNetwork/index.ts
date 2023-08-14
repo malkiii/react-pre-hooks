@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useEventListener, useWindowEvents } from '@/src';
+import { useEventListener } from '@/src';
 
 /**
  * Network Information API
@@ -39,8 +39,8 @@ export const useNetwork = (): NetworkState => {
   const [state, setState] = useState<NetworkState>(getConnectionState);
   const handleChange = () => setState(getConnectionState);
 
-  useWindowEvents(['online', 'offline'], handleChange, { passive: true });
-  useEventListener('change', handleChange, { element: connection as any, passive: true });
+  useEventListener(['online', 'offline'], handleChange, { passive: true });
+  useEventListener('change', handleChange, { target: connection as any, passive: true });
 
   return state;
 };

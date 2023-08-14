@@ -6,7 +6,7 @@ const faviconTypes = {
   ico: 'image/x-icon',
   png: 'image/png',
   svg: 'image/svg+xml'
-};
+} as const;
 
 type FaviconExtention = keyof typeof faviconTypes;
 
@@ -14,14 +14,15 @@ export const useFavicon = (url: string) => {
   const link = useRef<HTMLLinkElement>();
 
   const createIconLink = useCallback(() => {
-    const existingIcons = document.querySelectorAll<HTMLLinkElement>('link[rel*="icon"]');
+    const linksQuerySelector = 'link[rel*="icon"], link[rel*="shortcut icon"]';
+    const existingIcons = document.querySelectorAll<HTMLLinkElement>(linksQuerySelector);
     existingIcons.forEach(link => document.head.removeChild(link));
 
-    const element = document.createElement('link');
-    element.rel = 'shortcut icon';
-    document.head.appendChild(element);
+    const link = document.createElement('link');
+    link.rel = 'shortcut icon';
+    document.head.appendChild(link);
 
-    return element;
+    return link;
   }, []);
 
   useIsomorphicEffect(() => {
@@ -29,7 +30,7 @@ export const useFavicon = (url: string) => {
     if (!link.current) link.current = createIconLink();
 
     const iconExtention = url.split(/[#?]/)[0].split('.').pop()!.trim().toLowerCase();
-    link.current.setAttribute('type', faviconTypes[iconExtention as FaviconExtention]);
-    link.current.setAttribute('href', url);
+    link.current.type = faviconTypes[iconExtention as FaviconExtention];
+    link.current.href = url;
   }, [url]);
 };

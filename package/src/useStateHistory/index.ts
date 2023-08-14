@@ -1,5 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
-import { StateSetter } from '@/src/types';
+import { SetStateAction, useCallback, useRef, useState } from 'react';
 
 export const useStateHistory = <T extends any>(initial: T, limit = 10) => {
   if (limit <= 0) throw new Error(`useStateHistory: Limit must be grater than 0, got ${limit}`);
@@ -12,26 +11,24 @@ export const useStateHistory = <T extends any>(initial: T, limit = 10) => {
   const setHistory = () => setValue(getPointerValue);
 
   const setState = useCallback(
-    (v: T | ((prev?: T) => T)) => {
+    (value: SetStateAction<T>) => {
       setValue(currentValue => {
-        const resolvedValue = v instanceof Function ? v(currentValue) : v;
+        const resolvedValue = value instanceof Function ? value(currentValue) : value;
         if (getPointerValue() === resolvedValue) return resolvedValue;
 
         if (pointerRef.current < historyRef.current.length - 1) {
           historyRef.current.splice(pointerRef.current + 1);
         }
         historyRef.current.push(resolvedValue);
-        historyRef.current = historyRef.current.splice(0, historyRef.current.length - limit);
+        historyRef.current.splice(0, historyRef.current.length - limit);
 
-        const overflow = historyRef.current.length - limit;
-        historyRef.current = historyRef.current.slice(overflow > 0 ? overflow : 0);
         pointerRef.current = historyRef.current.length - 1;
 
         return resolvedValue;
       });
     },
     [limit, value]
-  ) as StateSetter<T>;
+  );
 
   const pointer = {
     history: historyRef.current,
@@ -57,8 +54,8 @@ export const useStateHistory = <T extends any>(initial: T, limit = 10) => {
       setHistory();
     },
     clear() {
-      historyRef.current = [value];
       pointerRef.current = 0;
+      historyRef.current = [];
       setHistory();
     }
   };
