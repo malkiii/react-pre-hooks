@@ -24,6 +24,7 @@ export { useScrollEnd } from './useScrollEnd';
 export { useSelection } from './useSelection';
 export { useSize } from './useSize';
 export { useStateHistory } from './useStateHistory';
+export { useStateStatus } from './useStateStatus';
 export { useLocalStorage, useSessionStorage } from './useStorage';
 export { useTimeout } from './useTimeout';
 export { useToggle } from './useToggle';
