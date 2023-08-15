@@ -4,10 +4,11 @@ import { useCounter, useInterval } from '@/src';
 type CountdownOptions = {
   seconds: number;
   initial?: number;
-  increment?: boolean;
   timeout?: number;
-  loop?: boolean;
+  startOnMount?: boolean;
   step?: number;
+  loop?: boolean;
+  increment?: boolean;
 };
 export const useCountdown = (options: CountdownOptions) => {
   const loops = useCounter();
@@ -19,14 +20,17 @@ export const useCountdown = (options: CountdownOptions) => {
   const counter = useCounter(initial, counterOptions);
   const [isCounting, setIsCounting] = useState<boolean>(true);
 
-  const interval = useInterval(() => {
-    if (counter.value === stopValue) {
-      if (options.loop) return loop();
-      else return interval.stop();
-    }
+  const interval = useInterval(
+    () => {
+      if (counter.value === stopValue) {
+        if (options.loop) return loop();
+        else return interval.stop();
+      }
 
-    options.increment ? counter.inc() : counter.dec();
-  }, options.timeout || 1000);
+      options.increment ? counter.inc() : counter.dec();
+    },
+    { timeout: options.timeout || 1000, startOnMount: options.startOnMount }
+  );
 
   const loop = () => {
     loops.inc();

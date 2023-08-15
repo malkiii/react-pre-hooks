@@ -5,7 +5,7 @@ export const useClipboard = ({ timeout = 3000 } = {}) => {
   const [copied, setCopied] = useState<boolean>(false);
   const [error, setError] = useState<Error>();
 
-  const statusTimer = useTimeout(() => setCopied(false), timeout);
+  const statusTimer = useTimeout(() => setCopied(false), { timeout });
 
   return {
     copy(text?: string) {

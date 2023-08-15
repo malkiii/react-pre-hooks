@@ -5,7 +5,7 @@ export const useDebouncedState = <T extends any = any>(initial: T, delay: number
   const [value, setValue] = useState<T>(initial);
   const [debouncedValue, setDebouncedValue] = useState<T>(initial);
 
-  useTimeout(() => setDebouncedValue(value), delay, [value]);
+  useTimeout(() => setDebouncedValue(value), { timeout: delay, startOnMount: true, deps: [value] });
 
   return [debouncedValue, setValue, value] as const;
 };

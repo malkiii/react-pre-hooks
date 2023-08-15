@@ -6,21 +6,32 @@ import { useTimeout } from '@/src';
 vi.useFakeTimers();
 
 describe('useTimeout', () => {
-  const ms = 1000;
+  const timeout = 1100;
+  const options = { timeout, startOnMount: true };
 
-  it(`should execute the callback after ${ms}ms`, () => {
+  it('should not start on mount', () => {
     const callback = vi.fn();
-    renderHook(() => useTimeout(callback, ms));
+    renderHook(() => useTimeout(callback, { timeout }));
 
     expect(callback).not.toHaveBeenCalled();
-    vi.advanceTimersByTime(ms);
+    vi.advanceTimersByTime(timeout);
+
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it(`should execute the callback after ${timeout}ms`, () => {
+    const callback = vi.fn();
+    renderHook(() => useTimeout(callback, options));
+
+    expect(callback).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(timeout);
 
     expect(callback).toHaveBeenCalledOnce();
   });
 
   it('should start and execute the callback', () => {
     const callback = vi.fn();
-    const { result } = renderHook(() => useTimeout(callback, ms));
+    const { result } = renderHook(() => useTimeout(callback, options));
 
     expect(callback).not.toHaveBeenCalled();
 
@@ -28,18 +39,18 @@ describe('useTimeout', () => {
 
     expect(callback).not.toHaveBeenCalled();
 
-    vi.advanceTimersByTime(ms);
+    vi.advanceTimersByTime(timeout);
 
     expect(callback).toHaveBeenCalledOnce();
   });
 
   it('should stop the timeout', () => {
     const callback = vi.fn();
-    const { result } = renderHook(() => useTimeout(callback, ms));
+    const { result } = renderHook(() => useTimeout(callback, options));
 
     act(() => result.current.start());
     act(() => result.current.stop());
-    vi.advanceTimersByTime(ms);
+    vi.advanceTimersByTime(timeout);
 
     expect(callback).not.toHaveBeenCalled();
   });

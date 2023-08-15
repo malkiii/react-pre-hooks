@@ -4,6 +4,7 @@ import { useInterval } from '@/src';
 
 describe('useInterval', () => {
   const timeout = 1000;
+  const options = { timeout, startOnMount: true };
 
   beforeEach(() => {
     vi.useFakeTimers(); // Use fake timers before each test
@@ -13,10 +14,20 @@ describe('useInterval', () => {
     vi.clearAllTimers(); // Clear timers after each test
   });
 
+  it('should not start on mount', () => {
+    const callback = vi.fn();
+    renderHook(() => useInterval(callback, { timeout }));
+
+    expect(callback).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(timeout);
+
+    expect(callback).not.toHaveBeenCalled();
+  });
+
   it('should start and execute the handler', () => {
     const handler = vi.fn();
     const callTimes = 3;
-    renderHook(() => useInterval(handler, timeout));
+    renderHook(() => useInterval(handler, options));
 
     expect(handler).not.toHaveBeenCalled();
     vi.advanceTimersByTime(timeout * callTimes);
@@ -26,7 +37,7 @@ describe('useInterval', () => {
 
   it('should start and execute the handler', () => {
     const handler = vi.fn();
-    const { result } = renderHook(() => useInterval(handler, timeout));
+    const { result } = renderHook(() => useInterval(handler, options));
 
     expect(handler).not.toHaveBeenCalled();
 
@@ -38,7 +49,7 @@ describe('useInterval', () => {
 
   it('should stop the interval', () => {
     const handler = vi.fn();
-    const { result } = renderHook(() => useInterval(handler, timeout));
+    const { result } = renderHook(() => useInterval(handler, options));
 
     act(() => result.current.start());
     act(() => result.current.stop());

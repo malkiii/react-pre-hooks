@@ -1,20 +1,30 @@
 import { DependencyList, useCallback, useEffect, useRef } from 'react';
 
-export const useTimeout = (callback: () => void, ms?: number, deps: DependencyList = []) => {
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
+type TimoutOptions = {
+  timeout: number;
+  startOnMount?: boolean;
+  deps?: DependencyList;
+};
+
+export const useTimeout = (
+  callback: () => any,
+  { timeout, startOnMount = false, deps = [] }: TimoutOptions
+) => {
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const callbackMemo = useCallback(callback, [callback]);
-  const clear = (): void => timeout.current && clearTimeout(timeout.current);
+  const clear = (): void => timeoutRef.current && clearTimeout(timeoutRef.current);
 
   const startTimeout = () => {
     clear();
-    timeout.current = setTimeout(callbackMemo, ms);
+    timeoutRef.current = setTimeout(callbackMemo, timeout);
   };
 
   useEffect(() => {
+    if (!startOnMount) return;
     startTimeout();
     return clear;
-  }, [ms, ...deps]);
+  }, [timeout, startOnMount, ...deps]);
 
   return { start: startTimeout, stop: clear } as const;
 };
