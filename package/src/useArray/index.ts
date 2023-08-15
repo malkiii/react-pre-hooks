@@ -29,6 +29,12 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
       setArray(arr => [...arr.slice(0, i), ...arr.slice(i + 1)]);
       return array[i];
     },
+    shift() {
+      return this.pop(0);
+    },
+    unshift(...elements: NonEmptyArray<T>) {
+      this.insert(0, ...elements);
+    },
     insert(index: number, ...elements: NonEmptyArray<T>) {
       const i = getResolvedIndex(index);
       setArray(arr => [...arr.slice(0, i), ...elements, ...arr.slice(i)]);
@@ -41,6 +47,12 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
     },
     merge(...elements: Array<T | ConcatArray<T>>) {
       setArray(arr => [...new Set(arr.concat(...elements))]);
+    },
+    map(callback: Parameters<typeof array.map<T>>[0]) {
+      setArray(arr => arr.map(callback));
+    },
+    filter(callback: Parameters<typeof array.filter>[0]) {
+      setArray(arr => arr.filter(callback));
     },
     copy() {
       return [...array];

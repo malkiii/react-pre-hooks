@@ -45,6 +45,18 @@ describe('useArray', () => {
     expect(result.current.value).toEqual([1, 2, 3, 4, 5]);
   });
 
+  it('should shift and unshift', () => {
+    const { result } = renderHook(() => useArray([3]));
+
+    act(() => result.current.unshift(1, 2));
+    expect(result.current.value).toEqual([1, 2, 3]);
+
+    act(() => result.current.shift());
+    expect(result.current.value).toEqual([2, 3]);
+    act(() => result.current.shift());
+    expect(result.current.value).toEqual([3]);
+  });
+
   it('should concat and merge', () => {
     const { result } = renderHook(() => useArray([0]));
 
@@ -53,6 +65,16 @@ describe('useArray', () => {
 
     act(() => result.current.merge([3, 4], 5));
     expect(result.current.value).toEqual([0, 1, 2, 3, 4, 5]);
+  });
+
+  it('should map and filter', () => {
+    const { result } = renderHook(() => useArray([-2, -1, 0, 1, 2]));
+
+    act(() => result.current.map(value => value * 2));
+    expect(result.current.value).toEqual([-4, -2, 0, 2, 4]);
+
+    act(() => result.current.filter(value => value > 0));
+    expect(result.current.value).toEqual([2, 4]);
   });
 
   it('should concat and merge', () => {
