@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      hotkeys-js:
-        specifier: ^3.11.2
-        version: 3.11.2
       react:
         specifier: '>=18.2.0'
         version: 18.2.0
@@ -1935,10 +1932,6 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
     dev: true
-
-  /hotkeys-js@3.11.2:
-    resolution: {integrity: sha512-hLuR+wtvrVrVFHku5cud44cPXQf5ke+96TonRaGzlNSt22rh2LH65avLYFNsc+QpzMuOEQG/IxJT5mEop99rvg==}
-    dev: false
 
   /html-encoding-sniffer@3.0.0:
     resolution: {integrity: sha512-oWv4T4yJ52iKrufjnyZPkrN0CH3QnrUqdB6In1g5Fe1mia8GmF36gnfNySxoZtxD5+NmYw1EElVXiBk93UeskA==}

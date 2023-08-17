@@ -34,7 +34,6 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "hotkeys-js": "^3.11.2",
     "ua-parser-js": "^1.0.35"
   },
   "devDependencies": {
