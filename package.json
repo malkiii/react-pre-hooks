@@ -2,7 +2,7 @@
   "name": "realtime-hooks",
   "version": "0.0.0",
   "type": "module",
-  "description": "The ultimate react hooks library that can saves you a lot of work",
+  "description": "The ultimate react hooks to simplify and clean up your components.",
   "author": {
     "name": "Malki Abdurrahman",
     "email": "malki.abdurrahmane@gmail.com"
