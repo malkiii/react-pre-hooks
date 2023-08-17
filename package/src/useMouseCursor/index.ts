@@ -5,16 +5,18 @@ export const useMouseCursor = <T extends HTMLElement = HTMLDivElement>(ref?: Ref
   const targetRef = ref || useRef<T>(null);
   const options = { target: targetRef.current || window };
 
-  const position = useRef({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isOut, setIsOut] = useState<boolean>();
   const [isDown, setIsDown] = useState<boolean>();
 
   const handleMouseMove = (event: MouseEvent | TouchEvent) => {
     const isMouseEvent = 'offsetX' in event;
 
-    position.current = isMouseEvent
-      ? { x: event.offsetX, y: event.offsetY }
-      : { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
+    setPosition(
+      isMouseEvent
+        ? { x: event.offsetX, y: event.offsetY }
+        : { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }
+    );
   };
 
   useEventListener(['mousemove', 'touchmove'], handleMouseMove, options);
@@ -25,5 +27,5 @@ export const useMouseCursor = <T extends HTMLElement = HTMLDivElement>(ref?: Ref
   useEventListener(['mouseenter', 'touchstart'], () => setIsOut(false), options);
   useEventListener(['mouseleave', 'touchend', 'touchcancel'], () => setIsOut(true), options);
 
-  return { targetRef, ...position.current, isOut, isDown };
+  return { targetRef, ...position, isOut, isDown };
 };

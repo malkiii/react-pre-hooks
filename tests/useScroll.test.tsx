@@ -1,4 +1,4 @@
-import { act, fireEvent, render, renderHook, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { useScroll } from '@/src';
 
@@ -13,15 +13,13 @@ describe('useScroll', () => {
     expect(result.current.scrollY).toBe(300);
   });
 
-  it.only('should update isScrollRight when scrolling right', async () => {
+  it('should update "isScrollRight" when scrolling right', async () => {
     const { result, rerender } = renderHook(() => useScroll());
 
-    await waitFor(() =>
-      render(
-        <div ref={result.current.targetRef} style={{ width: '1000px', overflow: 'scroll' }}>
-          <div style={{ width: '2000px' }} />
-        </div>
-      )
+    render(
+      <div ref={result.current.targetRef} style={{ width: '1000px', overflow: 'scroll' }}>
+        <div style={{ width: '2000px' }} />
+      </div>
     );
 
     rerender();
@@ -30,15 +28,12 @@ describe('useScroll', () => {
     expect(result.current.isScrollRight).toBe(true);
   });
 
-  it('should update isScrollDown when scrolling down', () => {
+  it('should update "isScrollDown" when scrolling down', () => {
     const { result } = renderHook(() => useScroll());
 
-    render(<div data-testid="scroll-div" style={{ height: '2000px', width: '2000px' }} />);
+    render(<div style={{ height: '2000px', width: '2000px' }} />);
 
-    fireEvent.scroll(document, { target: { scrollLeft: 200, scrollTop: 300 } });
-
+    fireEvent.scroll(window, { target: { scrollY: 500 } });
     expect(result.current.isScrollDown).toBe(true);
   });
-
-  // Add more test cases as needed
 });

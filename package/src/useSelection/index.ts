@@ -1,20 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useEventListener } from '@/src';
 
 export const useSelection = () => {
-  const selectionRef = useRef<Selection | null>(null);
+  const [selection, setSelection] = useState<Selection | null>(null);
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
 
   const getSelectionRect = () => {
-    const selection = selectionRef.current;
     if (!selection || selection.isCollapsed) return;
 
     return selection.getRangeAt(0).getBoundingClientRect();
   };
 
   const handleSelectionChange = () => {
-    selectionRef.current = document.getSelection();
-    setIsSelecting(!selectionRef.current?.isCollapsed);
+    const currentSelection = document.getSelection();
+
+    setSelection(currentSelection);
+    setIsSelecting(!currentSelection?.isCollapsed);
   };
 
   useEffect(handleSelectionChange, []);
@@ -22,8 +23,8 @@ export const useSelection = () => {
   useEventListener(['mouseup', 'touchend'], () => setIsSelecting(false), { target: document });
 
   return {
-    text: selectionRef.current?.toString() || null,
-    target: selectionRef.current?.focusNode?.parentElement || null,
+    text: selection?.toString() || null,
+    target: selection?.focusNode?.parentElement || null,
     rect: getSelectionRect(),
     isSelecting
   };

@@ -1,20 +1,21 @@
-import { RefObject, useCallback, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 export const useSize = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
   const targetRef = ref || useRef<T>(null);
-  const size = useRef({ width: 0, height: 0 });
+  const [size, setSize] = useState({ width: 0, height: 0 });
 
-  const observeElement = useCallback(() => {
+  useEffect(() => {
+    const target = targetRef.current || document.body;
+    setSize({ width: target.offsetWidth, height: target.offsetHeight });
+
     const resizeObserver = new ResizeObserver(entries => {
-      entries.forEach(entry => (size.current = entry.contentRect));
+      entries.forEach(entry => setSize(entry.contentRect));
     });
 
-    resizeObserver.observe(targetRef.current || document.body);
+    resizeObserver.observe(target);
 
     return () => resizeObserver.disconnect();
   }, [targetRef]);
 
-  useEffect(observeElement, [observeElement]);
-
-  return { targetRef, ...size.current };
+  return { targetRef, ...size };
 };
