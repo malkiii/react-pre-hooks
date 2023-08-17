@@ -30,5 +30,5 @@ export { useTimeout } from './useTimeout';
 export { useToggle } from './useToggle';
 export { useUnmount } from './useUnmount';
 export { useUpdateEffect } from './useUpdateEffect';
-export { useUserAgent } from './useUserAgent';
+export { useUserAgent, useDevice, useBrowser } from './useUserAgent';
 export { useViewport } from './useViewport';
