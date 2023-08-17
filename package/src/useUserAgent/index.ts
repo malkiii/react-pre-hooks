@@ -1,14 +1,33 @@
-import { useRef, useState } from 'react';
-import { UAParser, IResult as UAResult } from 'ua-parser-js';
+import { useState } from 'react';
+import { IResult as UA, UAParser } from 'ua-parser-js';
 import { useIsomorphicEffect } from '@/src';
 
 export const useUserAgent = () => {
-  const parserRef = useRef(new UAParser());
-  const [userAgent, setUserAgent] = useState<UAResult>();
+  const [userAgent, setUserAgent] = useState<UA>();
 
   useIsomorphicEffect(() => {
-    setUserAgent(parserRef.current.getResult());
-  }, [parserRef]);
+    setUserAgent(new UAParser().getResult());
+  }, []);
+
+  return userAgent;
+};
+
+export const useDevice = () => {
+  const [userAgent, setUserAgent] = useState<UA['device']>();
+
+  useIsomorphicEffect(() => {
+    setUserAgent(new UAParser().getDevice());
+  }, []);
+
+  return userAgent;
+};
+
+export const useBrowser = () => {
+  const [userAgent, setUserAgent] = useState<UA['browser']>();
+
+  useIsomorphicEffect(() => {
+    setUserAgent(new UAParser().getBrowser());
+  }, []);
 
   return userAgent;
 };
