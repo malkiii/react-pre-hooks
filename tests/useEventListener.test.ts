@@ -50,18 +50,18 @@ describe('useEventListener', () => {
     await waitFor(() => expect(document.body.classList.contains('scrolling')).toBe(true));
   });
 
-  it('should add .test class on mouse enter and leave', async () => {
+  it('should add .cursor class on mouse enter and leave', async () => {
     const input = document.createElement('input');
-    const handleClick = () => input.classList.add('test');
+    const handleClick = () => input.classList.add('cursor');
     renderHook(() =>
       useEventListener(['mouseenter', 'mouseleave'], handleClick, { target: input })
     );
 
     fireEvent.mouseEnter(input);
-    await waitFor(() => expect(input.classList.contains('test')).toBe(true));
+    await waitFor(() => expect(input.classList.contains('cursor')).toBe(true));
 
-    act(() => input.classList.remove('test'));
+    act(() => input.classList.remove('cursor'));
     fireEvent.mouseLeave(input);
-    await waitFor(() => expect(input.classList.contains('test')).toBe(true));
+    await waitFor(() => expect(input.classList.contains('cursor')).toBe(true));
   });
 });

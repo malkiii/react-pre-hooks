@@ -4,7 +4,7 @@ type EventMap<T> = T extends Window ? WindowEventMap : HTMLElementEventMap;
 
 export const useEventListener = <
   E extends keyof EventMap<T> & string,
-  T extends Document | EventTarget = Window
+  T extends EventTarget = Window
 >(
   event: E | E[],
   handler: (event: EventMap<T>[E]) => any,

@@ -8,9 +8,7 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
   return {
     value: array,
     length: array.length,
-    get(index: number) {
-      return array.at(index);
-    },
+    at: array.at,
     set(index: number, element: T) {
       setArray(arr => {
         const copy = [...arr];
