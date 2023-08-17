@@ -2,13 +2,15 @@ import { SetStateAction, useState } from 'react';
 import { NonEmptyArray } from '../types';
 
 export const useArray = <T extends any = any>(initial: T[] = []) => {
-  const [array, setArray] = useState<T[]>(initial);
+  const [array, setArray] = useState(initial);
   const getResolvedIndex = (i: number) => parseInt(i.toString()) + (i < 0 ? array.length : 0);
 
   return {
     value: array,
     length: array.length,
-    at: array.at,
+    at(index: number) {
+      return array.at(index);
+    },
     set(index: number, element: T) {
       setArray(arr => {
         const copy = [...arr];
