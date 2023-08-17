@@ -8,7 +8,7 @@ on:
     types: [opened, reopened]
 
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,8 +25,8 @@ jobs:
 
       - run: pnpm install
 
-      - name: Linting
-        run: pnpm lint
-
       - name: Running Tests
-        run: pnpm test
+        run: pnpm lint && pnpm test
+
+      - name: Building
+        run: pnpm build
