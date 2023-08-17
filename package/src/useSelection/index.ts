@@ -18,8 +18,8 @@ export const useSelection = () => {
   };
 
   useEffect(handleSelectionChange, []);
-  useEventListener('mouseup', () => setIsSelecting(false), { target: document });
   useEventListener('selectionchange', handleSelectionChange, { target: document });
+  useEventListener(['mouseup', 'touchend'], () => setIsSelecting(false), { target: document });
 
   return {
     text: selectionRef.current?.toString() || null,

@@ -1,46 +1,47 @@
 import { RefObject, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
-export const useScroll = <T extends HTMLElement = HTMLElement>(ref?: RefObject<T>) => {
-  const targetRef = ref || useRef<T>(document.body as any);
-  const options = { target: targetRef.current };
-
-  const [isScrollDown, setIsScrollDown] = useState<boolean>();
-  const [isScrollRight, setIsScrollRight] = useState<boolean>();
-  const scrollPosition = useRef({
+export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
+  const targetRef = ref || useRef<T>(null);
+  const options = { target: targetRef.current || window };
+  const initialProps = {
     scrollX: 0,
     scrollY: 0,
     scrollProgressX: 0,
     scrollProgressY: 0
-  });
-  const prevPosition = useRef<typeof scrollPosition.current>();
+  };
+
+  const [isScrollDown, setIsScrollDown] = useState<boolean>();
+  const [isScrollRight, setIsScrollRight] = useState<boolean>();
+
+  const scrollPosition = useRef(initialProps);
+  const prevPosition = useRef<typeof scrollPosition.current>(initialProps);
 
   const handleScrolling = () => {
-    if (!targetRef.current) return;
+    const scrollX = targetRef.current?.scrollLeft || window.scrollX;
+    const scrollY = targetRef.current?.scrollTop || window.scrollY;
 
-    const element = targetRef.current;
-    const scrollX = element.scrollLeft || window.scrollX;
-    const scrollY = element.scrollTop || window.scrollY;
+    const target = targetRef.current || document.body;
 
-    const maxScrollX = element.scrollWidth - element.clientWidth;
-    const maxScrollY = element.scrollHeight - element.clientHeight;
-    const scrollProgressX = (element.scrollLeft / maxScrollX) * 100;
-    const scrollProgressY = (element.scrollTop / maxScrollY) * 100;
+    const maxScrollX = target.scrollWidth - target.clientWidth;
+    const maxScrollY = target.scrollHeight - target.clientHeight;
+    const scrollProgressX = (target.scrollLeft / maxScrollX) * 100;
+    const scrollProgressY = (target.scrollTop / maxScrollY) * 100;
 
-    prevPosition.current = scrollPosition.current;
-    scrollPosition.current = { scrollX, scrollY, scrollProgressX, scrollProgressY };
-
-    const distanceX = scrollPosition.current.scrollX - prevPosition.current.scrollX;
-    const distanceY = scrollPosition.current.scrollY - prevPosition.current.scrollY;
+    const distanceX = scrollX - prevPosition.current.scrollX;
+    const distanceY = scrollY - prevPosition.current.scrollY;
 
     if (distanceX > 0) setIsScrollRight(true);
     else if (distanceX < 0) setIsScrollRight(false);
 
     if (distanceY > 0) setIsScrollDown(true);
     else if (distanceY < 0) setIsScrollDown(false);
+
+    prevPosition.current = scrollPosition.current;
+    scrollPosition.current = { scrollX, scrollY, scrollProgressX, scrollProgressY };
   };
 
   useEventListener('scroll', handleScrolling, options);
 
-  return { ...scrollPosition, isScrollRight, isScrollDown };
+  return { targetRef, ...scrollPosition.current, isScrollRight, isScrollDown };
 };

@@ -5,18 +5,16 @@ export const useSize = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<
   const size = useRef({ width: 0, height: 0 });
 
   const observeElement = useCallback(() => {
-    if (!targetRef.current) return;
-
     const resizeObserver = new ResizeObserver(entries => {
       entries.forEach(entry => (size.current = entry.contentRect));
     });
 
-    resizeObserver.observe(targetRef.current);
+    resizeObserver.observe(targetRef.current || document.body);
 
     return () => resizeObserver.disconnect();
   }, [targetRef]);
 
   useEffect(observeElement, [observeElement]);
 
-  return size.current;
+  return { targetRef, ...size.current };
 };

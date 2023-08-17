@@ -1,10 +1,11 @@
-import { RefObject, useCallback } from 'react';
+import { RefObject, useCallback, useRef } from 'react';
 import { useEventListener } from '@/src';
 
 export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
-  targetRef: RefObject<T>,
-  handler: (event: MouseEvent) => any
+  handler: (event: MouseEvent) => any,
+  ref?: RefObject<T>
 ) => {
+  const targetRef = ref || useRef<T>(null);
   const callback = useCallback(
     (event: MouseEvent) => {
       const element = targetRef.current;
@@ -14,4 +15,6 @@ export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
   );
 
   useEventListener('click', callback);
+
+  return targetRef;
 };
