@@ -1,19 +1,38 @@
-import { useCallback, useEffect } from 'react';
-import hotkeys, { KeyHandler } from 'hotkeys-js';
+import { useEventListener } from '@/src';
 
-export const useKeyboard = (keysRecord: Record<string, KeyHandler>) => {
-  const keys = Object.keys(keysRecord);
+type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
 
-  const bindKeys = useCallback(() => {
-    keys.forEach(key => hotkeys(key, keysRecord[key]));
-  }, [keysRecord]);
+const getKeyboardEventList = (record: KeysRecord) => {
+  return Object.keys(record).map(key => {
+    const resolvedKeys = key.split(/,+/g).map(k => k.trim().toLowerCase());
+    return [resolvedKeys, record[key]] as const;
+  });
+};
 
-  const unbindKeys = useCallback(() => {
-    keys.forEach(key => hotkeys.unbind(key));
-  }, [keysRecord]);
+const isPressed = (keyModifier: string, event: KeyboardEvent): boolean => {
+  return keyModifier.split('+').every(key => {
+    switch (key.trim()) {
+      case 'ctrl':
+        return event.ctrlKey;
+      case 'alt':
+        return event.altKey;
+      case 'shift':
+        return event.shiftKey;
+      default:
+        return event.key.toLowerCase() === key;
+    }
+  });
+};
 
-  useEffect(() => {
-    bindKeys();
-    return unbindKeys;
-  }, [keysRecord]);
+export const useKeyboard = <T extends EventTarget>(keysRecord: KeysRecord, element?: T | null) => {
+  const handleKeydown = (event: KeyboardEvent) => {
+    const keyboardEventList = getKeyboardEventList(keysRecord);
+    const pressedKeyEvent = keyboardEventList.find(([keys, _]) => {
+      return keys.some(key => isPressed(key, event));
+    });
+
+    if (pressedKeyEvent) pressedKeyEvent[1](event);
+  };
+
+  useEventListener('keydown', handleKeydown, { target: element });
 };
