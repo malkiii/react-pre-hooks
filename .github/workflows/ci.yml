@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ['src/**', 'tests/**']
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Running Tests
+        run: pnpm lint && pnpm test
