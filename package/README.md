@@ -1,8 +1,8 @@
 # realtime-hooks 👁
 
-> The ultimate react hooks library that can save you a lot of time.
-
 <div align=center>
+
+The ultimate react hooks to simplify and clean up your components.
 
 [![npm](https://img.shields.io/npm/v/realtime-hooks?label=latest%20version&logo=npm)](https://www.npmjs.com/package/realtime-hooks)
 [![Workflow](https://github.com/malkiii/realtime-hooks/actions/workflows/ci.yml/badge.svg)](https://github.com/malkiii/realtime-hooks/actions/workflows/release.yml)
