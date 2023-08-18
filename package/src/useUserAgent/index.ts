@@ -13,21 +13,31 @@ export const useUserAgent = () => {
 };
 
 export const useDevice = () => {
-  const [userAgent, setUserAgent] = useState<UA['device']>();
+  const [device, setDevice] = useState<UA['device']>();
 
   useIsomorphicEffect(() => {
-    setUserAgent(new UAParser().getDevice());
+    setDevice(new UAParser().getDevice());
   }, []);
 
-  return userAgent;
+  return device;
 };
 
 export const useBrowser = () => {
-  const [userAgent, setUserAgent] = useState<UA['browser']>();
+  const [browser, setBrowser] = useState<UA['browser']>();
 
   useIsomorphicEffect(() => {
-    setUserAgent(new UAParser().getBrowser());
+    setBrowser(new UAParser().getBrowser());
   }, []);
 
-  return userAgent;
+  return browser;
+};
+
+export const useOS = () => {
+  const [os, setOS] = useState<UA['os']>();
+
+  useIsomorphicEffect(() => {
+    setOS(new UAParser().getOS());
+  }, []);
+
+  return os;
 };
