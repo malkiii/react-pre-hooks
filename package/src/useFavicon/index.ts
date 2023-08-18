@@ -1,36 +1,34 @@
-import { useCallback, useRef } from 'react';
+import { LinkHTMLAttributes } from 'react';
 import { useIsomorphicEffect } from '@/src';
 
-const faviconTypes = {
-  gif: 'image/gif',
-  ico: 'image/x-icon',
-  png: 'image/png',
-  svg: 'image/svg+xml'
-} as const;
+type FaviconLink = Pick<
+  LinkHTMLAttributes<HTMLLinkElement>,
+  'title' | 'media' | 'crossOrigin' | 'referrerPolicy'
+> & {
+  href: string;
+  type?: `image/${'png' | 'gif' | 'svg+xml' | 'x-icon'}`;
+  sizes?: `${number}x${number}`;
+  rel:
+    | 'icon'
+    | 'mask-icon'
+    | 'fluid-icon'
+    | 'shortcut icon'
+    | 'apple-touch-icon'
+    | 'apple-touch-icon-precomposed';
+};
 
-type FaviconExtention = keyof typeof faviconTypes;
+const removeFaviconLinkTags = () => {
+  for (let link of document.getElementsByTagName('link'))
+    if (link.rel.includes('icon')) link.remove();
+};
 
-export const useFavicon = (url: string) => {
-  const link = useRef<HTMLLinkElement>();
-
-  const createIconLink = useCallback(() => {
-    const linksQuerySelector = 'link[rel*="icon"], link[rel*="shortcut icon"]';
-    const existingIcons = document.querySelectorAll<HTMLLinkElement>(linksQuerySelector);
-    existingIcons.forEach(link => document.head.removeChild(link));
-
-    const link = document.createElement('link');
-    link.rel = 'shortcut icon';
-    document.head.appendChild(link);
-
-    return link;
-  }, []);
-
+export const useFavicon = (...favicons: FaviconLink[]) => {
   useIsomorphicEffect(() => {
-    if (!url) return;
-    if (!link.current) link.current = createIconLink();
-
-    const iconExtention = url.split(/[#?]/)[0].split('.').pop()!.trim().toLowerCase();
-    link.current.type = faviconTypes[iconExtention as FaviconExtention];
-    link.current.href = url;
-  }, [url]);
+    removeFaviconLinkTags();
+    favicons.forEach(favicon => {
+      const link = document.createElement('link');
+      Object.entries(favicon).forEach(([prop, value]) => link.setAttribute(prop, value));
+      document.head.appendChild(link);
+    });
+  }, [favicons]);
 };
