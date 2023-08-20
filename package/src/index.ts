@@ -13,7 +13,7 @@ export { useEventListener } from './useEventListener';
 export { useFavicon } from './useFavicon';
 export { useFetch } from './useFetch';
 export { useGeolocation } from './useGeolocation';
-export { useImageOnLoad } from './useImageOnLoad';
+export { useImageLoading } from './useImageLoading';
 export { useIntersectionObserver } from './useIntersectionObserver';
 export { useInterval } from './useInterval';
 export { useIsomorphicEffect } from './useIsomorphicEffect';
