@@ -1,7 +1,7 @@
 import { RefObject, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
-export const useMouseCursor = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
+export const useMouse = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
   const targetRef = ref || useRef<T>(null);
   const options = { target: targetRef.current || window };
 
