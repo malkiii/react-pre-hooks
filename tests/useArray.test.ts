@@ -16,8 +16,11 @@ describe('useArray', () => {
 
     act(() => result.current.set(0, 69));
     expect(result.current.at(0)).toBe(69);
-    act(() => result.current.set(-2, 59));
-    expect(result.current.at(-2)).toBe(59);
+    act(() => result.current.set(-2, 69));
+    expect(result.current.at(-2)).toBe(69);
+
+    expect(result.current.count(0)).toBe(0);
+    expect(result.current.count(69)).toBe(2);
   });
 
   it('should push and pop', () => {
@@ -67,14 +70,11 @@ describe('useArray', () => {
     expect(result.current.value).toEqual([0, 1, 2, 3, 4, 5]);
   });
 
-  it('should map and filter', () => {
+  it('should apply a callback on all the elements', () => {
     const { result } = renderHook(() => useArray([-2, -1, 0, 1, 2]));
 
-    act(() => result.current.map(value => value * 2));
+    act(() => result.current.apply(value => value * 2));
     expect(result.current.value).toEqual([-4, -2, 0, 2, 4]);
-
-    act(() => result.current.filter(value => value > 0));
-    expect(result.current.value).toEqual([2, 4]);
   });
 
   it('should concat and merge', () => {

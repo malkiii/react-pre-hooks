@@ -1,10 +1,10 @@
 import { act, fireEvent, render, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useMouseCursor } from '@/src';
+import { useMouse } from '@/src';
 
-describe('useMouseCursor', () => {
+describe('useMouse', () => {
   it('should update position when mouse moves', async () => {
-    const { result } = renderHook(() => useMouseCursor());
+    const { result } = renderHook(() => useMouse());
 
     fireEvent.mouseMove(window, { clientX: 50, clientY: 100 });
 
@@ -13,7 +13,7 @@ describe('useMouseCursor', () => {
   });
 
   it('should update position when touch moves', () => {
-    const { result } = renderHook(() => useMouseCursor());
+    const { result } = renderHook(() => useMouse());
 
     fireEvent.touchMove(document, { changedTouches: [{ clientX: 150, clientY: 200 }] });
 
@@ -22,7 +22,7 @@ describe('useMouseCursor', () => {
   });
 
   it('should update isDown when mouse is pressed or released', () => {
-    const { result } = renderHook(() => useMouseCursor());
+    const { result } = renderHook(() => useMouse());
     const { targetRef } = result.current;
 
     render(<div ref={targetRef}>Container</div>);
@@ -35,7 +35,7 @@ describe('useMouseCursor', () => {
   });
 
   it('should update isDown when touch is started or ended', () => {
-    const { result } = renderHook(() => useMouseCursor());
+    const { result } = renderHook(() => useMouse());
 
     fireEvent.touchStart(document.body);
     expect(result.current.isDown).toBe(true);
@@ -45,7 +45,7 @@ describe('useMouseCursor', () => {
   });
 
   it('should update isOut when mouse enters or leaves', () => {
-    const { result } = renderHook(() => useMouseCursor());
+    const { result } = renderHook(() => useMouse());
 
     fireEvent.mouseEnter(window);
     expect(result.current.isOut).toBe(false);
@@ -55,7 +55,7 @@ describe('useMouseCursor', () => {
   });
 
   it('should update isOut when touch starts or cancels', () => {
-    const { result } = renderHook(() => useMouseCursor());
+    const { result } = renderHook(() => useMouse());
 
     fireEvent.touchStart(document);
     expect(result.current.isOut).toBe(false);
