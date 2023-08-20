@@ -18,6 +18,8 @@ const isPressed = (keyModifier: string, event: KeyboardEvent): boolean => {
         return event.altKey;
       case 'shift':
         return event.shiftKey;
+      case 'meta':
+        return event.metaKey;
       default:
         return event.key.toLowerCase() === key;
     }
