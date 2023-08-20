@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useIsomorphicEffect } from '@/src';
 
-export const useImageOnLoad = (imageSrc: string, handler: (event: Event) => any) => {
+export const useImageLoading = (imageSrc: string, handler: (event: Event) => any) => {
   const imageRef = useRef<HTMLImageElement>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
