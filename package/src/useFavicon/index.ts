@@ -1,7 +1,7 @@
 import { LinkHTMLAttributes } from 'react';
 import { useIsomorphicEffect } from '@/src';
 
-type FaviconLink = Pick<
+type FaviconProps = Pick<
   LinkHTMLAttributes<HTMLLinkElement>,
   'title' | 'media' | 'crossOrigin' | 'referrerPolicy'
 > & {
@@ -22,7 +22,7 @@ const removeFaviconLinkTags = () => {
     if (link.rel.includes('icon')) link.remove();
 };
 
-export const useFavicon = (...favicons: FaviconLink[]) => {
+export const useFavicon = (...favicons: FaviconProps[]) => {
   useIsomorphicEffect(() => {
     removeFaviconLinkTags();
     favicons.forEach(favicon => {

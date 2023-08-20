@@ -1,6 +1,9 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 
-export const useSize = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
+export const useSize = <T extends HTMLElement = HTMLDivElement>(
+  ref?: RefObject<T>,
+  options?: ResizeObserverOptions
+) => {
   const targetRef = ref || useRef<T>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
 
@@ -12,10 +15,12 @@ export const useSize = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<
       entries.forEach(entry => setSize(entry.contentRect));
     });
 
-    resizeObserver.observe(target);
+    resizeObserver.observe(target, options);
 
-    return () => resizeObserver.disconnect();
-  }, [targetRef]);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [ref, options]);
 
   return { targetRef, ...size };
 };
