@@ -6,13 +6,9 @@ type ClockOptions = {
   format?: string;
   timeout?: number;
   startOnMount?: boolean;
-} & (
-  | { initial?: undefined }
-  | {
-      initial: string | Date;
-      stop: string | Date;
-    }
-);
+  initial?: string | Date;
+  duration?: number;
+};
 
 export const useClock = (options?: ClockOptions) => {
   const timeout = options?.timeout || 1000;
@@ -21,28 +17,47 @@ export const useClock = (options?: ClockOptions) => {
 
   const initialDate = new Date(options?.initial || new Date());
   const [datetime, setDatetime] = useState<Date>(initialDate);
+  const [isRunning, setIsRunning] = useState<boolean>(startOnMount);
 
   const timer = useInterval(
     () => {
       if (!options?.initial) return setDatetime(new Date());
-      const stopDate = new Date(options.stop);
+      const duration = options.duration ?? Infinity;
 
       setDatetime(date => {
-        if (date > stopDate) return subMilliseconds(date, timeout);
-        if (date < stopDate) return addMilliseconds(date, timeout);
-        timer.stop();
-        return date;
+        const currentDuration = date.getTime() - initialDate.getTime();
+        const nextDatetime =
+          currentDuration > duration
+            ? subMilliseconds(date, timeout)
+            : currentDuration < duration
+            ? addMilliseconds(date, timeout)
+            : date;
+
+        nextDatetime.getTime() - initialDate.getTime() == duration && stop();
+
+        return nextDatetime;
       });
     },
     { timeout, startOnMount }
   );
 
-  const reset = () => {
-    if (!options?.initial) return;
-    timer.stop();
-    setDatetime(initialDate);
+  const value = format(datetime, clockFormat);
+
+  const start = () => {
+    setIsRunning(true);
     timer.start();
   };
 
-  return { value: format(datetime, clockFormat), datetime, reset, ...timer };
+  const stop = () => {
+    setIsRunning(false);
+    timer.stop();
+  };
+
+  const reset = () => {
+    if (!options?.initial) return;
+    stop();
+    setDatetime(initialDate);
+  };
+
+  return { value, isRunning, datetime, start, stop, reset };
 };

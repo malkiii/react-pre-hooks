@@ -11,14 +11,16 @@ type CountdownOptions = {
   increment?: boolean;
 };
 export const useCountdown = (options: CountdownOptions) => {
+  const { increment, startOnMount, timeout, step } = options;
+
   const loops = useCounter();
   const seconds = Math.abs(Math.abs(options.seconds));
-  const initial = options.initial != undefined ? options.initial : options.increment ? 0 : seconds;
-  const stopValue = options.increment ? initial + seconds : initial - seconds;
-  const counterOptions = { max: stopValue, step: options.step };
+  const initial = options.initial != undefined ? options.initial : increment ? 0 : seconds;
+  const stopValue = increment ? initial + seconds : initial - seconds;
+  const counterOptions = { max: stopValue, step };
 
   const counter = useCounter(initial, counterOptions);
-  const [isCounting, setIsCounting] = useState<boolean>(true);
+  const [isCounting, setIsCounting] = useState<boolean>(!!startOnMount);
 
   const interval = useInterval(
     () => {
@@ -27,9 +29,9 @@ export const useCountdown = (options: CountdownOptions) => {
         else return interval.stop();
       }
 
-      options.increment ? counter.inc() : counter.dec();
+      increment ? counter.inc() : counter.dec();
     },
-    { timeout: options.timeout || 1000, startOnMount: options.startOnMount }
+    { timeout: timeout || 1000, startOnMount }
   );
 
   const loop = () => {
