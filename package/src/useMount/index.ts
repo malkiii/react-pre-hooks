@@ -1,5 +1,3 @@
-import { useEffectOnce } from '@/src';
+import { EffectCallback, useEffect } from 'react';
 
-export const useMount = (callback: () => void) => {
-  useEffectOnce(callback);
-};
+export const useMount = (callback: EffectCallback) => useEffect(callback, []);

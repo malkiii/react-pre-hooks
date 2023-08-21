@@ -5,10 +5,8 @@ type RequestOptions = RequestInit & {
   query?: Record<string, string | number | null | undefined>;
 };
 
-type FetchResponse = Pick<Response, 'headers' | 'ok' | 'status' | 'type' | 'url'>;
-
 export const useFetch = <T extends any>(url: string, options?: RequestOptions) => {
-  const [response, setResponse] = useState<FetchResponse>();
+  const [response, setResponse] = useState<Response>();
   const fetchURL = new URL(url);
 
   if (options?.query) {
@@ -23,7 +21,7 @@ export const useFetch = <T extends any>(url: string, options?: RequestOptions) =
     fetchURL.search = new URLSearchParams(query).toString();
   }
 
-  const { retry: refetch, ...result } = useAsync(async () => {
+  const { retry: refetch, ...result } = useAsync<T>(async () => {
     const response = await fetch(fetchURL, options);
     setResponse(response);
     return (await response.json()) as T;

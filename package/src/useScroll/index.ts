@@ -4,7 +4,7 @@ import { useEventListener } from '@/src';
 export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
   const targetRef = ref || useRef<T>(null);
   const options = { target: targetRef.current || window };
-  const initialProps = {
+  const initialValues = {
     scrollX: 0,
     scrollY: 0,
     scrollProgressX: 0,
@@ -14,8 +14,8 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
   const [isScrollDown, setIsScrollDown] = useState<boolean>();
   const [isScrollRight, setIsScrollRight] = useState<boolean>();
 
-  const [scrollPosition, setScrollPosition] = useState(initialProps);
-  const [prevPosition, setPrevPosition] = useState<typeof scrollPosition>(initialProps);
+  const [scrollPosition, setScrollPosition] = useState(initialValues);
+  const prevPosition = useRef<typeof scrollPosition>(initialValues);
 
   const handleScrolling = () => {
     const scrollX = targetRef.current?.scrollLeft || window.scrollX;
@@ -28,8 +28,8 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
     const scrollProgressX = (target.scrollLeft / maxScrollX) * 100;
     const scrollProgressY = (target.scrollTop / maxScrollY) * 100;
 
-    const distanceX = scrollX - prevPosition.scrollX;
-    const distanceY = scrollY - prevPosition.scrollY;
+    const distanceX = scrollX - prevPosition.current.scrollX;
+    const distanceY = scrollY - prevPosition.current.scrollY;
 
     if (distanceX > 0) setIsScrollRight(true);
     else if (distanceX < 0) setIsScrollRight(false);
@@ -37,7 +37,7 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
     if (distanceY > 0) setIsScrollDown(true);
     else if (distanceY < 0) setIsScrollDown(false);
 
-    setPrevPosition(scrollPosition);
+    prevPosition.current = scrollPosition;
     setScrollPosition({ scrollX, scrollY, scrollProgressX, scrollProgressY });
   };
 

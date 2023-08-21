@@ -12,35 +12,31 @@ type NetworkInformation = {
   downlinkMax: number;
   effectiveType: 'slow-2g' | '2g' | '3g' | '4g';
   saveData: boolean;
-  onChange: (event: Event) => void;
 };
 
-type NetworkState = Partial<NetworkInformation> & {
-  online: boolean | undefined;
-};
+type NetworkState = Partial<NetworkInformation & { online: boolean }>;
 
 const nav = navigator as any;
-const connection: NetworkInformation =
-  nav && (nav.connection || nav.mozConnection || nav.webkitConnection);
+const connection: NetworkInformation = nav.connection || nav.mozConnection || nav.webkitConnection;
 
-const getConnectionState = (): NetworkState => {
+const getCurrentConnectionState = (): NetworkState => {
   return {
     online: nav?.onLine,
+    type: connection?.type,
+    rtt: connection?.rtt,
     downlink: connection?.downlink,
     downlinkMax: connection?.downlinkMax,
     effectiveType: connection?.effectiveType,
-    rtt: connection?.rtt,
-    saveData: connection?.saveData,
-    type: connection?.type
+    saveData: connection?.saveData
   };
 };
 
 export const useNetwork = (): NetworkState => {
-  const [state, setState] = useState<NetworkState>(getConnectionState);
-  const handleChange = () => setState(getConnectionState);
+  const [networkState, setNetworkState] = useState<NetworkState>(getCurrentConnectionState);
+  const handleChange = () => setNetworkState(getCurrentConnectionState);
 
   useEventListener(['online', 'offline'], handleChange, { passive: true });
   useEventListener('change', handleChange, { target: connection as any, passive: true });
 
-  return state;
+  return networkState;
 };
