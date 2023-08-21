@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useEffect, useRef } from 'react';
+import { DependencyList, useCallback, useEffect, useRef, useState } from 'react';
 
 type IntervalOptions = {
   timeout: number;
@@ -11,20 +11,26 @@ export const useInterval = (
   { timeout, startOnMount = false, deps = [] }: IntervalOptions
 ) => {
   const intervalRef = useRef<any>();
-
   const handlerMemo = useCallback(handler, [handler]);
-  const clear = (): void => intervalRef.current && window.clearInterval(intervalRef.current);
+  const [isRunning, setIsRunning] = useState<boolean>(startOnMount);
 
-  const startInterval = () => {
+  const clear = (): void => {
+    if (!intervalRef.current) return;
+    setIsRunning(false);
+    window.clearInterval(intervalRef.current);
+  };
+
+  const start = () => {
     clear();
     intervalRef.current = setInterval(handlerMemo, timeout);
+    setIsRunning(true);
   };
 
   useEffect(() => {
     if (!startOnMount) return;
-    startInterval();
+    start();
     return clear;
   }, [timeout, startOnMount, ...deps]);
 
-  return { start: startInterval, stop: clear } as const;
+  return { start, stop: clear, isRunning } as const;
 };

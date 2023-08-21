@@ -17,7 +17,6 @@ export const useClock = (options?: ClockOptions) => {
 
   const initialDate = new Date(options?.initial || new Date());
   const [datetime, setDatetime] = useState<Date>(initialDate);
-  const [isRunning, setIsRunning] = useState<boolean>(startOnMount);
 
   const timer = useInterval(
     () => {
@@ -33,7 +32,7 @@ export const useClock = (options?: ClockOptions) => {
             ? addMilliseconds(date, timeout)
             : date;
 
-        nextDatetime.getTime() - initialDate.getTime() == duration && stop();
+        nextDatetime.getTime() - initialDate.getTime() == duration && timer.stop();
 
         return nextDatetime;
       });
@@ -43,21 +42,11 @@ export const useClock = (options?: ClockOptions) => {
 
   const value = format(datetime, clockFormat);
 
-  const start = () => {
-    setIsRunning(true);
-    timer.start();
-  };
-
-  const stop = () => {
-    setIsRunning(false);
-    timer.stop();
-  };
-
   const reset = () => {
     if (!options?.initial) return;
-    stop();
+    timer.stop();
     setDatetime(initialDate);
   };
 
-  return { value, isRunning, datetime, start, stop, reset };
+  return { value, datetime, ...timer, reset };
 };

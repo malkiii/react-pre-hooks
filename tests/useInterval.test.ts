@@ -19,7 +19,7 @@ describe('useInterval', () => {
     renderHook(() => useInterval(callback, { timeout }));
 
     expect(callback).not.toHaveBeenCalled();
-    vi.advanceTimersByTime(timeout);
+    act(() => vi.advanceTimersByTime(timeout));
 
     expect(callback).not.toHaveBeenCalled();
   });
@@ -30,7 +30,7 @@ describe('useInterval', () => {
     renderHook(() => useInterval(handler, options));
 
     expect(handler).not.toHaveBeenCalled();
-    vi.advanceTimersByTime(timeout * callTimes);
+    act(() => vi.advanceTimersByTime(timeout * callTimes));
 
     expect(handler).toHaveBeenCalledTimes(callTimes);
   });
@@ -39,10 +39,11 @@ describe('useInterval', () => {
     const handler = vi.fn();
     const { result } = renderHook(() => useInterval(handler, options));
 
+    expect(result.current.isRunning).toBe(true);
     expect(handler).not.toHaveBeenCalled();
 
     act(() => result.current.start());
-    vi.advanceTimersByTime(timeout);
+    act(() => vi.advanceTimersByTime(timeout));
 
     expect(handler).toHaveBeenCalledOnce();
   });
@@ -53,7 +54,9 @@ describe('useInterval', () => {
 
     act(() => result.current.start());
     act(() => result.current.stop());
-    vi.advanceTimersByTime(timeout);
+    expect(result.current.isRunning).toBe(false);
+
+    act(() => vi.advanceTimersByTime(timeout));
 
     expect(handler).not.toHaveBeenCalled();
   });

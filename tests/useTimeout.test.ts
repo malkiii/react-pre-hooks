@@ -14,7 +14,7 @@ describe('useTimeout', () => {
     renderHook(() => useTimeout(callback, { timeout }));
 
     expect(callback).not.toHaveBeenCalled();
-    vi.advanceTimersByTime(timeout);
+    act(() => vi.advanceTimersByTime(timeout));
 
     expect(callback).not.toHaveBeenCalled();
   });
@@ -24,7 +24,7 @@ describe('useTimeout', () => {
     renderHook(() => useTimeout(callback, options));
 
     expect(callback).not.toHaveBeenCalled();
-    vi.advanceTimersByTime(timeout);
+    act(() => vi.advanceTimersByTime(timeout));
 
     expect(callback).toHaveBeenCalledOnce();
   });
@@ -33,14 +33,16 @@ describe('useTimeout', () => {
     const callback = vi.fn();
     const { result } = renderHook(() => useTimeout(callback, options));
 
+    expect(result.current.isRunning).toBe(options.startOnMount);
     expect(callback).not.toHaveBeenCalled();
 
     act(() => result.current.start());
 
     expect(callback).not.toHaveBeenCalled();
 
-    vi.advanceTimersByTime(timeout);
+    act(() => vi.advanceTimersByTime(timeout));
 
+    expect(result.current.isRunning).toBe(false);
     expect(callback).toHaveBeenCalledOnce();
   });
 
@@ -50,7 +52,8 @@ describe('useTimeout', () => {
 
     act(() => result.current.start());
     act(() => result.current.stop());
-    vi.advanceTimersByTime(timeout);
+    act(() => vi.advanceTimersByTime(timeout));
+    // vi.advanceTimersByTime(timeout);
 
     expect(callback).not.toHaveBeenCalled();
   });

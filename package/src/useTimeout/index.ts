@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useEffect, useRef } from 'react';
+import { DependencyList, useCallback, useEffect, useRef, useState } from 'react';
 
 type TimoutOptions = {
   timeout: number;
@@ -10,21 +10,30 @@ export const useTimeout = (
   callback: () => any,
   { timeout, startOnMount = false, deps = [] }: TimoutOptions
 ) => {
+  const [isRunning, setIsRunning] = useState<boolean>(startOnMount);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const callbackMemo = useCallback(() => {
+    callback();
+    setIsRunning(false);
+  }, [callback]);
 
-  const callbackMemo = useCallback(callback, [callback]);
-  const clear = (): void => timeoutRef.current && clearTimeout(timeoutRef.current);
+  const clear = (): void => {
+    if (!timeoutRef.current) return;
+    setIsRunning(false);
+    clearTimeout(timeoutRef.current);
+  };
 
-  const startTimeout = () => {
+  const start = () => {
     clear();
     timeoutRef.current = setTimeout(callbackMemo, timeout);
+    setIsRunning(true);
   };
 
   useEffect(() => {
     if (!startOnMount) return;
-    startTimeout();
+    start();
     return clear;
   }, [timeout, startOnMount, ...deps]);
 
-  return { start: startTimeout, stop: clear } as const;
+  return { start, stop: clear, isRunning } as const;
 };
