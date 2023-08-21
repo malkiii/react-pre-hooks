@@ -3,38 +3,38 @@ import { NonEmptyArray } from '../types';
 import { objectEqual } from '../utils';
 
 export const useArray = <T extends any = any>(initial: T[] = []) => {
-  const [value, setValue] = useState<T[]>(initial);
-  const getResolvedIndex = (i: number) => parseInt(i.toString()) + (i < 0 ? value.length : 0);
+  const [array, setArray] = useState<T[]>(initial);
+
+  const toSpliced = (arr: typeof array, ...args: Parameters<typeof array.splice>) => {
+    const copy = structuredClone(arr);
+    copy.splice(...args);
+    return copy;
+  };
 
   return {
-    value,
-    length: value.length,
+    value: array,
+    length: array.length,
     at(index: number) {
-      return value.at(index);
+      return array.at(index);
     },
     set(index: number, element: T) {
-      setValue(arr => {
-        const copy = [...arr];
-        copy[getResolvedIndex(index)] = element;
-        return copy;
-      });
+      setArray(arr => toSpliced(arr, index, 1, element));
     },
     has(element: T) {
-      return value.includes(element);
+      return array.includes(element);
     },
     isEqual(arr: any[]) {
-      return objectEqual(value, arr);
+      return objectEqual(array, arr);
     },
     count(element: T) {
-      return value.reduce((count, num) => (objectEqual(num, element) ? count + 1 : count), 0);
+      return array.reduce((count, num) => (objectEqual(num, element) ? count + 1 : count), 0);
     },
     push(...elements: NonEmptyArray<T>) {
-      setValue(arr => [...arr, ...elements]);
+      setArray(arr => toSpliced(arr, arr.length, 0, ...elements));
     },
     pop(index: number = -1) {
-      const i = getResolvedIndex(index);
-      setValue(arr => [...arr.slice(0, i), ...arr.slice(i + 1)]);
-      return value[i];
+      setArray(arr => toSpliced(arr, index, 1));
+      return array.at(index);
     },
     shift() {
       return this.pop(0);
@@ -43,26 +43,25 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
       this.insert(0, ...elements);
     },
     insert(index: number, ...elements: NonEmptyArray<T>) {
-      const i = getResolvedIndex(index);
-      setValue(arr => [...arr.slice(0, i), ...elements, ...arr.slice(i)]);
+      setArray(arr => toSpliced(arr, index, 0, ...elements));
     },
     remove(...elements: NonEmptyArray<T>) {
-      setValue(arr => arr.filter(el => !elements.includes(el)));
+      setArray(arr => arr.filter(el => !elements.includes(el)));
     },
     concat(...elements: Array<T | ConcatArray<T>>) {
-      setValue(arr => arr.concat(...elements));
+      setArray(arr => arr.concat(...elements));
     },
     merge(...elements: Array<T | ConcatArray<T>>) {
-      setValue(arr => [...new Set(arr.concat(...elements))]);
+      setArray(arr => [...new Set(arr.concat(...elements))]);
     },
-    apply(callback: Parameters<typeof value.map<T>>[0]) {
-      setValue(arr => arr.map(callback));
+    apply(callback: Parameters<typeof array.map<T>>[0]) {
+      setArray(arr => arr.map(callback));
     },
     copy() {
-      return structuredClone(value);
+      return structuredClone(array);
     },
     reset(arr: SetStateAction<T[]> = initial) {
-      setValue(arr);
+      setArray(arr);
     }
   };
 };
