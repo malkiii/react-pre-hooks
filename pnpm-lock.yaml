@@ -81,10 +81,6 @@ importers:
 
   package: {}
 
-  packages/hooks: {}
-
-  packages/realtime-hooks: {}
-
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:
