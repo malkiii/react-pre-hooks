@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 
+type FalsyValue = false | null | undefined;
 type EventMap<T> = T extends Window ? WindowEventMap : HTMLElementEventMap;
 
 export const useEventListener = <
   E extends keyof EventMap<T> & string,
   T extends EventTarget = Window
 >(
-  event: E | E[],
+  event: E | Array<E | FalsyValue>,
   handler: (event: EventMap<T>[E]) => any,
   options?: AddEventListenerOptions & { target?: T | null }
 ) => {
@@ -18,10 +19,12 @@ export const useEventListener = <
     const removeEvent = (e: string) => target.removeEventListener(e, handler as any, options);
 
     const hasMultipleEvents = Array.isArray(event);
-    hasMultipleEvents ? event.forEach(addEvent) : addEvent(event);
+    const resolvedEvents = hasMultipleEvents ? (event.filter(Boolean) as E[]) : [event];
+
+    resolvedEvents.forEach(addEvent);
 
     return () => {
-      hasMultipleEvents ? event.forEach(removeEvent) : removeEvent(event);
+      resolvedEvents.forEach(removeEvent);
     };
   }, [event, handler, options]);
 };

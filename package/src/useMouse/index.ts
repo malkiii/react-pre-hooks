@@ -10,10 +10,8 @@ export const useMouse = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject
   const [isDown, setIsDown] = useState<boolean>();
 
   const handleMouseMove = (event: MouseEvent | TouchEvent) => {
-    const isMouseEvent = 'offsetX' in event;
-
     setPosition(
-      isMouseEvent
+      event instanceof MouseEvent
         ? { x: event.offsetX, y: event.offsetY }
         : { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }
     );
