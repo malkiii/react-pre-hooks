@@ -1,5 +1,6 @@
 import { RefObject, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
+import { getCurrentMousePosition } from '@/src/utils';
 
 export const useMouse = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
   const targetRef = ref || useRef<T>(null);
@@ -10,11 +11,7 @@ export const useMouse = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject
   const [isDown, setIsDown] = useState<boolean>();
 
   const handleMouseMove = (event: MouseEvent | TouchEvent) => {
-    setPosition(
-      event instanceof MouseEvent
-        ? { x: event.offsetX, y: event.offsetY }
-        : { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }
-    );
+    setPosition(getCurrentMousePosition(event));
   };
 
   useEventListener(['mousemove', 'touchmove'], handleMouseMove, options);
