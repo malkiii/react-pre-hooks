@@ -1,4 +1,5 @@
 /** @run "pnpm prebuild" to modify this file */
+export { useAnimatePresence } from './useAnimatePresence';
 export { useArray } from './useArray';
 export { useAsync } from './useAsync';
 export { useClickAway } from './useClickAway';
@@ -7,7 +8,6 @@ export { useClock } from './useClock';
 export { useColorScheme } from './useColorScheme';
 export { useCounter } from './useCounter';
 export { useDebouncedState } from './useDebouncedState';
-export { useEasing } from './useEasing';
 export { useEffectOnce } from './useEffectOnce';
 export { useEventListener } from './useEventListener';
 export { useFavicon } from './useFavicon';
@@ -31,6 +31,7 @@ export { useSize } from './useSize';
 export { useStateHistory } from './useStateHistory';
 export { useStateStatus } from './useStateStatus';
 export { useLocalStorage, useSessionStorage } from './useStorage';
+export { useSwiping } from './useSwiping';
 export { useTimeout } from './useTimeout';
 export { useToggle } from './useToggle';
 export { useUnmount } from './useUnmount';
