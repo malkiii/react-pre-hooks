@@ -75,6 +75,7 @@ export const usePageTab = (pageHead: PageTabProps = {}) => {
     location: tabLocation,
     open: window.open,
     close: window.close,
+    print: window.print,
     reload: window.location.reload,
     duplicate: () => window.open(window.location.href),
     getTitle,
