@@ -26,6 +26,7 @@ export const useSelection = () => {
     text: selection?.toString() || null,
     target: selection?.focusNode?.parentElement || null,
     rect: getSelectionRect(),
+    value: selection,
     isSelecting
   };
 };

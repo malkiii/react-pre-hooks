@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useEventListener } from '@/src';
 
-type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
+export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
 
 const getKeyboardEventList = (record: KeysRecord) => {
   return Object.keys(record).map(key => {

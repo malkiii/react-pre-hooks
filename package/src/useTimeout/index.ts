@@ -1,6 +1,6 @@
 import { DependencyList, useCallback, useEffect, useRef, useState } from 'react';
 
-type TimoutOptions = {
+export type TimoutOptions = {
   timeout: number;
   startOnMount?: boolean;
   deps?: DependencyList;

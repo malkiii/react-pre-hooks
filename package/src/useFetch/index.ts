@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAsync } from '@/src';
 
-type RequestOptions = RequestInit & {
+export type RequestOptions = RequestInit & {
   query?: Record<string, string | number | null | undefined>;
 };
 

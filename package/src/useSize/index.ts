@@ -2,7 +2,7 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 
 export const useSize = <T extends HTMLElement = HTMLDivElement>(
   ref?: RefObject<T>,
-  options?: ResizeObserverOptions
+  options: ResizeObserverOptions = {}
 ) => {
   const targetRef = ref || useRef<T>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });

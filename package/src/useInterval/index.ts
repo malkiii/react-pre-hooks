@@ -1,6 +1,6 @@
 import { DependencyList, useCallback, useEffect, useRef, useState } from 'react';
 
-type IntervalOptions = {
+export type IntervalOptions = {
   timeout: number;
   startOnMount?: boolean;
   deps?: DependencyList;

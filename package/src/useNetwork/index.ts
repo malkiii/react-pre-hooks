@@ -5,7 +5,7 @@ import { useEventListener } from '@/src';
  * Network Information API
  * @see https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
  */
-type NetworkInformation = {
+export type NetworkInformation = {
   type: 'bluetooth' | 'cellular' | 'ethernet' | 'none' | 'wifi' | 'wimax' | 'other' | 'unknown';
   rtt: number;
   downlink: number;
@@ -14,7 +14,7 @@ type NetworkInformation = {
   saveData: boolean;
 };
 
-type NetworkState = Partial<NetworkInformation & { online: boolean }>;
+export type NetworkState = Partial<NetworkInformation & { online: boolean }>;
 
 const nav = navigator as any;
 const connection: NetworkInformation = nav.connection || nav.mozConnection || nav.webkitConnection;

@@ -3,8 +3,8 @@ import { SetStateAction, useCallback, useRef, useState } from 'react';
 export const useStateHistory = <T extends any>(initial: T, limit = 10) => {
   if (limit <= 0) throw new Error(`useStateHistory: Limit must be grater than 0, got ${limit}`);
 
-  const [value, setValue] = useState<typeof initial>(initial);
-  const historyRef = useRef<Array<typeof value>>([value]);
+  const [value, setValue] = useState<T>(initial);
+  const historyRef = useRef<T[]>([value]);
   const pointerRef = useRef<number>(0);
 
   const getPointerValue = () => historyRef.current[pointerRef.current];

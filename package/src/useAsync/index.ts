@@ -5,7 +5,7 @@ export const useAsync = <T extends any>(callback: () => Promise<T>, deps: Depend
   const [error, setError] = useState<unknown>();
   const [data, setData] = useState<T>();
 
-  const callbackFunction = useCallback(async () => {
+  const callbackMemo = useCallback(async () => {
     if (isLoading) return;
     setIsLoading(true);
     setError(undefined);
@@ -20,8 +20,8 @@ export const useAsync = <T extends any>(callback: () => Promise<T>, deps: Depend
   }, [callback, ...deps]);
 
   useEffect(() => {
-    callbackFunction();
-  }, [callbackFunction]);
+    callbackMemo();
+  }, []);
 
-  return { data, isLoading, error, retry: callbackFunction };
+  return { data, isLoading, error, retry: callbackMemo };
 };

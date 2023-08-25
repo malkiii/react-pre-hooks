@@ -1,11 +1,12 @@
 import { SetStateAction, useState } from 'react';
 
-type CounterOptions = {
+export type CounterOptions = Partial<{
   min: number;
   max: number;
   step: number;
-};
-export const useCounter = (value: number = 0, options?: Partial<CounterOptions>) => {
+}>;
+
+export const useCounter = (value: number = 0, options?: CounterOptions) => {
   const initialValue = Math.floor(value);
   const [counter, setCounter] = useState<number>(initialValue);
 

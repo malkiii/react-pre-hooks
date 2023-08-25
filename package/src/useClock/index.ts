@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { addMilliseconds, format, subMilliseconds } from 'date-fns';
 import { useInterval } from '@/src';
 
-type ClockOptions = {
-  format?: string;
-  timeout?: number;
-  startOnMount?: boolean;
-  initial?: string | Date;
-  duration?: number;
-};
+export type ClockOptions = Partial<{
+  format: string;
+  timeout: number;
+  startOnMount: boolean;
+  initial: string | Date;
+  duration: number;
+}>;
 
 export const useClock = (options?: ClockOptions) => {
   const timeout = options?.timeout || 1000;

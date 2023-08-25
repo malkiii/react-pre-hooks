@@ -13,11 +13,11 @@ type TransformProps = Partial<{
   rotate: string;
 }>;
 
-type AnimationProps = TransformProps & {
+export type AnimationProps = TransformProps & {
   transition?: TransitionProps;
 };
 
-type ElementPresenceOptions<T extends HTMLElement> = {
+export type AnimatePresenceOptions<T extends HTMLElement = HTMLElement> = {
   ref?: RefObject<T>;
   initialMount?: boolean;
   animate?: AnimationProps;
@@ -28,7 +28,7 @@ type ElementPresenceOptions<T extends HTMLElement> = {
 };
 
 export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
-  options: ElementPresenceOptions<T>
+  options: AnimatePresenceOptions<T>
 ) => {
   const { initialMount = false, animate, exit, transition, onEnter, onExit } = options;
 

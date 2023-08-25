@@ -1,10 +1,15 @@
-import { useCallback, useRef, useState } from 'react';
-import { WithRef } from '@/src/types';
+import { RefObject, useCallback, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
-type Options<T> = WithRef<Partial<{ horizontal: boolean; offset: number }>, T>;
+export type ScrollEndOptions<T extends HTMLElement> = Partial<{
+  ref: RefObject<T>;
+  offset: number;
+  horizontal: boolean;
+}>;
 
-export const useScrollEnd = <T extends HTMLElement = HTMLDivElement>(options?: Options<T>) => {
+export const useScrollEnd = <T extends HTMLElement = HTMLDivElement>(
+  options?: ScrollEndOptions<T>
+) => {
   const targetRef = options?.ref || useRef<T>(null);
   const [isScrollEnd, setIsScrollEnd] = useState<boolean>(false);
 

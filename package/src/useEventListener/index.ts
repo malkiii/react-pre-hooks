@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 
 type FalsyValue = false | null | undefined;
-type EventMap<T> = T extends Window ? WindowEventMap : HTMLElementEventMap;
+export type EventMap<T> = T extends Window ? WindowEventMap : HTMLElementEventMap;
+export type EventHandler<T, E extends keyof EventMap<T>> = (event: EventMap<T>[E]) => any;
+export type EventListenerOptions<T> = AddEventListenerOptions & { target?: T | null };
 
 export const useEventListener = <
   E extends keyof EventMap<T> & string,
   T extends EventTarget = Window
 >(
   event: E | Array<E | FalsyValue>,
-  handler: (event: EventMap<T>[E]) => any,
-  options?: AddEventListenerOptions & { target?: T | null }
+  handler: EventHandler<T, E>,
+  options?: EventListenerOptions<T>
 ) => {
   useEffect(() => {
     const target = options?.target !== undefined ? options.target : window;

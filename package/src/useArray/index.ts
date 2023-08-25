@@ -1,16 +1,16 @@
 import { SetStateAction, useState } from 'react';
-import { NonEmptyArray } from '../types';
-import { objectEqual } from '../utils';
+import { objectEqual } from '@/src/utils';
+
+type NonEmptyArray<T> = [T, ...T[]];
+
+const toSpliced = <T extends any>(arr: T[], ...args: Parameters<T[]['splice']>) => {
+  const copy = structuredClone(arr);
+  copy.splice(...args);
+  return copy;
+};
 
 export const useArray = <T extends any = any>(initial: T[] = []) => {
   const [array, setArray] = useState<T[]>(initial);
-
-  const toSpliced = (arr: typeof array, ...args: Parameters<typeof array.splice>) => {
-    const copy = structuredClone(arr);
-    copy.splice(...args);
-    return copy;
-  };
-
   return {
     value: array,
     length: array.length,

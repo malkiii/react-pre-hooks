@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useEventListener } from '@/src';
 
-type StorageType = 'localStorage' | 'sessionStorage';
-
 declare global {
   interface WindowEventMap {
     'storage:local': CustomEvent;
     'storage:session': CustomEvent;
   }
 }
+
+export type StorageType = 'localStorage' | 'sessionStorage';
 
 const parseJSON = <T>(value: string | null): T => {
   try {

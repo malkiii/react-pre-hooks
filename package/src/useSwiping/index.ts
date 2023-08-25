@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 import { useEventListener } from '@/src';
 import { getCurrentMousePosition } from '@/src/utils';
 
-interface SwipeAction {
+export interface SwipeAction {
   readonly deltaX: number;
   readonly deltaY: number;
   readonly initialX: number;
@@ -11,9 +11,9 @@ interface SwipeAction {
   readonly event: TouchEvent | MouseEvent;
 }
 
-type SwipActionHandler = (action: SwipeAction) => any;
+export type SwipActionHandler = (action: SwipeAction) => any;
 
-type SwipOptions = {
+export type SwipOptions = {
   mouse?: boolean;
   eventOptions?: AddEventListenerOptions;
 };
