@@ -2,6 +2,7 @@
 export { useAnimatePresence } from './useAnimatePresence';
 export { useArray } from './useArray';
 export { useAsync } from './useAsync';
+export { useAutoComplete } from './useAutoComplete';
 export { useClickAway } from './useClickAway';
 export { useClipboard } from './useClipboard';
 export { useClock } from './useClock';
@@ -39,6 +40,8 @@ export { useUserAgent, useDevice, useBrowser, useOS } from './useUserAgent';
 export { useViewport } from './useViewport';
 
 export type { AnimationProps, AnimatePresenceOptions } from './useAnimatePresence';
+export type { AutoCompleteHandler, AutoCompleteOptions } from './useAutoComplete';
+export type { ClickAwayOptions } from './useClickAway';
 export type { ClockOptions } from './useClock';
 export type { CounterOptions } from './useCounter';
 export type { EventMap, EventHandler, EventListenerOptions } from './useEventListener';
@@ -49,7 +52,7 @@ export type { IntervalOptions } from './useInterval';
 export type { KeysRecord } from './useKeyboard';
 export type { MutationObserverOptions } from './useMutation';
 export type { NetworkInformation, NetworkState } from './useNetwork';
-export type { FaviconAttributes, PageTabProps } from './usePageTab';
+export type { WindowFeatures, FaviconAttributes, PageTabProps } from './usePageTab';
 export type { ScrollEndOptions } from './useScrollEnd';
 export type { StatusHandler } from './useStateStatus';
 export type { StorageType } from './useStorage';
