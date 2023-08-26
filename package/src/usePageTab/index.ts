@@ -1,5 +1,22 @@
-import { LinkHTMLAttributes, useLayoutEffect, useState } from 'react';
+import { HTMLAttributeAnchorTarget, LinkHTMLAttributes, useLayoutEffect, useState } from 'react';
 import { EventHandler, useEventListener } from '@/src';
+
+export type WindowFeatures = Partial<{
+  target: HTMLAttributeAnchorTarget;
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+  noopener: boolean;
+  noreferrer: boolean;
+  menubar: boolean;
+  status: boolean;
+  toolbar: boolean;
+  location: boolean;
+  resizable: boolean;
+  scrollbars: boolean;
+  fullscreen: boolean;
+}>;
 
 type LinkAttributes = LinkHTMLAttributes<HTMLLinkElement>;
 export type FaviconAttributes = {
@@ -29,6 +46,30 @@ const createOrUpdateValueOf = <T extends keyof HTMLElementTagNameMap>(
   if (!element) element = document.createElement(tagName);
   Object.entries(props).forEach(([prop, value]) => element?.setAttribute(prop, value));
   return element;
+};
+
+const windowFeaturesToString = (features?: WindowFeatures) => {
+  if (!features) return undefined;
+
+  const { target: _, noopener, noreferrer, ...restFeatures } = features;
+  const resolvedFeatures = Object.fromEntries(
+    Object.entries(restFeatures)
+      .filter(([_, value]) => typeof value !== undefined)
+      .map(([key, value]) => {
+        switch (typeof value) {
+          case 'number':
+            return [key, value.toString()];
+          case 'boolean':
+            return [key, value ? 'yes' : 'no'];
+          default:
+            return [key, value];
+        }
+      })
+  );
+
+  const featuresString = new URLSearchParams(resolvedFeatures).toString().replace('&', ',');
+
+  return `${featuresString}${noopener && ',noopener'}${noreferrer && ',noreferrer'}`;
 };
 
 const faviconQuerySelector = 'link[rel="icon"], link[rel="shortcut icon"]';
@@ -63,6 +104,14 @@ export const usePageTab = (pageHead: PageTabProps = {}) => {
     setTabLocation(new URL(window.location.href));
   };
 
+  const open = (url: string | URL, features?: WindowFeatures) => {
+    window.open(url, features?.target, windowFeaturesToString(features));
+  };
+
+  const duplicate = () => {
+    window.open(window.location.href, '_blank');
+  };
+
   useLayoutEffect(() => {
     setTabLocation(new URL(window.location.href));
     setTitle(initialData.title ?? getTitle());
@@ -77,11 +126,11 @@ export const usePageTab = (pageHead: PageTabProps = {}) => {
 
   return {
     location: tabLocation,
-    open: window.open,
+    open,
     close: window.close,
     print: window.print,
     reload: window.location.reload,
-    duplicate: () => window.open(window.location.href),
+    duplicate,
     getTitle,
     setTitle,
     getFavicon,
