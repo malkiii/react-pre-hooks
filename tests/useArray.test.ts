@@ -5,7 +5,7 @@ import { useArray } from '@/src';
 describe('useArray', () => {
   it('should be [] by default', () => {
     const { result } = renderHook(() => useArray());
-    expect(result.current.value).toEqual([]);
+    expect(result.current.values).toEqual([]);
   });
 
   it('should get and set a value', () => {
@@ -27,60 +27,67 @@ describe('useArray', () => {
     const { result } = renderHook(() => useArray());
 
     act(() => result.current.push(0, 1, 2));
-    expect(result.current.value).toEqual([0, 1, 2]);
+    expect(result.current.values).toEqual([0, 1, 2]);
 
     act(() => result.current.pop());
-    expect(result.current.value).toEqual([0, 1]);
+    expect(result.current.values).toEqual([0, 1]);
     act(() => result.current.pop(0));
-    expect(result.current.value).toEqual([1]);
+    expect(result.current.values).toEqual([1]);
   });
 
   it('should insert and remove values', () => {
     const { result } = renderHook(() => useArray([1, 2, 3]));
 
     act(() => result.current.insert(0, -1, 0));
-    expect(result.current.value).toEqual([-1, 0, 1, 2, 3]);
+    expect(result.current.values).toEqual([-1, 0, 1, 2, 3]);
     act(() => result.current.insert(5, 4, 5));
-    expect(result.current.value).toEqual([-1, 0, 1, 2, 3, 4, 5]);
+    expect(result.current.values).toEqual([-1, 0, 1, 2, 3, 4, 5]);
 
     act(() => result.current.remove(-1, 0));
     expect(result.current.has(0)).toBeFalsy();
-    expect(result.current.value).toEqual([1, 2, 3, 4, 5]);
+    expect(result.current.values).toEqual([1, 2, 3, 4, 5]);
   });
 
   it('should shift and unshift', () => {
     const { result } = renderHook(() => useArray([3]));
 
     act(() => result.current.unshift(1, 2));
-    expect(result.current.value).toEqual([1, 2, 3]);
+    expect(result.current.values).toEqual([1, 2, 3]);
 
     act(() => result.current.shift());
-    expect(result.current.value).toEqual([2, 3]);
+    expect(result.current.values).toEqual([2, 3]);
     act(() => result.current.shift());
-    expect(result.current.value).toEqual([3]);
+    expect(result.current.values).toEqual([3]);
   });
 
   it('should concat and merge', () => {
     const { result } = renderHook(() => useArray([0]));
 
     act(() => result.current.concat(1, [2, 3]));
-    expect(result.current.value).toEqual([0, 1, 2, 3]);
+    expect(result.current.values).toEqual([0, 1, 2, 3]);
 
     act(() => result.current.merge([3, 4], 5));
-    expect(result.current.value).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(result.current.values).toEqual([0, 1, 2, 3, 4, 5]);
   });
 
   it('should apply a callback on all the elements', () => {
     const { result } = renderHook(() => useArray([-2, -1, 0, 1, 2]));
 
     act(() => result.current.apply(value => value * 2));
-    expect(result.current.value).toEqual([-4, -2, 0, 2, 4]);
+    expect(result.current.values).toEqual([-4, -2, 0, 2, 4]);
+
+    act(() =>
+      result.current.apply(value => {
+        if (value > 0) return value;
+      })
+    );
+    expect(result.current.values).toEqual([2, 4]);
   });
 
   it('should concat and merge', () => {
     const { result } = renderHook(() => useArray([1, 2, 3]));
 
     act(() => result.current.reset(_ => [0]));
-    expect(result.current.value).toEqual([0]);
+    expect(result.current.values).toEqual([0]);
   });
 });

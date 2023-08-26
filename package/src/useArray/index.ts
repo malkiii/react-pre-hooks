@@ -2,6 +2,7 @@ import { SetStateAction, useState } from 'react';
 import { objectEqual } from '@/src/utils';
 
 type NonEmptyArray<T> = [T, ...T[]];
+type MapParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
 
 const toSpliced = <T extends any>(arr: T[], ...args: Parameters<T[]['splice']>) => {
   const copy = structuredClone(arr);
@@ -12,7 +13,7 @@ const toSpliced = <T extends any>(arr: T[], ...args: Parameters<T[]['splice']>) 
 export const useArray = <T extends any = any>(initial: T[] = []) => {
   const [array, setArray] = useState<T[]>(initial);
   return {
-    value: array,
+    values: array,
     length: array.length,
     at(index: number) {
       return array.at(index);
@@ -54,8 +55,8 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
     merge(...elements: Array<T | ConcatArray<T>>) {
       setArray(arr => [...new Set(arr.concat(...elements))]);
     },
-    apply(callback: Parameters<typeof array.map<T>>[0]) {
-      setArray(arr => arr.map(callback));
+    apply(callback: (...args: MapParameters<T>) => T | void) {
+      setArray(arr => arr.map(callback).filter(value => value !== undefined) as T[]);
     },
     copy() {
       return structuredClone(array);
