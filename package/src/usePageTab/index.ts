@@ -69,7 +69,11 @@ export const usePageTab = (pageHead: PageTabProps = {}) => {
     setFavicon(initialData.favicon ?? getFavicon());
   }, []);
 
-  if (beforeClose) useEventListener('beforeunload', beforeClose);
+  if (beforeClose)
+    useEventListener('beforeunload', event => {
+      event.preventDefault();
+      return beforeClose(event);
+    });
 
   return {
     location: tabLocation,

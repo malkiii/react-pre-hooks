@@ -6,14 +6,14 @@ export type CounterOptions = Partial<{
   step: number;
 }>;
 
-export const useCounter = (value: number = 0, options?: CounterOptions) => {
+export const useCounter = (value: number = 0, options: CounterOptions = {}) => {
   const initialValue = Math.floor(value);
   const [counter, setCounter] = useState<number>(initialValue);
 
-  const [min, max] = [options?.min, options?.max];
+  const [min, max] = [options.min, options.max];
   const counterMin = Math.min(counter, Math.floor(min != undefined ? min : -Infinity));
   const counterMax = Math.max(counter, Math.floor(max != undefined ? max : Infinity));
-  const step = Math.abs(Math.floor(options?.step || 1));
+  const step = Math.abs(Math.floor(options.step || 1));
 
   return {
     value: counter,

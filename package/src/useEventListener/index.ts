@@ -11,10 +11,10 @@ export const useEventListener = <
 >(
   event: E | Array<E | FalsyValue>,
   handler: EventHandler<T, E>,
-  options?: EventListenerOptions<T>
+  options: EventListenerOptions<T> = {}
 ) => {
   useEffect(() => {
-    const target = options?.target !== undefined ? options.target : window;
+    const target = options.target ?? window;
     if (!target) return;
 
     const addEvent = (e: string) => target.addEventListener(e, handler as any, options);

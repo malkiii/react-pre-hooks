@@ -1,11 +1,15 @@
 import { RefObject, useCallback, useRef } from 'react';
 import { useEventListener } from '@/src';
 
+export type ClickAwayOptions<T extends HTMLElement> = {
+  ref?: RefObject<T>;
+};
+
 export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
   handler: (event: MouseEvent) => any,
-  ref?: RefObject<T>
+  options: ClickAwayOptions<T> = {}
 ) => {
-  const targetRef = ref || useRef<T>(null);
+  const targetRef = options.ref || useRef<T>(null);
   const callback = useCallback(
     (event: MouseEvent) => {
       const element = targetRef.current;

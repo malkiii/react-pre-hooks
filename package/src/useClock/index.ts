@@ -10,17 +10,18 @@ export type ClockOptions = Partial<{
   duration: number;
 }>;
 
-export const useClock = (options?: ClockOptions) => {
-  const timeout = options?.timeout || 1000;
-  const startOnMount = options?.startOnMount ?? true;
-  const clockFormat = options?.format || 'HH:mm:ss a';
+export const useClock = (options: ClockOptions = {}) => {
+  const timeout = options.timeout ?? 1000;
+  const startOnMount = options.startOnMount ?? true;
+  const clockFormat = options.format ?? 'HH:mm:ss a';
 
-  const initialDate = new Date(options?.initial || new Date());
+  const hasInitialDate = !!options.initial;
+  const initialDate = new Date(options.initial || new Date());
   const [datetime, setDatetime] = useState<Date>(initialDate);
 
   const timer = useInterval(
     () => {
-      if (!options?.initial) return setDatetime(new Date());
+      if (!hasInitialDate) return setDatetime(new Date());
       const duration = options.duration ?? Infinity;
 
       setDatetime(date => {
@@ -43,7 +44,7 @@ export const useClock = (options?: ClockOptions) => {
   const value = format(datetime, clockFormat);
 
   const reset = () => {
-    if (!options?.initial) return;
+    if (!hasInitialDate) return;
     timer.stop();
     setDatetime(initialDate);
   };

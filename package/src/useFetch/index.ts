@@ -5,11 +5,11 @@ export type RequestOptions = RequestInit & {
   query?: Record<string, string | number | null | undefined>;
 };
 
-export const useFetch = <T extends any>(url: string, options?: RequestOptions) => {
+export const useFetch = <T extends any>(url: string, options: RequestOptions = {}) => {
   const [response, setResponse] = useState<Response>();
   const fetchURL = new URL(url);
 
-  if (options?.query) {
+  if (options.query) {
     const query = Object.fromEntries(
       Object.entries(options.query)
         // remove "null" and "undefined" values

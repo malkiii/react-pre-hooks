@@ -13,7 +13,7 @@ export type GeoLocationSensorState = {
   error?: Error | GeolocationPositionError;
 };
 
-export const useGeolocation = (options?: PositionOptions): GeoLocationSensorState => {
+export const useGeolocation = (options: PositionOptions = {}): GeoLocationSensorState => {
   const [state, setState] = useState<GeoLocationSensorState>({
     loading: true,
     accuracy: null,

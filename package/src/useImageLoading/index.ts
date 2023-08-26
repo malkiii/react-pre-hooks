@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useIsomorphicEffect } from '@/src';
 
-export const useImageLoading = (imageSrc: string, handler: (event: Event) => any) => {
+export const useImageLoading = (imageSrc: string, handler?: (event: Event) => any) => {
   const imageRef = useRef<HTMLImageElement>(new Image());
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -10,7 +10,7 @@ export const useImageLoading = (imageSrc: string, handler: (event: Event) => any
 
     const handleLoad = (event: Event) => {
       setIsLoading(false);
-      handler(event);
+      if (handler) handler(event);
     };
 
     imageRef.current.addEventListener('load', handleLoad);

@@ -18,7 +18,7 @@ export type SwipOptions = {
   eventOptions?: AddEventListenerOptions;
 };
 
-export const useSwiping = (handler: SwipActionHandler, options?: SwipOptions) => {
+export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}) => {
   const delta = useRef<{ x: number; y: number }>();
   const initialPosition = useRef<typeof delta.current>();
 
@@ -74,8 +74,8 @@ export const useSwiping = (handler: SwipActionHandler, options?: SwipOptions) =>
     [handler]
   );
 
-  const mouse = !!options?.mouse;
-  const eventOptions = options?.eventOptions;
+  const mouse = !!options.mouse;
+  const eventOptions = options.eventOptions;
 
   useEventListener(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);
   useEventListener(['touchend', mouse && 'mouseup', 'touchcancel'], handleTouchEnd, eventOptions);
