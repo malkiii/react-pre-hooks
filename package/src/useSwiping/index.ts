@@ -8,6 +8,7 @@ export interface SwipeAction {
   readonly initialX: number;
   readonly initialY: number;
   readonly direction?: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
+  readonly isEnded: boolean;
   readonly event: TouchEvent | MouseEvent;
 }
 
@@ -19,34 +20,43 @@ export type SwipOptions = {
 };
 
 export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}) => {
-  const delta = useRef<{ x: number; y: number }>();
+  const delta = useRef({ x: 0, y: 0 });
   const initialPosition = useRef<typeof delta.current>();
+
+  const getSwipDirection = (): SwipeAction['direction'] => {
+    const { x: deltaX, y: deltaY } = delta.current;
+    return Math.abs(deltaX) >= Math.abs(deltaY)
+      ? deltaX > 0
+        ? 'LEFT'
+        : 'RIGHT'
+      : deltaY > 0
+      ? 'UP'
+      : 'DOWN';
+  };
 
   const handleTouchStart = useCallback(
     (event: SwipeAction['event']) => {
       initialPosition.current = getCurrentMousePosition(event);
-
       const { x: initialX, y: initialY } = initialPosition.current;
-      handler({ deltaX: 0, deltaY: 0, initialX, initialY, event });
+
+      handler({ deltaX: 0, deltaY: 0, initialX, initialY, isEnded: false, event });
     },
     [handler]
   );
 
   const handleTouchEnd = useCallback(
     (event: SwipeAction['event']) => {
-      const { x: deltaX, y: deltaY } = delta.current!;
-      const { x: initialX, y: initialY } = initialPosition.current!;
+      if (!initialPosition.current) return;
 
-      const direction: SwipeAction['direction'] =
-        Math.abs(deltaX) >= Math.abs(deltaY)
-          ? deltaX > 0
-            ? 'LEFT'
-            : 'RIGHT'
-          : deltaY > 0
-          ? 'UP'
-          : 'DOWN';
-
-      handler({ deltaX, deltaY, initialX, initialY, direction, event });
+      handler({
+        deltaX: delta.current.x,
+        deltaY: delta.current.y,
+        initialX: initialPosition.current.x,
+        initialY: initialPosition.current.y,
+        direction: getSwipDirection(),
+        isEnded: true,
+        event
+      });
 
       initialPosition.current = undefined;
     },
@@ -68,16 +78,21 @@ export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}
         deltaY: delta.current.y,
         initialX: initialPosition.current.x,
         initialY: initialPosition.current.y,
+        direction: getSwipDirection(),
+        isEnded: false,
         event
       });
     },
     [handler]
   );
 
-  const mouse = !!options.mouse;
-  const eventOptions = options.eventOptions;
+  const { mouse = false, eventOptions } = options;
 
-  useEventListener(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);
-  useEventListener(['touchend', mouse && 'mouseup', 'touchcancel'], handleTouchEnd, eventOptions);
   useEventListener(['touchmove', mouse && 'mousemove'], handleTouchMove, eventOptions);
+  useEventListener(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);
+  useEventListener(
+    ['touchend', 'touchcancel', mouse && 'mouseup', mouse && 'mouseleave'],
+    handleTouchEnd,
+    eventOptions
+  );
 };

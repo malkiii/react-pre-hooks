@@ -17,18 +17,18 @@ export type AnimationProps = TransformProps & {
   transition?: TransitionProps;
 };
 
-export type AnimatePresenceOptions<T extends HTMLElement = HTMLElement> = {
-  ref?: RefObject<T>;
-  initialMount?: boolean;
-  animate?: AnimationProps;
-  exit?: AnimationProps;
-  onEnter?: (element: T) => any;
-  onExit?: (element: T) => any;
-  transition?: TransitionProps;
-};
+export type AnimatePresenceOptions<T extends HTMLElement = HTMLElement> = Partial<{
+  ref: RefObject<T>;
+  initialMount: boolean;
+  animate: AnimationProps;
+  exit: AnimationProps;
+  onEnter: (element: T) => any;
+  onExit: (element: T) => any;
+  transition: TransitionProps;
+}>;
 
 export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
-  options: AnimatePresenceOptions<T>
+  options: AnimatePresenceOptions<T> = {}
 ) => {
   const { initialMount = false, animate, exit, transition, onEnter, onExit } = options;
 
@@ -38,42 +38,54 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
   const [isMounted, setIsMounted] = useState<boolean>(initialMount);
 
   const getEase = (props?: TransitionProps) => props?.ease ?? transition?.ease ?? 'ease';
-  const getDuration = (props?: TransitionProps) => props?.duration ?? transition?.duration ?? 500;
+  const getDuration = (props?: TransitionProps) => props?.duration ?? transition?.duration ?? 300;
   const getDelay = (props?: TransitionProps) => props?.delay ?? transition?.delay ?? 0;
 
-  const setProperties = (animation?: AnimationProps) => {
-    if (!animation) return;
-    const { transition: _, ...props } = animation;
-    Object.entries(props).forEach(pv => ref.current!.style.setProperty(...pv));
-  };
+  const setProperties = useCallback(
+    (animation?: AnimationProps) => {
+      if (!animation) return;
+      const { transition: _, ...props } = animation;
+      Object.entries(props).forEach(pv => ref.current!.style.setProperty(...pv));
+    },
+    [ref.current]
+  );
 
-  const removeProperties = (animation?: AnimationProps) => {
-    if (!animation) return;
-    const { transition: _, ...props } = animation || {};
-    Object.entries(props).forEach(([p, _]) => ref.current!.style.removeProperty(p));
-  };
+  const removeProperties = useCallback(
+    (animation?: AnimationProps) => {
+      if (!animation) return;
+      const { transition: _, ...props } = animation || {};
+      Object.entries(props).forEach(([p, _]) => ref.current!.style.removeProperty(p));
+    },
+    [ref.current]
+  );
 
-  const setTransition = (animation?: AnimationProps) => {
-    const { transition: _, ...props } = animation || {};
+  const setTransition = useCallback(
+    (animation?: AnimationProps) => {
+      const { transition: _, ...props } = animation || {};
 
-    const transitionProperty = Object.keys(props)
-      .filter(prop => !!props[prop as keyof typeof props])
-      .join(',');
+      const transitionProperty = Object.keys(props)
+        .filter(prop => !!props[prop as keyof typeof props])
+        .join(',');
 
-    ref.current!.style.transitionProperty = transitionProperty;
-    ref.current!.style.transitionDuration = getDuration(animation?.transition) + 'ms';
-    ref.current!.style.transitionTimingFunction = getEase(animation?.transition);
-  };
+      ref.current!.style.transitionProperty = transitionProperty;
+      ref.current!.style.transitionDuration = getDuration(animation?.transition) + 'ms';
+      ref.current!.style.transitionTimingFunction = getEase(animation?.transition);
+    },
+    [ref.current]
+  );
 
-  const renderAnimationBetween = (initial?: AnimationProps, animation?: AnimationProps) => {
-    setTimeout(() => {
-      setTransition(animation ?? initial);
-      animation ? setProperties(animation) : removeProperties(initial);
-    }, 0);
-  };
+  const renderAnimationBetween = useCallback(
+    (initial?: AnimationProps, animation?: AnimationProps) => {
+      setTimeout(() => {
+        setTransition(animation ?? initial);
+        animation ? setProperties(animation) : removeProperties(initial);
+      }, 0);
+    },
+    [setTransition, setProperties, removeProperties]
+  );
 
   // mounting animation
-  const mount = useCallback(() => {
+  const mount = () => {
     isToggled.current = true;
     if (durationTimeout.current) clearTimeout(durationTimeout.current);
     else if (isMounted) return;
@@ -92,10 +104,10 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
         }, getDuration(resolvedTransition));
       }, 0);
     }, getDelay(resolvedTransition));
-  }, [onEnter]);
+  };
 
   // unmounting animation
-  const unmount = useCallback(() => {
+  const unmount = () => {
     isToggled.current = false;
     if (durationTimeout.current) clearTimeout(durationTimeout.current);
     else if (!isMounted) return;
@@ -110,7 +122,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
         if (onExit) onExit(ref.current!);
       }, getDuration(resolvedTransition));
     }, getDelay(resolvedTransition));
-  }, [onExit]);
+  };
 
   const toggle = useCallback(
     (value?: SetStateAction<boolean>) => {
@@ -119,7 +131,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
 
       shouldToggle ? mount() : unmount();
     },
-    [mount, unmount, isToggled.current]
+    [isToggled.current, mount, unmount]
   );
 
   return { ref, isMounted, toggle };
