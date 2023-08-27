@@ -19,7 +19,6 @@ export { useInterval } from './useInterval';
 export { useIsomorphicEffect } from './useIsomorphicEffect';
 export { useKeyboard } from './useKeyboard';
 export { useMap } from './useMap';
-export { useMount } from './useMount';
 export { useMouse } from './useMouse';
 export { useMutationObserver } from './useMutation';
 export { useNetwork } from './useNetwork';
