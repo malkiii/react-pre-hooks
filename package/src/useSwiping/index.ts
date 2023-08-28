@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { useEventListener } from '@/src';
+import { EventListenerOptions, useEventListener } from '@/src';
 import { getCurrentMousePosition } from '@/src/utils';
 
 export interface SwipeAction {
@@ -16,7 +16,7 @@ export type SwipActionHandler = (action: SwipeAction) => any;
 
 export type SwipOptions = {
   mouse?: boolean;
-  eventOptions?: AddEventListenerOptions;
+  eventOptions?: EventListenerOptions<HTMLElement>;
 };
 
 export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}) => {
