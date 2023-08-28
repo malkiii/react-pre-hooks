@@ -14,9 +14,8 @@ export interface SwipeAction {
 
 export type SwipActionHandler = (action: SwipeAction) => any;
 
-export type SwipOptions = {
+export type SwipOptions = EventListenerOptions<HTMLElement> & {
   mouse?: boolean;
-  eventOptions?: EventListenerOptions<HTMLElement>;
 };
 
 export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}) => {
@@ -86,7 +85,7 @@ export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}
     [handler]
   );
 
-  const { mouse = false, eventOptions } = options;
+  const { mouse = false, ...eventOptions } = options;
 
   useEventListener(['touchmove', mouse && 'mousemove'], handleTouchMove, eventOptions);
   useEventListener(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);
