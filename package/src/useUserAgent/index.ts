@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { IResult, UAParser } from 'ua-parser-js';
-import { useIsomorphicEffect } from '@/src';
 
 export type UserAgentResult = IResult;
 
 export const useUserAgent = () => {
   const [userAgent, setUserAgent] = useState<UserAgentResult>();
 
-  useIsomorphicEffect(() => {
+  useLayoutEffect(() => {
     setUserAgent(new UAParser().getResult());
   }, []);
 
@@ -17,7 +16,7 @@ export const useUserAgent = () => {
 export const useDevice = () => {
   const [device, setDevice] = useState<UserAgentResult['device']>();
 
-  useIsomorphicEffect(() => {
+  useLayoutEffect(() => {
     setDevice(new UAParser().getDevice());
   }, []);
 
@@ -27,7 +26,7 @@ export const useDevice = () => {
 export const useBrowser = () => {
   const [browser, setBrowser] = useState<UserAgentResult['browser']>();
 
-  useIsomorphicEffect(() => {
+  useLayoutEffect(() => {
     setBrowser(new UAParser().getBrowser());
   }, []);
 
@@ -37,7 +36,7 @@ export const useBrowser = () => {
 export const useOS = () => {
   const [os, setOS] = useState<UserAgentResult['os']>();
 
-  useIsomorphicEffect(() => {
+  useLayoutEffect(() => {
     setOS(new UAParser().getOS());
   }, []);
 

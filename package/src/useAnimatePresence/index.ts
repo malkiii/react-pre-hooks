@@ -1,12 +1,12 @@
 import { CSSProperties, RefObject, SetStateAction, useCallback, useRef, useState } from 'react';
 
-type TransitionProps = Partial<{
+export type TransitionProps = Partial<{
   ease: CSSProperties['transitionTimingFunction'];
   duration: number;
   delay: number;
 }>;
 
-type TransformProps = Partial<{
+export type TransformProps = Partial<{
   opacity: string;
   translate: string;
   scale: string;
@@ -41,38 +41,27 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
   const getDuration = (props?: TransitionProps) => props?.duration ?? transition?.duration ?? 300;
   const getDelay = (props?: TransitionProps) => props?.delay ?? transition?.delay ?? 0;
 
-  const setProperties = useCallback(
-    (animation?: AnimationProps) => {
-      if (!animation) return;
-      const { transition: _, ...props } = animation;
-      Object.entries(props).forEach(pv => ref.current!.style.setProperty(...pv));
-    },
-    [ref.current]
-  );
+  const setProperties = useCallback((animation: AnimationProps = {}) => {
+    const { transition: _, ...props } = animation;
+    Object.entries(props).forEach(pv => ref.current!.style.setProperty(...pv));
+  }, []);
 
-  const removeProperties = useCallback(
-    (animation?: AnimationProps) => {
-      if (!animation) return;
-      const { transition: _, ...props } = animation || {};
-      Object.entries(props).forEach(([p, _]) => ref.current!.style.removeProperty(p));
-    },
-    [ref.current]
-  );
+  const removeProperties = useCallback((animation: AnimationProps = {}) => {
+    const { transition: _, ...props } = animation;
+    Object.entries(props).forEach(([p, _]) => ref.current!.style.removeProperty(p));
+  }, []);
 
-  const setTransition = useCallback(
-    (animation?: AnimationProps) => {
-      const { transition: _, ...props } = animation || {};
+  const setTransition = useCallback((animation: AnimationProps = {}) => {
+    const { transition: _, ...props } = animation;
 
-      const transitionProperty = Object.keys(props)
-        .filter(prop => !!props[prop as keyof typeof props])
-        .join(',');
+    const transitionProperty = Object.keys(props)
+      .filter(prop => !!props[prop as keyof typeof props])
+      .join(',');
 
-      ref.current!.style.transitionProperty = transitionProperty;
-      ref.current!.style.transitionDuration = getDuration(animation?.transition) + 'ms';
-      ref.current!.style.transitionTimingFunction = getEase(animation?.transition);
-    },
-    [ref.current]
-  );
+    ref.current!.style.transitionProperty = transitionProperty;
+    ref.current!.style.transitionDuration = getDuration(animation?.transition) + 'ms';
+    ref.current!.style.transitionTimingFunction = getEase(animation?.transition);
+  }, []);
 
   const renderAnimationBetween = useCallback(
     (initial?: AnimationProps, animation?: AnimationProps) => {
@@ -85,7 +74,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
   );
 
   // mounting animation
-  const mount = () => {
+  const mount = useCallback(() => {
     isToggled.current = true;
     if (durationTimeout.current) clearTimeout(durationTimeout.current);
     else if (isMounted) return;
@@ -104,10 +93,10 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
         }, getDuration(resolvedTransition));
       }, 0);
     }, getDelay(resolvedTransition));
-  };
+  }, [renderAnimationBetween]);
 
   // unmounting animation
-  const unmount = () => {
+  const unmount = useCallback(() => {
     isToggled.current = false;
     if (durationTimeout.current) clearTimeout(durationTimeout.current);
     else if (!isMounted) return;
@@ -122,7 +111,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
         if (onExit) onExit(ref.current!);
       }, getDuration(resolvedTransition));
     }, getDelay(resolvedTransition));
-  };
+  }, [renderAnimationBetween]);
 
   const toggle = useCallback(
     (value?: SetStateAction<boolean>) => {
@@ -131,7 +120,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
 
       shouldToggle ? mount() : unmount();
     },
-    [isToggled.current, mount, unmount]
+    [mount, unmount]
   );
 
   return { ref, isMounted, toggle };

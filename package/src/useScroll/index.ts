@@ -1,4 +1,4 @@
-import { RefObject, useRef, useState } from 'react';
+import { RefObject, useCallback, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
 export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
@@ -17,7 +17,7 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
   const [scrollPosition, setScrollPosition] = useState(initialValues);
   const prevPosition = useRef<typeof scrollPosition>(initialValues);
 
-  const handleScrolling = () => {
+  const handleScrolling = useCallback(() => {
     const scrollX = targetRef.current?.scrollLeft || window.scrollX;
     const scrollY = targetRef.current?.scrollTop || window.scrollY;
 
@@ -39,7 +39,7 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
 
     prevPosition.current = scrollPosition;
     setScrollPosition({ scrollX, scrollY, scrollProgressX, scrollProgressY });
-  };
+  }, [scrollPosition]);
 
   useEventListener('scroll', handleScrolling, options);
 
