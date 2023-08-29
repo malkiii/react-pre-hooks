@@ -10,7 +10,7 @@ export const useClipboard = ({ timeout = 3000 } = {}) => {
       navigator.clipboard
         .writeText(text || '')
         .then(() => statusTimer.start())
-        .catch(error => setError(error));
+        .catch(setError);
     },
     [statusTimer]
   );
