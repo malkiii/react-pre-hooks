@@ -2,19 +2,23 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
 type FileReaderName = 'readAsArrayBuffer' | 'readAsBinaryString' | 'readAsDataURL' | 'readAsText';
-type FileData<T> = T extends undefined ? File : T extends 'array-buffer' ? ArrayBuffer : string;
+type FileData<T extends FileDataType | undefined> = T extends undefined
+  ? File
+  : T extends 'array-buffer'
+  ? ArrayBuffer
+  : string;
 
-export type DropperFile<T extends FileDataType> = {
+export type FileDataType = 'array-buffer' | 'binary-string' | 'url' | 'text';
+export type FileDropperError = { type?: 'extention' | 'size' | (string & {}); message: string };
+
+export type DropperFile<T extends FileDataType | undefined> = {
   name: string;
   size: number;
   extension?: string;
   data: FileData<T> | null;
 };
 
-export type FileDataType = 'array-buffer' | 'binary-string' | 'url' | 'text' | undefined;
-export type FileDropperError = { type?: 'extention' | 'size' | (string & {}); message: string };
-
-export type FileDropperOptions<T extends FileDataType> = Partial<{
+export type FileDropperOptions<T extends FileDataType | undefined> = Partial<{
   multiple: boolean;
   extensions: string[];
   minSize: number;
@@ -23,7 +27,7 @@ export type FileDropperOptions<T extends FileDataType> = Partial<{
   onUpload: (files: File[]) => any;
 }>;
 
-const readerMethods: Record<NonNullable<FileDataType>, FileReaderName> = {
+const readerMethods: Record<NonNullable<FileDataType | undefined>, FileReaderName> = {
   'array-buffer': 'readAsArrayBuffer',
   'binary-string': 'readAsBinaryString',
   'url': 'readAsDataURL',
@@ -35,7 +39,7 @@ const getFileInputElement = (label: HTMLLabelElement): HTMLInputElement | null =
   return label.querySelector('input[type="file"]') as any;
 };
 
-export const useFileDropper = <T extends FileDataType = undefined>(
+export const useFileDropper = <T extends FileDataType | undefined = undefined>(
   options: FileDropperOptions<T> = {}
 ) => {
   const { multiple = false, readAs, onUpload } = options;
@@ -129,6 +133,9 @@ export const useFileDropper = <T extends FileDataType = undefined>(
   useEffect(() => {
     if (!dropperRef.current) return;
 
+    const fileInput = getFileInputElement(dropperRef.current);
+    if (!fileInput) return;
+
     const handleInputChange = async () => {
       setError(undefined);
       await getDropperFiles(fileInput?.files);
@@ -136,8 +143,6 @@ export const useFileDropper = <T extends FileDataType = undefined>(
       fileInput!.value = '';
     };
 
-    const fileInput = getFileInputElement(dropperRef.current);
-    if (!fileInput) return;
     fileInput.multiple = !!options.multiple;
     fileInput.addEventListener('change', handleInputChange);
 
