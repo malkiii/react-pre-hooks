@@ -23,7 +23,7 @@ describe('useMouse', () => {
 
   it('should update isDown when mouse is pressed or released', () => {
     const { result } = renderHook(() => useMouse());
-    const { targetRef } = result.current;
+    const { ref: targetRef } = result.current;
 
     render(<div ref={targetRef}>Container</div>);
 
