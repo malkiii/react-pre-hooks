@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useEventListener } from '@/src';
+import { EventListenerOptions, useEventListener } from '@/src';
 
 export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
 
@@ -27,7 +27,10 @@ const isPressed = (keyModifier: string, event: KeyboardEvent): boolean => {
   });
 };
 
-export const useKeyboard = <T extends EventTarget>(keysRecord: KeysRecord, element?: T | null) => {
+export const useKeyboard = <T extends EventTarget>(
+  keysRecord: KeysRecord = {},
+  options: EventListenerOptions<T> = {}
+) => {
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
       const keyboardEventList = getKeyboardEventList(keysRecord);
@@ -40,5 +43,5 @@ export const useKeyboard = <T extends EventTarget>(keysRecord: KeysRecord, eleme
     [keysRecord]
   );
 
-  useEventListener('keydown', handleKeydown, { target: element });
+  useEventListener('keydown', handleKeydown, options);
 };

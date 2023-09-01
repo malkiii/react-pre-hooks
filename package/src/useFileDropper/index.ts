@@ -44,7 +44,7 @@ export const useFileDropper = <T extends FileDataType | undefined = undefined>(
 ) => {
   const { multiple = false, readAs, onUpload } = options;
 
-  const dropperRef = useRef<HTMLLabelElement>(null);
+  const ref = useRef<HTMLLabelElement>(null);
   const [files, setFiles] = useState<DropperFile<T>[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -131,9 +131,9 @@ export const useFileDropper = <T extends FileDataType | undefined = undefined>(
   );
 
   useEffect(() => {
-    if (!dropperRef.current) return;
+    if (!ref.current) return;
 
-    const fileInput = getFileInputElement(dropperRef.current);
+    const fileInput = getFileInputElement(ref.current);
     if (!fileInput) return;
 
     const handleInputChange = async () => {
@@ -149,9 +149,9 @@ export const useFileDropper = <T extends FileDataType | undefined = undefined>(
     return () => {
       fileInput?.removeEventListener('change', handleInputChange);
     };
-  }, [options]);
+  }, [ref, options]);
 
-  const eventOptions = { target: dropperRef.current };
+  const eventOptions = { target: ref.current };
 
   const handleFileDrop = async (event: DragEvent) => {
     event.preventDefault();
@@ -170,5 +170,5 @@ export const useFileDropper = <T extends FileDataType | undefined = undefined>(
   useEventListener('dragover', handleDragOver, eventOptions);
   useEventListener('dragleave', handleDragLeave, eventOptions);
 
-  return { dropperRef, files, isDragging, isLoading, error, setError };
+  return { ref, files, isDragging, isLoading, error, setError };
 };

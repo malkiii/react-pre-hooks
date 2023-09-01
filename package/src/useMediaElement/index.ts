@@ -34,33 +34,38 @@ const useMediaElement = <T extends MediaElementType | undefined = undefined>(
     speed: 1
   });
 
-  const controls = useMemo(
-    () => ({
+  const controls = useMemo(() => {
+    const mediaElement = ref.current;
+    return {
       toggle(play?: boolean) {
-        if (!ref.current) return;
-        play ?? !state.isPlaying ? ref.current.play() : ref.current.pause();
+        if (!mediaElement) return;
+        play ?? !state.isPlaying ? mediaElement.play() : mediaElement.pause();
+      },
+      mute(force: boolean = true) {
+        if (!mediaElement) return;
+        mediaElement.muted = force;
+        setState(state => ({ ...state, isMuted: force }));
       },
       setTime(time: SetStateAction<number>) {
-        if (!ref.current) return;
-        const resolvedTime = time instanceof Function ? time(ref.current.currentTime) : time;
-        ref.current.currentTime = resolvedTime;
+        if (!mediaElement) return;
+        const resolvedTime = time instanceof Function ? time(mediaElement.currentTime) : time;
+        mediaElement.currentTime = resolvedTime;
       },
       setVolume(vol: SetStateAction<number>) {
-        if (!ref.current) return;
-        const resolvedVolume = vol instanceof Function ? vol(ref.current.volume) : vol;
-        ref.current.volume = resolvedVolume;
+        if (!mediaElement) return;
+        const resolvedVolume = vol instanceof Function ? vol(mediaElement.volume) : vol;
+        mediaElement.volume = resolvedVolume;
       },
       setSpeed(speed: SetStateAction<number>) {
-        if (!ref.current) return;
-        const resolvedSpeed = speed instanceof Function ? speed(ref.current.playbackRate) : speed;
-        ref.current.playbackRate = resolvedSpeed;
+        if (!mediaElement) return;
+        const resolvedSpeed = speed instanceof Function ? speed(mediaElement.playbackRate) : speed;
+        mediaElement.playbackRate = resolvedSpeed;
       },
       seekBy(time: number) {
         this.setTime(curr => curr + time);
       }
-    }),
-    []
-  );
+    };
+  }, [ref, state]);
 
   useLayoutEffect(() => {
     const element = ref.current;
@@ -89,11 +94,9 @@ const useMediaElement = <T extends MediaElementType | undefined = undefined>(
 };
 
 export const useVideo = (initialState?: MediaElementInit) => {
-  const { ref, state, controls } = useMediaElement<'video'>(initialState);
-  return { videoRef: ref, videoState: state, videoControls: controls };
+  return useMediaElement<'video'>(initialState);
 };
 
 export const useAudio = (initialState?: MediaElementInit) => {
-  const { ref, state, controls } = useMediaElement<'audio'>(initialState);
-  return { audioRef: ref, audioState: state, audioControls: controls };
+  return useMediaElement<'audio'>(initialState);
 };

@@ -1,7 +1,7 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { QRCodeRenderersOptions, QRCodeToDataURLOptions, toCanvas, toDataURL } from 'qrcode';
 
-export type QrCodeType<TCanvas extends boolean | undefined> = TCanvas extends true
+export type QrCode<TCanvas extends boolean | undefined> = TCanvas extends true
   ? HTMLCanvasElement
   : string;
 
@@ -22,7 +22,7 @@ export const useQrCode = <T extends boolean | undefined = false>(
   const { text: initial, canvas, ...renderOptions } = options;
   if (!renderOptions.margin) renderOptions.margin = 0;
 
-  const [qrCode, setQrCode] = useState<QrCodeType<T> | undefined>(undefined);
+  const [qrCode, setQrCode] = useState<QrCode<T> | undefined>(undefined);
 
   const updateQrCode = useCallback(
     async (text?: string) => {
