@@ -45,8 +45,13 @@ describe('useClock', () => {
 
   it('should countdown', () => {
     const timeSkip = 45 * 1000;
-    const params = { initial: '2000T00:05:00.000Z', duration: -duration, format: 'mm:ss' };
-    const { result } = renderHook(() => useClock(params));
+    const { result } = renderHook(() =>
+      useClock({
+        initial: { minutes: 5 },
+        duration: -duration,
+        format: 'mm:ss'
+      })
+    );
 
     act(() => vi.advanceTimersByTime(timeSkip));
     expect(result.current.value).toBe('04:15');

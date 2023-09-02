@@ -2,13 +2,41 @@ import { useState } from 'react';
 import { addMilliseconds, format, subMilliseconds } from 'date-fns';
 import { useInterval } from '@/src';
 
+export type DateObject = Partial<{
+  year: number;
+  month: number;
+  day: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  milliseconds: number;
+}>;
+
 export type ClockOptions = Partial<{
   format: string;
   timeout: number;
   startOnMount: boolean;
-  initial: string | Date;
+  initial: string | Date | DateObject;
   duration: number;
 }>;
+
+const getInitialDate = (date?: ClockOptions['initial']) => {
+  if (!date) return new Date();
+  if (date instanceof Date) return date;
+  if (typeof date === 'string') return new Date(date);
+
+  const {
+    year = 2000,
+    month = 1,
+    day = 1,
+    hours = 0,
+    minutes = 0,
+    seconds = 0,
+    milliseconds = 0
+  } = date;
+
+  return new Date(year, month - 1, day, hours + 1, minutes, seconds, milliseconds);
+};
 
 export const useClock = (options: ClockOptions = {}) => {
   const timeout = options.timeout ?? 1000;
@@ -16,7 +44,7 @@ export const useClock = (options: ClockOptions = {}) => {
   const clockFormat = options.format ?? 'HH:mm:ss a';
 
   const hasInitialDate = !!options.initial;
-  const initialDate = new Date(options.initial || new Date());
+  const initialDate = getInitialDate(options.initial);
   const [datetime, setDatetime] = useState<Date>(initialDate);
 
   const timer = useInterval(
