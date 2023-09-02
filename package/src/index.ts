@@ -40,6 +40,7 @@ export { useUnmount } from './useUnmount';
 export { useUpdateEffect } from './useUpdateEffect';
 export { useUserAgent, useDevice, useBrowser, useOS } from './useUserAgent';
 export { useViewport } from './useViewport';
+export { useWebcam } from './useWebcam';
 
 export type { TransitionProps, TransformProps, AnimationProps, AnimatePresenceOptions } from './useAnimatePresence';
 export type { AutoCompleteHandler, AutoCompleteOptions } from './useAutoComplete';
@@ -57,10 +58,11 @@ export type { MediaElementType, MediaElement, MediaElementInit } from './useMedi
 export type { MutationObserverOptions } from './useMutation';
 export type { NetworkInformation, NetworkState } from './useNetwork';
 export type { WindowFeatures, FaviconAttributes, PageTabProps } from './usePageTab';
-export type { QrCodeType, QrRenderOptions, QrCodeOptions } from './useQrCode';
+export type { QrCode, QrRenderOptions, QrCodeOptions } from './useQrCode';
 export type { ScrollEndOptions } from './useScrollEnd';
 export type { StatusHandler } from './useStateStatus';
 export type { StorageType } from './useStorage';
 export type { SwipActionHandler, SwipOptions } from './useSwiping';
 export type { TimoutOptions } from './useTimeout';
 export type { UserAgentResult } from './useUserAgent';
+export type { WebcamOptions, WebcamScreenshotOptions, WebcamRecorderOptions } from './useWebcam';
