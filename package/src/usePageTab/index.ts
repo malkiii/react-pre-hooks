@@ -1,4 +1,10 @@
-import { HTMLAttributeAnchorTarget, LinkHTMLAttributes, useLayoutEffect, useState } from 'react';
+import {
+  HTMLAttributeAnchorTarget,
+  LinkHTMLAttributes,
+  useCallback,
+  useLayoutEffect,
+  useState
+} from 'react';
 import { EventHandler, useEventListener } from '@/src';
 
 export type WindowFeatures = Partial<{
@@ -85,32 +91,36 @@ const getFavicon = (tag?: HTMLLinkElement): FaviconAttributes => {
   return { title, media, href, type, sizes: sizes[0], crossOrigin, referrerPolicy };
 };
 
+const setTitle = (title: string) => {
+  document.title = title;
+};
+
+const setFavicon = (favicon: FaviconAttributes) => {
+  document.head.appendChild(
+    createOrUpdateValueOf('link', faviconQuerySelector, { rel: 'icon', ...favicon })
+  );
+};
+
+const open = (url: string | URL, features?: WindowFeatures) => {
+  window.open(url, features?.target, windowFeaturesToString(features));
+};
+
+const duplicate = () => {
+  window.open(window.location.href, '_blank');
+};
+
+const go = (pathname: string = '/') => {
+  window.location.pathname = pathname;
+};
+
 export const usePageTab = (pageHead: PageTabProps = {}) => {
   const { beforeClose, ...initialData } = pageHead;
   const [tabLocation, setTabLocation] = useState<URL>();
 
-  const setTitle = (title: string) => {
-    document.title = title;
-  };
-
-  const setFavicon = (favicon: FaviconAttributes) => {
-    document.head.appendChild(
-      createOrUpdateValueOf('link', faviconQuerySelector, { rel: 'icon', ...favicon })
-    );
-  };
-
-  const setHash = (hash: string) => {
+  const setHash = useCallback((hash: string) => {
     window.location.hash = hash;
     setTabLocation(new URL(window.location.href));
-  };
-
-  const open = (url: string | URL, features?: WindowFeatures) => {
-    window.open(url, features?.target, windowFeaturesToString(features));
-  };
-
-  const duplicate = () => {
-    window.open(window.location.href, '_blank');
-  };
+  }, []);
 
   useLayoutEffect(() => {
     setTabLocation(new URL(window.location.href));
@@ -131,6 +141,7 @@ export const usePageTab = (pageHead: PageTabProps = {}) => {
     print: window.print,
     reload: window.location.reload,
     duplicate,
+    go,
     getTitle,
     setTitle,
     getFavicon,

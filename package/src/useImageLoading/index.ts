@@ -20,7 +20,7 @@ export const useImageLoading = (imageSrc: string, handler?: (event: Event) => an
     return () => {
       imageRef.current.removeEventListener('load', handleLoad);
     };
-  }, [imageSrc]);
+  }, []);
 
   return { image: imageRef.current, isLoading };
 };

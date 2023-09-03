@@ -1,17 +1,17 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
-export type IntersectionObserverOptions = IntersectionObserverInit & {
-  once?: boolean;
+export type IntersectionObserverOptions<T extends HTMLElement> = IntersectionObserverInit & {
+  ref?: RefObject<T>;
   callback?: IntersectionObserverCallback;
+  once?: boolean;
 };
 
 export const useIntersectionObserver = <T extends HTMLElement = HTMLDivElement>(
-  ref?: RefObject<T>,
-  options: IntersectionObserverOptions = {}
+  options: IntersectionObserverOptions<T> = {}
 ) => {
   const { callback, once, ...observerInit } = options;
 
-  const targetRef = ref || useRef<T>(null);
+  const targetRef = options.ref || useRef<T>(null);
   const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
 
   const callbackMemo: IntersectionObserverCallback = useCallback(

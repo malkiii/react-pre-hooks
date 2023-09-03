@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export type GeoLocationSensorState = {
   loading: boolean;
@@ -26,25 +26,25 @@ export const useGeolocation = (options: PositionOptions = {}): GeoLocationSensor
     timestamp: null
   });
 
+  const successCallback: PositionCallback = useCallback(({ coords, timestamp }) => {
+    setState({
+      loading: false,
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      altitude: coords.altitude,
+      accuracy: coords.accuracy,
+      altitudeAccuracy: coords.altitudeAccuracy,
+      heading: coords.heading,
+      speed: coords.speed,
+      timestamp
+    });
+  }, []);
+
+  const errorCallback: PositionErrorCallback = useCallback(error => {
+    setState(s => ({ ...s, loading: false, error }));
+  }, []);
+
   useEffect(() => {
-    const successCallback: PositionCallback = ({ coords, timestamp }) => {
-      setState({
-        loading: false,
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-        altitude: coords.altitude,
-        accuracy: coords.accuracy,
-        altitudeAccuracy: coords.altitudeAccuracy,
-        heading: coords.heading,
-        speed: coords.speed,
-        timestamp
-      });
-    };
-
-    const errorCallback: PositionErrorCallback = error => {
-      setState(s => ({ ...s, loading: false, error }));
-    };
-
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
     const watch = navigator.geolocation.watchPosition(successCallback, errorCallback, options);
 

@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { DependencyList, useState } from 'react';
 import { useAsync } from '@/src';
 
 export type RequestOptions = RequestInit & {
+  url: string;
   query?: Record<string, string | number | null | undefined>;
 };
 
-export const useFetch = <T extends any>(url: string, options: RequestOptions = {}) => {
+export const useFetch = <T extends any>(options: RequestOptions, deps?: DependencyList) => {
+  const { url, ...fetchInit } = options;
   const [response, setResponse] = useState<Response>();
   const fetchURL = new URL(url);
 
@@ -22,10 +24,10 @@ export const useFetch = <T extends any>(url: string, options: RequestOptions = {
   }
 
   const { retry: refetch, ...result } = useAsync<T>(async () => {
-    const response = await fetch(fetchURL, options);
+    const response = await fetch(fetchURL, fetchInit);
     setResponse(response);
     return (await response.json()) as T;
-  }, [options]);
+  }, deps);
 
   return { ...result, response, refetch };
 };

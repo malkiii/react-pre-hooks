@@ -17,11 +17,11 @@ export const useAsync = <T extends any>(callback: () => Promise<T>, deps: Depend
     } finally {
       setIsLoading(false);
     }
-  }, [callback, ...deps]);
+  }, [callback]);
 
   useEffect(() => {
     callbackMemo();
-  }, []);
+  }, deps);
 
   return { data, isLoading, error, retry: callbackMemo };
 };

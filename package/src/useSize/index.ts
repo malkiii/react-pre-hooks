@@ -1,10 +1,13 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 
+export type SizeObserverOptions<T extends HTMLElement> = ResizeObserverOptions & {
+  ref?: RefObject<T>;
+};
+
 export const useSize = <T extends HTMLElement = HTMLDivElement>(
-  ref?: RefObject<T>,
-  options: ResizeObserverOptions = {}
+  options: SizeObserverOptions<T> = {}
 ) => {
-  const targetRef = ref || useRef<T>(null);
+  const targetRef = options.ref || useRef<T>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export const useSize = <T extends HTMLElement = HTMLDivElement>(
     return () => {
       resizeObserver.disconnect();
     };
-  }, [ref, options]);
+  }, [options]);
 
   return { targetRef, ...size };
 };

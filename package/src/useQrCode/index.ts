@@ -36,7 +36,7 @@ export const useQrCode = <T extends boolean | undefined = false>(
 
   useLayoutEffect(() => {
     updateQrCode(initial);
-  }, []);
+  }, [updateQrCode]);
 
   return [qrCode, updateQrCode] as const;
 };

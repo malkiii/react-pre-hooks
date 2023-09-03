@@ -1,16 +1,16 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
-export type MutationObserverOptions = MutationObserverInit & {
+export type MutationObserverOptions<T extends HTMLElement> = MutationObserverInit & {
+  ref?: RefObject<T>;
   callback?: MutationCallback;
 };
 
 export const useMutationObserver = <T extends HTMLElement = HTMLDivElement>(
-  ref?: RefObject<T>,
-  options: MutationObserverOptions = {}
+  options: MutationObserverOptions<T> = {}
 ) => {
   const { callback, ...observerInit } = options;
 
-  const targetRef = ref || useRef<T>(null);
+  const targetRef = options.ref || useRef<T>(null);
   const [mutations, setMutations] = useState<MutationRecord[]>();
 
   const callbackMemo: MutationCallback = useCallback(
