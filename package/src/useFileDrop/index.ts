@@ -9,16 +9,16 @@ type FileData<T extends FileDataType | undefined> = T extends undefined
   : string;
 
 export type FileDataType = 'array-buffer' | 'binary-string' | 'url' | 'text';
-export type FileDropperError = { type?: 'extention' | 'size' | (string & {}); message: string };
+export type FileDropError = { type?: 'extention' | 'size' | (string & {}); message: string };
 
-export type DropperFile<T extends FileDataType | undefined> = {
+export type DroppedFile<T extends FileDataType | undefined> = {
   name: string;
   size: number;
   extension?: string;
   data: FileData<T> | null;
 };
 
-export type FileDropperOptions<T extends FileDataType | undefined> = Partial<{
+export type FileDropOptions<T extends FileDataType | undefined> = Partial<{
   multiple: boolean;
   extensions: string[];
   minSize: number;
@@ -39,19 +39,19 @@ const getFileInputElement = (label: HTMLLabelElement): HTMLInputElement | null =
   return label.querySelector('input[type="file"]') as any;
 };
 
-export const useFileDropper = <T extends FileDataType | undefined = undefined>(
-  options: FileDropperOptions<T> = {}
+export const useFileDrop = <T extends FileDataType | undefined = undefined>(
+  options: FileDropOptions<T> = {}
 ) => {
   const { multiple = false, readAs, onUpload } = options;
 
   const ref = useRef<HTMLLabelElement>(null);
-  const [files, setFiles] = useState<DropperFile<T>[]>();
+  const [files, setFiles] = useState<DroppedFile<T>[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [error, setError] = useState<FileDropperError>();
+  const [error, setError] = useState<FileDropError>();
 
   const isValidFiles = useCallback(
-    (files: DropperFile<T>[]) => {
+    (files: DroppedFile<T>[]) => {
       const { extensions, minSize = 0, maxSize = Infinity } = options;
       return files.every(file => {
         // validate the type
@@ -81,7 +81,7 @@ export const useFileDropper = <T extends FileDataType | undefined = undefined>(
   );
 
   const readFilesAs = useCallback(
-    (files: DropperFile<T>[]) => {
+    (files: DroppedFile<T>[]) => {
       if (!readAs) return;
       setIsLoading(true);
 
@@ -113,7 +113,7 @@ export const useFileDropper = <T extends FileDataType | undefined = undefined>(
       const resolvedFiles = multiple ? files : [files[0]];
       if (onUpload) onUpload(resolvedFiles);
 
-      const dropperFiles = resolvedFiles.map<DropperFile<T>>(file => ({
+      const dropperFiles = resolvedFiles.map<DroppedFile<T>>(file => ({
         name: file.name,
         size: Number((file.size / 1024 ** 2).toFixed(2)),
         extension: file.name.split(/(?=\.[^.]+$)\./).at(1),
