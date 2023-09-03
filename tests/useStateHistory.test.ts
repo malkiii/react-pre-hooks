@@ -7,7 +7,7 @@ describe('useStateHistory', () => {
     const initialValue = 0;
     const { result } = renderHook(() => useStateHistory(initialValue));
 
-    const [value, setState, pointer] = result.current;
+    const [value, _, pointer] = result.current;
 
     expect(value).toBe(initialValue);
     expect(pointer.history).toEqual([value]);
@@ -32,7 +32,7 @@ describe('useStateHistory', () => {
   it('should limit history size', () => {
     const initialValue = 0;
     const limit = 3;
-    const { result } = renderHook(() => useStateHistory(initialValue, limit));
+    const { result } = renderHook(() => useStateHistory(initialValue, { limit }));
 
     const setState = result.current[1];
     act(() => {

@@ -1,6 +1,6 @@
-import { SetStateAction, useCallback, useRef, useState } from 'react';
+import { SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
 
-export const useStateHistory = <T extends any>(initial: T, limit = 10) => {
+export const useStateHistory = <T extends any>(initial: T, { limit = 10 } = {}) => {
   if (limit <= 0) throw new Error(`useStateHistory: Limit must be grater than 0, got ${limit}`);
 
   const [value, setValue] = useState<T>(initial);
@@ -30,35 +30,39 @@ export const useStateHistory = <T extends any>(initial: T, limit = 10) => {
     [limit, value]
   );
 
-  const pointer = {
-    history: historyRef.current,
-    position: pointerRef.current,
-    go(step: number) {
-      const lastIndex = historyRef.current.length - 1;
-      const nextPointer = pointerRef.current + step;
-      pointerRef.current = nextPointer < 0 ? 0 : nextPointer > lastIndex ? lastIndex : nextPointer;
-      setHistory();
-    },
-    next() {
-      if (pointerRef.current >= historyRef.current.length - 1) return;
-      pointerRef.current++;
-      setHistory();
-    },
-    prev() {
-      if (pointerRef.current <= 0) return;
-      pointerRef.current--;
-      setHistory();
-    },
-    reset() {
-      pointerRef.current = historyRef.current.length - 1;
-      setHistory();
-    },
-    clear() {
-      pointerRef.current = 0;
-      historyRef.current = [];
-      setHistory();
-    }
-  };
+  const pointer = useMemo(
+    () => ({
+      history: historyRef.current,
+      position: pointerRef.current,
+      go(step: number) {
+        const lastIndex = historyRef.current.length - 1;
+        const nextPointer = pointerRef.current + step;
+        pointerRef.current =
+          nextPointer < 0 ? 0 : nextPointer > lastIndex ? lastIndex : nextPointer;
+        setHistory();
+      },
+      next() {
+        if (pointerRef.current >= historyRef.current.length - 1) return;
+        pointerRef.current++;
+        setHistory();
+      },
+      prev() {
+        if (pointerRef.current <= 0) return;
+        pointerRef.current--;
+        setHistory();
+      },
+      reset() {
+        pointerRef.current = historyRef.current.length - 1;
+        setHistory();
+      },
+      clear() {
+        pointerRef.current = 0;
+        historyRef.current = [];
+        setHistory();
+      }
+    }),
+    [value]
+  );
 
   return [value, setState, pointer] as const;
 };
