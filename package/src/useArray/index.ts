@@ -1,5 +1,5 @@
 import { SetStateAction, useMemo, useState } from 'react';
-import { objectEqual } from '@/src/utils';
+import deepEqual from 'fast-deep-equal';
 
 type NonEmptyArray<T> = [T, ...T[]];
 type MapParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
@@ -26,10 +26,10 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
         return array.includes(element);
       },
       isEqual(arr: any[]) {
-        return objectEqual(array, arr);
+        return deepEqual(array, arr);
       },
       count(element: T) {
-        return array.reduce((count, num) => (objectEqual(num, element) ? count + 1 : count), 0);
+        return array.reduce((count, num) => (deepEqual(num, element) ? count + 1 : count), 0);
       },
       push(...elements: NonEmptyArray<T>) {
         setArray(arr => toSpliced(arr, arr.length, 0, ...elements));

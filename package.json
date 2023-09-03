@@ -14,7 +14,7 @@
   "homepage": "https://github.com/malkiii/realtime-hooks#readme",
   "files": [
     "dist/",
-    "packages/hooks/README.md"
+    "package/README.md"
   ],
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
   "sideEffects": false,
   "dependencies": {
     "date-fns": "^2.30.0",
+    "fast-deep-equal": "^3.1.3",
     "qrcode": "^1.5.3",
     "ua-parser-js": "^1.0.35"
   },

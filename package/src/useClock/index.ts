@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { addMilliseconds, format, subMilliseconds } from 'date-fns';
 import { useInterval } from '@/src';
 
-export type DateObject = Partial<{
+export type DateProps = Partial<{
   year: number;
   month: number;
   day: number;
@@ -16,7 +16,7 @@ export type ClockOptions = Partial<{
   format: string;
   timeout: number;
   startOnMount: boolean;
-  initial: string | Date | DateObject;
+  initial: string | Date | DateProps;
   duration: number;
 }>;
 

@@ -1,5 +1,5 @@
 import { SetStateAction, useMemo, useState } from 'react';
-import { objectEqual } from '@/src/utils';
+import deepEqual from 'fast-deep-equal';
 
 type DefaultObject = Record<string, unknown>;
 type ObjectType<T> = keyof T extends never ? DefaultObject : T;
@@ -34,7 +34,7 @@ export const useMap = <T extends DefaultObject>(initial: ObjectType<T> = {} as a
         return Object.entries(map) as { [K in keyof T]: [K, T[K]] }[keyof T][];
       },
       isEqual(obj: Record<any, any>) {
-        return objectEqual(map, obj);
+        return deepEqual(map, obj);
       },
       copy() {
         return structuredClone(map);
