@@ -12,17 +12,17 @@ export interface SwipeAction {
   readonly event: TouchEvent | MouseEvent;
 }
 
-export type SwipActionHandler = (action: SwipeAction) => any;
+export type SwipeEventHandler = (action: SwipeAction) => any;
 
-export type SwipOptions = EventListenerOptions<HTMLElement> & {
+export type SwipeOptions = EventListenerOptions<HTMLElement> & {
   mouse?: boolean;
 };
 
-export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}) => {
+export const useSwipeEvent = (handler: SwipeEventHandler, options: SwipeOptions = {}) => {
   const delta = useRef({ x: 0, y: 0 });
   const initialPosition = useRef<typeof delta.current>();
 
-  const getSwipDirection = (): SwipeAction['direction'] => {
+  const getSwipeDirection = (): SwipeAction['direction'] => {
     const { x: deltaX, y: deltaY } = delta.current;
     return Math.abs(deltaX) >= Math.abs(deltaY)
       ? deltaX > 0
@@ -52,7 +52,7 @@ export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}
         deltaY: delta.current.y,
         initialX: initialPosition.current.x,
         initialY: initialPosition.current.y,
-        direction: getSwipDirection(),
+        direction: getSwipeDirection(),
         isEnded: true,
         event
       });
@@ -77,7 +77,7 @@ export const useSwiping = (handler: SwipActionHandler, options: SwipOptions = {}
         deltaY: delta.current.y,
         initialX: initialPosition.current.x,
         initialY: initialPosition.current.y,
-        direction: getSwipDirection(),
+        direction: getSwipeDirection(),
         isEnded: false,
         event
       });
