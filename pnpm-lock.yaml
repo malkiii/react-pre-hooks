@@ -43,8 +43,8 @@ importers:
         specifier: ^18.0.37
         version: 18.0.37
       '@types/react-dom':
-        specifier: ^18.0.11
-        version: 18.0.11
+        specifier: ^18.2.7
+        version: 18.2.7
       '@types/ua-parser-js':
         specifier: ^0.7.36
         version: 0.7.36
@@ -783,7 +783,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.10
       '@testing-library/dom': 9.3.1
-      '@types/react-dom': 18.0.11
+      '@types/react-dom': 18.2.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
@@ -837,8 +837,8 @@ packages:
       '@types/node': 20.3.3
     dev: true
 
-  /@types/react-dom@18.0.11:
-    resolution: {integrity: sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==}
+  /@types/react-dom@18.2.7:
+    resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
     dependencies:
       '@types/react': 18.0.37
     dev: true
