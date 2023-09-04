@@ -15,8 +15,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3
       qrcode:
-        specifier: ^1.5.3
-        version: 1.5.3
+        specifier: 1.5.2
+        version: 1.5.2
       react:
         specifier: '>=18.2.0'
         version: 18.2.0
@@ -1570,8 +1570,9 @@ packages:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: false
 
-  /encode-utf8@1.0.3:
-    resolution: {integrity: sha512-ucAnuBEhUK4boH2HjVYG5Q2mQyPorvv0u/ocS+zhdw0S8AlHYY+GOFhP1Gio5z4icpP2ivFSvhtFjQi8+T9ppw==}
+  /encode-utf8@2.0.0:
+    resolution: {integrity: sha512-3EyMFxZj1/7oMotElDQUEQcP7N4TIe1aJ0m1uBDoyQ8I2LBHhBsXx8P3KsPbqNlGzG+NYxFwEauUwMPHZg3YDQ==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
   /entities@4.5.0:
@@ -2705,13 +2706,13 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /qrcode@1.5.3:
-    resolution: {integrity: sha512-puyri6ApkEHYiVl4CFzo1tDkAZ+ATcnbJrJ6RiBM1Fhctdn/ix9MTE3hRph33omisEbC/2fcfemsseiKgBPKZg==}
+  /qrcode@1.5.2:
+    resolution: {integrity: sha512-aX3t2vLTDIGhqJujaQkw8SA+D38gcQ/ayPF4187OHMl+1ARZ/2UlBbNTnA2iTOte+QP88K8xY+XNXrR7H9z6fA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dependencies:
       dijkstrajs: 1.0.3
-      encode-utf8: 1.0.3
+      encode-utf8: 2.0.0
       pngjs: 5.0.0
       yargs: 15.4.1
     dev: false
