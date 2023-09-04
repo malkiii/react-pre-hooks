@@ -22,6 +22,7 @@ export { useIsomorphicEffect } from './useIsomorphicEffect';
 export { useKeyboard } from './useKeyboard';
 export { useMap } from './useMap';
 export { useVideo, useAudio } from './useMediaElement';
+export { useMount } from './useMount';
 export { useMouse } from './useMouse';
 export { useMutationObserver } from './useMutation';
 export { useNetwork } from './useNetwork';
