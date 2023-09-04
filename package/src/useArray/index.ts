@@ -22,8 +22,8 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
       set(index: number, element: T) {
         setArray(arr => toSpliced(arr, index, 1, element));
       },
-      has(element: T) {
-        return array.includes(element);
+      has(...elements: T[]) {
+        return elements.every(e => array.includes(e));
       },
       isEqual(arr: any[]) {
         return deepEqual(array, arr);

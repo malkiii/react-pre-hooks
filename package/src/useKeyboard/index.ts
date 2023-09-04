@@ -5,7 +5,7 @@ export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
 
 const getKeyboardEventList = (record: KeysRecord) => {
   return Object.keys(record).map(key => {
-    const resolvedKeys = key.split(/,+/g).map(k => k.trim().toLowerCase());
+    const resolvedKeys = key.split(',').map(k => k.trim().toLowerCase());
     return [resolvedKeys, record[key]] as const;
   });
 };

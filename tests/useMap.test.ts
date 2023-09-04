@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { useMap } from '@/src';
 
-describe('useObject', () => {
+describe('useMap', () => {
   it('should return the initial object', () => {
     const obj = { key: 'value' };
     const { result } = renderHook(() => useMap(obj));
@@ -42,6 +42,7 @@ describe('useObject', () => {
     const obj = { key1: 'value', key2: { key12: 10, key22: 20 } };
     const { result } = renderHook(() => useMap(obj));
 
+    expect(result.current.has('key1', 'key2')).toBe(true);
     expect(result.current.isEqual({ key1: 'value', key2: { key12: 10, key22: 20 } })).toBe(true);
   });
 

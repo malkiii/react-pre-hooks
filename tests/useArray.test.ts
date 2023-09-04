@@ -39,12 +39,13 @@ describe('useArray', () => {
     const { result } = renderHook(() => useArray([1, 2, 3]));
 
     act(() => result.current.insert(0, -1, 0));
+    expect(result.current.has(2, 0)).toBe(true);
     expect(result.current.values).toEqual([-1, 0, 1, 2, 3]);
     act(() => result.current.insert(5, 4, 5));
     expect(result.current.values).toEqual([-1, 0, 1, 2, 3, 4, 5]);
 
     act(() => result.current.remove(-1, 0));
-    expect(result.current.has(0)).toBeFalsy();
+    expect(result.current.has(0, 1)).toBe(false);
     expect(result.current.values).toEqual([1, 2, 3, 4, 5]);
   });
 

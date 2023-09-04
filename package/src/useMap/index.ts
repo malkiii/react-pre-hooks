@@ -17,12 +17,12 @@ export const useMap = <T extends DefaultObject>(initial: ObjectType<T> = {} as a
       set<K extends keyof TMap>(key: K, value: TMap[K]) {
         setMap(obj => ({ ...obj, [key]: value }));
       },
-      delete(key: keyof TMap) {
-        const { [key]: _, ...rest } = map;
-        setMap(rest as TMap);
+      delete(...keys: (keyof TMap)[]) {
+        const newEntries = Object.entries(map).map<any>(([k, _]) => !keys.includes(k));
+        setMap(Object.fromEntries(newEntries) as TMap);
       },
-      has(key: keyof TMap) {
-        return key in map;
+      has(...keys: (keyof TMap)[]) {
+        return keys.every(k => k in map);
       },
       keys() {
         return Object.keys(map) as (keyof TMap)[];

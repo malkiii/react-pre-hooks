@@ -1,10 +1,5 @@
-import {
-  HTMLAttributeAnchorTarget,
-  LinkHTMLAttributes,
-  useCallback,
-  useLayoutEffect,
-  useState
-} from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
+import type { HTMLAttributeAnchorTarget, LinkHTMLAttributes } from 'react';
 import { EventHandler, useEventListener } from '@/src';
 
 export type WindowFeatures = Partial<{
@@ -34,12 +29,6 @@ export type FaviconAttributes = {
   crossOrigin?: LinkAttributes['crossOrigin'] | (string & {}) | null;
   referrerPolicy?: LinkAttributes['crossOrigin'] | (string & {}) | null;
 };
-
-export type PageTabProps = Partial<{
-  title: string;
-  favicon: FaviconAttributes;
-  beforeClose: EventHandler<Window, 'beforeunload'>;
-}>;
 
 const createOrUpdateValueOf = <T extends keyof HTMLElementTagNameMap>(
   tagName: T,
@@ -101,6 +90,10 @@ const setFavicon = (favicon: FaviconAttributes) => {
   );
 };
 
+const setHash = (hash: string) => {
+  window.location.hash = hash;
+};
+
 const open = (url: string | URL, features?: WindowFeatures) => {
   window.open(url, features?.target, windowFeaturesToString(features));
 };
@@ -113,20 +106,31 @@ const go = (pathname: string = '/') => {
   window.location.pathname = pathname;
 };
 
-export const usePageTab = (pageHead: PageTabProps = {}) => {
-  const { beforeClose, ...initialData } = pageHead;
-  const [tabLocation, setTabLocation] = useState<URL>();
+const documentHiddenProperties = ['hidden', 'mozHidden', 'webkitHidden', 'oHidden', 'msHidden'];
 
-  const setHash = useCallback((hash: string) => {
-    window.location.hash = hash;
-    setTabLocation(new URL(window.location.href));
-  }, []);
+export type PageTabOptions = Partial<{
+  title: string;
+  favicon: FaviconAttributes;
+  beforeClose: EventHandler<Window, 'beforeunload'>;
+}>;
+
+export const usePageTab = (initialPageHead: PageTabOptions = {}) => {
+  const { beforeClose, ...initialData } = initialPageHead;
+  const [isVisible, setIsVisible] = useState<boolean>(true);
 
   useLayoutEffect(() => {
-    setTabLocation(new URL(window.location.href));
     setTitle(initialData.title ?? getTitle());
     setFavicon(initialData.favicon ?? getFavicon());
   }, []);
+
+  const handleVisibilityChange = useCallback((force?: boolean) => {
+    if (force !== undefined) return setIsVisible(force);
+    setIsVisible(documentHiddenProperties.some(prop => (document as any)[prop]));
+  }, []);
+
+  useEventListener('blur', () => handleVisibilityChange(false));
+  useEventListener('focus', () => handleVisibilityChange(true));
+  useEventListener('visibilitychange' as any, () => handleVisibilityChange(), { target: document });
 
   if (beforeClose)
     useEventListener('beforeunload', event => {
@@ -135,11 +139,12 @@ export const usePageTab = (pageHead: PageTabProps = {}) => {
     });
 
   return {
-    location: tabLocation,
     open,
     close: window.close,
     print: window.print,
     reload: window.location.reload,
+    location: window.location,
+    isVisible,
     duplicate,
     go,
     getTitle,
