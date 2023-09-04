@@ -68,4 +68,4 @@ export type { StorageType } from './useStorage';
 export type { SwipeEventHandler, SwipeOptions } from './useSwipeEvent';
 export type { TimoutOptions } from './useTimeout';
 export type { UserAgentResult } from './useUserAgent';
-export type { WebcamOptions, WebcamScreenshotOptions, WebcamRecorderOptions } from './useWebcam';
+export type { MediaDevice, WebcamRecorderOptions, WebcamOptions, WebcamScreenshotOptions } from './useWebcam';
