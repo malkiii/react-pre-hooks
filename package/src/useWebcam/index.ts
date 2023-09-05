@@ -162,6 +162,7 @@ export const useWebcam = (options: WebcamOptions = {}) => {
       },
       async stop(options: WebcamRecorderOptions = {}) {
         if (recorderState == 'inactive') return;
+        recorderRef.current?.resume();
         recorderRef.current?.stop();
 
         const blob = await new Promise<Blob>(resolve => {

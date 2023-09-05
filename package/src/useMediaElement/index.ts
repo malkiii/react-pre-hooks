@@ -90,7 +90,7 @@ const useMediaElement = <T extends MediaElementType | undefined = undefined>(
     element.onended = () => setState(state => ({ ...state, isEnded: true }));
   }, [ref]);
 
-  return { ref, state, controls };
+  return { ref, ...state, ...controls };
 };
 
 export const useVideo = (initialState?: MediaElementInit) => {
