@@ -33,6 +33,7 @@ export { useScrollEnd } from './useScrollEnd';
 export { useSelection } from './useSelection';
 export { useSet } from './useSet';
 export { useSize } from './useSize';
+export { useSpeech } from './useSpeech';
 export { useStateHistory } from './useStateHistory';
 export { useStateStatus } from './useStateStatus';
 export { useLocalStorage, useSessionStorage } from './useStorage';
@@ -65,6 +66,7 @@ export type { WindowFeatures, FaviconAttributes, PageTabOptions } from './usePag
 export type { QrCode, QrRenderOptions, QrCodeOptions } from './useQrCode';
 export type { ScrollEndOptions } from './useScrollEnd';
 export type { SizeObserverOptions } from './useSize';
+export type { SpeechOptions } from './useSpeech';
 export type { StatusHandler } from './useStateStatus';
 export type { StorageType } from './useStorage';
 export type { SwipeEventHandler, SwipeOptions } from './useSwipeEvent';
