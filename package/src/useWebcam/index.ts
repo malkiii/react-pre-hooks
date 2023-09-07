@@ -177,13 +177,10 @@ export const useWebcam = (options: WebcamOptions = {}) => {
 
         return videoURL;
       },
-      pause() {
+      toggle(play?: boolean) {
         if (recorderState == 'inactive') return;
-        recorderRef.current?.pause();
-      },
-      resume() {
-        if (recorderState == 'inactive') return;
-        recorderRef.current?.resume();
+        const shouldPlay = play ?? recorderState == 'paused';
+        shouldPlay ? recorderRef.current?.resume() : recorderRef.current?.pause();
       }
     }),
     [recorderRef, recorderState]

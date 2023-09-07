@@ -28,14 +28,12 @@ export const useSpeech = (options: SpeechOptions = {}) => {
         startSpeech(text);
         setState(s => ({ ...s, text: '' }));
       },
-      pause() {
-        if (speechSynthesis.speaking) speechSynthesis.pause();
-      },
-      resume() {
-        if (speechSynthesis.paused) speechSynthesis.resume();
+      toggle(play?: boolean) {
+        const shouldPlay = play ?? speechSynthesis.paused;
+        shouldPlay ? speechSynthesis.resume() : speechSynthesis.pause();
       },
       cancel() {
-        this.resume();
+        this.toggle(true);
         speechSynthesis.cancel();
       },
       setLang(lang: SetStateAction<string | undefined>) {
@@ -97,11 +95,14 @@ export const useSpeech = (options: SpeechOptions = {}) => {
     speech.onend = () => setState(s => ({ ...s, isSpeeking: false, isEnded: true }));
     speech.onpause = () => setState(s => ({ ...s, isSpeeking: false, isPaused: true }));
     speech.onresume = () => setState(s => ({ ...s, isSpeeking: true, isPaused: false }));
-    speech.onboundary = e => {
-      charIndex.current = e.charIndex;
-      const nextWord = speechRef.current.text.substring(e.charIndex).split(/\s+/g).shift() ?? '';
-      setState(s => ({ ...s, text: s.text + (s.text.endsWith(nextWord) ? '' : ' ' + nextWord) }));
-    };
+    speech.onboundary = e =>
+      setState(s => {
+        charIndex.current = e.charIndex;
+        const nextWord = speechRef.current.text.substring(e.charIndex).split(/\s+/g).shift() ?? '';
+        const text = s.text + (s.text.endsWith(nextWord) ? '' : ' ' + nextWord);
+
+        return { ...s, text: text.trim() };
+      });
 
     speechSynthesis.onvoiceschanged = () => {
       const voices = speechSynthesis.getVoices().filter(v => v.localService);

@@ -39,7 +39,8 @@ const useMediaElement = <T extends MediaElementType | undefined = undefined>(
     return {
       toggle(play?: boolean) {
         if (!mediaElement) return;
-        play ?? !state.isPlaying ? mediaElement.play() : mediaElement.pause();
+        const shouldPlay = play ?? !state.isPlaying;
+        shouldPlay ? mediaElement.play() : mediaElement.pause();
       },
       mute(force: boolean = true) {
         if (!mediaElement) return;
