@@ -148,7 +148,7 @@ export const useWebcam = (options: WebcamOptions = {}) => {
         const stream = streamRef.current;
         if (!stream) return;
 
-        recorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm' });
+        recorderRef.current = new MediaRecorder(stream);
         recorderRef.current.ondataavailable = event => {
           if (event.data.size > 0) recorderBlobParts.current.push(event.data);
         };
