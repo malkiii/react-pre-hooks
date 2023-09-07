@@ -16,7 +16,7 @@ export type WebcamRecorderOptions = Partial<{
 
 export type WebcamOptions = MediaTrackConstraints & {
   video?: boolean;
-  audio?: boolean;
+  audio?: boolean | MediaTrackConstraints;
   autoStart?: boolean;
   onStreaming?: (stream: MediaStream) => void;
 };
@@ -32,6 +32,7 @@ export type WebcamScreenshotOptions = Partial<{
 export const useWebcam = (options: WebcamOptions = {}) => {
   const ref = useRef<HTMLVideoElement>(null);
   const { video = true, audio = false, autoStart = true, onStreaming, ...constraints } = options;
+  const audioConstraints = typeof audio == 'boolean' ? {} : audio;
 
   const streamRef = useRef<MediaStream>();
   const [isStarted, setIsStarted] = useState<boolean>(false);
@@ -56,7 +57,7 @@ export const useWebcam = (options: WebcamOptions = {}) => {
   const [microphone, setMicrophone] = useState<MediaDevice>({
     available: [],
     current: undefined,
-    isEnabled: audio,
+    isEnabled: !!audio,
     use: index => {
       const device = camera.available.at(index);
       if (device && device.kind == 'audioinput') setMicrophone(m => ({ ...m, current: device }));
@@ -76,7 +77,7 @@ export const useWebcam = (options: WebcamOptions = {}) => {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: { deviceId: microphone.current?.deviceId },
+        audio: { ...audioConstraints, deviceId: microphone.current?.deviceId },
         video: { ...constraints, deviceId: camera.current?.deviceId }
       });
 
