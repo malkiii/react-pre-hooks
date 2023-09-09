@@ -20,7 +20,7 @@ export const useMouse = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject
   useEventListener(['mousedown', 'touchstart'], () => setIsDown(true), options);
 
   useEventListener(['mouseenter', 'touchstart'], () => setIsOut(false), options);
-  useEventListener(['mouseleave', 'touchend', 'touchcancel'], () => setIsOut(true), options);
+  useEventListener(['mouseleave', 'touchcancel'], () => setIsOut(true), options);
 
   return { ref: targetRef, ...position, isOut, isDown };
 };
