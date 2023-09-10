@@ -1,4 +1,5 @@
 import { CSSProperties, RefObject, SetStateAction, useCallback, useRef, useState } from 'react';
+import { getStateActionValue } from '@/src/utils';
 
 export type TransitionProps = Partial<{
   ease: CSSProperties['transitionTimingFunction'];
@@ -115,9 +116,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
 
   const toggle = useCallback(
     (value?: SetStateAction<boolean>) => {
-      const resolvedValue = value instanceof Function ? value(isToggled.current) : value;
-      const shouldToggle = resolvedValue ?? !isToggled.current;
-
+      const shouldToggle = getStateActionValue(value ?? !isToggled.current, isToggled.current);
       shouldToggle ? mount() : unmount();
     },
     [mount, unmount]

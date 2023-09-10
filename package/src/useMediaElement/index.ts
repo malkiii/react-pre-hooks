@@ -1,4 +1,5 @@
 import { SetStateAction, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { getStateActionValue } from '@/src/utils';
 
 export type MediaElementType = 'video' | 'audio';
 export type MediaElement<T extends MediaElementType | undefined> = T extends 'video'
@@ -49,18 +50,15 @@ const useMediaElement = <T extends MediaElementType | undefined = undefined>(
       },
       setTime(time: SetStateAction<number>) {
         if (!mediaElement) return;
-        const resolvedTime = time instanceof Function ? time(mediaElement.currentTime) : time;
-        mediaElement.currentTime = resolvedTime;
+        mediaElement.currentTime = getStateActionValue(time, mediaElement.currentTime);
       },
-      setVolume(vol: SetStateAction<number>) {
+      setVolume(volume: SetStateAction<number>) {
         if (!mediaElement) return;
-        const resolvedVolume = vol instanceof Function ? vol(mediaElement.volume) : vol;
-        mediaElement.volume = resolvedVolume;
+        mediaElement.volume = getStateActionValue(volume, mediaElement.volume);
       },
       setSpeed(speed: SetStateAction<number>) {
         if (!mediaElement) return;
-        const resolvedSpeed = speed instanceof Function ? speed(mediaElement.playbackRate) : speed;
-        mediaElement.playbackRate = resolvedSpeed;
+        mediaElement.playbackRate = getStateActionValue(speed, mediaElement.playbackRate);
       },
       seekBy(time: number) {
         this.setTime(curr => curr + time);

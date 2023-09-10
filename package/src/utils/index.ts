@@ -1,3 +1,9 @@
+import { SetStateAction } from 'react';
+
+export function getStateActionValue<T extends any>(state: SetStateAction<T>, value: T) {
+  return state instanceof Function ? state(value) : state;
+}
+
 export function getCurrentMousePosition(event: MouseEvent | TouchEvent) {
   return event instanceof MouseEvent
     ? { x: event.offsetX, y: event.offsetY }

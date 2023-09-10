@@ -1,5 +1,5 @@
 import { SetStateAction, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { download } from '@/src/utils';
+import { download, getStateActionValue } from '@/src/utils';
 
 export type MediaDevice = {
   available: MediaDeviceInfo[];
@@ -46,14 +46,14 @@ export const useWebRTC = (options: StreamOptions = {}) => {
     isEnabled: !!video,
     use: value => {
       setCamera(c => {
-        const device = value instanceof Function ? value(c.current) : value;
+        const device = getStateActionValue(value, c.current);
         if (device && device.kind !== 'videoinput') return c;
         return { ...c, current: device };
       });
     },
     enable: (force = true) => {
       setCamera(c => {
-        const resolvedValue = force instanceof Function ? force(c.isEnabled) : force;
+        const resolvedValue = getStateActionValue(force, c.isEnabled);
         streamRef.current.getVideoTracks()[0].enabled = resolvedValue;
         return { ...c, isEnabled: resolvedValue };
       });
@@ -65,14 +65,14 @@ export const useWebRTC = (options: StreamOptions = {}) => {
     isEnabled: !!audio,
     use: value => {
       setMicrophone(m => {
-        const device = value instanceof Function ? value(m.current) : value;
+        const device = getStateActionValue(value, m.current);
         if (device && device.kind !== 'audioinput') return m;
         return { ...m, current: device };
       });
     },
     enable: (force = true) => {
       setMicrophone(m => {
-        const resolvedValue = force instanceof Function ? force(m.isEnabled) : force;
+        const resolvedValue = getStateActionValue(force, m.isEnabled);
         streamRef.current.getAudioTracks()[0].enabled = resolvedValue;
         return { ...m, isEnabled: resolvedValue };
       });
