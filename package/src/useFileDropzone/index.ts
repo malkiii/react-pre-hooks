@@ -9,7 +9,7 @@ type FileData<T extends FileDataType | undefined> = T extends undefined
   : string;
 
 export type FileDataType = 'array-buffer' | 'binary-string' | 'url' | 'text';
-export type FileDropError = { type?: 'extention' | 'size' | (string & {}); message: string };
+export type DropzoneError = { type?: 'extention' | 'size' | (string & {}); message: string };
 
 export type DroppedFile<T extends FileDataType | undefined> = {
   name: string;
@@ -18,7 +18,7 @@ export type DroppedFile<T extends FileDataType | undefined> = {
   data: FileData<T> | null;
 };
 
-export type FileDropOptions<T extends FileDataType | undefined> = Partial<{
+export type DropzoneOptions<T extends FileDataType | undefined> = Partial<{
   multiple: boolean;
   extensions: string[];
   minSize: number;
@@ -39,8 +39,8 @@ const getFileInputElement = (label: HTMLLabelElement): HTMLInputElement | null =
   return label.querySelector('input[type="file"]') as any;
 };
 
-export const useFileDrop = <T extends FileDataType | undefined = undefined>(
-  options: FileDropOptions<T> = {}
+export const useFileDropzone = <T extends FileDataType | undefined = undefined>(
+  options: DropzoneOptions<T> = {}
 ) => {
   const { multiple = false, readAs, onUpload } = options;
 
@@ -48,7 +48,7 @@ export const useFileDrop = <T extends FileDataType | undefined = undefined>(
   const [files, setFiles] = useState<DroppedFile<T>[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [error, setError] = useState<FileDropError>();
+  const [error, setError] = useState<DropzoneError>();
 
   const isValidFiles = useCallback(
     (files: DroppedFile<T>[]) => {
