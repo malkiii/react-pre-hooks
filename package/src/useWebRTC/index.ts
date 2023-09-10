@@ -18,7 +18,7 @@ export type StreamOptions = Partial<{
   video: boolean | (MediaTrackConstraints & { display?: boolean });
   audio: boolean | MediaTrackConstraints;
   autoStart: boolean;
-  onStream: (stream: MediaStream) => void;
+  onStart: (stream: MediaStream) => void;
 }>;
 
 export type ScreenshotOptions = Partial<{
@@ -31,7 +31,7 @@ export type ScreenshotOptions = Partial<{
 
 export const useWebRTC = (options: StreamOptions = {}) => {
   const ref = useRef<HTMLVideoElement>(null);
-  const { autoStart = true, onStream } = options;
+  const { autoStart = true, onStart } = options;
   const { video = false, audio = false } = options;
 
   const videoConstraints = typeof video == 'boolean' ? {} : video;
@@ -90,7 +90,7 @@ export const useWebRTC = (options: StreamOptions = {}) => {
     media.autoplay = true;
     media.srcObject = stream;
 
-    if (onStream) onStream(stream);
+    if (onStart) onStart(stream);
   }, [shouldStart, camera.current, microphone.current]);
 
   const stop = useCallback(() => {
