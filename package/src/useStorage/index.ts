@@ -18,7 +18,11 @@ const parseJSON = <T>(value: string | null): T => {
   }
 };
 
-const useStorage = <T extends any>(type: StorageType, key: string, initialValue: T | null) => {
+const useStorage = <T extends any>(
+  type: StorageType,
+  key: string,
+  initialValue: T | null = null
+) => {
   const storage = type === 'localStorage' ? window.localStorage : window.sessionStorage;
   const storageEvent = type === 'localStorage' ? 'storage:local' : 'storage:session';
 
@@ -62,7 +66,9 @@ const useStorage = <T extends any>(type: StorageType, key: string, initialValue:
     [key, getStoredValue]
   );
 
-  useEffect(setCurrentStoredValue, []);
+  useEffect(() => {
+    setCurrentStoredValue();
+  }, []);
 
   useEventListener('storage', handleStorageChange);
   useEventListener(storageEvent, handleStorageChange);
@@ -70,10 +76,10 @@ const useStorage = <T extends any>(type: StorageType, key: string, initialValue:
   return [storedValue, updateStoredValue] as const;
 };
 
-export const useLocalStorage = <T extends any = any>(key: string, initialValue: T) => {
-  return useStorage('localStorage', key, initialValue);
+export const useLocalStorage = <T extends any = any>(key: string, initialValue?: T) => {
+  return useStorage<T>('localStorage', key, initialValue);
 };
 
-export const useSessionStorage = <T extends any = any>(key: string, initialValue: T) => {
-  return useStorage('sessionStorage', key, initialValue);
+export const useSessionStorage = <T extends any = any>(key: string, initialValue?: T) => {
+  return useStorage<T>('sessionStorage', key, initialValue);
 };
