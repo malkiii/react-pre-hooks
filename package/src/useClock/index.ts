@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { addMilliseconds, format, subMilliseconds } from 'date-fns';
 import { useInterval } from '@/src';
 
 export type DateProps = Partial<{
@@ -13,10 +12,9 @@ export type DateProps = Partial<{
 }>;
 
 export type ClockOptions = Partial<{
-  format: string;
   timeout: number;
-  startOnMount: boolean;
   initial: string | Date | DateProps;
+  startOnMount: boolean;
   duration: number;
 }>;
 
@@ -41,7 +39,6 @@ const getInitialDate = (date?: ClockOptions['initial']) => {
 export const useClock = (options: ClockOptions = {}) => {
   const timeout = options.timeout ?? 1000;
   const startOnMount = options.startOnMount ?? true;
-  const clockFormat = options.format ?? 'HH:mm:ss a';
 
   const hasInitialDate = !!options.initial;
   const initialDate = getInitialDate(options.initial);
@@ -56,9 +53,9 @@ export const useClock = (options: ClockOptions = {}) => {
         const currentDuration = date.getTime() - initialDate.getTime();
         const nextDatetime =
           currentDuration > duration
-            ? subMilliseconds(date, timeout)
+            ? new Date(date.getTime() - timeout)
             : currentDuration < duration
-            ? addMilliseconds(date, timeout)
+            ? new Date(date.getTime() + timeout)
             : date;
 
         nextDatetime.getTime() - initialDate.getTime() == duration && timer.stop();
@@ -69,13 +66,11 @@ export const useClock = (options: ClockOptions = {}) => {
     { timeout, startOnMount }
   );
 
-  const value = format(datetime, clockFormat);
-
   const reset = () => {
     if (!hasInitialDate) return;
     timer.stop();
     setDatetime(initialDate);
   };
 
-  return { value, datetime, ...timer, reset };
+  return { datetime, ...timer, reset };
 };
