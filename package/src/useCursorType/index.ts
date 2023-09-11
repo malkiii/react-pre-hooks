@@ -13,7 +13,8 @@ export const useCursorType = <T extends HTMLElement = HTMLDivElement>(ref?: RefO
   }, []);
 
   useEventListener(['mousemove', 'mousedown', 'mouseup'], handleMouseMove, {
-    target: targetRef.current || window
+    target: targetRef.current || window,
+    passive: true
   });
 
   return { targetRef, cursor };
