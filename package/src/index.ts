@@ -12,7 +12,6 @@ export { useCss } from './useCss';
 export { useCursorType } from './useCursorType';
 export { useDebouncedState } from './useDebouncedState';
 export { useDevice } from './useDevice';
-export { useEffectOnce } from './useEffectOnce';
 export { useEventListener } from './useEventListener';
 export { useFetch } from './useFetch';
 export { useFileDropzone } from './useFileDropzone';
