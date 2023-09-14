@@ -176,6 +176,12 @@ export const useWebRTC = (options: StreamOptions = {}) => {
         if (recorderState == 'inactive') return;
         const shouldPlay = play ?? recorderState == 'paused';
         shouldPlay ? recorderRef.current?.resume() : recorderRef.current?.pause();
+      },
+      pause() {
+        this.toggle(false);
+      },
+      resume() {
+        this.toggle(true);
       }
     }),
     [recorderRef, recorderState]

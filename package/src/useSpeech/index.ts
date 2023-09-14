@@ -32,6 +32,12 @@ export const useSpeech = (options: SpeechOptions = {}) => {
         const shouldPlay = play ?? speechSynthesis.paused;
         shouldPlay ? speechSynthesis.resume() : speechSynthesis.pause();
       },
+      play() {
+        this.toggle(true);
+      },
+      pause() {
+        this.toggle(false);
+      },
       cancel() {
         this.toggle(true);
         speechSynthesis.cancel();
