@@ -21,7 +21,7 @@ export const useEasing = (options: EasingOption) => {
     isReversed: false
   });
 
-  const animationRef = useRef(new Animation());
+  const animationRef = useRef(new Animation(new KeyframeEffect(null, null, { duration })));
   const frameRequestId = useRef<number>();
 
   const handleEasing = useCallback(() => {
@@ -66,6 +66,7 @@ export const useEasing = (options: EasingOption) => {
       },
       reverse() {
         animationRef.current.reverse();
+        if (!state.isPlaying) this.play();
         setState(s => ({ ...s, isReversed: !s.isReversed }));
       }
     }),
@@ -84,10 +85,6 @@ export const useEasing = (options: EasingOption) => {
   }, [state.isReversed]);
 
   useEffect(() => {
-    const animation = document.createElement('p').animate(null, { duration });
-    animation.cancel();
-
-    animationRef.current.effect = animation.effect;
     if (startOnMount) animationRef.current.play();
   }, []);
 
