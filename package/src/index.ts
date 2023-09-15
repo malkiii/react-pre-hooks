@@ -47,7 +47,7 @@ export { useUpdateEffect } from './useUpdateEffect';
 export { useViewport } from './useViewport';
 export { useWebRTC } from './useWebRTC';
 
-export type { TransitionProps, TransformProps, AnimationProps, AnimatePresenceOptions } from './useAnimatePresence';
+export type { TransitionProps, AnimatePresenceOptions } from './useAnimatePresence';
 export type { AutoCompleteHandler, AutoCompleteOptions } from './useAutoComplete';
 export type { ClickAwayOptions } from './useClickAway';
 export type { DateProps, ClockOptions } from './useClock';
