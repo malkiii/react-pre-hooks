@@ -1,5 +1,5 @@
 import { SetStateAction, useMemo, useState } from 'react';
-import deepEqual from 'fast-deep-equal';
+import { deepEqual } from '@/src/utils';
 
 type DefaultObject = Record<string, unknown>;
 type ObjectType<T> = keyof T extends never ? DefaultObject : T;

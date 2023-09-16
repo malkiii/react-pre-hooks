@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      fast-deep-equal:
-        specifier: ^3.1.3
-        version: 3.1.3
       react:
         specifier: '>=18.2.0'
         version: 18.2.0
@@ -1724,6 +1721,7 @@ packages:
 
   /fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+    dev: true
 
   /fast-diff@1.3.0:
     resolution: {integrity: sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==}

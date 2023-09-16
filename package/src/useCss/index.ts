@@ -1,5 +1,5 @@
 import { CSSProperties, RefObject, useLayoutEffect, useRef, useState } from 'react';
-import deepEqual from 'fast-deep-equal';
+import { deepEqual } from '@/src/utils';
 
 export type CSSObject = { [K in string]: CSSProps | CSSObject };
 export type CSSProps = CSSProperties & { [K in string]?: string | number | null };
