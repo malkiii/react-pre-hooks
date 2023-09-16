@@ -20,3 +20,15 @@ export function download(url: string, name = '') {
   a.click();
   a.remove();
 }
+
+/* prettier-ignore */
+export function deepEqual(a: any, b: any) {
+  if (a === b) return true;
+
+  if (a.constructor !== b.constructor) return false;
+  if (Array.isArray(a) && Array.isArray(b) && a.length !== b.length) return false;
+  if (((a instanceof Set && b instanceof Set) || (a instanceof Map && b instanceof Map)) && a.size !== b.size) return false;
+  if (Object.keys(a as {}).length !== Object.keys(b as {}).length) return false;
+
+  return JSON.stringify(a) === JSON.stringify(b);
+}
