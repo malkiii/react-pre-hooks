@@ -11,7 +11,10 @@ export type MediaDevice = {
 
 export type RecorderOptions = Partial<{
   download: string;
-  format: 'mp4' | 'webm';
+  type:
+    | `video/${'mp4' | 'mpeg' | 'webm' | 'ogg'}`
+    | `audio/${'mpeg' | 'wav' | 'webm' | 'ogg'}`
+    | (string & {});
 }>;
 
 export type StreamOptions = Partial<{
@@ -161,7 +164,7 @@ export const useWebRTC = (options: StreamOptions = {}) => {
         recorderRef.current?.stop();
 
         const blob = await new Promise<Blob>(resolve => {
-          const type = `video/${options.format || 'mp4'}`;
+          const type = options.type ?? 'video/mp4';
           setTimeout(() => resolve(new Blob(recorderBlobParts.current, { type })), 0);
         });
 
