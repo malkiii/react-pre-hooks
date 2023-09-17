@@ -1,5 +1,5 @@
 import { SetStateAction, useMemo, useState } from 'react';
-import { deepEqual } from '@/src/utils';
+import deepEqual from 'fast-deep-equal';
 
 const copyWith = <T extends any>(set: Set<T>, callback: (set: Set<T>) => any) => {
   const copy = structuredClone(set);

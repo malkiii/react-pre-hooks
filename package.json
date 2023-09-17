@@ -25,11 +25,13 @@
   },
   "scripts": {
     "build": "rm -rf dist/ && pnpm prebuild && tsc && vite build",
+    "prebuild": "pnpm lint && bash package/export-hooks.sh",
     "format": "prettier --write package/**/*.{ts,tsx}",
     "lint": "eslint package --ext ts,tsx --cache",
-    "prebuild": "pnpm lint && bash package/export-hooks.sh",
     "test": "vitest run --coverage",
     "test:watch": "clear && vitest watch",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
     "prepublish": "node -pe \"require('./package.json').version\" | echo \"v$(cat)\" | xargs -I {} git tag {} && git push --tags"
   },
   "sideEffects": false,
@@ -51,6 +53,7 @@
     "vite-plugin-banner": "^0.7.0",
     "vite-plugin-dts": "^3.0.2",
     "vite-tsconfig-paths": "^4.2.0",
+    "vitepress": "1.0.0-rc.13",
     "vitest": "^0.32.2"
   },
   "peerDependencies": {
@@ -72,5 +75,8 @@
     "next",
     "ts",
     "js"
-  ]
+  ],
+  "dependencies": {
+    "fast-deep-equal": "^3.1.3"
+  }
 }

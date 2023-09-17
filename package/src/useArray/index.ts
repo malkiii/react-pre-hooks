@@ -1,5 +1,5 @@
 import { SetStateAction, useMemo, useState } from 'react';
-import { deepEqual } from '@/src/utils';
+import deepEqual from 'fast-deep-equal';
 
 type NonEmptyArray<T> = [T, ...T[]];
 type MapParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
