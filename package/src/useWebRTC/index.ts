@@ -142,10 +142,10 @@ export const useWebRTC = (options: StreamOptions = {}) => {
       isPaused: recorderState == 'paused',
       start() {
         if (recorderState !== 'inactive') return;
-        const stream = streamRef.current;
-        if (!stream) return;
 
-        recorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9,opus' });
+        recorderRef.current = new MediaRecorder(streamRef.current, {
+          mimeType: 'video/webm;codecs=vp9,opus'
+        });
         recorderRef.current.ondataavailable = event => {
           if (event.data.size > 0) recorderBlobParts.current.push(event.data);
         };
@@ -156,7 +156,11 @@ export const useWebRTC = (options: StreamOptions = {}) => {
           recorderRef.current![event] = updateRecorderState;
         });
 
-        recorderRef.current.start();
+        try {
+          recorderRef.current.start();
+        } catch (error) {
+          console.log(error);
+        }
       },
       async stop(options: RecorderOptions = {}) {
         if (recorderState == 'inactive') return;
