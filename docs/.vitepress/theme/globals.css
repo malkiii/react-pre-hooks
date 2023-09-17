@@ -1,0 +1,46 @@
+:root {
+  --vp-c-brand-1: #f0033c;
+  --vp-c-brand-2: #f02958;
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(
+    60deg,
+    var(--vp-c-brand-1) 55%,
+    var(--vp-c-brand-2)
+  );
+
+  --vp-button-brand-bg: var(--vp-c-brand-1);
+  --vp-home-hero-image-background-image: linear-gradient(135deg, var(--vp-c-brand-2) 55%, #fff);
+  --vp-home-hero-image-filter: blur(40px);
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+*::selection {
+  color: #fff;
+  background-color: var(--vp-c-brand-1);
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vp-c-brand-1);
+  border: 4px solid transparent;
+  background-clip: content-box;
+  border-radius: 10px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(72px);
+  }
+}

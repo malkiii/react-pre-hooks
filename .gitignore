@@ -5,6 +5,10 @@ dist
 # testing
 coverage
 
+# docs
+docs/.vitepress/dist
+docs/.vitepress/cache
+
 # Editor directories and files
 .DS_Store
 .eslintcache
