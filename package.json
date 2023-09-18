@@ -11,7 +11,7 @@
   "main": "dist/realtime-hooks.umd.js",
   "module": "dist/realtime-hooks.es.js",
   "types": "dist/index.d.ts",
-  "homepage": "https://github.com/malkiii/realtime-hooks#readme",
+  "homepage": "https://malkiii.github.io/realtime-hooks",
   "files": [
     "dist/",
     "package/README.md"

@@ -1,21 +1,23 @@
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vitepress';
-import { author, description, repository } from '../../package.json';
+import { author, description, homepage, repository } from '../../package.json';
+
+const baseURL = new URL(homepage);
 
 const site = {
   title: 'Realtime hooks',
   description,
   logo: '/realtime-hooks-logo.svg',
-  og: ''
+  og: `${baseURL}/og.png`
 };
 
 export default defineConfig({
   title: site.title,
   description: site.description,
-  base: '/realtime-hooks/',
+  base: baseURL.pathname,
   head: [
-    ['link', { rel: 'icon', href: site.logo, type: 'image/svg+xml' }],
+    ['link', { rel: 'icon', href: baseURL.pathname + site.logo, type: 'image/svg+xml' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: site.title }],
     ['meta', { property: 'og:description', content: site.description }],
