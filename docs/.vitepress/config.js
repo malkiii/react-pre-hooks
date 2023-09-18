@@ -6,27 +6,9 @@ import { author, description, repository } from '../../package.json';
 const site = {
   title: 'Realtime hooks',
   description,
-  author: author.name,
   logo: '/realtime-hooks-logo.svg',
   og: ''
 };
-
-function getAllHooks() {
-  const guideDirectory = path.join(__dirname, '../guide');
-  const srcDirectory = path.join(__dirname, '../../package/src');
-
-  const hooks = fs
-    .readdirSync(srcDirectory, { withFileTypes: true })
-    .filter(dir => dir.isDirectory() && dir.name.startsWith('use'))
-    .map(dir => dir.name);
-
-  hooks.forEach(hook => {
-    const hookDoc = path.join(guideDirectory, `${hook}.md`);
-    if (!fs.existsSync(hookDoc)) fs.writeFileSync(hookDoc, `# ${hook}`);
-  });
-
-  return hooks;
-}
 
 export default defineConfig({
   title: site.title,
@@ -61,17 +43,21 @@ export default defineConfig({
         },
         {
           text: 'Hooks',
-          items: getAllHooks().map(hook => ({ text: hook, link: `/guide/${hook}` }))
+          items: fs
+            .readdirSync(path.join(__dirname, '../../package/src'), { withFileTypes: true })
+            .filter(dir => dir.isDirectory() && dir.name.startsWith('use'))
+            .map(({ name }) => ({ text: name, link: `/guide/${name}` }))
         }
       ]
     },
+    lastUpdated: true,
     editLink: {
       text: 'Edit this page',
       pattern: `${repository.url}/edit/master/docs/:path`
     },
     footer: {
       message: 'Released under the MIT License.',
-      copyright: `Copyright &copy; 2023-PRESENT ${site.author}`
+      copyright: `Copyright &copy; 2023-PRESENT ${author.name}`
     }
   }
 });
