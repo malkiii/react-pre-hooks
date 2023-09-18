@@ -34,5 +34,5 @@ bun add realtime-hooks
 Just import the hook that you want to use:
 
 ```ts
-import { /*name*/ } from 'realtime-hooks';
+import { /* hook */ } from 'realtime-hooks';
 ```
