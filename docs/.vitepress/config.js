@@ -13,6 +13,7 @@ const site = {
 export default defineConfig({
   title: site.title,
   description: site.description,
+  base: '/realtime-hooks/',
   head: [
     ['link', { rel: 'icon', href: site.logo, type: 'image/svg+xml' }],
     ['meta', { name: 'og:type', content: 'website' }],
