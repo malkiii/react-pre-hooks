@@ -28,18 +28,18 @@ export const useSpeech = (options: SpeechOptions = {}) => {
         startSpeech(text);
         setState(s => ({ ...s, text: '' }));
       },
-      toggle(play?: boolean) {
+      togglePlayState(play?: boolean) {
         const shouldPlay = play ?? speechSynthesis.paused;
         shouldPlay ? speechSynthesis.resume() : speechSynthesis.pause();
       },
       play() {
-        this.toggle(true);
+        this.togglePlayState(true);
       },
       pause() {
-        this.toggle(false);
+        this.togglePlayState(false);
       },
       cancel() {
-        this.toggle(true);
+        this.play();
         speechSynthesis.cancel();
       },
       setLang(lang: SetStateAction<string | undefined>) {

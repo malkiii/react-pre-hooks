@@ -8,7 +8,7 @@ export interface SwipeAction {
   readonly initialX: number;
   readonly initialY: number;
   readonly direction?: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
-  readonly isEnded: boolean;
+  readonly isHolding: boolean;
   readonly event: TouchEvent | MouseEvent;
 }
 
@@ -38,7 +38,7 @@ export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions
       initialPosition.current = getCurrentMousePosition(event);
       const { x: initialX, y: initialY } = initialPosition.current;
 
-      handler({ deltaX: 0, deltaY: 0, initialX, initialY, isEnded: false, event });
+      handler({ deltaX: 0, deltaY: 0, initialX, initialY, isHolding: true, event });
     },
     [handler]
   );
@@ -53,7 +53,7 @@ export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions
         initialX: initialPosition.current.x,
         initialY: initialPosition.current.y,
         direction: getSwipeDirection(),
-        isEnded: true,
+        isHolding: false,
         event
       });
 
@@ -78,7 +78,7 @@ export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions
         initialX: initialPosition.current.x,
         initialY: initialPosition.current.y,
         direction: getSwipeDirection(),
-        isEnded: false,
+        isHolding: true,
         event
       });
     },

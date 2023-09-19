@@ -2,7 +2,7 @@ import { SetStateAction, useCallback, useLayoutEffect, useMemo, useRef, useState
 import { download, getStateActionValue } from '@/src/utils';
 
 export type MediaDevice = {
-  available: MediaDeviceInfo[];
+  devices: MediaDeviceInfo[];
   current?: MediaDeviceInfo;
   isEnabled: boolean;
   use: (device?: SetStateAction<MediaDeviceInfo | undefined>) => void;
@@ -45,7 +45,7 @@ export const useWebRTC = (options: StreamOptions = {}) => {
   const [notAllowedDevices, setNotAllowedDevices] = useState<Array<'video' | 'audio'>>([]);
 
   const [camera, setCamera] = useState<MediaDevice>({
-    available: [],
+    devices: [],
     isEnabled: !!video,
     use: value => {
       setCamera(c => {
@@ -64,7 +64,7 @@ export const useWebRTC = (options: StreamOptions = {}) => {
   });
 
   const [microphone, setMicrophone] = useState<MediaDevice>({
-    available: [],
+    devices: [],
     isEnabled: !!audio,
     use: value => {
       setMicrophone(m => {
@@ -159,7 +159,7 @@ export const useWebRTC = (options: StreamOptions = {}) => {
         try {
           recorderRef.current.start();
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       },
       async stop(options: RecorderOptions = {}) {
@@ -179,16 +179,16 @@ export const useWebRTC = (options: StreamOptions = {}) => {
 
         return videoURL;
       },
-      toggle(play?: boolean) {
+      togglePlayState(play?: boolean) {
         if (recorderState == 'inactive') return;
         const shouldPlay = play ?? recorderState == 'paused';
         shouldPlay ? recorderRef.current?.resume() : recorderRef.current?.pause();
       },
       pause() {
-        this.toggle(false);
+        this.togglePlayState(false);
       },
       resume() {
-        this.toggle(true);
+        this.togglePlayState(true);
       }
     }),
     [recorderRef, recorderState]
@@ -199,11 +199,11 @@ export const useWebRTC = (options: StreamOptions = {}) => {
 
     if (!videoConstraints.display) {
       const videoDevices = devices.filter(d => d.deviceId && d.kind === 'videoinput');
-      setCamera(c => ({ ...c, available: videoDevices, current: videoDevices[0] }));
+      setCamera(c => ({ ...c, devices: videoDevices, current: videoDevices[0] }));
     }
 
     const audioDevices = devices.filter(d => d.deviceId && d.kind === 'audioinput');
-    setMicrophone(m => ({ ...m, available: audioDevices, current: audioDevices[0] }));
+    setMicrophone(m => ({ ...m, devices: audioDevices, current: audioDevices[0] }));
 
     setShouldStart(autoStart);
   }, []);
@@ -295,7 +295,8 @@ export const useWebRTC = (options: StreamOptions = {}) => {
 
   return {
     ref,
-    devices: { video: camera, audio: microphone },
+    camera,
+    microphone,
     start: () => setShouldStart(true),
     stop,
     takeScreenshot,

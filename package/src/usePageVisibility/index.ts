@@ -1,14 +1,13 @@
 import { useCallback, useState } from 'react';
 import { useEventListener } from '@/src';
-
-const documentHiddenProperties = ['hidden', 'mozHidden', 'webkitHidden', 'oHidden', 'msHidden'];
+import { getPrefixedProperty } from '@/src/utils';
 
 export const usePageVisibility = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   const handleVisibilityChange = useCallback((force?: boolean) => {
     if (force !== undefined) return setIsVisible(force);
-    setIsVisible(documentHiddenProperties.some(prop => (document as any)[prop]));
+    setIsVisible(!!getPrefixedProperty(document, 'hidden'));
   }, []);
 
   useEventListener('blur', () => handleVisibilityChange(false));

@@ -38,7 +38,7 @@ export const useEasing = (options: EasingOption) => {
 
   const controls = useMemo(
     () => ({
-      toggle(play?: boolean) {
+      togglePlayState(play?: boolean) {
         const shouldPlay = play ?? !state.isPlaying;
 
         if (shouldPlay) {
@@ -55,10 +55,10 @@ export const useEasing = (options: EasingOption) => {
         setState(s => ({ ...s, isPlaying: shouldPlay, isPaused: !shouldPlay, isFinished: false }));
       },
       play() {
-        this.toggle(true);
+        this.togglePlayState(true);
       },
       pause() {
-        this.toggle(false);
+        this.togglePlayState(false);
       },
       cancel() {
         cancelAnimationFrame();
