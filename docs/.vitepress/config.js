@@ -47,9 +47,9 @@ export default defineConfig({
         {
           text: 'Hooks',
           items: fs
-            .readdirSync(path.join(__dirname, '../../package/src'), { withFileTypes: true })
-            .filter(dir => dir.isDirectory() && dir.name.startsWith('use'))
-            .map(({ name }) => ({ text: name, link: `/guide/${name}` }))
+            .readdirSync(path.join(__dirname, '../guide'))
+            .filter(name => name.startsWith('use') && name.endsWith('.md'))
+            .map(name => ({ text: name.replace(/\.md$/, ''), link: `/guide/${name}` }))
         }
       ]
     },
