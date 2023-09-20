@@ -9,12 +9,10 @@ Simplify and clean up your components with this react hooks collection.
 <a href="https://packagequality.com/#?package=realtime-hooks"><img alt="Package Quality" src="https://packagequality.com/shield/realtime-hooks.svg" /></a>
 <a href="https://github.com/malkiii/realtime-hooks/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/malkiii/realtime-hooks" /></a>
 
-## Contributing
+## List Of Hooks
 
-Please read <a href="https://github.com/malkiii/realtime-hooks/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING.md</a> for details on our code of conduct, and the process for submitting pull requests to us.
-
-<table>
-  <tr><th>Name</th><th>Description</th></tr>
+<table align=center>
+  <tr><th width="300">Name</th><th width="700">Description</th></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAnimatePresence">useAnimatePresence</a></td><td></td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useArray">useArray</a></td><td></td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAsync">useAsync</a></td><td></td></tr>
@@ -63,3 +61,7 @@ Please read <a href="https://github.com/malkiii/realtime-hooks/blob/master/.gith
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useViewport">useViewport</a></td><td></td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useWebRTC">useWebRTC</a></td><td></td></tr>
 </table>
+
+## Contributing
+
+Please read <a href="https://github.com/malkiii/realtime-hooks/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING.md</a> for details on our code of conduct, and the process for submitting pull requests to us.
