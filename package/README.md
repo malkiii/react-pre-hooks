@@ -20,7 +20,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAutoComplete">useAutoComplete</a></td><td>Returns the result array of a search text.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClickAway">useClickAway</a></td><td>Execute a function when clicking outside an element.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClipboard">useClipboard</a></td><td>Copy to clipboard and return a temporary <code>copied</code> state.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClock">useClock</a></td><td>Returns a date value in a duration starting from an initial date or return the current date.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClock">useClock</a></td><td>Returns a date in a duration starting from an initial date or return the current date.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useColorScheme">useColorScheme</a></td><td>Returns the current system color scheme (<code>dark</code> or <code>light</code>).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCounter">useCounter</a></td><td>Simple counter with <code>step</code>, <code>min</code> and <code>max</code> value.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCss">useCss</a></td><td>Insert some actual CSS using a <code>CSS Object</code>.</td></tr>
@@ -29,7 +29,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useDevice">useDevice</a></td><td>Returns the current device type (<code>desktop</code>, <code>mobile</code>, <code>smartTV</code>...)</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useEasing">useEasing</a></td><td>Change a value from <code>start</code> to <code>end</code> using an <code><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function">animation timing function</a></code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useEventListener">useEventListener</a></td><td>Add one or multiple event listeners.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFetch">useFetch</a></td><td>Fetch data using a URL and search queries, and returns the data, loading state, refetch function...</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFetch">useFetch</a></td><td>Fetch data using a URL and search queries...</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFileDropzone">useFileDropzone</a></td><td>Handles file dropping to a label of a file input.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useGeolocation">useGeolocation</a></td><td>Track the current geo location of the client.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useHover">useHover</a></td><td>Returns a <code>hovered</code> state, and it can use a <code>delay</code> value as well.</td></tr>
@@ -43,7 +43,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMount">useMount</a></td><td>Execute a callback after the component is mounted.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMouse">useMouse</a></td><td>Track the mouse position and state (down or up, in or out).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMutation">useMutation</a></td><td>Handles <code>MutationObserver</code> and returns the current mutations (changes being made to the DOM tree).</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useNetwork">useNetwork</a></td><td></td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useOnlineState">useOnlineState</a></td><td>Returns whether the user is online or not.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePageVisibility">usePageVisibility</a></td><td>Returns the tab visible state (the tab contents is visible or hidden).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScroll">useScroll</a></td><td>Track the scroll <code>position</code> ,<code>progress</code> and <code>direction</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScrollEnd">useScrollEnd</a></td><td>Execute a callback when the scrolling is close to the end with a specific <code>offset</code>.</td></tr>
