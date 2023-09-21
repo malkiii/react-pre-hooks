@@ -186,8 +186,8 @@ export const useVideo = (initialState: VideoElementInit = {}) => {
   const handleVideoModeChange = useCallback(() => {
     setVideoState(state => ({
       ...state,
-      isFullscreen: document.fullscreenEnabled,
-      isMiniPlayer: document.pictureInPictureEnabled
+      isFullscreen: !!document.fullscreenElement,
+      isMiniPlayer: !!document.pictureInPictureElement
     }));
   }, []);
 
