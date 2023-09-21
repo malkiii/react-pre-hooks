@@ -1,11 +1,25 @@
-import { useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { useEventListener } from '@/src';
+import { getPrefixedProperty } from '@/src/utils';
 
 export const useOnlineStatus = () => {
-  const [isOnline, setIsOnline] = useState<boolean>(() => navigator.onLine);
-  const handleChange = () => setIsOnline(navigator.onLine);
+  const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
+  const connection = getPrefixedProperty(navigator, 'connection' as any);
 
-  useEventListener(['online', 'offline'], handleChange, { passive: true });
+  const testConnection = useCallback(async () => {
+    try {
+      setIsOnline((await fetch('https://httpbin.org/status/200')).ok);
+    } catch (error) {
+      setIsOnline(false);
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    testConnection();
+  }, []);
+
+  useEventListener(['online', 'offline'], () => setIsOnline(navigator.onLine));
+  useEventListener(['change', 'typechange' as any], testConnection, { target: connection });
 
   return isOnline;
 };
