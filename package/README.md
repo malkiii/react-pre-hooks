@@ -66,4 +66,4 @@ Simplify and clean up your components with this react hooks collection.
 
 ## Contributing
 
-Please read <a href="https://github.com/malkiii/realtime-hooks/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING.md</a> for details on our code of conduct, and the process for submitting pull requests to us.
+Please read <a href="https://github.com/malkiii/realtime-hooks/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING.md</a> for details on our code of conduct, and the process for submitting pull requests.
