@@ -12,6 +12,16 @@ const site = {
   og: `${baseURL}/og.png`
 };
 
+function getHooksSectionItems() {
+  return fs
+    .readdirSync(path.join(__dirname, '../../package/src'), { withFileTypes: true })
+    .filter(file => file.isFile() && file.name.startsWith('use'))
+    .map(({ name }) => {
+      const text = name.replace(/\.\w+$/g, '');
+      return { text, link: `/guide/${text}` };
+    });
+}
+
 export default defineConfig({
   title: site.title,
   description: site.description,
@@ -46,10 +56,7 @@ export default defineConfig({
         },
         {
           text: 'Hooks',
-          items: fs
-            .readdirSync(path.join(__dirname, '../guide'))
-            .filter(name => name.startsWith('use') && name.endsWith('.md'))
-            .map(name => ({ text: name.replace(/\.md$/, ''), link: `/guide/${name}` }))
+          items: getHooksSectionItems()
         }
       ]
     },
