@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-export type StorageType = 'localStorage' | 'sessionStorage';
+type StorageType = 'localStorage' | 'sessionStorage';
 
 const parseJSON = <T>(value: string | null): T => {
   try {
@@ -18,7 +18,7 @@ const parseJSON = <T>(value: string | null): T => {
   }
 };
 
-const useStorage = <T extends any>(
+export const useStorage = <T extends any>(
   type: StorageType,
   key: string,
   initialValue: T | null = null
@@ -74,12 +74,4 @@ const useStorage = <T extends any>(
   useEventListener(storageEvent, handleStorageChange);
 
   return [storedValue, updateStoredValue] as const;
-};
-
-export const useLocalStorage = <T extends any = any>(key: string, initialValue?: T) => {
-  return useStorage<T>('localStorage', key, initialValue);
-};
-
-export const useSessionStorage = <T extends any = any>(key: string, initialValue?: T) => {
-  return useStorage<T>('sessionStorage', key, initialValue);
 };
