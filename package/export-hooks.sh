@@ -2,7 +2,7 @@
 
 src_directory="$(dirname "$0")/src"
 index_file="$src_directory/index.ts"
-hooks_files=$(find $src_directory -type f -name 'use*')
+hooks_files=$(find $src_directory -maxdepth 1 -type f -name 'use*')
 
 # Create or overwrite the index.ts file
 echo "/** @run \"pnpm prebuild\" to modify this file */" > $index_file
