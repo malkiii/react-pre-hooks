@@ -1,0 +1,20 @@
+name: ✨ Request a new feature
+description: If you found a bug on daisyUI, feel free to create a new report.
+labels: ['feature']
+title: 'feat: '
+body:
+  - type: input
+    id: hook
+    attributes:
+      label: What is the target hook?
+      description: the name of the hook that you want to add or modify.
+      placeholder: useSomthing
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the new feature
+      description: summarizing what feature you want to add.
+    validations:
+      required: true

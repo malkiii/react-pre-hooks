@@ -1,0 +1,32 @@
+name: 🐞 Report a new Bug
+description: If you found a bug on daisyUI, feel free to create a new report.
+labels: ['bug']
+title: 'bug: '
+body:
+  - type: dropdown
+    id: bugs
+    attributes:
+      label: in which part did you find this bug?
+      multiple: true
+      options:
+        - 🦯 Existing hook
+        - 📕 Documentation
+        - 🔧 Build configuration
+        - 🧰 Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the issue
+      description: Write a clear and concise description summarizing what the bug is.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: file URL
+      description: add the target file URL if you want.
+      placeholder: 'https://'
+    validations:
+      required: false
