@@ -1,5 +1,5 @@
 name: ✨ Request a new feature
-description: If you found a bug on daisyUI, feel free to create a new report.
+description: Suggest a feature or a new hook.
 labels: ['feature']
 title: 'feat: '
 body:

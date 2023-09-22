@@ -1,5 +1,5 @@
 name: 🐞 Report a new Bug
-description: If you found a bug on daisyUI, feel free to create a new report.
+description: If you found a bug, feel free to create a new report.
 labels: ['bug']
 title: 'bug: '
 body:
