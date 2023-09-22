@@ -1,11 +1,11 @@
-# Contributing to daisyUI
+# Contributing to `realtime-hooks`
 
 Thank you for your contribution 🤝
 
 ## Reporting issues
 
 - Before opening a new issue, first [search for existing issues](https://github.com/malkiii/realtime-hooks/issues?q=) to avoid duplications.
-- Provide detailed reports to make things easier for maintainers.
+- [Open a bug report](https://github.com/malkiii/realtime-hooks/issues/new?labels=bug&template=bug-report.yml&title=bug%3A+) with detailed description to make things easier.
 
 ## Fixing existing issues
 
@@ -16,7 +16,7 @@ Thank you for your contribution 🤝
 
 ## Feature requests
 
-- For feature requests, [open a new issue](https://github.com/saadeghi/daisyui/issues/new)
+- For feature requests, [open a new issue](https://github.com/malkiii/realtime-hooks/issues/new?labels=feature&template=feature-request.yml&title=feat%3A+)
 - All feature requests may not fit this library and some may get rejected. Don't take it personally.
 
 ## Pull requests
@@ -28,29 +28,35 @@ Thank you for your contribution 🤝
 
 ### To build the realtime-hooks package on local:
 
-1. **Fork** and **clone** the repo on local
-1. Install package dependencies:
-   ```bash
-   pnpm install
+1. **Fork** and **clone** the repo on local, if you are using [GitHub CLI](https://cli.github.com/) just run:
+
+   ```sh
+   gh repo fork malkiii/realtime-hooks --clone
    ```
-1. Build the package:
-   ```bash
-   pnpm build
+2. Install package dependencies and build the package:
+
+   ```sh
+   pnpm install && pnpm build
    ```
-1. Now you can import `realtime-hooks`:
+3. Now you can import any hook with:
+
    ```ts
-   import * as hooks from "/path/to/dist/directory"
+   import { /* hook */ } from "/path/to/dist/directory"
    ```
 
 ### To run the **documentation site** on local:
-```bash
-pnpm dev
+```sh
+pnpm docs:dev
 ```
 
 ## Adding a new hook
 
-### File structure
+1. Before you add a new hook, please [open a request](https://github.com/malkiii/realtime-hooks/issues/new?labels=feature&template=feature-request.yml&title=feat(hook)%3A+).
 
-All the hooks are in [`/src`](https://github.com/malkiii/realtime-hooks/tree/master/packages/hooks/src) folder, you must follow this file structure:
+2. Add the hook file to [`package/src`](https://github.com/malkiii/realtime-hooks/tree/master/package/src) folder including the code, and then run:
 
-### An example
+   ```sh
+   pnpm prebuild
+   ```
+
+3. Add the hook name and description to the [list of hooks](https://github.com/malkiii/realtime-hooks/#list-of-hooks) in README.md respecting the **alphabetical order**.
