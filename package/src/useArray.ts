@@ -2,7 +2,7 @@ import { SetStateAction, useMemo, useState } from 'react';
 import deepEqual from 'fast-deep-equal';
 
 type NonEmptyArray<T> = [T, ...T[]];
-type MapParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
+type IterationParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
 
 const toSpliced = <T extends any>(arr: T[], ...args: Parameters<T[]['splice']>) => {
   const copy = structuredClone(arr);
@@ -16,20 +16,21 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
     () => ({
       values: array,
       length: array.length,
-      at(index: number) {
+      get(index: number) {
         return array.at(index);
       },
       set(index: number, element: T) {
         setArray(arr => toSpliced(arr, index, 1, element));
       },
       has(...elements: T[]) {
-        return elements.every(e => array.includes(e));
+        return elements.every(value => array.includes(value));
       },
       isEqual(arr: any[]) {
         return deepEqual(array, arr);
       },
-      count(element: T) {
-        return array.reduce((count, num) => (deepEqual(num, element) ? count + 1 : count), 0);
+      count(cond: T | ((...args: IterationParameters<T>) => unknown)) {
+        const canIncrement = cond instanceof Function ? cond : (value: T) => deepEqual(value, cond);
+        return array.reduce((count, ...args) => (canIncrement(...args) ? count + 1 : count), 0);
       },
       push(...elements: NonEmptyArray<T>) {
         setArray(arr => toSpliced(arr, arr.length, 0, ...elements));
@@ -56,8 +57,8 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
       merge(...elements: Array<T | ConcatArray<T>>) {
         setArray(arr => [...new Set(arr.concat(...elements))]);
       },
-      apply(callback: (...args: MapParameters<T>) => T | void) {
-        setArray(arr => arr.map(callback).filter(value => value !== undefined) as T[]);
+      apply(callback: (...args: IterationParameters<T>) => T) {
+        setArray(arr => arr.map(callback));
       },
       copy() {
         return structuredClone(array);

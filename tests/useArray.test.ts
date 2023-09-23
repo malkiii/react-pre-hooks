@@ -11,13 +11,13 @@ describe('useArray', () => {
   it('should get and set a value', () => {
     const { result } = renderHook(() => useArray([1, 2, 3, 4, 5]));
 
-    expect(result.current.at(0)).toBe(1);
-    expect(result.current.at(-1)).toBe(5);
+    expect(result.current.get(0)).toBe(1);
+    expect(result.current.get(-1)).toBe(5);
 
     act(() => result.current.set(0, 69));
-    expect(result.current.at(0)).toBe(69);
+    expect(result.current.get(0)).toBe(69);
     act(() => result.current.set(-2, 69));
-    expect(result.current.at(-2)).toBe(69);
+    expect(result.current.get(-2)).toBe(69);
 
     expect(result.current.count(0)).toBe(0);
     expect(result.current.count(69)).toBe(2);
@@ -76,13 +76,6 @@ describe('useArray', () => {
 
     act(() => result.current.apply(value => value * 2));
     expect(result.current.values).toEqual([-4, -2, 0, 2, 4]);
-
-    act(() =>
-      result.current.apply(value => {
-        if (value > 0) return value;
-      })
-    );
-    expect(result.current.values).toEqual([2, 4]);
   });
 
   it('should concat and merge', () => {
