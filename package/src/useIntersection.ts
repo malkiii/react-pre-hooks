@@ -9,9 +9,9 @@ export type IntersectionObserverOptions<T extends HTMLElement> = IntersectionObs
 export const useIntersectionObserver = <T extends HTMLElement = HTMLDivElement>(
   options: IntersectionObserverOptions<T> = {}
 ) => {
-  const { callback, once, ...observerInit } = options;
+  const { ref, callback, once, ...observerInit } = options;
 
-  const targetRef = options.ref || useRef<T>(null);
+  const targetRef = ref || useRef<T>(null);
   const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
 
   const callbackMemo: IntersectionObserverCallback = useCallback(

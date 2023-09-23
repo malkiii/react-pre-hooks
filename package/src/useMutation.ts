@@ -8,9 +8,9 @@ export type MutationObserverOptions<T extends HTMLElement> = MutationObserverIni
 export const useMutationObserver = <T extends HTMLElement = HTMLDivElement>(
   options: MutationObserverOptions<T> = {}
 ) => {
-  const { callback, ...observerInit } = options;
+  const { ref, callback, ...observerInit } = options;
 
-  const targetRef = options.ref || useRef<T>(null);
+  const targetRef = ref || useRef<T>(null);
   const [mutations, setMutations] = useState<MutationRecord[]>();
 
   const callbackMemo: MutationCallback = useCallback(
