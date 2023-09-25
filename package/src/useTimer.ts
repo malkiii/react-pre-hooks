@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SetStateAction, useCallback, useMemo, useState } from 'react';
 import { useInterval } from '@/src';
 
 export type DateProps = Partial<{
@@ -11,17 +11,16 @@ export type DateProps = Partial<{
   milliseconds: number;
 }>;
 
-export type ClockOptions = Partial<{
-  timeout: number;
-  initial: string | Date | DateProps;
-  startOnMount: boolean;
+export type TimerOptions = Partial<{
+  initial: DateProps;
   duration: number;
+  timeout: number;
+  startOnMount: boolean;
 }>;
 
-const getInitialDate = (date?: ClockOptions['initial']) => {
+const getResolvedDate = (date?: Date | DateProps) => {
   if (!date) return new Date();
   if (date instanceof Date) return date;
-  if (typeof date === 'string') return new Date(date);
 
   const {
     year = 2000,
@@ -36,17 +35,20 @@ const getInitialDate = (date?: ClockOptions['initial']) => {
   return new Date(year, month - 1, day, hours + 1, minutes, seconds, milliseconds);
 };
 
-export const useClock = (options: ClockOptions = {}) => {
-  const timeout = options.timeout ?? 1000;
+export const useTimer = (options: TimerOptions = {}) => {
+  const timeout = Math.abs(Math.floor(options.timeout ?? 1000));
+  const initial = options.initial ?? (options.duration ? {} : undefined);
   const startOnMount = options.startOnMount ?? true;
 
-  const hasInitialDate = !!options.initial;
-  const initialDate = getInitialDate(options.initial);
+  const isTimer = !!(options.initial || options.duration);
+  const initialDate = useMemo(() => getResolvedDate(initial), []);
   const [datetime, setDatetime] = useState<Date>(initialDate);
+
+  const passing = Math.abs(datetime.getTime() - initialDate.getTime());
 
   const timer = useInterval(
     () => {
-      if (!hasInitialDate) return setDatetime(new Date());
+      if (!isTimer) return setDatetime(new Date());
       const duration = options.duration ?? Infinity;
 
       setDatetime(date => {
@@ -66,11 +68,14 @@ export const useClock = (options: ClockOptions = {}) => {
     { timeout, startOnMount }
   );
 
-  const reset = () => {
-    if (!hasInitialDate) return;
-    timer.stop();
-    setDatetime(initialDate);
-  };
+  const reset = useCallback(
+    (value: SetStateAction<Date> | DateProps = initialDate) => {
+      if (!isTimer) return;
+      timer.stop();
+      setDatetime(v => getResolvedDate(value instanceof Function ? value(v) : value));
+    },
+    [timer]
+  );
 
-  return { datetime, ...timer, reset };
+  return { value: datetime, passing, ...timer, reset };
 };
