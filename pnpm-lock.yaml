@@ -12,10 +12,10 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3
       react:
-        specifier: '>=18.2.0'
+        specifier: '>=17'
         version: 18.2.0
       react-dom:
-        specifier: '>=18.2.0'
+        specifier: '>=17'
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
