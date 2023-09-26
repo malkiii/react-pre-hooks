@@ -1,8 +1,8 @@
 import { CSSProperties, RefObject, useLayoutEffect, useRef, useState } from 'react';
 import deepEqual from 'fast-deep-equal';
 
-export type CSSObject = { [K in string]: CSSProps | CSSObject };
-export type CSSProps = CSSProperties & { [K in string]?: string | number | null };
+export type CSSObject = { [K in string]: CSSProps };
+export type CSSProps = CSSProperties & { [K in string]?: string | number | null | CSSProps };
 
 export type CSSOptions<T extends HTMLElement> = Partial<{
   ref: RefObject<T>;
