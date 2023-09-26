@@ -4,13 +4,14 @@ import { getCurrentMousePosition } from '@/src/utils';
 
 export const useMouse = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
   const targetRef = ref || useRef<T>(null);
-  const options = { target: targetRef.current || window };
+  const options = { target: targetRef.current ?? window };
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isOut, setIsOut] = useState<boolean>();
   const [isDown, setIsDown] = useState<boolean>();
 
   const handleMouseMove = (event: MouseEvent | TouchEvent) => {
+    setIsOut(false);
     setPosition(getCurrentMousePosition(event));
   };
 

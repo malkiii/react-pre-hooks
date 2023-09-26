@@ -18,7 +18,7 @@ export const useOnlineStatus = () => {
     testConnection();
   }, []);
 
-  useEventListener(['online', 'offline'], () => setIsOnline(navigator.onLine));
+  useEventListener(['online', 'offline'], () => setIsOnline(navigator.onLine), { target: window });
   useEventListener(['change', 'typechange' as any], testConnection, { target: connection });
 
   return isOnline;

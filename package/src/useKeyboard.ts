@@ -27,7 +27,7 @@ const isPressed = (keyModifier: string, event: KeyboardEvent): boolean => {
   });
 };
 
-export const useKeyboard = <T extends EventTarget>(
+export const useKeyboard = <T extends EventTarget = Window>(
   keysRecord: KeysRecord = {},
   options: EventListenerOptions<T> = {}
 ) => {
@@ -42,6 +42,8 @@ export const useKeyboard = <T extends EventTarget>(
     },
     [keysRecord]
   );
+
+  if (!options.target) options.target = window as any;
 
   useEventListener('keydown', handleKeydown, options);
 };

@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
 export type ScrollEndOptions<T extends HTMLElement> = Partial<{
@@ -28,7 +28,8 @@ export const useScrollEnd = <T extends HTMLElement = HTMLDivElement>(
     setIsScrollEnd(isCloseToEnd);
   }, [options]);
 
-  useEventListener('scroll', handleScrolling, { target: targetRef.current || window });
+  useEffect(handleScrolling, []);
+  useEventListener('scroll', handleScrolling, { target: targetRef.current ?? window });
 
   return { targetRef, isScrollEnd };
 };

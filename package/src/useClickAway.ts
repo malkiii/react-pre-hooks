@@ -18,7 +18,7 @@ export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
     [handler]
   );
 
-  useEventListener('click', callback);
+  useEventListener('click', callback, { target: window });
 
   return targetRef;
 };
