@@ -11,16 +11,16 @@ describe('useCounter', () => {
 
   it('should increments and decrements', () => {
     const step = 3;
-    const { result } = renderHook(() => useCounter(0, { step }));
+    const { result } = renderHook(() => useCounter(0));
 
-    act(() => result.current.inc());
+    act(() => result.current.inc(step));
     expect(result.current.value).toBe(step * 1);
-    act(() => result.current.inc());
+    act(() => result.current.inc(step));
     expect(result.current.value).toBe(step * 2);
 
-    act(() => result.current.dec());
+    act(() => result.current.dec(step));
     expect(result.current.value).toBe(step * 1);
-    act(() => result.current.dec());
+    act(() => result.current.dec(step));
     expect(result.current.value).toBe(0);
   });
 
