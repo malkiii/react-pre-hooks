@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useTimeout } from '@/src';
 
-export const useClipboard = ({ timeout = 3000 } = {}) => {
+export const useClipboard = ({ duration = 3000 } = {}) => {
   const [error, setError] = useState<Error>();
-  const statusTimer = useTimeout(() => {}, { timeout });
+  const statusTimer = useTimeout(() => {}, { timeout: duration });
 
   const copy = useCallback(
     (text?: string) => {
@@ -20,5 +20,5 @@ export const useClipboard = ({ timeout = 3000 } = {}) => {
     setError(undefined);
   }, [statusTimer]);
 
-  return { copy, reset, copied: statusTimer.isRunning, error } as const;
+  return { copy, reset, isCopied: statusTimer.isRunning, error } as const;
 };
