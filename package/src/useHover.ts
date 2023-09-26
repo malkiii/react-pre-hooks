@@ -12,11 +12,13 @@ export const useHover = <T extends HTMLElement = HTMLDivElement>(options: HoverO
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
-  const hoverDelay = typeof options.delay == 'object' ? options.delay.hover : options.delay;
-  const unhoverDelay = typeof options.delay == 'object' ? options.delay.unhover : options.delay;
+  const delay =
+    typeof options.delay === 'number'
+      ? { hover: options.delay, unhover: options.delay }
+      : options.delay ?? {};
 
-  const hoverTimeout = useTimeout(() => setIsHovered(true), { timeout: hoverDelay ?? 0 });
-  const unhoverTimeout = useTimeout(() => setIsHovered(false), { timeout: unhoverDelay ?? 0 });
+  const hoverTimeout = useTimeout(() => setIsHovered(true), { timeout: delay.hover ?? 0 });
+  const unhoverTimeout = useTimeout(() => setIsHovered(false), { timeout: delay.unhover ?? 0 });
 
   const hover = () => {
     hoverTimeout.start();
