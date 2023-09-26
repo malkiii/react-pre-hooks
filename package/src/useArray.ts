@@ -5,7 +5,7 @@ type NonEmptyArray<T> = [T, ...T[]];
 type IterationParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
 
 const toSpliced = <T extends any>(arr: T[], ...args: Parameters<T[]['splice']>) => {
-  const copy = structuredClone(arr);
+  const copy = [...arr];
   copy.splice(...args);
   return copy;
 };
@@ -50,12 +50,6 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
       },
       remove(...elements: NonEmptyArray<T>) {
         setArray(arr => arr.filter(el => !elements.includes(el)));
-      },
-      concat(...elements: Array<T | ConcatArray<T>>) {
-        setArray(arr => arr.concat(...elements));
-      },
-      merge(...elements: Array<T | ConcatArray<T>>) {
-        setArray(arr => [...new Set(arr.concat(...elements))]);
       },
       apply(callback: (...args: IterationParameters<T>) => T) {
         setArray(arr => arr.map(callback));

@@ -61,16 +61,6 @@ describe('useArray', () => {
     expect(result.current.values).toEqual([3]);
   });
 
-  it('should concat and merge', () => {
-    const { result } = renderHook(() => useArray([0]));
-
-    act(() => result.current.concat(1, [2, 3]));
-    expect(result.current.values).toEqual([0, 1, 2, 3]);
-
-    act(() => result.current.merge([3, 4], 5));
-    expect(result.current.values).toEqual([0, 1, 2, 3, 4, 5]);
-  });
-
   it('should apply a callback on all the elements', () => {
     const { result } = renderHook(() => useArray([-2, -1, 0, 1, 2]));
 
