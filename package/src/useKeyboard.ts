@@ -3,9 +3,9 @@ import { EventListenerOptions, useEventListener } from '@/src';
 
 export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
 
-const getKeyboardEventList = (record: KeysRecord) => {
+const getKeyboardEventList = (record: KeysRecord, sep = '|') => {
   return Object.keys(record).map(key => {
-    const resolvedKeys = key.split(',').map(k => k.trim().toLowerCase());
+    const resolvedKeys = key.split(sep).map(k => k.trim().toLowerCase());
     return [resolvedKeys, record[key]] as const;
   });
 };
@@ -27,13 +27,17 @@ const isPressed = (keyModifier: string, event: KeyboardEvent): boolean => {
   });
 };
 
+export type KeyboardOptions<T extends EventTarget> = EventListenerOptions<T> & {
+  separator?: string;
+};
+
 export const useKeyboard = <T extends EventTarget = Window>(
   keysRecord: KeysRecord = {},
-  options: EventListenerOptions<T> = {}
+  options: KeyboardOptions<T> = {}
 ) => {
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
-      const keyboardEventList = getKeyboardEventList(keysRecord);
+      const keyboardEventList = getKeyboardEventList(keysRecord, options.separator);
       const pressedKeyEvent = keyboardEventList.find(([keys, _]) => {
         return keys.some(key => isPressed(key, event));
       });
