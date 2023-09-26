@@ -5,20 +5,18 @@ export type EventMap<T> = T extends Window ? WindowEventMap : HTMLElementEventMa
 export type EventHandler<T, E extends keyof EventMap<T>> = (event: EventMap<T>[E]) => any;
 export type EventListenerOptions<T> = AddEventListenerOptions & { target?: T | null };
 
-export const useEventListener = <
-  E extends keyof EventMap<T> & string,
-  T extends EventTarget = Window
->(
+export const useEventListener = <T extends EventTarget, E extends keyof EventMap<T> & string>(
   event: E | Array<E | FalsyValue>,
   handler: EventHandler<T, E>,
   options: EventListenerOptions<T> = {}
 ) => {
+  const { target, ...eventOptions } = options;
+
   useEffect(() => {
-    const target = options.target ?? window;
     if (!target) return;
 
-    const addEvent = (e: string) => target.addEventListener(e, handler as any, options);
-    const removeEvent = (e: string) => target.removeEventListener(e, handler as any, options);
+    const addEvent = (e: string) => target.addEventListener(e, handler as any, eventOptions);
+    const removeEvent = (e: string) => target.removeEventListener(e, handler as any, eventOptions);
 
     const hasMultipleEvents = Array.isArray(event);
     const resolvedEvents = hasMultipleEvents ? (event.filter(Boolean) as E[]) : [event];

@@ -21,11 +21,11 @@ describe('useEventListener', () => {
     const options = { target: document.createElement('div') };
     const { unmount } = renderHook(() => useEventListener('click', handler, options));
 
-    expect(addEventListenerSpy).toHaveBeenCalledWith('click', handler, options);
+    expect(addEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
 
     unmount();
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('click', handler, options);
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
   });
 
   it('should attach multiple event listeners', () => {
@@ -33,18 +33,18 @@ describe('useEventListener', () => {
     const options = { target: document.createElement('input') };
     const { unmount } = renderHook(() => useEventListener(['click', 'keydown'], handler, options));
 
-    expect(addEventListenerSpy).toHaveBeenCalledWith('click', handler, options);
-    expect(addEventListenerSpy).toHaveBeenCalledWith('keydown', handler, options);
+    expect(addEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
+    expect(addEventListenerSpy).toHaveBeenCalledWith('keydown', handler, {});
 
     unmount();
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('click', handler, options);
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', handler, options);
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', handler, {});
   });
 
   it('should add .scrolling class to the body on scroll', async () => {
     const handleScrolling = () => document.body.classList.add('scrolling');
-    renderHook(() => useEventListener('scroll', handleScrolling));
+    renderHook(() => useEventListener('scroll', handleScrolling, { target: window }));
 
     fireEvent.scroll(window);
     await waitFor(() => expect(document.body.classList.contains('scrolling')).toBe(true));
