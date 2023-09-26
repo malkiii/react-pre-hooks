@@ -1,25 +1,20 @@
-import { useRef, useState } from 'react';
-import { useIsomorphicEffect } from '@/src';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 export const useImageLoading = (imageSrc: string, handler?: (event: Event) => any) => {
   const imageRef = useRef<HTMLImageElement>(new Image());
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useIsomorphicEffect(() => {
-    setIsLoading(true);
-
-    const handleLoad = (event: Event) => {
+  useLayoutEffect(() => {
+    const handleLoad = (event: Event | string) => {
       setIsLoading(false);
-      if (handler) handler(event);
+      if (typeof event === 'string') return;
+      if (handler && event.type !== 'error') handler(event);
     };
 
-    imageRef.current.addEventListener('load', handleLoad);
+    imageRef.current.onload = handleLoad;
+    imageRef.current.onerror = handleLoad;
     imageRef.current.crossOrigin = 'anonymous';
     imageRef.current.src = imageSrc;
-
-    return () => {
-      imageRef.current.removeEventListener('load', handleLoad);
-    };
   }, []);
 
   return { image: imageRef.current, isLoading };
