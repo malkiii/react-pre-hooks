@@ -11,19 +11,30 @@ const deviceTypePatterns: Record<Exclude<DeviceType, 'desktop'>, RegExp> = {
 };
 
 export const useDevice = () => {
-  const [result, setResult] = useState<{ [K in `is${Capitalize<DeviceType>}`]?: boolean }>({});
+  const [device, setDevice] = useState<DeviceType>();
 
   useLayoutEffect(() => {
     const ua = navigator.userAgent;
 
-    const isConsole = deviceTypePatterns.console.test(ua);
-    const isSmartTV = !isConsole && deviceTypePatterns.smartTV.test(ua);
-    const isTablet = !isSmartTV && deviceTypePatterns.tablet.test(ua);
-    const isMobile = isTablet || deviceTypePatterns.mobile.test(ua);
-    const isDesktop = !isConsole && !isSmartTV && !isTablet && !isMobile;
-
-    setResult({ isDesktop, isMobile, isTablet, isSmartTV, isConsole });
+    setDevice(
+      deviceTypePatterns.console.test(ua)
+        ? 'console'
+        : deviceTypePatterns.smartTV.test(ua)
+        ? 'smartTV'
+        : deviceTypePatterns.tablet.test(ua)
+        ? 'tablet'
+        : deviceTypePatterns.mobile.test(ua)
+        ? 'mobile'
+        : 'desktop'
+    );
   }, []);
 
-  return result;
+  return {
+    device,
+    isDesktop: device === 'desktop',
+    isMobile: device === 'tablet' || device === 'mobile',
+    isTablet: device === 'tablet',
+    isSmartTV: device === 'smartTV',
+    isConsole: device === 'console'
+  };
 };
