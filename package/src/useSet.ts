@@ -1,12 +1,6 @@
 import { SetStateAction, useMemo, useState } from 'react';
 import deepEqual from 'fast-deep-equal';
 
-const copyWith = <T extends any>(set: Set<T>, callback: (set: Set<T>) => any) => {
-  const copy = structuredClone(set);
-  callback(copy);
-  return copy;
-};
-
 export const useSet = <T extends any = any>(initial: Set<T> | T[] = new Set<any>()) => {
   const initialValue = new Set<T>(initial);
   const [set, setSet] = useState<Set<T>>(initialValue);
@@ -15,13 +9,30 @@ export const useSet = <T extends any = any>(initial: Set<T> | T[] = new Set<any>
       value: set,
       size: set.size,
       add(...values: T[]) {
-        setSet(set => copyWith(set, s => values.forEach(v => s.add(v))));
+        setSet(set => {
+          const copy = new Set(set);
+          values.forEach(value => {
+            const isExists = this.find(v => deepEqual(value, v), copy) !== undefined;
+            if (!isExists) copy.add(value);
+          });
+          return copy;
+        });
       },
       delete(...values: T[]) {
-        setSet(set => copyWith(set, s => values.forEach(v => s.delete(v))));
+        setSet(set => {
+          const copy = new Set(set);
+          values.forEach(value => {
+            const resolvedValue = this.find(v => deepEqual(value, v), copy);
+            if (resolvedValue) copy.delete(resolvedValue);
+          });
+          return copy;
+        });
       },
       has(...values: T[]) {
-        return values.every(v => set.has(v));
+        return values.every(value => set.has(value) || this.find(v => deepEqual(value, v)));
+      },
+      find(callback: (value: T) => unknown, thisArg = set) {
+        for (const value of thisArg) if (callback(value)) return value;
       },
       values() {
         return Array.from(set);

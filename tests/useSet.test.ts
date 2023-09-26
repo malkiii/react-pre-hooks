@@ -27,6 +27,13 @@ describe('useSet', () => {
     expect(result.current.values().sort()).toEqual([1, 2, 3, 4, 5]);
   });
 
+  it('should find the target value', () => {
+    const { result } = renderHook(() => useSet(new Set([{ a: 1 }, { b: 2 }])));
+
+    expect(result.current.has({ a: 1 })).toBe(true);
+    expect(result.current.find(v => v.b === 2)).toEqual({ b: 2 });
+  });
+
   it('should clear and reset', () => {
     const { result } = renderHook(() => useSet([0]));
 
