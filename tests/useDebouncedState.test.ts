@@ -15,13 +15,13 @@ describe('useDebouncedState', () => {
 
   it('should update debounced value after delay', () => {
     const delay = 500;
-    const { result } = renderHook(() => useDebouncedState(0, delay));
+    const { result } = renderHook(() => useDebouncedState(0, { delay }));
     const setValue = result.current[1];
 
     act(() => setValue(5));
     expect(result.current[2]).toBe(5); // Value before debounce
 
-    act(() => vi.advanceTimersByTime(500));
+    act(() => vi.advanceTimersByTime(delay));
     expect(result.current[0]).toBe(5); // Debounced value
   });
 });
