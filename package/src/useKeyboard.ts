@@ -33,7 +33,7 @@ export type KeyboardOptions<T extends EventTarget> = EventListenerOptions<T> & {
 
 export const useKeyboard = <T extends EventTarget = Window>(
   keysRecord: KeysRecord = {},
-  options: KeyboardOptions<T> = {}
+  options: KeyboardOptions<T>
 ) => {
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {

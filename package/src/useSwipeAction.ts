@@ -18,7 +18,7 @@ export type SwipeOptions = EventListenerOptions<HTMLElement> & {
   mouse?: boolean;
 };
 
-export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions = {}) => {
+export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions) => {
   const delta = useRef({ x: 0, y: 0 });
   const initialPosition = useRef<typeof delta.current>();
 
