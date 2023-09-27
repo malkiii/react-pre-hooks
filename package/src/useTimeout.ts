@@ -17,23 +17,28 @@ export const useTimeout = (
     setIsRunning(false);
   }, [callback]);
 
-  const clear = (): void => {
+  const cancel = (): void => {
     if (!timeoutRef.current) return;
     setIsRunning(false);
     clearTimeout(timeoutRef.current);
   };
 
   const start = () => {
-    clear();
+    cancel();
     timeoutRef.current = setTimeout(callbackMemo, timeout);
     setIsRunning(true);
+  };
+
+  const toggle = (force?: boolean) => {
+    const shouldStart = force ?? !isRunning;
+    shouldStart ? start() : cancel();
   };
 
   useEffect(() => {
     if (!startOnMount) return;
     start();
-    return clear;
+    return cancel;
   }, [timeout, startOnMount, ...deps]);
 
-  return { start, stop: clear, isRunning } as const;
+  return { start, cancel, toggle, isRunning } as const;
 };

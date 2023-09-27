@@ -22,12 +22,12 @@ export const useHover = <T extends HTMLElement = HTMLDivElement>(options: HoverO
 
   const hover = () => {
     hoverTimeout.start();
-    unhoverTimeout.stop();
+    unhoverTimeout.cancel();
   };
 
   const unhover = () => {
     unhoverTimeout.start();
-    hoverTimeout.stop();
+    hoverTimeout.cancel();
   };
 
   useEventListener('mouseenter', hover, eventOptions);

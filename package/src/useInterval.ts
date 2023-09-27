@@ -26,11 +26,16 @@ export const useInterval = (
     setIsRunning(true);
   };
 
+  const toggle = (force?: boolean) => {
+    const shouldStart = force ?? !isRunning;
+    shouldStart ? start() : clear();
+  };
+
   useEffect(() => {
     if (!startOnMount) return;
     start();
     return clear;
-  }, [timeout, startOnMount, ...deps]);
+  }, [timeout, ...deps]);
 
-  return { start, stop: clear, isRunning } as const;
+  return { start, stop: clear, toggle, isRunning } as const;
 };

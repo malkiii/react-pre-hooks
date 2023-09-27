@@ -16,7 +16,7 @@ export const useClipboard = ({ duration = 3000 } = {}) => {
   );
 
   const reset = useCallback(() => {
-    statusTimer.stop();
+    statusTimer.cancel();
     setError(undefined);
   }, [statusTimer]);
 

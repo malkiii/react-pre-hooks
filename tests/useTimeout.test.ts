@@ -46,12 +46,12 @@ describe('useTimeout', () => {
     expect(callback).toHaveBeenCalledOnce();
   });
 
-  it('should stop the timeout', () => {
+  it('should cancel the timeout', () => {
     const callback = vi.fn();
     const { result } = renderHook(() => useTimeout(callback, options));
 
     act(() => result.current.start());
-    act(() => result.current.stop());
+    act(() => result.current.cancel());
     act(() => vi.advanceTimersByTime(timeout));
     // vi.advanceTimersByTime(timeout);
 
