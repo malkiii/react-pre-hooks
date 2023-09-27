@@ -17,14 +17,14 @@ describe('useScroll', () => {
     const { result, rerender } = renderHook(() => useScroll());
 
     render(
-      <div ref={result.current.targetRef} style={{ width: '1000px', overflow: 'scroll' }}>
+      <div ref={result.current.ref} style={{ width: '1000px', overflow: 'scroll' }}>
         <div style={{ width: '2000px' }} />
       </div>
     );
 
     rerender();
 
-    fireEvent.scroll(result.current.targetRef.current, { target: { scrollLeft: 500 } });
+    fireEvent.scroll(result.current.ref.current, { target: { scrollLeft: 500 } });
     expect(result.current.isScrollRight).toBe(true);
   });
 

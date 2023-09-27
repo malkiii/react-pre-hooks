@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 type FalsyValue = false | null | undefined;
 export type EventMap<T> = T extends Window ? WindowEventMap : HTMLElementEventMap;
 export type EventHandler<T, E extends keyof EventMap<T>> = (event: EventMap<T>[E]) => any;
-export type EventListenerOptions<T> = AddEventListenerOptions & { target?: T | null };
+export type EventListenerOptions<T> = AddEventListenerOptions & { target: T | null | undefined };
 
 export const useEventListener = <T extends EventTarget, E extends keyof EventMap<T> & string>(
   event: E | Array<E | FalsyValue>,
   handler: EventHandler<T, E>,
-  options: EventListenerOptions<T> = {}
+  options: EventListenerOptions<T>
 ) => {
   const { target, ...eventOptions } = options;
 
@@ -26,5 +26,5 @@ export const useEventListener = <T extends EventTarget, E extends keyof EventMap
     return () => {
       resolvedEvents.forEach(removeEvent);
     };
-  }, [event, handler, options]);
+  }, [options]);
 };

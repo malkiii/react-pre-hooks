@@ -1,10 +1,10 @@
-import { RefObject, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 import { getCurrentMousePosition } from '@/src/utils';
 
-export const useMouse = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
-  const targetRef = ref || useRef<T>(null);
-  const options = { target: targetRef.current ?? window };
+export const useMouse = <T extends HTMLElement = HTMLDivElement>(target: T | null = null) => {
+  const ref = useRef<T>(target);
+  const options = { target: ref.current ?? window };
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isOut, setIsOut] = useState<boolean>();
@@ -23,5 +23,5 @@ export const useMouse = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject
   useEventListener(['mouseenter', 'touchstart'], () => setIsOut(false), options);
   useEventListener(['mouseleave', 'touchcancel'], () => setIsOut(true), options);
 
-  return { ref: targetRef, ...position, isOut, isDown };
+  return { ref, ...position, isOut, isDown };
 };

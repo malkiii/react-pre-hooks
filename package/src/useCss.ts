@@ -1,12 +1,12 @@
-import { CSSProperties, RefObject, useLayoutEffect, useRef, useState } from 'react';
+import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
 import deepEqual from 'fast-deep-equal';
 
 export type CSSObject = { [K in string]: CSSProps };
 export type CSSProps = CSSProperties & { [K in string]?: string | number | null | CSSProps };
 
-export type CSSOptions<T extends HTMLElement> = Partial<{
-  ref: RefObject<T>;
-}>;
+export type CSSOptions<T extends HTMLElement> = {
+  target?: T | null;
+};
 
 const getCssText = (props: CSSObject[string]) => {
   return Object.entries(props)
@@ -35,7 +35,7 @@ export const useCss = <T extends HTMLElement = HTMLDivElement>(
   css: CSSObject = {},
   options: CSSOptions<T> = {}
 ) => {
-  const rootRef = options.ref || useRef<T>(null);
+  const rootRef = useRef<T>(options.target ?? null);
   const [currentCss, setCurrentCss] = useState<CSSObject>({});
   const styleRef = useRef<HTMLStyleElement>(document.createElement('style'));
 

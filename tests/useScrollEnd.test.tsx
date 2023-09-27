@@ -24,13 +24,6 @@ describe('useScrollEnd', () => {
   afterAll(() => {
     Object.defineProperty(window, 'scrollX', { value: 0 });
     Object.defineProperty(window, 'scrollY', { value: 0 });
-
-    // delete HTMLElement.prototype.scrollLeft;
-    // delete HTMLElement.prototype.scrollTop;
-    // delete HTMLElement.prototype.clientWidth;
-    // delete HTMLElement.prototype.clientHeight;
-    // delete HTMLElement.prototype.scrollWidth;
-    // delete HTMLElement.prototype.scrollHeight;
   });
 
   it('should update isScrollEnd when scrolling to the end vertically', () => {
@@ -39,7 +32,7 @@ describe('useScrollEnd', () => {
 
     render(
       <div
-        ref={result.current.targetRef}
+        ref={result.current.ref}
         style={{ height: '1000px', width: '1000px', overflow: 'scroll' }}
       >
         <div style={{ height: '2000px', width: '1000px' }}></div>
@@ -48,12 +41,12 @@ describe('useScrollEnd', () => {
 
     rerender();
 
-    fireEvent.scroll(result.current.targetRef.current, {
+    fireEvent.scroll(result.current.ref.current, {
       target: { scrollTop: mockClientHeight - offset - 10 }
     });
     expect(result.current.isScrollEnd).toBe(false);
 
-    fireEvent.scroll(result.current.targetRef.current, {
+    fireEvent.scroll(result.current.ref.current, {
       target: { scrollTop: mockClientHeight - offset }
     });
     expect(result.current.isScrollEnd).toBe(true);
@@ -64,7 +57,7 @@ describe('useScrollEnd', () => {
 
     render(
       <div
-        ref={result.current.targetRef}
+        ref={result.current.ref}
         style={{ height: '1000px', width: '1000px', overflow: 'scroll' }}
       >
         <div style={{ height: '1000px', width: '2000px' }}></div>
@@ -73,7 +66,7 @@ describe('useScrollEnd', () => {
 
     rerender();
 
-    fireEvent.scroll(result.current.targetRef.current, { target: { scrollLeft: mockClientWidth } });
+    fireEvent.scroll(result.current.ref.current, { target: { scrollLeft: mockClientWidth } });
     expect(result.current.isScrollEnd).toBe(true);
   });
 });

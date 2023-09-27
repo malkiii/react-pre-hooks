@@ -1,16 +1,16 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type MutationObserverOptions<T extends HTMLElement> = MutationObserverInit & {
-  ref?: RefObject<T>;
+  target?: T | null;
   callback?: MutationCallback;
 };
 
 export const useMutationObserver = <T extends HTMLElement = HTMLDivElement>(
   options: MutationObserverOptions<T> = {}
 ) => {
-  const { ref, callback, ...observerInit } = options;
+  const { target = null, callback, ...observerInit } = options;
 
-  const targetRef = ref || useRef<T>(null);
+  const ref = useRef<T>(target);
   const [mutations, setMutations] = useState<MutationRecord[]>();
 
   const callbackMemo: MutationCallback = useCallback(
@@ -22,12 +22,12 @@ export const useMutationObserver = <T extends HTMLElement = HTMLDivElement>(
   );
 
   useEffect(() => {
-    if (!targetRef.current) return;
+    if (!ref.current) return;
     const observer = new MutationObserver(callbackMemo);
-    observer.observe(targetRef.current, observerInit);
+    observer.observe(ref.current, observerInit);
 
     return () => observer.disconnect();
   }, [callback]);
 
-  return { targetRef, mutations };
+  return { ref, mutations };
 };

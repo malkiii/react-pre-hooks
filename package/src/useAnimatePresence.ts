@@ -1,4 +1,4 @@
-import { CSSProperties, RefObject, SetStateAction, useCallback, useRef, useState } from 'react';
+import { CSSProperties, SetStateAction, useCallback, useRef, useState } from 'react';
 
 export type TransitionProps = Omit<KeyframeAnimationOptions, 'easing'> & {
   easing: CSSProperties['transitionTimingFunction'];
@@ -10,21 +10,21 @@ export type AnimatePresenceKeyframes = Record<
 > &
   Pick<PropertyIndexedKeyframes, 'composite' | 'offset' | 'easing'>;
 
-export type AnimatePresenceOptions<T extends HTMLElement = HTMLElement> = Partial<{
-  ref: RefObject<T>;
-  initialMount: boolean;
-  keyframes: AnimatePresenceKeyframes;
-  transition: TransitionProps;
-  onEnter: (element: T) => any;
-  onExit: (element: T) => any;
-}>;
+export type AnimatePresenceOptions<T extends HTMLElement = HTMLElement> = {
+  target?: T | null;
+  initialMount?: boolean;
+  keyframes?: AnimatePresenceKeyframes;
+  transition?: TransitionProps;
+  onEnter?: (element: T) => any;
+  onExit?: (element: T) => any;
+};
 
 export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
   options: AnimatePresenceOptions<T> = {}
 ) => {
   const { initialMount = false, keyframes = {}, onEnter, onExit } = options;
 
-  const ref = options.ref || useRef<T>(null);
+  const ref = useRef<T>(options.target ?? null);
   const animationRef = useRef<Animation>();
   const isAnimating = useRef<boolean>(false);
   const isToggled = useRef<boolean>(initialMount);

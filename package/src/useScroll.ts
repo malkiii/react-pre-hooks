@@ -1,9 +1,9 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
-export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T>) => {
-  const targetRef = ref || useRef<T>(null);
-  const options = { target: targetRef.current ?? window };
+export const useScroll = <T extends HTMLElement = HTMLDivElement>(target: T | null = null) => {
+  const ref = useRef<T>(target ?? null);
+  const options = { target: ref.current ?? window };
   const initialValues = {
     scrollX: 0,
     scrollY: 0,
@@ -18,15 +18,15 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
   const prevPosition = useRef<typeof scrollPosition>(initialValues);
 
   const handleScrolling = useCallback(() => {
-    const scrollX = targetRef.current?.scrollLeft || window.scrollX;
-    const scrollY = targetRef.current?.scrollTop || window.scrollY;
+    const scrollX = ref.current?.scrollLeft || window.scrollX;
+    const scrollY = ref.current?.scrollTop || window.scrollY;
 
-    const target = targetRef.current || document.body;
+    const element = ref.current ?? document.body;
 
-    const maxScrollX = target.scrollWidth - target.clientWidth;
-    const maxScrollY = target.scrollHeight - target.clientHeight;
-    const scrollProgressX = (target.scrollLeft / maxScrollX) * 100;
-    const scrollProgressY = (target.scrollTop / maxScrollY) * 100;
+    const maxScrollX = element.scrollWidth - element.clientWidth;
+    const maxScrollY = element.scrollHeight - element.clientHeight;
+    const scrollProgressX = (element.scrollLeft / maxScrollX) * 100;
+    const scrollProgressY = (element.scrollTop / maxScrollY) * 100;
 
     const distanceX = scrollX - prevPosition.current.scrollX;
     const distanceY = scrollY - prevPosition.current.scrollY;
@@ -44,5 +44,5 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
   useEffect(handleScrolling, []);
   useEventListener('scroll', handleScrolling, options);
 
-  return { targetRef, ...scrollPosition, isScrollRight, isScrollDown };
+  return { ref, ...scrollPosition, isScrollRight, isScrollDown };
 };
