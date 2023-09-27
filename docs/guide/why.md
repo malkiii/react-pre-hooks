@@ -12,28 +12,27 @@ By using Realtime Hooks, you can simplify your React components significantly. C
 
 ```jsx
 export default function Component({ scrolling }) {
-
   useEffect(() => {
-    const handler = (event) => {
+    const handler = event => {
       console.log('handling...');
-    }
+    };
 
-    window.addEventListener('click', handler, { passive: true });
-    window.addEventListener('mousemove', handler, { passive: true });
-    if (scrolling) window.addEventListener('scroll', { passive: true });
+    window.addEventListener('click', handler);
+    window.addEventListener('mousemove', handler);
+    if (scrolling) window.addEventListener('scroll');
 
     return () => {
       window.removeEventListener('click', handler);
       window.removeEventListener('mousemove', handler);
       if (scrolling) window.removeEventListener('scroll', handler);
-    }
+    };
   }, []);
 
   return (
     <div>
       <button>Click</button>
     </div>
-  )
+  );
 }
 ```
 
@@ -41,16 +40,19 @@ you can simplify this by using [useEventListener](./useEventListener) hook:
 
 ```jsx
 export default function Component({ scrolling }) {
-
-  useEventListener(['click', 'mousemove', scrolling && 'scroll'], (event) => {
-    console.log('handling...');
-  }, { passive: true });
+  useEventListener(
+    ['click', 'mousemove', scrolling && 'scroll'],
+    event => {
+      console.log('handling...');
+    },
+    { target: window }
+  );
 
   return (
-    <div>
+    <main>
       <button>Click</button>
-    </div>
-  )
+    </main>
+  );
 }
 ```
 
