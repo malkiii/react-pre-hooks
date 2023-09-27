@@ -20,13 +20,12 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAutoComplete">useAutoComplete</a></td><td>Returns the result array of a search text.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClickAway">useClickAway</a></td><td>Execute a function when clicking outside an element.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClipboard">useClipboard</a></td><td>Copy to clipboard and return a temporary <code>copied</code> state.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClock">useClock</a></td><td>Returns a date in a duration starting from an initial date or return the current date.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useColorScheme">useColorScheme</a></td><td>Returns the current system color scheme (<code>dark</code> or <code>light</code>).</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCounter">useCounter</a></td><td>Simple counter with <code>step</code>, <code>min</code> and <code>max</code> value.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCounter">useCounter</a></td><td>Simple counter with <code>min</code> and <code>max</code> values, and a some methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCss">useCss</a></td><td>Insert some actual CSS using a <code>CSS Object</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCursorType">useCursorType</a></td><td>Track the cursor type (<code>pointer</code>, <code>text</code>, <code>not-allowed</code>...)</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useDebouncedState">useDebouncedState</a></td><td>Update the state value after a delay.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useDevice">useDevice</a></td><td>Returns the current device type (<code>desktop</code>, <code>mobile</code>, <code>smartTV</code>...)</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useDevice">useDevice</a></td><td>Detect the current device type (<code>desktop</code>, <code>mobile</code>, <code>smartTV</code>...)</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useEasing">useEasing</a></td><td>Change a value from <code>start</code> to <code>end</code> using an <code><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function">animation timing function</a></code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useEventListener">useEventListener</a></td><td>Add one or multiple event listeners.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFetch">useFetch</a></td><td>Fetch data using a URL and search queries...</td></tr>
@@ -56,6 +55,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStateStatus">useStateStatus</a></td><td>Returns the state and its current <code>status</code> that is returned by a handler.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSwipeAction">useSwipeAction</a></td><td>Handle the user swipe actions, and it can also handle the mouse swipes.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useTimeout">useTimeout</a></td><td>Uses <code>setTimout</code> and returns <code>start</code> and <code>stop</code> methods...</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClock">useTimer</a></td><td>Returns a date in a duration starting from an initial date or return the current date.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useToggle">useToggle</a></td><td>Toggles the state between given values.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useUnmount">useUnmount</a></td><td>Execute a callback before the component is unmounted.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useUpdateEffect">useUpdateEffect</a></td><td>Ignore the first render of the component.</td></tr>

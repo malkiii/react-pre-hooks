@@ -5,7 +5,7 @@ export type CSSObject = { [K in string]: CSSProps };
 export type CSSProps = CSSProperties & { [K in string]?: string | number | null | CSSProps };
 
 export type CSSOptions<T extends HTMLElement> = {
-  target?: T | null;
+  root?: T | null;
 };
 
 const getCssText = (props: CSSObject[string]) => {
@@ -35,7 +35,7 @@ export const useCss = <T extends HTMLElement = HTMLDivElement>(
   css: CSSObject = {},
   options: CSSOptions<T> = {}
 ) => {
-  const rootRef = useRef<T>(options.target ?? null);
+  const rootRef = useRef<T>(options.root ?? null);
   const [currentCss, setCurrentCss] = useState<CSSObject>({});
   const styleRef = useRef<HTMLStyleElement>(document.createElement('style'));
 

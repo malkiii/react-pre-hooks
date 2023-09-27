@@ -3,16 +3,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 export type EasingFunction = (x: number) => number;
 
 export type EasingOption = {
-  interval: [number, number];
-  startOnMount?: boolean;
+  interval?: [number, number];
   easing?: EasingFunction;
   duration?: number;
+  startOnMount?: boolean;
 };
 
 export const useEasing = (options: EasingOption) => {
-  const { easing = x => x, duration = 1000, startOnMount = false } = options;
+  const { interval = [0, 1], easing = x => x, duration = 1000, startOnMount = false } = options;
 
-  const [start, end] = options.interval;
+  const [start, end] = interval;
   const [value, setValue] = useState<number>(start);
   const [state, setState] = useState({
     isPlaying: false,
@@ -88,5 +88,5 @@ export const useEasing = (options: EasingOption) => {
     if (startOnMount) animationRef.current.play();
   }, []);
 
-  return { value, ...state, ...controls };
+  return { ...state, ...controls, value };
 };
