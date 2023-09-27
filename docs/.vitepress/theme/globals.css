@@ -1,7 +1,8 @@
 :root {
-  --vp-c-brand-1: #f0033c;
-  --vp-c-brand-2: #f02958;
+  --vp-c-brand-1: #fa0d46;
+  --vp-c-brand-2: #f82859;
 
+  --vp-code-color: var(--vp-c-text-1);
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(
     60deg,
