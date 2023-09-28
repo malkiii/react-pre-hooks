@@ -9,28 +9,28 @@ export type MediaDevice = {
   enable: (force?: SetStateAction<boolean>) => void;
 };
 
-export type RecorderOptions = Partial<{
-  download: string;
-  type:
+export type RecorderOptions = {
+  download?: string;
+  type?:
     | `video/${'mp4' | 'mpeg' | 'webm' | 'ogg'}`
     | `audio/${'mpeg' | 'wav' | 'webm' | 'ogg'}`
     | (string & {});
-}>;
+};
 
-export type StreamOptions = Partial<{
-  video: boolean | (MediaTrackConstraints & { display?: boolean });
-  audio: boolean | MediaTrackConstraints;
-  autoStart: boolean;
-  onStart: (stream: MediaStream) => void;
-}>;
+export type StreamOptions = {
+  video?: boolean | (MediaTrackConstraints & { display?: boolean });
+  audio?: boolean | MediaTrackConstraints;
+  autoStart?: boolean;
+  onStart?: (stream: MediaStream) => void;
+};
 
-export type ScreenshotOptions = Partial<{
-  width: number;
-  height: number;
-  quality: number;
-  download: string;
-  format: 'png' | 'jpeg' | 'webp';
-}>;
+export type ScreenshotOptions = {
+  width?: number;
+  height?: number;
+  quality?: number;
+  download?: string;
+  format?: 'png' | 'jpeg' | 'webp';
+};
 
 export const useWebRTC = (options: StreamOptions = {}) => {
   const ref = useRef<HTMLVideoElement>(null);

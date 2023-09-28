@@ -3,12 +3,11 @@ import { useEventListener } from '@/src';
 import { getPrefixedProperty } from '@/src/utils';
 import { MediaElementInit, useMediaElement } from '@/src/utils/useMediaElement';
 
-export type VideoElementInit = MediaElementInit &
-  Partial<{
-    caption: { lang?: string; enabled?: boolean };
-    fullscreen: boolean;
-    miniPlayer: boolean;
-  }>;
+export type VideoElementInit = MediaElementInit & {
+  caption?: { lang?: string; enabled?: boolean };
+  fullscreen?: boolean;
+  miniPlayer?: boolean;
+};
 
 export const useVideo = (initialState: VideoElementInit = {}) => {
   const { caption = {}, fullscreen = false, miniPlayer = false, ...init } = initialState;

@@ -8,14 +8,14 @@ export type MediaElement<T extends MediaElementType | undefined> = T extends 'vi
   ? HTMLAudioElement
   : HTMLMediaElement;
 
-export type MediaElementInit = Partial<{
-  autoPlay: boolean;
-  muted: boolean;
-  loop: boolean;
-  startTime: number;
-  volume: number;
-  speed: number;
-}>;
+export type MediaElementInit = {
+  autoPlay?: boolean;
+  muted?: boolean;
+  loop?: boolean;
+  startTime?: number;
+  volume?: number;
+  speed?: number;
+};
 
 export const useMediaElement = <T extends MediaElementType | undefined = undefined>(
   initialState: MediaElementInit = {}

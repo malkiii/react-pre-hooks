@@ -57,8 +57,8 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
       copy() {
         return structuredClone(array);
       },
-      reset(arr: SetStateAction<T[]> = initial) {
-        setArray(arr);
+      reset(value: SetStateAction<T[]> = initial) {
+        setArray(value);
       }
     }),
     [array]

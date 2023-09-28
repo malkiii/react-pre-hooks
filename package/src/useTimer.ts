@@ -11,12 +11,12 @@ export type DateProps = Partial<{
   milliseconds: number;
 }>;
 
-export type TimerOptions = Partial<{
-  initial: DateProps;
-  duration: number;
-  timeout: number;
-  startOnMount: boolean;
-}>;
+export type TimerOptions = {
+  initial?: DateProps;
+  duration?: number;
+  timeout?: number;
+  startOnMount?: boolean;
+};
 
 const getResolvedDate = (date?: Date | DateProps) => {
   if (!date) return new Date();

@@ -2,12 +2,12 @@ import { useMemo } from 'react';
 import { useDebouncedState } from '@/src';
 
 export type AutoCompleteHandler<T> = (search: string, value: T, index: number) => unknown;
-export type AutoCompleteOptions<T extends any> = Partial<{
-  initial: string;
-  debounce: number;
-  filter: AutoCompleteHandler<T>;
-  sort: boolean;
-}>;
+export type AutoCompleteOptions<T extends any> = {
+  initial?: string;
+  debounce?: number;
+  filter?: AutoCompleteHandler<T>;
+  sort?: boolean;
+};
 
 const defaultFilter: AutoCompleteHandler<any> = (search, value) => {
   if (!search || typeof value !== 'string') return;

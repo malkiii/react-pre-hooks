@@ -18,14 +18,14 @@ export type DroppedFile<T extends FileDataType | undefined> = {
   data: FileData<T> | null;
 };
 
-export type DropzoneOptions<T extends FileDataType | undefined> = Partial<{
-  multiple: boolean;
-  extensions: string[];
-  minSize: number;
-  maxSize: number;
-  readAs: T;
-  onUpload: (files: File[]) => any;
-}>;
+export type DropzoneOptions<T extends FileDataType | undefined> = {
+  multiple?: boolean;
+  extensions?: string[];
+  minSize?: number;
+  maxSize?: number;
+  readAs?: T;
+  onUpload?: (files: File[]) => any;
+};
 
 const readerMethods: Record<NonNullable<FileDataType | undefined>, FileReaderName> = {
   'array-buffer': 'readAsArrayBuffer',
