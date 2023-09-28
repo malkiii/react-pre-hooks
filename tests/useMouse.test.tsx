@@ -13,7 +13,7 @@ describe('useMouse', () => {
   });
 
   it('should update position when touch moves', () => {
-    const { result } = renderHook(() => useMouse());
+    const { result } = renderHook(() => useMouse({ touches: true }));
 
     fireEvent.touchMove(document, { changedTouches: [{ clientX: 150, clientY: 200 }] });
 
@@ -35,7 +35,7 @@ describe('useMouse', () => {
   });
 
   it('should update isDown when touch is started or ended', () => {
-    const { result } = renderHook(() => useMouse());
+    const { result } = renderHook(() => useMouse({ touches: true }));
 
     fireEvent.touchStart(document.body);
     expect(result.current.isDown).toBe(true);
@@ -55,7 +55,7 @@ describe('useMouse', () => {
   });
 
   it('should update isOut when touch starts or cancels', () => {
-    const { result } = renderHook(() => useMouse());
+    const { result } = renderHook(() => useMouse({ touches: true }));
 
     fireEvent.touchStart(document);
     expect(result.current.isOut).toBe(false);
