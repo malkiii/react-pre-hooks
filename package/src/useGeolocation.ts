@@ -1,32 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export type GeoLocationSensorState = {
+export type GeoLocationState = Partial<GeolocationCoordinates> & {
   loading: boolean;
-  accuracy: number | null;
-  altitude: number | null;
-  altitudeAccuracy: number | null;
-  heading: number | null;
-  latitude: number | null;
-  longitude: number | null;
-  speed: number | null;
-  timestamp: number | null;
-  error?: Error | GeolocationPositionError;
+  error?: GeolocationPositionError;
 };
 
-export const useGeolocation = (options: PositionOptions = {}): GeoLocationSensorState => {
-  const [state, setState] = useState<GeoLocationSensorState>({
-    loading: true,
-    accuracy: null,
-    altitude: null,
-    altitudeAccuracy: null,
-    heading: null,
-    latitude: null,
-    longitude: null,
-    speed: null,
-    timestamp: null
-  });
+export const useGeolocation = (options: PositionOptions = {}) => {
+  const [state, setState] = useState<GeoLocationState>({ loading: true });
 
-  const successCallback: PositionCallback = useCallback(({ coords, timestamp }) => {
+  const successCallback: PositionCallback = useCallback(({ coords }) => {
     setState({
       loading: false,
       latitude: coords.latitude,
@@ -35,13 +17,12 @@ export const useGeolocation = (options: PositionOptions = {}): GeoLocationSensor
       accuracy: coords.accuracy,
       altitudeAccuracy: coords.altitudeAccuracy,
       heading: coords.heading,
-      speed: coords.speed,
-      timestamp
+      speed: coords.speed
     });
   }, []);
 
   const errorCallback: PositionErrorCallback = useCallback(error => {
-    setState(s => ({ ...s, loading: false, error }));
+    setState(state => ({ ...state, loading: false, error }));
   }, []);
 
   useEffect(() => {
