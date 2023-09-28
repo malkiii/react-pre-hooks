@@ -8,7 +8,8 @@ export const useOnlineStatus = () => {
 
   const testConnection = useCallback(async () => {
     try {
-      setIsOnline((await fetch('https://httpbin.org/status/200')).ok);
+      const response = await fetch('https://httpbin.org/status/200');
+      if (response.ok) setIsOnline(true);
     } catch (error) {
       setIsOnline(false);
     }
