@@ -8,6 +8,7 @@ export type ScrollEndOptions<T extends HTMLElement> = {
 };
 
 export const useScrollEnd = <T extends HTMLElement = HTMLDivElement>(
+  handler: () => any,
   options: ScrollEndOptions<T> = {}
 ) => {
   const ref = useRef<T>(options.target ?? null);
@@ -26,10 +27,14 @@ export const useScrollEnd = <T extends HTMLElement = HTMLDivElement>(
       : scrollY + clientHeight >= scrollHeight - offset;
 
     setIsScrollEnd(isCloseToEnd);
-  }, [options]);
+  }, [handler]);
+
+  useEffect(() => {
+    if (isScrollEnd) handler();
+  }, [isScrollEnd]);
 
   useEffect(handleScrolling, []);
   useEventListener('scroll', handleScrolling, { target: ref.current ?? window });
 
-  return { ref, isScrollEnd };
+  return ref;
 };
