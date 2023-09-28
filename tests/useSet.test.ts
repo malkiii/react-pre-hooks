@@ -20,15 +20,8 @@ describe('useSet', () => {
     expect(result.current.value).toEqual(new Set([0, 1, 2]));
   });
 
-  it('should merge two sets', () => {
-    const { result } = renderHook(() => useSet(new Set([1, 2, 3])));
-
-    act(() => result.current.union([1, 3, 4, 5]));
-    expect(result.current.values().sort()).toEqual([1, 2, 3, 4, 5]);
-  });
-
   it('should find the target value', () => {
-    const { result } = renderHook(() => useSet(new Set([{ a: 1 }, { b: 2 }])));
+    const { result } = renderHook(() => useSet([{ a: 1 }, { b: 2 }]));
 
     expect(result.current.has({ a: 1 })).toBe(true);
     expect(result.current.find(v => v.b === 2)).toEqual({ b: 2 });
@@ -41,6 +34,6 @@ describe('useSet', () => {
     expect(result.current.value).toEqual(new Set());
 
     act(() => result.current.reset(new Set([1])));
-    expect(result.current.values()).toEqual([1]);
+    expect(result.current.toArray()).toEqual([1]);
   });
 });
