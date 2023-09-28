@@ -5,10 +5,10 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(target: T | nu
   const ref = useRef<T>(target ?? null);
   const options = { target: ref.current ?? window };
   const initialValues = {
-    scrollX: 0,
-    scrollY: 0,
-    scrollProgressX: 0,
-    scrollProgressY: 0
+    x: 0,
+    y: 0,
+    progressX: 0,
+    progressY: 0
   };
 
   const [isScrollDown, setIsScrollDown] = useState<boolean>();
@@ -18,18 +18,18 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(target: T | nu
   const prevPosition = useRef<typeof scrollPosition>(initialValues);
 
   const handleScrolling = useCallback(() => {
-    const scrollX = ref.current?.scrollLeft || window.scrollX;
-    const scrollY = ref.current?.scrollTop || window.scrollY;
+    const x = ref.current?.scrollLeft || window.scrollX;
+    const y = ref.current?.scrollTop || window.scrollY;
 
     const element = ref.current ?? document.body;
 
     const maxScrollX = element.scrollWidth - element.clientWidth;
     const maxScrollY = element.scrollHeight - element.clientHeight;
-    const scrollProgressX = (element.scrollLeft / maxScrollX) * 100;
-    const scrollProgressY = (element.scrollTop / maxScrollY) * 100;
+    const progressX = (element.scrollLeft / maxScrollX) * 100;
+    const progressY = (element.scrollTop / maxScrollY) * 100;
 
-    const distanceX = scrollX - prevPosition.current.scrollX;
-    const distanceY = scrollY - prevPosition.current.scrollY;
+    const distanceX = scrollX - prevPosition.current.x;
+    const distanceY = scrollY - prevPosition.current.y;
 
     if (distanceX > 0) setIsScrollRight(true);
     else if (distanceX < 0) setIsScrollRight(false);
@@ -38,7 +38,7 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(target: T | nu
     else if (distanceY < 0) setIsScrollDown(false);
 
     prevPosition.current = scrollPosition;
-    setScrollPosition({ scrollX, scrollY, scrollProgressX, scrollProgressY });
+    setScrollPosition({ x, y, progressX, progressY });
   }, [scrollPosition]);
 
   useEffect(handleScrolling, []);

@@ -9,8 +9,8 @@ describe('useScroll', () => {
     render(<div style={{ height: '2000px', width: '2000px' }} />);
 
     fireEvent.scroll(window, { target: { scrollX: 200, scrollY: 300 } });
-    expect(result.current.scrollX).toBe(200);
-    expect(result.current.scrollY).toBe(300);
+    expect(result.current.x).toBe(200);
+    expect(result.current.y).toBe(300);
   });
 
   it('should update "isScrollRight" when scrolling right', async () => {
