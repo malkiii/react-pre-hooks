@@ -1,22 +1,72 @@
 # useInterval
 
+This hook makes [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) easy to use and control with some useful methods.
+
 ## Options
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
+| Name             | Type    | Description                                                                 |
+| ---------------- | ------- | --------------------------------------------------------------------------- |
+| **timeout**      | Number  | the `setInterval` timeout in `ms`.                                          |
+| **startOnMount** | Boolean | start automatically when the component is **mounted** (default is `false`). |
+| **deps**         | Array   | dependency array (default is `[]`)                                          |
+
+## Props And Methods
+
+### `start()`, `stop()`, and `toggle()`
+
+Use these two methods to start and stop the interval, or toggle between them using `toggle`:
+
+```ts
+const interval = useInterval(() => console.log('Hello!'), { timeout: 1000 });
+
+interval.start(); // running
+interval.stop(); // stopped
+
+interval.toggle(); // running
+interval.toggle(); // stopped
+
+interval.toggle(true); // running
+interval.toggle(false); // stopped
+```
+
+### `isRunning`
+
+this value indicates whether the interval is running or not:
+
+```ts
+const interval = useInterval(() => console.log('Running...'), {
+  timeout: 500,
+  startOnMount: true
+});
+
+interval.isRunning; // true
+
+interval.stop();
+
+interval.isRunning; // false
+```
 
 ## Example Usage
 
+<!-- prettier-ignore -->
 ```tsx
-import 'realtime-hooks';
+import { useCounter, useInterval } from 'realtime-hooks';
 
-function example() {}
+export default function Counter() {
+  const counter = useCounter();
+
+  const interval = useInterval(() => counter.inc(), {
+    timeout: 1000,
+    startOnMount: true
+  });
+
+  return (
+    <main>
+      <button onClick={() => interval.toggle()}>
+        {interval.isRunning ? 'Stop' : 'Start'}
+      </button>
+      <div>{counter.value}</div>
+    </main>
+  );
+}
 ```
-
-## Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
-

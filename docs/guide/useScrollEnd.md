@@ -1,22 +1,27 @@
 # useScrollEnd
 
+Execute a callback when the scrolling is close to the end with a specific `offset`.
+
 ## Options
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
+| Name           | Type    | Description                                                     |
+| -------------- | ------- | --------------------------------------------------------------- |
+| **target**     | Element | the target element (default is `window`).                       |
+| **offset**     | Number  | the distance before reaching the scroll end (default is `5`px). |
+| **horizontal** | Boolean | use horizontal scrolling (default is `false`).                  |
+
+## Return Values
+
+a `ref` object of the target element.
 
 ## Example Usage
 
 ```tsx
-import 'realtime-hooks';
+import { useScrollEnd } from 'realtime-hooks';
 
-function example() {}
+export default function Example() {
+  useScrollEnd(() => console.log('Hey!'), { offset: 200 });
+
+  return <main></main>;
+}
 ```
-
-## Return Values
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
-

@@ -6,7 +6,7 @@ This hook returns an array with with some common and useful array methods making
 
 ### `values` and `length`
 
-`values` uses the array its self:
+`values` uses the array itsself:
 
 ```ts
 const array = useArray([1, 2, 3]);

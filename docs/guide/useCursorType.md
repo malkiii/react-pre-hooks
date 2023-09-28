@@ -2,11 +2,9 @@
 
 This hook tracks the CSS cursor type value.
 
-## Options
+## Parameters
 
-| Name       | Type    | Description                               |
-| ---------- | ------- | ----------------------------------------- |
-| **target** | Element | the target element (default is `window`). |
+a `target` element (default is `window`).
 
 ## Return Values
 

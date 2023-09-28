@@ -4,12 +4,12 @@ Change a value from a **start** to an **end** value using an [animation timing f
 
 ## Options
 
-| Name             | Type             | Description                                                                      |
-| ---------------- | ---------------- | -------------------------------------------------------------------------------- |
-| **interval**     | [Number, Number] | the [start, end] interval (default is `[0, 1]`).                                 |
-| **easing**       | Function         | the animation timing function (default is `(x) => x`).                           |
-| **duration**     | Number           | the easing duration in `ms` (default is `1000`).                                 |
-| **startOnMount** | Boolean          | start the clock or timer when the component is **mounted** (default is `false`). |
+| Name             | Type             | Description                                                                 |
+| ---------------- | ---------------- | --------------------------------------------------------------------------- |
+| **interval**     | [Number, Number] | the [start, end] interval (default is `[0, 1]`).                            |
+| **easing**       | Function         | the animation timing function (default is `(x) => x`).                      |
+| **duration**     | Number           | the easing duration in `ms` (default is `1000`).                            |
+| **startOnMount** | Boolean          | start automatically when the component is **mounted** (default is `false`). |
 
 ::: tip
 You can find many easing functions on [easings.net](https://easings.net/).

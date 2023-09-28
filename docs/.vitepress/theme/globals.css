@@ -35,6 +35,10 @@ html {
   border-radius: 10px;
 }
 
+.custom-block.info code {
+  color: var(--vp-c-text-1);
+}
+
 @media (min-width: 640px) {
   :root {
     --vp-home-hero-image-filter: blur(56px);

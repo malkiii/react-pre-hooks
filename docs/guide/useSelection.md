@@ -1,22 +1,53 @@
 # useSelection
 
-## Options
+This hook returns the current selected text on the window or a specific element, and other things.
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
+## Parameters
 
-## Example Usage
+a `target` element (default is `document`).
 
-```tsx
-import 'realtime-hooks';
-
-function example() {}
-```
+::: warning
+**Do not** use `window` as the target element, it will only work with HTML elements.
+:::
 
 ## Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
+| Name            | Type      | Description                                                                                |
+| --------------- | --------- | ------------------------------------------------------------------------------------------ |
+| **ref**         | RefObject | the target element reference.                                                              |
+| **text**        | String    | the selection text.                                                                        |
+| **rect**        | Object    | the selection rectangle (`top`, `left`, `width`...).                                       |
+| **isSelecting** | Boolean   | whether the user is selecting or not.                                                      |
+| **value**       | Selection | the actual [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) object. |
 
+## Example Usage
+
+<!-- prettier-ignore -->
+```tsx
+import { useSelection } from 'realtime-hooks';
+
+export default function Example() {
+  const { text, rect, isSelecting } = useSelection();
+
+  return (
+    <main>
+      {!isSelecting && text && (
+        <div style={{ top: rect.top + 'px', left: rect.left + rect.width / 2 }}>
+          Quote this!
+        </div>
+      )}
+      <article>
+        <h1>Select anything.</h1>
+        <p>
+          A user may make a selection from left to right (in document order)
+          or right to left (reverse of document order). The anchor is where
+          the user began the selection and the focus is where the user ends 
+          the selection. If you make a selection with a desktop mouse,
+          the anchor is placed where you pressed the mouse button, and 
+          the focus is placed where you released the mouse button.
+        </p>
+      </article>
+    </main>
+  );
+}
+```
