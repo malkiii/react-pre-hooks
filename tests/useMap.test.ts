@@ -65,7 +65,7 @@ describe('useMap', () => {
 
   it('should convert object to string', () => {
     const { result } = renderHook(() => useMap({ key: 'value' }));
-    const jsonString = result.current.toString();
+    const jsonString = result.current.toJSON();
 
     expect(jsonString).toBe('{"key":"value"}');
   });

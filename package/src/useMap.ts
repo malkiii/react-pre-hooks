@@ -39,10 +39,10 @@ export const useMap = <T extends DefaultObject>(initial: ObjectType<T> = {} as a
       copy() {
         return structuredClone(map);
       },
-      reset(obj: SetStateAction<TMap> = initial) {
-        setMap(obj);
+      reset(value: SetStateAction<TMap> = initial) {
+        setMap(value);
       },
-      toString(spaces?: number) {
+      toJSON(spaces?: number) {
         return JSON.stringify(map, null, spaces);
       }
     }),
