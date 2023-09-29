@@ -66,9 +66,9 @@ export default function Example() {
   return (
     <main>
       <div>
-        <button onClick={() => counter.inc()}>Reset</button>
+        <button onClick={() => counter.inc()}>+</button>
         <span>{counter.value}</span>
-        <button onClick={() => counter.dec()}>Reset</button>
+        <button onClick={() => counter.dec()}>-</button>
       </div>
       <button onClick={() => counter.reset()}>Reset</button>
     </main>
