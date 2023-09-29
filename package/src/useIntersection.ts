@@ -2,14 +2,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type IntersectionObserverOptions<T extends HTMLElement> = IntersectionObserverInit & {
   target?: T | null;
-  callback?: IntersectionObserverCallback;
+  handler?: IntersectionObserverCallback;
   once?: boolean;
 };
 
-export const useIntersectionObserver = <T extends HTMLElement = HTMLDivElement>(
+export const useIntersection = <T extends HTMLElement = HTMLDivElement>(
   options: IntersectionObserverOptions<T> = {}
 ) => {
-  const { target = null, callback, once, ...observerInit } = options;
+  const { target = null, handler, once, ...observerInit } = options;
 
   const ref = useRef<T>(target);
   const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
@@ -18,10 +18,10 @@ export const useIntersectionObserver = <T extends HTMLElement = HTMLDivElement>(
     (entries, observer) => {
       const { isIntersecting } = entries[0];
       setIsIntersecting(isIntersecting);
-      if (callback) callback(entries, observer);
+      if (handler) handler(entries, observer);
       if (isIntersecting && once) observer.unobserve(ref.current!);
     },
-    [options]
+    [handler]
   );
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const useIntersectionObserver = <T extends HTMLElement = HTMLDivElement>(
     observer.observe(ref.current);
 
     return () => observer.disconnect();
-  }, [callbackMemo]);
+  }, []);
 
   return { ref, isIntersecting };
 };
