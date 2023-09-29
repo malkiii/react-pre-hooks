@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 
 export type GeoLocationState = Partial<GeolocationCoordinates> & {
-  loading: boolean;
+  isLoading: boolean;
   error?: GeolocationPositionError;
 };
 
 export const useGeolocation = (options: PositionOptions = {}) => {
-  const [state, setState] = useState<GeoLocationState>({ loading: true });
+  const [state, setState] = useState<GeoLocationState>({ isLoading: true });
 
   const successCallback: PositionCallback = useCallback(({ coords }) => {
     setState({
-      loading: false,
+      isLoading: false,
       latitude: coords.latitude,
       longitude: coords.longitude,
       altitude: coords.altitude,
