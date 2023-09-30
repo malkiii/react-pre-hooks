@@ -4,7 +4,7 @@
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/) 18 or higher.
+- [Node.js](https://nodejs.org/) 17 or higher.
 - React.js 17 or higher.
 
 Install it with:
