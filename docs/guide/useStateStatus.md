@@ -1,22 +1,67 @@
 # useStateStatus
 
-## Options
+This hook returns the state and its current **status** using a state handler.
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
+## Parameters
+
+| Name        | Type     | Description                                                                                       |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------- |
+| **initial** | Any      | the initial value.                                                                                |
+| **handler** | Function | the handler of the current state that takes the value as the parameter and return a status value. |
+
+## Return Values
+
+It returns a tuple of 3 values:
+
+| Index | Name         | Type     | Description                                                 |
+| :---: | ------------ | -------- | ----------------------------------------------------------- |
+|   0   | **value**    | Any      | the current value.                                          |
+|   1   | **setValue** | Function | updates the value.                                          |
+|   2   | **status**   | Any      | the status of the current value (what the handler returns). |
 
 ## Example Usage
 
 ```tsx
-import 'realtime-hooks';
+import { useStateStatus } from 'realtime-hooks';
 
-function example() {}
+export default function Email() {
+  const [email, setEmail, status] = useStateStatus('', value => {
+    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) return 'valid';
+    else return 'invalid';
+  });
+
+  return (
+    <main>
+      <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
+      <p>this email is {status}.</p>
+    </main>
+  );
+}
 ```
 
-## Return Values
+You can use **objects** instead:
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-|      |      |             |
+```tsx
+import { useStateStatus } from 'realtime-hooks';
 
+export default function Username() {
+  const [name, setName, status] = useStateStatus('', value => {
+    if (value.length < 3) {
+      return { type: 'length', message: 'too short!' };
+    }
+    if (value.length > 15) {
+      return { type: 'length', message: 'too long!' };
+    }
+    if (/[^\w_]/.test(value)) {
+      return { type: 'pattern', message: 'no special characters!' };
+    }
+  });
+
+  return (
+    <main>
+      <input type="text" value={name} onChange={e => setName(e.target.value)} />
+      {status && <p>{status.message}</p>}
+    </main>
+  );
+}
+```
