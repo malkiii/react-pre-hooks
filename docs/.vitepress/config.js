@@ -8,7 +8,7 @@ const site = {
   description,
   url: new URL(homepage),
   logo: '/realtime-hooks-logo.svg',
-  og: new URL('/og.png', homepage).href
+  og: new URL(homepage).href + '/og.png'
 };
 
 function getHooksSectionItems() {
