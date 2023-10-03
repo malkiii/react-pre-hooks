@@ -3,6 +3,7 @@ import { EventListenerOptions, useEventListener } from '@/src';
 import { getCurrentMousePosition } from '@/src/utils';
 
 export interface SwipeAction {
+  readonly state: 'start' | 'moving' | 'end';
   readonly deltaX: number;
   readonly deltaY: number;
   readonly initialX: number;
@@ -14,11 +15,15 @@ export interface SwipeAction {
 
 export type SwipeEventHandler = (action: SwipeAction) => any;
 
-export type SwipeOptions = EventListenerOptions<HTMLElement> & {
+export type SwipeOptions<T extends EventTarget> = EventListenerOptions<T> & {
   mouse?: boolean;
 };
 
-export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions = {}) => {
+export const useSwipeAction = <T extends EventTarget = Window>(
+  handler: SwipeEventHandler,
+  options: SwipeOptions<T> = {}
+) => {
+  const ref = useRef<T>(options.target ?? null);
   const delta = useRef({ x: 0, y: 0 });
   const initialPosition = useRef<typeof delta.current>();
 
@@ -38,7 +43,7 @@ export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions
       initialPosition.current = getCurrentMousePosition(event);
       const { x: initialX, y: initialY } = initialPosition.current;
 
-      handler({ deltaX: 0, deltaY: 0, initialX, initialY, isHolding: true, event });
+      handler({ state: 'start', deltaX: 0, deltaY: 0, initialX, initialY, isHolding: true, event });
     },
     [handler]
   );
@@ -48,6 +53,7 @@ export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions
       if (!initialPosition.current) return;
 
       handler({
+        state: 'end',
         deltaX: delta.current.x,
         deltaY: delta.current.y,
         initialX: initialPosition.current.x,
@@ -73,6 +79,7 @@ export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions
       };
 
       handler({
+        state: 'moving',
         deltaX: delta.current.x,
         deltaY: delta.current.y,
         initialX: initialPosition.current.x,
@@ -86,6 +93,7 @@ export const useSwipeAction = (handler: SwipeEventHandler, options: SwipeOptions
   );
 
   const { mouse = false, ...eventOptions } = options;
+  if (!eventOptions.target) eventOptions.target = ref.current ?? (window as any);
 
   useEventListener(['touchmove', mouse && 'mousemove'], handleTouchMove, eventOptions);
   useEventListener(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);
