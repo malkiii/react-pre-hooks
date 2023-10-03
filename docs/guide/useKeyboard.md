@@ -35,10 +35,14 @@ You can use any string case you want for the keys, for example:
 
 ## Options
 
-| Name           | Type   | Description                                                             |
-| -------------- | ------ | ----------------------------------------------------------------------- |
-| **separator**  | String | the string separator between the keys in one handler (default is `\|`). |
-| **...options** | Object | the event listener [options](./useEventListener.md#parameters).         |
+| Name           | Type   | Description                                                                                                   |
+| -------------- | ------ | ------------------------------------------------------------------------------------------------------------- |
+| **separator**  | String | the string separator between the keys in one handler (default is `\|`).                                       |
+| **...options** | Object | the event listener [options](./useEventListener.md#parameters), and the target element (default is `window`). |
+
+## Return Values
+
+a `ref` object of the target element.
 
 ## Example Usage
 
