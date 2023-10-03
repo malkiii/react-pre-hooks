@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
-type FileReaderName = 'readAsArrayBuffer' | 'readAsBinaryString' | 'readAsDataURL' | 'readAsText';
 type FileData<T extends FileDataType | undefined> = T extends undefined
   ? File
   : T extends 'array-buffer'
@@ -18,40 +17,48 @@ export type DroppedFile<T extends FileDataType | undefined> = {
   data: FileData<T> | null;
 };
 
-export type DropzoneOptions<T extends FileDataType | undefined> = {
+export type DropzoneOptions<
+  T extends HTMLElement = HTMLDivElement,
+  F extends FileDataType | undefined = undefined
+> = {
+  target?: T;
   multiple?: boolean;
   extensions?: string[];
   minSize?: number;
   maxSize?: number;
-  readAs?: T;
+  readAs?: F;
   onUpload?: (files: File[]) => any;
 };
 
-const readerMethods: Record<NonNullable<FileDataType | undefined>, FileReaderName> = {
+const readerMethods = {
   'array-buffer': 'readAsArrayBuffer',
   'binary-string': 'readAsBinaryString',
   'url': 'readAsDataURL',
   'text': 'readAsText'
-};
+} as const;
 
-const getFileInputElement = (label: HTMLLabelElement): HTMLInputElement | null => {
-  if (label.htmlFor) return document.getElementById(label.htmlFor) as any;
+const getFileInputElement = (label: HTMLElement): HTMLInputElement | null => {
+  if ('htmlFor' in label && label.htmlFor)
+    return document.getElementById(label.htmlFor as string) as any;
   return label.querySelector('input[type="file"]') as any;
 };
 
-export const useFileDropzone = <T extends FileDataType | undefined = undefined>(
-  options: DropzoneOptions<T> = {}
+export const useFileDropzone = <
+  T extends HTMLElement = HTMLDivElement,
+  F extends FileDataType | undefined = undefined
+>(
+  options: DropzoneOptions<T, F> = {}
 ) => {
-  const { multiple = false, readAs, onUpload } = options;
+  const { target = null, multiple = false, readAs, onUpload } = options;
 
-  const ref = useRef<HTMLLabelElement>(null);
-  const [files, setFiles] = useState<DroppedFile<T>[]>();
+  const ref = useRef<HTMLElement>(target);
+  const [files, setFiles] = useState<DroppedFile<F>[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [error, setError] = useState<DropzoneError>();
 
   const isValidFiles = useCallback(
-    (files: DroppedFile<T>[]) => {
+    (files: DroppedFile<F>[]) => {
       const { extensions, minSize = 0, maxSize = Infinity } = options;
       return files.every(file => {
         // validate the type
@@ -81,7 +88,7 @@ export const useFileDropzone = <T extends FileDataType | undefined = undefined>(
   );
 
   const readFilesAs = useCallback(
-    (files: DroppedFile<T>[]) => {
+    (files: DroppedFile<F>[]) => {
       if (!readAs) return;
       setIsLoading(true);
 
@@ -113,10 +120,10 @@ export const useFileDropzone = <T extends FileDataType | undefined = undefined>(
       const resolvedFiles = multiple ? files : [files[0]];
       if (onUpload) onUpload(resolvedFiles);
 
-      const dropperFiles = resolvedFiles.map<DroppedFile<T>>(file => ({
+      const dropperFiles = resolvedFiles.map<DroppedFile<F>>(file => ({
         name: file.name,
         size: Number((file.size / 1024 ** 2).toFixed(2)),
-        extension: file.name.split(/(?=\.[^.]+$)\./).at(1),
+        extension: file.name.split(/(?=\.\w+$)\./).at(1),
         data: file as any
       }));
 
@@ -125,7 +132,7 @@ export const useFileDropzone = <T extends FileDataType | undefined = undefined>(
       await readFilesAs(dropperFiles);
       setIsLoading(false);
 
-      setFiles(dropperFiles);
+      setFiles(f => [...f, ...dropperFiles]);
     },
     [options]
   );
@@ -151,8 +158,6 @@ export const useFileDropzone = <T extends FileDataType | undefined = undefined>(
     };
   }, [ref, options]);
 
-  const eventOptions = { target: ref.current };
-
   const handleFileDrop = async (event: DragEvent) => {
     event.preventDefault();
     await getDropperFiles(event.dataTransfer?.files);
@@ -166,9 +171,9 @@ export const useFileDropzone = <T extends FileDataType | undefined = undefined>(
     setIsDragging(false);
   };
 
-  useEventListener('drop', handleFileDrop, eventOptions);
-  useEventListener('dragover', handleDragOver, eventOptions);
-  useEventListener('dragleave', handleDragLeave, eventOptions);
+  useEventListener('drop', handleFileDrop, { target: ref.current });
+  useEventListener('dragover', handleDragOver, { target: window, passive: true });
+  useEventListener('dragleave', handleDragLeave, { target: window, passive: true });
 
   return { ref, files, isDragging, isLoading, error, setError };
 };
