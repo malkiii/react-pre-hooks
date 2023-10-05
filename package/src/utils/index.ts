@@ -10,6 +10,15 @@ export function getCurrentMousePosition(event: MouseEvent | TouchEvent) {
     : { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
 }
 
+export function getPrefixedProperty<T extends {}, K extends keyof T & string>(obj: T, prop: K) {
+  if (prop in obj) return obj[prop];
+
+  const capitalizedProp = prop.charAt(0).toUpperCase() + prop.substring(1);
+  const prefixedProps = ['moz', 'webkit', 'o', 'ms'].map(pref => pref + capitalizedProp);
+  const property = prefixedProps.find(p => p in obj);
+  if (property) return obj[property as K];
+}
+
 export function download(url: string, name = '') {
   const a = document.createElement('a');
   a.style.display = 'none';
@@ -19,13 +28,4 @@ export function download(url: string, name = '') {
   document.body.appendChild(a);
   a.click();
   a.remove();
-}
-
-export function getPrefixedProperty<T extends {}, K extends keyof T & string>(obj: T, prop: K) {
-  if (prop in obj) return obj[prop];
-
-  const capitalizedProp = prop.charAt(0).toUpperCase() + prop.substring(1);
-  const prefixedProps = ['moz', 'webkit', 'o', 'ms'].map(pref => pref + capitalizedProp);
-  const property = prefixedProps.find(p => p in obj);
-  if (property) return obj[property as K];
 }

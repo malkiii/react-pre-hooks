@@ -1,14 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { useEventListener } from '@/src';
-
-declare global {
-  interface WindowEventMap {
-    'storage:local': CustomEvent;
-    'storage:session': CustomEvent;
-  }
-}
-
-type StorageType = 'localStorage' | 'sessionStorage';
 
 const parseJSON = <T>(value: string | null): T => {
   try {
@@ -19,12 +10,11 @@ const parseJSON = <T>(value: string | null): T => {
 };
 
 export const useStorage = <T extends any>(
-  type: StorageType,
+  type: 'localStorage' | 'sessionStorage',
   key: string,
   initialValue: T | null = null
 ) => {
   const storage = type === 'localStorage' ? window.localStorage : window.sessionStorage;
-  const storageEvent = type === 'localStorage' ? 'storage:local' : 'storage:session';
 
   const getStoredValue = useCallback(() => {
     if (typeof window === 'undefined') return initialValue;
@@ -35,7 +25,7 @@ export const useStorage = <T extends any>(
     } catch (error) {
       throw new Error(`Error reading localStorage key “${key}”: ${error}`);
     }
-  }, [initialValue, key]);
+  }, [key]);
 
   // stored value state
   const [storedValue, setStoredValue] = useState<T | null>(getStoredValue);
@@ -49,29 +39,23 @@ export const useStorage = <T extends any>(
     try {
       const newValue = value instanceof Function ? value(storedValue) : value;
       storage.setItem(key, JSON.stringify(newValue));
-      setStoredValue(newValue);
 
-      window.dispatchEvent(new Event(storageEvent));
+      window.dispatchEvent(new StorageEvent('storage', { key }));
     } catch (error) {
       throw new Error(`Value error: setting localStorage key “${key}” with ${value}: ${error}`);
     }
   }, []);
 
   const handleStorageChange = useCallback(
-    (event: StorageEvent | CustomEvent) => {
-      const storageKey = (event as StorageEvent)?.key;
-      if (storageKey && storageKey !== key) return;
-      setCurrentStoredValue();
-    },
+    (event: StorageEvent) => event?.key === key && setCurrentStoredValue(),
     [key, getStoredValue]
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCurrentStoredValue();
   }, []);
 
   useEventListener('storage', handleStorageChange, { target: window });
-  useEventListener(storageEvent, handleStorageChange, { target: window });
 
   return [storedValue, updateStoredValue] as const;
 };
