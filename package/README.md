@@ -16,7 +16,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAnimatePresence">useAnimatePresence</a></td><td>Animate an element when it enters or leaves the DOM.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useArray">useArray</a></td><td>Returns an array with common array methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAsync">useAsync</a></td><td>Execut an <code>async</code> function and returns a loading state, return data and other values.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAudio">useAudio</a></td><td>Returns an audio <code>ref</code> as well as its state and controler methods.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAudio">useAudio</a></td><td>Returns an audio <code>ref</code> as well as its state and controller methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAutoComplete">useAutoComplete</a></td><td>Returns the result array of a search text.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClickAway">useClickAway</a></td><td>Execute a function when clicking outside an element.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClipboard">useClipboard</a></td><td>Copy to clipboard and return a temporary <code>copied</code> state.</td></tr>
@@ -50,7 +50,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStorage">useSessionStorage</a></td><td>Get and Set a specific value in the session storage.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSet">useSet</a></td><td>Returns a set with common set methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSize">useSize</a></td><td>Track the element size using <code>ResizeObserver</code>.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSpeech">useSpeech</a></td><td>Returns a text speaker with available voices as well as its state and controler methods.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSpeech">useSpeech</a></td><td>Returns a text speaker with available voices as well as its state and controller methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStateHistory">useStateHistory</a></td><td>Stores a specific number of the previous state values.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStateStatus">useStateStatus</a></td><td>Returns the state and its current <code>status</code> that is returned by a handler.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSwipeAction">useSwipeAction</a></td><td>Handle the user swipe actions, and it can also handle the mouse swipes.</td></tr>
@@ -59,7 +59,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useToggle">useToggle</a></td><td>Toggles the state between given values.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useUnmount">useUnmount</a></td><td>Execute a callback before the component is unmounted.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useUpdateEffect">useUpdateEffect</a></td><td>Ignore the first render of the component.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useVideo">useVideo</a></td><td>Returns a video <code>ref</code> as well as its state and controler methods.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useVideo">useVideo</a></td><td>Returns a video <code>ref</code> as well as its state and controller methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useViewport">useViewport</a></td><td>Track the screen <code>viewport</code> (width and height) and <code>orientation</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useWebRTC">useWebRTC</a></td><td>Uses the user media devices (<code>camera</code> and <code>microphone</code>) and <code>screen capture</code> and returns their states and controls as well as a <code>recorder</code> that records their current stream.</td></tr>
 </table>
