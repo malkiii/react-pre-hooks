@@ -17,14 +17,14 @@ export const useSpeech = (options: SpeechOptions = {}) => {
     pitch,
     volume,
     text: '',
-    isSpeeking: false,
+    isSpeaking: false,
     isPaused: false,
     isEnded: false
   });
 
   const controls = useMemo(
     () => ({
-      speek(text: string) {
+      speak(text: string) {
         startSpeech(text);
         setState(s => ({ ...s, text: '' }));
       },
@@ -97,10 +97,10 @@ export const useSpeech = (options: SpeechOptions = {}) => {
     speech.pitch = pitch;
     speech.volume = volume;
 
-    speech.onstart = () => setState(s => ({ ...s, isSpeeking: true, isEnded: false }));
-    speech.onend = () => setState(s => ({ ...s, isSpeeking: false, isEnded: true }));
-    speech.onpause = () => setState(s => ({ ...s, isSpeeking: false, isPaused: true }));
-    speech.onresume = () => setState(s => ({ ...s, isSpeeking: true, isPaused: false }));
+    speech.onstart = () => setState(s => ({ ...s, isSpeaking: true, isEnded: false }));
+    speech.onend = () => setState(s => ({ ...s, isSpeaking: false, isEnded: true }));
+    speech.onpause = () => setState(s => ({ ...s, isSpeaking: false, isPaused: true }));
+    speech.onresume = () => setState(s => ({ ...s, isSpeaking: true, isPaused: false }));
     speech.onboundary = e =>
       setState(s => {
         charIndex.current = e.charIndex;
@@ -112,7 +112,7 @@ export const useSpeech = (options: SpeechOptions = {}) => {
 
     speechSynthesis.onvoiceschanged = () => {
       const voices = speechSynthesis.getVoices().filter(v => v.localService);
-      speechRef.current.voice = voice ?? voices.find(v => v.default)!;
+      speechRef.current.voice = options.voice ?? voices.find(v => v.default) ?? null;
       setVoices(voices);
     };
 
