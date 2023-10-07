@@ -9,6 +9,4 @@
 
 ## Description
 
-> Please include a summary of the changes in your `pull request`.
-
-Please review the [guidelines for contributing](CONTRIBUTING.md) to this repository.
+> Please include a summary of the changes in your pull request, and make sure review the [guidelines for contributing](CONTRIBUTING.md) to this repository first.
