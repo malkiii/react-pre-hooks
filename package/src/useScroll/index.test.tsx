@@ -1,4 +1,4 @@
-import { act, fireEvent, render, renderHook } from '@testing-library/react';
+import { fireEvent, render, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { useScroll } from '@/src';
 
@@ -24,7 +24,7 @@ describe('useScroll', () => {
 
     rerender();
 
-    fireEvent.scroll(result.current.ref.current, { target: { scrollLeft: 500 } });
+    fireEvent.scroll(result.current.ref.current as any, { target: { scrollLeft: 500 } });
     expect(result.current.isScrollRight).toBe(true);
   });
 

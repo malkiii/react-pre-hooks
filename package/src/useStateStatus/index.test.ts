@@ -16,7 +16,7 @@ describe('useStateStatus', () => {
 
   it('should update value and status when state changes', () => {
     const statusHandler = vi.fn(value => (value > 0 ? 'positive' : 'negative'));
-    const { result } = renderHook(() => useStateStatus(0, statusHandler));
+    const { result } = renderHook(() => useStateStatus(0 as number, statusHandler));
 
     const setValue = result.current[1];
 

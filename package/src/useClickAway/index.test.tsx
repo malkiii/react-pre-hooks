@@ -1,4 +1,4 @@
-import { act, fireEvent, render, renderHook } from '@testing-library/react';
+import { fireEvent, render, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { useClickAway } from '@/src';
 
@@ -22,7 +22,7 @@ describe('useClickAway', () => {
 
     render(<div ref={result.current}>Click inside</div>);
 
-    fireEvent.click(result.current.current);
+    fireEvent.click(result.current.current as any);
     expect(handler).not.toHaveBeenCalled();
   });
 });

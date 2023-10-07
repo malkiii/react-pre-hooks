@@ -56,7 +56,7 @@ describe('useMap', () => {
   });
 
   it('should reset to initial object', () => {
-    const { result } = renderHook(() => useMap({ key: null }));
+    const { result } = renderHook(() => useMap({ key: null as string | null }));
 
     act(() => result.current.set('key', 'new value'));
     act(() => result.current.reset());

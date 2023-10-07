@@ -1,4 +1,4 @@
-import { act, fireEvent, renderHook, waitFor } from '@testing-library/react';
+import { fireEvent, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { useKeyboard } from '@/src';
 

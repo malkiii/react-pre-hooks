@@ -1,4 +1,4 @@
-import { act, render, renderHook } from '@testing-library/react';
+import { render, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { useCss } from '@/src';
 
@@ -12,7 +12,7 @@ describe('useCss', () => {
     );
 
     render(<div className="target">test</div>);
-    const targetElementStyle = window.getComputedStyle(document.querySelector('.target'));
+    const targetElementStyle = window.getComputedStyle(document.querySelector('.target') as any);
 
     expect(result.current.cssText).toBe('.target{color:rgb(255, 0, 0);font-size:1.12rem;}');
     expect(targetElementStyle.color).toBe(elementStyle.color);
@@ -33,7 +33,7 @@ describe('useCss', () => {
       </div>
     );
 
-    const buttonStyle = window.getComputedStyle(document.querySelector('#container button'));
+    const buttonStyle = window.getComputedStyle(document.querySelector('#container button') as any);
     expect(buttonStyle.fontWeight).toBe('bold');
   });
 });

@@ -1,4 +1,4 @@
-import { act, fireEvent, render, renderHook } from '@testing-library/react';
+import { fireEvent, render, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { useMouse } from '@/src';
 
@@ -27,10 +27,10 @@ describe('useMouse', () => {
 
     render(<div ref={targetRef}>Container</div>);
 
-    fireEvent.mouseDown(targetRef.current);
+    fireEvent.mouseDown(targetRef.current as any);
     expect(result.current.isDown).toBe(true);
 
-    fireEvent.mouseUp(targetRef.current);
+    fireEvent.mouseUp(targetRef.current as any);
     expect(result.current.isDown).toBe(false);
   });
 
