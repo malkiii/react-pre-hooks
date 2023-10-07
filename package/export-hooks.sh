@@ -2,18 +2,18 @@
 
 src_directory="$(dirname "$0")/src"
 index_file="$src_directory/index.ts"
-hooks_files=$(find $src_directory -maxdepth 1 -type f -name 'use*')
+hooks_folders=$(find $src_directory -maxdepth 1 -type d -name 'use*')
 
 # Create or overwrite the index.ts file
 echo "/** @run \"pnpm prebuild\" to modify this file */" > $index_file
 
 export_with() {
-  for file in ${hooks_files[@]}; do
-    name=$(basename $file | sed 's/\.ts$//g')
-    exports=$(grep -oP "$2" "$file" | sed ':a;N;$!ba;s/\n/, /g')
+  for folder in ${hooks_folders[@]}; do
+    folder_name=$(basename $folder)
+    exports=$(grep -oP "$2" "$folder/index.ts" | sed ':a;N;$!ba;s/\n/, /g')
 
     if [ -n "$exports" ]; then
-      echo "export $1{ $exports } from './$name';" >> $index_file
+      echo "export $1{ $exports } from './$folder_name';" >> $index_file
     fi
   done
 }
