@@ -33,27 +33,30 @@ Thank you for your contribution 🤝
    ```sh
    gh repo fork malkiii/realtime-hooks --clone
    ```
+
 2. Install package dependencies and build the package:
 
    ```sh
    pnpm install && pnpm build
    ```
+
 3. Now you can import any hook with:
 
    ```ts
-   import { /* hook */ } from "/path/to/dist/directory"
+   import '/path/to/dist/directory'; /* hook */
    ```
 
 ### To run the **documentation site** on local:
+
 ```sh
 pnpm docs:dev
 ```
 
 ## Adding a new hook
 
-1. Before you add a new hook, please [open a request](https://github.com/malkiii/realtime-hooks/issues/new?labels=feature&template=feature-request.yml&title=feat(hook)%3A+).
+1. Before you add a new hook, please [open a request](<https://github.com/malkiii/realtime-hooks/issues/new?labels=feature&template=feature-request.yml&title=feat(hook)%3A+>).
 
-2. Add the hook file to [`package/src`](https://github.com/malkiii/realtime-hooks/tree/master/package/src) folder including the code, and then run:
+2. Add the hook folder to [`package/src`](https://github.com/malkiii/realtime-hooks/tree/master/package/src) folder, then create an `index.ts` file that includes the code, and then run:
 
    ```sh
    pnpm prebuild
