@@ -1,7 +1,7 @@
 import { SetStateAction, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { getStateActionValue } from '@/src/utils';
 
-export type MediaDevice = {
+export type MediaDeviceState = {
   devices: MediaDeviceInfo[];
   current?: MediaDeviceInfo;
   isEnabled: boolean;
@@ -22,35 +22,28 @@ export const useRTC = (options: StreamOptions = {}) => {
   const audioConstraints = typeof audio == 'boolean' ? {} : audio;
 
   const streamRef = useRef<MediaStream>(new MediaStream());
-  const [shouldStart, setShouldStart] = useState<boolean>(autoStart);
+  const [canStart, setCanStart] = useState<boolean>(autoStart);
 
-  const [camera, setCamera] = useState<MediaDevice>({
+  const [camera, setCamera] = useState<MediaDeviceState>({
     devices: [],
     isEnabled: !!video,
     hasPermission: false
   });
 
-  const [microphone, setMicrophone] = useState<MediaDevice>({
+  const [microphone, setMicrophone] = useState<MediaDeviceState>({
     devices: [],
     isEnabled: !!audio,
     hasPermission: false
   });
 
-  const start = useCallback(() => {
-    const media = ref.current;
-    if (!media) return;
-    const stream = streamRef.current;
-    if (!stream.getTracks().length) return;
+  const initializeStream = useCallback(() => {
+    if (!ref.current) return;
+    if (!streamRef.current.getTracks().length) return;
 
-    media.muted = true;
-    media.controls = false;
-    media.autoplay = true;
-    media.srcObject = stream;
-  }, [shouldStart, camera.current, microphone.current]);
-
-  const stop = useCallback(() => {
-    if (ref.current) ref.current.srcObject = null;
-    setShouldStart(false);
+    ref.current.muted = true;
+    ref.current.controls = false;
+    ref.current.autoplay = true;
+    ref.current.srcObject = streamRef.current;
   }, [ref]);
 
   const videoDevice = useMemo(
@@ -113,20 +106,22 @@ export const useRTC = (options: StreamOptions = {}) => {
           const devices = mediaDevices.filter(d => d.deviceId && d.kind === 'videoinput');
 
           setCamera(c => ({ ...c, devices, current: devices[0] }));
+
+          // stop the current video tracks so that the next stream tracks start
+          videoStream.getVideoTracks().forEach(t => t.stop());
+
           return;
         }
 
         const tracks = videoStream.getVideoTracks();
-
         if (isDisplay) tracks[0].onended = () => videoDevice.enable(false);
         else tracks[0].enabled = videoDevice.isEnabled;
-
         tracks.forEach(track => (track.contentHint = isDisplay ? 'screen' : 'camera'));
 
         streamRef.current = new MediaStream([...streamRef.current.getAudioTracks(), ...tracks]);
 
         setCamera(c => ({ ...c, hasPermission: true }));
-        start();
+        initializeStream();
       } catch (error) {
         console.error(error);
         setCamera(c => ({ ...c, hasPermission: false }));
@@ -147,6 +142,8 @@ export const useRTC = (options: StreamOptions = {}) => {
         const devices = mediaDevices.filter(d => d.deviceId && d.kind === 'audioinput');
 
         setMicrophone(m => ({ ...m, devices, current: devices[0] }));
+        audioStream.getAudioTracks().forEach(t => t.stop());
+
         return;
       }
 
@@ -163,7 +160,7 @@ export const useRTC = (options: StreamOptions = {}) => {
       streamRef.current = new MediaStream([...currentTracks, ...tracks]);
 
       setMicrophone(c => ({ ...c, hasPermission: true }));
-      start();
+      initializeStream();
     } catch (error) {
       console.error(error);
       setMicrophone(c => ({ ...c, hasPermission: false }));
@@ -174,18 +171,18 @@ export const useRTC = (options: StreamOptions = {}) => {
   useLayoutEffect(() => {
     if (videoConstraints.display) return;
     streamRef.current.getVideoTracks().forEach(t => t.stop());
-    if (!shouldStart || !video) return;
+    if (!canStart || !video) return;
 
     startVideo();
-  }, [videoDevice.current, shouldStart]);
+  }, [videoDevice.current, canStart]);
 
   // start the screen-capture
   useLayoutEffect(() => {
     if (!videoConstraints.display) return;
-    if (!shouldStart || !camera.isEnabled) return;
+    if (!canStart || !camera.isEnabled) return;
 
     startVideo(true);
-  }, [videoDevice.isEnabled, shouldStart]);
+  }, [videoDevice.isEnabled, canStart]);
 
   // start the audio
   useLayoutEffect(() => {
@@ -193,17 +190,22 @@ export const useRTC = (options: StreamOptions = {}) => {
       .getAudioTracks()
       .filter(t => t.contentHint === 'microphone')
       .forEach(t => t.stop());
-    if (!shouldStart || !audio) return;
+    if (!canStart || !audio) return;
 
     startAudio();
-  }, [audioDevice.current, shouldStart]);
+  }, [audioDevice.current, canStart]);
 
   return {
     ref,
     stream: streamRef.current,
     video: videoDevice,
     audio: audioDevice,
-    start: () => setShouldStart(true),
-    stop
+    start() {
+      setCanStart(true);
+    },
+    stop() {
+      if (ref.current) ref.current.srcObject = null;
+      setCanStart(false);
+    }
   };
 };

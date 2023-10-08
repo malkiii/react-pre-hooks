@@ -69,7 +69,7 @@ export type { IntervalOptions } from './useInterval';
 export type { KeysRecord, KeyboardOptions } from './useKeyboard';
 export type { RecorderDownloadOptions } from './useMediaRecorder';
 export type { MutationObserverOptions } from './useMutation';
-export type { MediaDevice, StreamOptions } from './useRTC';
+export type { MediaDeviceState, StreamOptions } from './useRTC';
 export type { ScrollEndOptions } from './useScrollEnd';
 export type { SizeObserverOptions } from './useSize';
 export type { SpeechOptions } from './useSpeech';
