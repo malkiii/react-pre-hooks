@@ -19,7 +19,7 @@ html {
   scrollbar-gutter: stable;
 }
 
-*::selection {
+::selection {
   color: #fff;
   background-color: var(--vp-c-brand-1);
 }
@@ -33,6 +33,10 @@ html {
   border: 4px solid transparent;
   background-clip: content-box;
   border-radius: 10px;
+}
+
+img.VPImage {
+  user-select: none;
 }
 
 .custom-block.info code {

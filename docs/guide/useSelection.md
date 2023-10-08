@@ -15,7 +15,7 @@ a `target` element (default is `document`).
 | Name            | Type      | Description                                                                                |
 | --------------- | --------- | ------------------------------------------------------------------------------------------ |
 | **ref**         | RefObject | the target element reference.                                                              |
-| **text**        | String    | the selection text.                                                                        |
+| **text**        | String    | the selection text or `null`.                                                              |
 | **rect**        | Object    | the selection rectangle (`top`, `left`, `width`...).                                       |
 | **isSelecting** | Boolean   | whether the user is selecting or not.                                                      |
 | **value**       | Selection | the actual [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) object. |

@@ -24,7 +24,7 @@ Build a **file dropzone** component easily with this hook, it handles file dropp
 | **error**      | Error     | the [`DropzoneError`](#dropzoneerror-object) error.           |
 | **setError**   | Function  | set your own error.                                           |
 
-### `DroppedFile` object
+### `DroppedFile` Object
 
 | Name          | Type     | Description                                                                                                                                               |
 | ------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -33,7 +33,7 @@ Build a **file dropzone** component easily with this hook, it handles file dropp
 | **extension** | String   | the file extension.                                                                                                                                       |
 | **data**      | FileData | the file data type depends on `readAs` option, if you don't use this it will be a [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) object. |
 
-### `DropzoneError` object
+### `DropzoneError` Object
 
 | Name        | Type   | Description                                                                                                                                                                                                |
 | ----------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

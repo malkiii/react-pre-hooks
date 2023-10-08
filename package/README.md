@@ -44,6 +44,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMutation">useMutation</a></td><td>Handles <code>MutationObserver</code> and returns the current mutations (changes being made to the DOM tree).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useOnlineState">useOnlineState</a></td><td>Returns whether the user is online or not.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePageVisibility">usePageVisibility</a></td><td>Returns the tab visible state (the tab contents is visible or hidden).</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useWebRTC">useRTC</a></td><td>Uses the user media devices (<code>camera</code> and <code>microphone</code>) and <code>screen capture</code> and returns their states and controls as well as their stream object.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScroll">useScroll</a></td><td>Track the scroll <code>position</code> ,<code>progress</code> and <code>direction</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScrollEnd">useScrollEnd</a></td><td>Execute a callback when the scrolling is close to the end with a specific <code>offset</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSelection">useSelection</a></td><td>Returns the current selected text as well as the target element and its rectangle...</td></tr>
@@ -61,7 +62,6 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useUpdateEffect">useUpdateEffect</a></td><td>Ignore the first render of the component.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useVideo">useVideo</a></td><td>Returns a video <code>ref</code> as well as its state and controller methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useViewport">useViewport</a></td><td>Track the screen <code>viewport</code> (width and height) and <code>orientation</code>.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useWebRTC">useWebRTC</a></td><td>Uses the user media devices (<code>camera</code> and <code>microphone</code>) and <code>screen capture</code> and returns their states and controls as well as a <code>recorder</code> that records their current stream.</td></tr>
 </table>
 
 ## Contributing
