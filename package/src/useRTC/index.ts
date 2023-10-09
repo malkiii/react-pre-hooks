@@ -179,6 +179,7 @@ export const useRTC = (options: StreamOptions = {}) => {
   // start the screen-capture
   useLayoutEffect(() => {
     if (!videoConstraints.display) return;
+    streamRef.current.getVideoTracks().forEach(t => t.stop());
     if (!canStart || !camera.isEnabled) return;
 
     startVideo(true);
