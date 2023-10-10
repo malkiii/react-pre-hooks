@@ -72,3 +72,25 @@ export default function Example() {
   );
 }
 ```
+
+2. Using the browser screen capture:
+
+```tsx
+import { useRTC } from 'realtime-hooks';
+
+export default function Example() {
+  const { ref, video, start, stop } = useRTC({
+    video: { display: true },
+    autoStart: false
+  });
+
+  return (
+    <main>
+      <button onClick={video.isEnabled ? stop() : start()}>
+        {video.isEnabled ? 'stop' : 'start'}
+      </button>
+      <video ref={ref} />
+    </main>
+  );
+}
+```
