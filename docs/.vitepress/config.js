@@ -14,11 +14,8 @@ const site = {
 function getHooksSectionItems() {
   return fs
     .readdirSync(path.join(__dirname, '../../package/src'), { withFileTypes: true })
-    .filter(file => file.isFile() && file.name.startsWith('use'))
-    .map(({ name }) => {
-      const text = name.replace(/\.\w+$/g, '');
-      return { text, link: `/guide/${text}` };
-    });
+    .filter(file => file.isDirectory() && file.name.startsWith('use'))
+    .map(({ name }) => ({ text: name, link: `/guide/${name}` }));
 }
 
 export default defineConfig({
