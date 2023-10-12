@@ -1,12 +1,23 @@
 import { useEffect } from 'react';
 
-type FalsyValue = false | null | undefined;
-export type EventMap<T> = T extends Window ? WindowEventMap : HTMLElementEventMap;
-export type EventHandler<T, E extends keyof EventMap<T>> = (event: EventMap<T>[E]) => any;
-export type EventListenerOptions<T> = AddEventListenerOptions & { target?: T | null | undefined };
+export type EventMap<T extends EventTarget> = T extends Window
+  ? WindowEventMap
+  : T extends Document
+  ? DocumentEventMap
+  : T extends HTMLElement
+  ? HTMLElementEventMap
+  : GlobalEventHandlersEventMap;
+
+export type EventHandler<T extends EventTarget, E extends keyof EventMap<T>> = (
+  event: EventMap<T>[E]
+) => any;
+
+export type EventListenerOptions<T extends EventTarget> = AddEventListenerOptions & {
+  target?: T | null | undefined;
+};
 
 export const useEventListener = <T extends EventTarget, E extends keyof EventMap<T> & string>(
-  event: E | Array<E | FalsyValue>,
+  event: E | Array<E | false | null | undefined>,
   handler: EventHandler<T, E>,
   options: EventListenerOptions<T>
 ) => {
@@ -15,8 +26,8 @@ export const useEventListener = <T extends EventTarget, E extends keyof EventMap
   useEffect(() => {
     if (!target) return;
 
-    const addEvent = (e: string) => target.addEventListener(e, handler as any, eventOptions);
-    const removeEvent = (e: string) => target.removeEventListener(e, handler as any, eventOptions);
+    const addEvent = (e: E) => target.addEventListener(e, handler as any, eventOptions);
+    const removeEvent = (e: E) => target.removeEventListener(e, handler as any, eventOptions);
 
     const hasMultipleEvents = Array.isArray(event);
     const resolvedEvents = hasMultipleEvents ? (event.filter(Boolean) as E[]) : [event];
@@ -26,5 +37,5 @@ export const useEventListener = <T extends EventTarget, E extends keyof EventMap
     return () => {
       resolvedEvents.forEach(removeEvent);
     };
-  }, [options]);
+  }, [target]);
 };

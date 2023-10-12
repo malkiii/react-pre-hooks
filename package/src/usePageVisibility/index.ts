@@ -12,7 +12,7 @@ export const usePageVisibility = () => {
 
   useEventListener('blur', () => handleVisibilityChange(false), { target: window });
   useEventListener('focus', () => handleVisibilityChange(true), { target: window });
-  useEventListener('visibilitychange' as any, () => handleVisibilityChange(), { target: document });
+  useEventListener('visibilitychange', () => handleVisibilityChange(), { target: document });
 
   return isVisible;
 };

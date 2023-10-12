@@ -3,18 +3,8 @@ import deepEqual from 'fast-deep-equal';
 
 type IterationParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
 
-const removeDuplicateObjects = <T extends any>(set: Set<T> | T[]) => {
-  const newSet = new Set<T>();
-  set.forEach(value => {
-    if (newSet.has(value)) return;
-    for (const v of newSet) if (deepEqual(value, v)) return;
-    newSet.add(value);
-  });
-  return newSet;
-};
-
 export const useSet = <T extends any = any>(initial: T[] = []) => {
-  const [set, setSet] = useState<Set<T>>(() => removeDuplicateObjects(initial));
+  const [set, setSet] = useState<Set<T>>(new Set(initial));
   return useMemo(
     () => ({
       value: set,
@@ -60,7 +50,7 @@ export const useSet = <T extends any = any>(initial: T[] = []) => {
         return structuredClone(set);
       },
       reset(value: T[] | SetStateAction<Set<T>> = initial) {
-        setSet(set => removeDuplicateObjects(value instanceof Function ? value(set) : value));
+        setSet(Array.isArray(value) ? new Set(value) : value);
       }
     }),
     [set]
