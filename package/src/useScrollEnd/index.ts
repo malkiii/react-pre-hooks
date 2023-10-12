@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useEventListener } from '@/src';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { addEvents } from '@/src/utils';
 
 export type ScrollEndOptions<T extends HTMLElement> = {
-  target?: T | null;
+  ref?: RefObject<T> | null;
   offset?: number;
   horizontal?: boolean;
 };
@@ -11,14 +11,14 @@ export const useScrollEnd = <T extends HTMLElement = HTMLDivElement>(
   handler: () => any,
   options: ScrollEndOptions<T> = {}
 ) => {
-  const ref = useRef<T>(options.target ?? null);
+  const targetRef = options.ref ?? useRef<T>(null);
   const [isScrollEnd, setIsScrollEnd] = useState<boolean>(false);
 
   const handleScrolling = useCallback(() => {
-    const scrollX = ref.current?.scrollLeft || window.scrollX;
-    const scrollY = ref.current?.scrollTop || window.scrollY;
+    const scrollX = targetRef.current?.scrollLeft || window.scrollX;
+    const scrollY = targetRef.current?.scrollTop || window.scrollY;
 
-    const target = ref.current || document.body;
+    const target = targetRef.current || document.body;
     const { clientWidth, clientHeight, scrollWidth, scrollHeight } = target;
 
     const offset = options.offset || 5;
@@ -33,8 +33,12 @@ export const useScrollEnd = <T extends HTMLElement = HTMLDivElement>(
     if (isScrollEnd) handler();
   }, [isScrollEnd]);
 
-  useEffect(handleScrolling, []);
-  useEventListener('scroll', handleScrolling, { target: ref.current ?? window });
+  useEffect(() => {
+    handleScrolling();
+    return addEvents('scroll', handleScrolling, {
+      ref: options.ref ?? targetRef.current ?? window
+    });
+  }, [options.ref]);
 
-  return ref;
+  return targetRef;
 };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
 type FileData<T extends FileDataType | undefined> = T extends undefined
@@ -21,7 +21,7 @@ export type DropzoneOptions<
   T extends HTMLElement = HTMLDivElement,
   F extends FileDataType | undefined = undefined
 > = {
-  target?: T;
+  ref?: RefObject<T> | null;
   multiple?: boolean;
   extensions?: string[];
   minSize?: number;
@@ -49,9 +49,9 @@ export const useFileDropzone = <
 >(
   options: DropzoneOptions<T, F> = {}
 ) => {
-  const { target = null, multiple = false, readAs, onUpload } = options;
+  const { ref, multiple = false, readAs, onUpload } = options;
 
-  const ref = useRef<HTMLElement>(target);
+  const targetRef = ref ?? useRef<HTMLElement>(null);
   const [files, setFiles] = useState<DroppedFile<F>[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -138,9 +138,9 @@ export const useFileDropzone = <
   );
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!targetRef.current) return;
 
-    const fileInput = getFileInputElement(ref.current);
+    const fileInput = getFileInputElement(targetRef.current);
     if (!fileInput) return;
 
     const handleInputChange = async () => {
@@ -171,9 +171,9 @@ export const useFileDropzone = <
     setIsDragging(false);
   };
 
-  useEventListener('drop', handleFileDrop, { target: ref.current });
-  useEventListener('dragover', handleDragOver, { target: window, passive: true });
-  useEventListener('dragleave', handleDragLeave, { target: window, passive: true });
+  useEventListener('drop', handleFileDrop, { ref });
+  useEventListener('dragover', handleDragOver, { ref: window, passive: true });
+  useEventListener('dragleave', handleDragLeave, { ref: window, passive: true });
 
-  return { ref, files, isDragging, isLoading, error, setError };
+  return { ref: targetRef, files, isDragging, isLoading, error, setError };
 };

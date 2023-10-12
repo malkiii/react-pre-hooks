@@ -1,15 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useEventListener } from '@/src';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { addEvents } from '@/src/utils';
 
-export const useScroll = <T extends HTMLElement = HTMLDivElement>(target: T | null = null) => {
-  const ref = useRef<T>(target ?? null);
-  const options = { target: ref.current ?? window };
-  const initialValues = {
-    x: 0,
-    y: 0,
-    progressX: 0,
-    progressY: 0
-  };
+export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T> | null) => {
+  const targetRef = useRef<T>(null);
+  const initialValues = { x: 0, y: 0, progressX: 0, progressY: 0 };
 
   const [isScrollDown, setIsScrollDown] = useState<boolean>();
   const [isScrollRight, setIsScrollRight] = useState<boolean>();
@@ -18,10 +12,10 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(target: T | nu
   const prevPosition = useRef<typeof scrollPosition>(initialValues);
 
   const handleScrolling = useCallback(() => {
-    const x = ref.current?.scrollLeft || window.scrollX;
-    const y = ref.current?.scrollTop || window.scrollY;
+    const x = targetRef.current?.scrollLeft || window.scrollX;
+    const y = targetRef.current?.scrollTop || window.scrollY;
 
-    const element = ref.current ?? document.body;
+    const element = targetRef.current ?? document.body;
 
     const maxScrollX = element.scrollWidth - element.clientWidth;
     const maxScrollY = element.scrollHeight - element.clientHeight;
@@ -41,8 +35,10 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(target: T | nu
     setScrollPosition({ x, y, progressX, progressY });
   }, [scrollPosition]);
 
-  useEffect(handleScrolling, []);
-  useEventListener('scroll', handleScrolling, options);
+  useEffect(() => {
+    handleScrolling();
+    return addEvents('scroll', handleScrolling, { ref: ref ?? targetRef.current ?? window });
+  }, [ref]);
 
-  return { ref, ...scrollPosition, isScrollRight, isScrollDown };
+  return { ref: targetRef, ...scrollPosition, isScrollRight, isScrollDown };
 };

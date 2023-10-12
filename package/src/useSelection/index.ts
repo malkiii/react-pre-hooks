@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useEventListener } from '@/src';
 
-export const useSelection = <T extends HTMLElement = HTMLDivElement>(target: T | null = null) => {
-  const ref = useRef<T>(target);
+export const useSelection = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T> | null) => {
+  const targetRef = ref ?? useRef<T>(null);
 
   const [selection, setSelection] = useState<Selection | null>(null);
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
@@ -16,11 +16,11 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(target: T |
     const currentSelection = document.getSelection();
     const target = currentSelection?.focusNode?.parentElement;
 
-    if (ref.current && !ref.current.contains(target!)) return;
+    if (targetRef.current && !targetRef.current.contains(target!)) return;
 
     setSelection(currentSelection);
     setIsSelecting(!currentSelection?.isCollapsed);
-  }, [ref]);
+  }, [targetRef]);
 
   const eventOptions = { target: document, passive: true };
 
@@ -29,7 +29,7 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(target: T |
   useEventListener(['mouseup', 'touchend'], () => setIsSelecting(false), eventOptions);
 
   return {
-    ref,
+    ref: targetRef,
     value: selection,
     text: selection?.toString() ?? null,
     rect: getSelectionRect(),

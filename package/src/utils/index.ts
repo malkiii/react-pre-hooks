@@ -1,4 +1,5 @@
 import { SetStateAction } from 'react';
+import { EventHandler, EventListenerOptions, EventMap } from '@/src';
 
 export function getStateActionValue<T extends any>(state: SetStateAction<T>, value: T) {
   return state instanceof Function ? state(value) : state;
@@ -28,4 +29,26 @@ export function download(url: string, name = '') {
   document.body.appendChild(a);
   a.click();
   a.remove();
+}
+
+export function addEvents<T extends EventTarget, E extends keyof EventMap<T> & string>(
+  event: E | Array<E | false | null | undefined>,
+  handler: EventHandler<T, E>,
+  { ref, ...options }: EventListenerOptions<T> = {}
+) {
+  if (!ref) return () => {};
+  const target = 'addEventListener' in ref ? ref : ref.current;
+  if (!target) return () => {};
+
+  const addEvent = (e: string) => target.addEventListener(e, handler as any, options);
+  const removeEvent = (e: string) => target.removeEventListener(e, handler as any, options);
+
+  const hasMultipleEvents = Array.isArray(event);
+  const resolvedEvents = hasMultipleEvents ? (event.filter(Boolean) as any) : [event];
+
+  resolvedEvents.forEach(addEvent);
+
+  return () => {
+    resolvedEvents.forEach(removeEvent);
+  };
 }

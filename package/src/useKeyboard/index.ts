@@ -1,5 +1,6 @@
-import { useCallback, useRef } from 'react';
-import { EventListenerOptions, useEventListener } from '@/src';
+import { useCallback, useEffect, useRef } from 'react';
+import { EventListenerOptions } from '@/src';
+import { addEvents } from '@/src/utils';
 
 export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
 
@@ -35,7 +36,7 @@ export const useKeyboard = <T extends EventTarget = Window>(
   keysRecord: KeysRecord = {},
   options: KeyboardOptions<T> = {}
 ) => {
-  const ref = useRef<T>(null);
+  const targetRef = useRef<T>(null);
 
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
@@ -49,7 +50,9 @@ export const useKeyboard = <T extends EventTarget = Window>(
     [keysRecord]
   );
 
-  if (!options.target) options.target = ref.current ?? (window as any);
+  useEffect(() => {
+    addEvents('keydown', handleKeydown, { ref: targetRef.current ?? window, ...options });
+  }, [options.ref]);
 
-  useEventListener('keydown', handleKeydown, options);
+  return targetRef;
 };

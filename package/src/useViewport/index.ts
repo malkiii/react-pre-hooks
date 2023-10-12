@@ -11,8 +11,8 @@ export const useViewport = () => {
   }, []);
 
   useEffect(getWindowSize, []);
-  useEventListener('change', getWindowSize, { target: screen.orientation });
-  useEventListener('resize', getWindowSize, { target: window, passive: true });
+  useEventListener('change', getWindowSize, { ref: screen.orientation });
+  useEventListener('resize', getWindowSize, { ref: window, passive: true });
 
   return { ...viewport, orientation };
 };

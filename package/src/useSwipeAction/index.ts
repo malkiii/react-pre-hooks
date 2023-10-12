@@ -1,6 +1,6 @@
-import { useCallback, useRef } from 'react';
-import { EventListenerOptions, useEventListener } from '@/src';
-import { getCurrentMousePosition } from '@/src/utils';
+import { useCallback, useEffect, useRef } from 'react';
+import { EventListenerOptions } from '@/src';
+import { addEvents, getCurrentMousePosition } from '@/src/utils';
 
 export interface SwipeAction {
   readonly state: 'start' | 'moving' | 'end';
@@ -23,7 +23,7 @@ export const useSwipeAction = <T extends EventTarget = Window>(
   handler: SwipeEventHandler,
   options: SwipeOptions<T> = {}
 ) => {
-  const ref = useRef<T>(options.target ?? null);
+  const targetRef = useRef<T>(null);
   const delta = useRef({ x: 0, y: 0 });
   const initialPosition = useRef<typeof delta.current>();
 
@@ -92,14 +92,20 @@ export const useSwipeAction = <T extends EventTarget = Window>(
     [handler]
   );
 
-  const { mouse = false, ...eventOptions } = options;
-  if (!eventOptions.target) eventOptions.target = ref.current ?? (window as any);
+  /* prettier-ignore */
+  useEffect(() => {
+    const { mouse = false, ...eventOptions } = options;
+    if (!eventOptions.ref) eventOptions.ref = options.ref ?? targetRef.current ?? (window as any);
 
-  useEventListener(['touchmove', mouse && 'mousemove'], handleTouchMove, eventOptions);
-  useEventListener(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);
-  useEventListener(
-    ['touchend', 'touchcancel', mouse && 'mouseup', mouse && 'mouseleave'],
-    handleTouchEnd,
-    eventOptions
-  );
+    const clearTouchMove = addEvents(['touchmove', mouse && 'mousemove'], handleTouchMove, eventOptions);
+
+    const clearTouchStart = addEvents(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);
+    const clearTouchEnd = addEvents(['touchend', 'touchcancel', mouse && 'mouseup', mouse && 'mouseleave'], handleTouchEnd, eventOptions);
+
+    return () => {
+      clearTouchMove();
+      clearTouchStart();
+      clearTouchEnd();
+    }
+  }, [options.ref]);
 };

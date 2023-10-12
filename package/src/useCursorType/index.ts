@@ -1,10 +1,12 @@
-import { CSSProperties, useCallback, useRef, useState } from 'react';
-import { useEventListener } from '@/src';
+import { CSSProperties, RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { addEvents } from '@/src/utils';
 
 export type CursorType = CSSProperties['cursor'];
 
-export const useCursorType = <T extends HTMLElement = HTMLDivElement>(target: T | null = null) => {
-  const ref = useRef<T>(target);
+export const useCursorType = <T extends HTMLElement = HTMLDivElement>(
+  ref?: RefObject<T> | null
+) => {
+  const targetRef = ref ?? useRef<T>(null);
   const [cursor, setCursor] = useState<CursorType>('auto');
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
@@ -12,10 +14,12 @@ export const useCursorType = <T extends HTMLElement = HTMLDivElement>(target: T 
     setCursor(window.getComputedStyle(event.target as any).cursor);
   }, []);
 
-  useEventListener(['mousemove', 'mousedown', 'mouseup'], handleMouseMove, {
-    target: ref.current ?? window,
-    passive: true
-  });
+  useEffect(() => {
+    addEvents(['mousemove', 'mousedown', 'mouseup'], handleMouseMove, {
+      ref: targetRef.current ?? window,
+      passive: true
+    });
+  }, []);
 
-  return { ref, cursor };
+  return { ref: targetRef, cursor };
 };
