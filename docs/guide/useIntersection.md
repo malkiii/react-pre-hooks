@@ -4,12 +4,12 @@ Handles the [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/We
 
 ## Options
 
-| Name           | Type     | Description                                                                                                                                                           |
-| -------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **target**     | Element  | the target element.                                                                                                                                                   |
-| **handler**    | Function | the `IntersectionObserver` [handler](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#callback).                            |
-| **once**       | Boolean  | should observe the target element just for one time.                                                                                                                  |
-| **...options** | Object   | the [IntersectionObserver options](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#options) such as `root`, `threshold`... |
+| Name           | Type      | Description                                                                                                                                                           |
+| -------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ref**        | RefObject | the target element reference.                                                                                                                                         |
+| **handler**    | Function  | the `IntersectionObserver` [handler](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#callback).                            |
+| **once**       | Boolean   | should observe the target element just for one time.                                                                                                                  |
+| **...options** | Object    | the [IntersectionObserver options](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#options) such as `root`, `threshold`... |
 
 ## Return Values
 

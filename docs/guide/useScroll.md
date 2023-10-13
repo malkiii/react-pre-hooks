@@ -4,7 +4,7 @@ This hook tracks the scroll `position` ,`progress` and `direction` of a target e
 
 ## Parameters
 
-a `target` element (default is `window`).
+a `ref` object of the target element (default is `window`).
 
 ## Return Values
 

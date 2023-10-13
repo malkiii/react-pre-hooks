@@ -18,6 +18,18 @@ It returns a tuple of 3 values:
 |   1   | **setValue**       | Function | updates the value.                        |
 |   2   | **value**          | Any      | the actual current value (not debounced). |
 
+::: tip
+You can also get a debounced value from an **external** state by setting it as the initial value:
+
+```ts
+...
+const [value, setValue] = useState('anything');
+const [debounced] = useDebouncedState(value, { delay: 500 });
+...
+```
+
+:::
+
 ## Example Usage
 
 ```tsx

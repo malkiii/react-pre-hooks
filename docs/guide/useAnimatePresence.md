@@ -4,14 +4,14 @@ Animate a conditional rendered element when it enters and exits the DOM in a ver
 
 ## Options
 
-| Name             | Type     | Description                                                                                                                                   |
-| ---------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| **target**       | Element  | the target element.                                                                                                                           |
-| **initialMount** | Boolean  | if the element is presente in the first render or not.                                                                                        |
-| **keyframes**    | Object   | animation keyframes, see [Keyframe Formats](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats).            |
-| **transition**   | Object   | animation transition options, see [Keyframe Options](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/KeyframeEffect#options). |
-| **onEnter**      | Function | a handler that will be executed when the element enters.                                                                                      |
-| **onExit**       | Function | a handler that will be executed when the element exits.                                                                                       |
+| Name             | Type      | Description                                                                                                                                   |
+| ---------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ref**          | RefObject | the target element reference.                                                                                                                 |
+| **initialMount** | Boolean   | if the element is presente in the first render or not.                                                                                        |
+| **keyframes**    | Object    | animation keyframes, see [Keyframe Formats](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats).            |
+| **transition**   | Object    | animation transition options, see [Keyframe Options](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/KeyframeEffect#options). |
+| **onEnter**      | Function  | a handler that will be executed when the element enters.                                                                                      |
+| **onExit**       | Function  | a handler that will be executed when the element exits.                                                                                       |
 
 ## Return Values
 

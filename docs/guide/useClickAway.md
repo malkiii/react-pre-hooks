@@ -4,9 +4,9 @@ Execute a function when the user clicks outside a target element.
 
 ## Options
 
-| Name       | Type    | Description         |
-| ---------- | ------- | ------------------- |
-| **target** | Element | the target element. |
+| Name    | Type      | Description                   |
+| ------- | --------- | ----------------------------- |
+| **ref** | RefObject | the target element reference. |
 
 ## Return Values
 

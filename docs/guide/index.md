@@ -4,8 +4,9 @@
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/) 17 or higher.
-- React.js 18 or higher.
+- [Node.js](https://nodejs.org/) v17 or higher.
+- [React.js](https://react.dev) v18 or higher.
+- [TypeScript](https://www.typescriptlang.org) v5 or higher if you want to use it.
 
 Install it with:
 
@@ -29,7 +30,7 @@ bun add realtime-hooks
 
 :::
 
-## Usage
+## Importing
 
 Just import the hook that you want to use:
 

@@ -4,10 +4,10 @@ Track the mouse position and state in a specific target element.
 
 ## Options
 
-| Name        | Type    | Description                                                         |
-| ----------- | ------- | ------------------------------------------------------------------- |
-| **target**  | Element | the target element (default is `window`).                           |
-| **touches** | Boolean | whether it should also consider `touches` in mobile devices or not. |
+| Name        | Type      | Description                                                         |
+| ----------- | --------- | ------------------------------------------------------------------- |
+| **ref**     | RefObject | the target element reference (default is `window`).                 |
+| **touches** | Boolean   | whether it should also consider `touches` in mobile devices or not. |
 
 ## Return Values
 

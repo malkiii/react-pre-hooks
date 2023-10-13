@@ -13,7 +13,7 @@ useKeyboard(
     'alt+p': e => {},
     'q | Ctrl+A | alt+shift+d': e => {}
   },
-  { target: document.body }
+  { ref: document.body }
 );
 ```
 
@@ -24,7 +24,7 @@ useKeyboard(
   {
     'd, alt+f, meta+f': e => {}
   },
-  { separator: ',', target: window }
+  { separator: ',', ref: window }
 );
 ```
 
@@ -56,7 +56,7 @@ export default function Example() {
       '1|2|3': (e) => console.log(`you pressed ${e.key}`);
       'Ctrl+s': () => console.log('you pressed Ctrl and S');
     },
-    { target: window }
+    { ref: window }
   );
 
   return <main></main>;

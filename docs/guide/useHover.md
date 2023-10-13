@@ -4,10 +4,10 @@ This hook returns whether the target element is hovered or not, and it can use a
 
 ## Options
 
-| Name       | Type             | Description                                                  |
-| ---------- | ---------------- | ------------------------------------------------------------ |
-| **target** | Element          | the target element.                                          |
-| **delay**  | Number or Object | a delay value for both `hover` and `unhover` events in `ms`. |
+| Name      | Type             | Description                                                  |
+| --------- | ---------------- | ------------------------------------------------------------ |
+| **ref**   | RefObject        | the target element reference.                                |
+| **delay** | Number or Object | a delay value for both `hover` and `unhover` events in `ms`. |
 
 ## Return Values
 

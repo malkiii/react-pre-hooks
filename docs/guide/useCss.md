@@ -4,9 +4,9 @@ You can use and insert some actual CSS in `object` format with this hook, and it
 
 ## Options
 
-| Name     | Type    | Description                                                                                                      |
-| -------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| **root** | Element | the target element. (default is [`<head>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) tag). |
+| Name    | Type      | Description                                                                                                                 |
+| ------- | --------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **ref** | RefObject | the **root** element reference (default is [`<head>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) tag). |
 
 ## Return Values
 

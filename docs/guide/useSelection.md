@@ -4,7 +4,7 @@ This hook returns the current selected text on the window or a specific element,
 
 ## Parameters
 
-a `target` element (default is `document`).
+a `ref` object of the target element (default is `document`).
 
 ::: warning
 **Do not** use `window` as the target element, it will only work with HTML elements.
