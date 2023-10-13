@@ -21,6 +21,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClickAway">useClickAway</a></td><td>Execute a function when clicking outside an element.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClipboard">useClipboard</a></td><td>Copy to clipboard and return a temporary <code>copied</code> state.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useColorScheme">useColorScheme</a></td><td>Returns the current system color scheme (<code>dark</code> or <code>light</code>).</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useContextMenu">useContextMenu</a></td><td>Handle the user right clicks on a target element.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCounter">useCounter</a></td><td>Simple counter with <code>min</code> and <code>max</code> values, and a some methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCss">useCss</a></td><td>Insert some actual CSS using a <code>CSS Object</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCursorType">useCursorType</a></td><td>Track the cursor type (<code>pointer</code>, <code>text</code>, <code>not-allowed</code>...)</td></tr>
@@ -42,7 +43,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMount">useMount</a></td><td>Execute a callback after the component is mounted.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMouse">useMouse</a></td><td>Track the mouse position and state (down or up, in or out).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMutation">useMutation</a></td><td>Handles <code>MutationObserver</code> and returns the current mutations (changes being made to the DOM tree).</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useOnlineState">useOnlineState</a></td><td>Returns whether the user is online or not.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useNetworkState">useNetworkState</a></td><td>Returns whether the user is online or not with some network informations.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePageVisibility">usePageVisibility</a></td><td>Returns the tab visible state (the tab contents is visible or hidden).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useWebRTC">useRTC</a></td><td>Uses the user media devices (<code>camera</code> and <code>microphone</code>) and <code>screen capture</code> and returns their states and controls as well as their stream object.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScroll">useScroll</a></td><td>Track the scroll <code>position</code> ,<code>progress</code> and <code>direction</code>.</td></tr>
