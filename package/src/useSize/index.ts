@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 export type SizeObserverOptions<T extends HTMLElement> = ResizeObserverOptions & {
-  target?: T | null;
+  ref?: RefObject<T> | null;
 };
 
 export const useSize = <T extends HTMLElement = HTMLDivElement>(
   options: SizeObserverOptions<T> = {}
 ) => {
-  const ref = useRef<T>(options.target ?? null);
+  const targetRef = options.ref ?? useRef<T>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    const target = ref.current ?? document.body;
+    const target = targetRef.current ?? document.body;
     setSize({ width: target.offsetWidth, height: target.offsetHeight });
 
     const resizeObserver = new ResizeObserver(entries => {
@@ -25,5 +25,5 @@ export const useSize = <T extends HTMLElement = HTMLDivElement>(
     };
   }, []);
 
-  return { ref, ...size };
+  return { ref: targetRef, ...size };
 };

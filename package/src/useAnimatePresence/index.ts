@@ -1,4 +1,4 @@
-import { CSSProperties, SetStateAction, useCallback, useRef, useState } from 'react';
+import { CSSProperties, RefObject, SetStateAction, useCallback, useRef, useState } from 'react';
 
 export type TransitionProps = Omit<KeyframeAnimationOptions, 'easing'> & {
   easing: CSSProperties['transitionTimingFunction'];
@@ -11,7 +11,7 @@ export type AnimatePresenceKeyframes = Record<
   Pick<PropertyIndexedKeyframes, 'composite' | 'offset' | 'easing'>;
 
 export type AnimatePresenceOptions<T extends HTMLElement = HTMLElement> = {
-  target?: T | null;
+  ref?: RefObject<T> | null;
   initialMount?: boolean;
   keyframes?: AnimatePresenceKeyframes;
   transition?: TransitionProps;
@@ -24,7 +24,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
 ) => {
   const { initialMount = false, keyframes = {}, onEnter, onExit } = options;
 
-  const ref = useRef<T>(options.target ?? null);
+  const targetRef = options.ref ?? useRef<T>(null);
   const animationRef = useRef<Animation>();
   const isAnimating = useRef<boolean>(false);
   const isToggled = useRef<boolean>(initialMount);
@@ -39,7 +39,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
       transition.fill = 'both';
 
       if (isAnimating.current && animationRef.current) animationRef.current.reverse();
-      else animationRef.current = ref.current?.animate(keyframes, transition);
+      else animationRef.current = targetRef.current?.animate(keyframes, transition);
 
       isAnimating.current = true;
     },
@@ -54,13 +54,13 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
     setTimeout(() => {
       setIsMounted(true);
       setTimeout(() => {
-        if (!ref.current) return setIsMounted(false);
+        if (!targetRef.current) return setIsMounted(false);
 
         startAnimation();
 
         animationRef.current!.onfinish = () => {
           isAnimating.current = false;
-          onEnter && onEnter(ref.current!);
+          onEnter && onEnter(targetRef.current!);
         };
       }, 0);
     }, 0);
@@ -69,14 +69,14 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
   // unmounting animation
   const unmount = useCallback(() => {
     isToggled.current = false;
-    if (!ref.current || (!isAnimating.current && !isMounted)) return;
+    if (!targetRef.current || (!isAnimating.current && !isMounted)) return;
 
     startAnimation(true);
 
     animationRef.current!.onfinish = () => {
       isAnimating.current = false;
       setIsMounted(false);
-      if (onExit) onExit(ref.current!);
+      if (onExit) onExit(targetRef.current!);
     };
   }, [isMounted]);
 
@@ -89,5 +89,5 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
     [mount, unmount]
   );
 
-  return { ref, isMounted, toggle };
+  return { ref: targetRef, isMounted, toggle };
 };
