@@ -6,6 +6,7 @@ import { useDebouncedState } from '@/src';
 vi.useFakeTimers();
 
 describe('useDebouncedState', () => {
+  const delay = 500;
   it('should return initial value', () => {
     const { result } = renderHook(() => useDebouncedState(0));
     const [debouncedValue] = result.current;
@@ -14,7 +15,6 @@ describe('useDebouncedState', () => {
   });
 
   it('should update debounced value after delay', () => {
-    const delay = 500;
     const { result } = renderHook(() => useDebouncedState(0, { delay }));
     const setValue = result.current[1];
 
