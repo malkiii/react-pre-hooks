@@ -1,17 +1,17 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { addEvents, getCurrentMousePosition } from '@/src/utils';
+import { addEvents } from '@/src/utils';
 
 export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
   ref?: RefObject<T> | null
 ) => {
-  const targetRef = useRef<T>(null);
+  const targetRef = ref ?? useRef<T>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [canShow, setCanShow] = useState<boolean>(false);
 
   const handleRightClick = useCallback((event: MouseEvent) => {
     if (event.target !== event.currentTarget) return;
     event.preventDefault();
-    setPosition(getCurrentMousePosition(event));
+    setPosition({ x: event.pageX, y: event.pageY });
     setCanShow(true);
   }, []);
 
@@ -24,7 +24,7 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
   }, []);
 
   useEffect(() => {
-    const options = { ref: ref ?? targetRef.current ?? window };
+    const options = { ref: targetRef.current ?? window };
     const clearRightClick = addEvents('contextmenu', handleRightClick, options);
     const clearLeftClick = addEvents('click', handleLeftClick, options);
 
