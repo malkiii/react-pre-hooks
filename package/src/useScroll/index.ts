@@ -2,7 +2,7 @@ import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { addEvents } from '@/src/utils';
 
 export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T> | null) => {
-  const targetRef = useRef<T>(null);
+  const targetRef = ref ?? useRef<T>(null);
   const initialValues = { x: 0, y: 0, progressX: 0, progressY: 0 };
 
   const [isScrollDown, setIsScrollDown] = useState<boolean>();
@@ -37,7 +37,7 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
 
   useEffect(() => {
     handleScrolling();
-    return addEvents('scroll', handleScrolling, { ref: ref ?? targetRef.current ?? window });
+    return addEvents('scroll', handleScrolling, { ref: targetRef.current ?? window });
   }, [ref]);
 
   return { ref: targetRef, ...scrollPosition, isScrollRight, isScrollDown };
