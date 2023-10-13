@@ -27,6 +27,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCursorType">useCursorType</a></td><td>Track the cursor type (<code>pointer</code>, <code>text</code>, <code>not-allowed</code>...)</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useDebouncedState">useDebouncedState</a></td><td>Update the state value after a delay.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useDevice">useDevice</a></td><td>Detect the current device type (<code>desktop</code>, <code>mobile</code>, <code>smartTV</code>...)</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useDragAndDrop">useDragAndDrop</a></td><td>Handle the user drag actions, and it can also handle the mobile touches.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useEasing">useEasing</a></td><td>Change a value from <code>start</code> to <code>end</code> using an <code><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function">animation timing function</a></code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useEventListener">useEventListener</a></td><td>Add one or multiple event listeners.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFetch">useFetch</a></td><td>Fetch data using a URL and search queries...</td></tr>
@@ -41,7 +42,6 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStorage">useLocalStorage</a></td><td>Get and Set a specific value in the local storage.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMap">useMap</a></td><td>Returns an object with common map methods such as <code>get</code>, <code>set</code>, <code>has</code>, <code>delete</code>...</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMount">useMount</a></td><td>Execute a callback after the component is mounted.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMouse">useMouse</a></td><td>Track the mouse position and state (down or up, in or out).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMutation">useMutation</a></td><td>Handles <code>MutationObserver</code> and returns the current mutations (changes being made to the DOM tree).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useNetworkState">useNetworkState</a></td><td>Returns whether the user is online or not with some network informations.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePageVisibility">usePageVisibility</a></td><td>Returns the tab visible state (the tab contents is visible or hidden).</td></tr>
@@ -55,7 +55,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSpeech">useSpeech</a></td><td>Returns a text speaker with available voices as well as its state and controller methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStateHistory">useStateHistory</a></td><td>Stores a specific number of the previous state values.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStateStatus">useStateStatus</a></td><td>Returns the state and its current <code>status</code> that is returned by a handler.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSwipeAction">useSwipeAction</a></td><td>Handle the user swipe actions, and it can also handle the mouse swipes.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSwiping">useSwiping</a></td><td>Handle the user swipe actions, and it can also handle the mouse swipes.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useTimeout">useTimeout</a></td><td>Uses <code>setTimout</code> and returns <code>start</code> and <code>stop</code> methods...</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClock">useTimer</a></td><td>Returns a date in a duration starting from an initial date or return the current date.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useToggle">useToggle</a></td><td>Toggles the state between given values.</td></tr>
