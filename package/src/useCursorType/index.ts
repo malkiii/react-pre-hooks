@@ -15,7 +15,7 @@ export const useCursorType = <T extends HTMLElement = HTMLDivElement>(
   }, []);
 
   useEffect(() => {
-    addEvents(['mousemove', 'mousedown', 'mouseup'], handleMouseMove, {
+    return addEvents(['mousemove', 'mousedown', 'mouseup'], handleMouseMove, {
       ref: targetRef.current ?? window,
       passive: true
     });
