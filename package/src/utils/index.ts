@@ -7,7 +7,7 @@ export function getStateActionValue<T extends any>(state: SetStateAction<T>, val
 
 export function getCurrentMousePosition(event: MouseEvent | TouchEvent) {
   return event instanceof MouseEvent
-    ? { x: event.offsetX, y: event.offsetY }
+    ? { x: event.clientX, y: event.clientY }
     : { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
 }
 
