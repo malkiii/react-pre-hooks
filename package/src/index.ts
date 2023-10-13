@@ -7,6 +7,7 @@ export { useAutoComplete } from './useAutoComplete';
 export { useClickAway } from './useClickAway';
 export { useClipboard } from './useClipboard';
 export { useColorScheme } from './useColorScheme';
+export { useContextMenu } from './useContextMenu';
 export { useCounter } from './useCounter';
 export { useCss } from './useCss';
 export { useCursorType } from './useCursorType';
