@@ -1,4 +1,4 @@
-# realtime-hooks
+# realtime-hooks ✨
 
 Simplify and clean up your components with this react hooks collection.
 
