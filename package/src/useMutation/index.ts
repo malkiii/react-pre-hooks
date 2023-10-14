@@ -18,7 +18,7 @@ export const useMutation = <T extends HTMLElement = HTMLDivElement>(
     observer.observe(targetRef.current, observerInit);
 
     return () => observer.disconnect();
-  }, []);
+  }, [ref]);
 
   return targetRef;
 };

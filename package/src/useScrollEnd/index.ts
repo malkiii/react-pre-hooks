@@ -36,7 +36,7 @@ export const useScrollEnd = <T extends HTMLElement = HTMLDivElement>(
   useEffect(() => {
     handleScrolling();
     return addEvents('scroll', handleScrolling, {
-      ref: options.ref ?? targetRef.current ?? window
+      ref: targetRef.current ?? window
     });
   }, [options.ref]);
 

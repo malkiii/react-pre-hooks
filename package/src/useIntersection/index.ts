@@ -30,7 +30,7 @@ export const useIntersection = <T extends HTMLElement = HTMLDivElement>(
     observer.observe(targetRef.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [ref]);
 
   return { ref: targetRef, isIntersecting };
 };

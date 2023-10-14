@@ -171,7 +171,7 @@ export const useFileDropzone = <
     setIsDragging(false);
   };
 
-  useEventListener('drop', handleFileDrop, { ref });
+  useEventListener('drop', handleFileDrop, { ref: targetRef });
   useEventListener('dragover', handleDragOver, { ref: window, passive: true });
   useEventListener('dragleave', handleDragLeave, { ref: window, passive: true });
 
