@@ -1,24 +1,26 @@
 # useFetch
 
-Fetch data with a URL and search queries using [useAsync](./useAsync) hook.
+Fetch data with a URL and search parameters using [useAsync](./useAsync) hook, and you can also specify a **timeout** for the fetch requeste.
 
 ## Options
 
 | Name        | Type                                                                      | Description                                                                                       |
 | ----------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **url**     | String or [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) | the fetch URL.                                                                                    |
-| **query**   | Object                                                                    | URL search params.                                                                                |
+| **params**  | Object                                                                    | URL search params.                                                                                |
+| **timeout** | Number                                                                    | the request time limit in `ms`.                                                                   |
 | **...init** | Object                                                                    | [request init](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options) options. |
 
 ## Return Values
 
-| Name          | Type                   | Description                                                                                           |
-| ------------- | ---------------------- | ----------------------------------------------------------------------------------------------------- |
-| **data**      | `callback` return type | resolved data from the function.                                                                      |
-| **isLoading** | Boolean                | the loading state.                                                                                    |
-| **response**  | Object                 | [response object](https://developer.mozilla.org/en-US/docs/Web/API/Response) from the fetch function. |
-| **refetch**   | Fnuction               | retry executing the async function.                                                                   |
-| **error**     | Unknown                | cached error if it exists.                                                                            |
+| Name          | Type     | Description                                                                                                            |
+| ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **data**      | Any      | resolved data from the function.                                                                                       |
+| **isLoading** | Boolean  | the loading state.                                                                                                     |
+| **response**  | Object   | [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) object from the fetch function.                  |
+| **retry**     | Fnuction | retry executing the fetch function.                                                                                    |
+| **abort**     | Fnuction | cancel the fetch request using an [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController). |
+| **error**     | Unknown  | cached error if it exists.                                                                                             |
 
 ## Example Usage
 
@@ -38,7 +40,7 @@ type Data = {
 export default function Users() {
   const { data, isLoading, refetch, error } = useFetch<Data>({
     url: 'https://dummyjson.com/users',
-    query: { limit: 12 }
+    params: { limit: 12 }
   });
 
   return (

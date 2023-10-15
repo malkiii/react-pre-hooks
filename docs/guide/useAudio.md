@@ -1,6 +1,6 @@
 # useAudio
 
-This hook uses an audio element reference as well as its state and controler methods.
+This hook uses an audio element reference as well as its state and controller methods.
 
 ## Options
 

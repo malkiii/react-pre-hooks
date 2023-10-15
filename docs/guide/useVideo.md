@@ -1,6 +1,6 @@
 # useVideo
 
-This hook uses a video element reference as well as its state and controler methods.
+This hook uses a video element reference as well as its state and controller methods.
 
 ## Options
 
