@@ -1,35 +1,41 @@
-import { DependencyList, useState } from 'react';
+import { DependencyList, useCallback, useRef, useState } from 'react';
 import { useAsync } from '@/src';
 
 export type RequestOptions = RequestInit & {
   url: string | URL;
-  query?: Record<string, string | number | null | undefined>;
+  params?: Record<string, string | number | null | undefined>;
+  timeout?: number;
 };
 
 export const useFetch = <T extends any>(options: RequestOptions, deps?: DependencyList) => {
-  const { url, ...fetchInit } = options;
   const [response, setResponse] = useState<Response>();
-  const fetchURL = url instanceof URL ? url : new URL(url);
+  const controller = useRef<AbortController>(new AbortController());
 
-  if (options.query) {
-    const query = Object.fromEntries(
-      Object.entries(options.query)
-        // remove "null" and "undefined" values
-        .filter(([_, value]) => value !== null && value !== undefined)
-        // convert numbers to strings
-        .map(([key, value]) => [key, typeof value === 'number' ? value.toString() : value])
-    ) as Record<string, string>;
+  const fetchData = useCallback(async () => {
+    const { url, params, timeout, ...fetchInit } = options;
+    const fetchURL = url instanceof URL ? url : new URL(url);
 
-    fetchURL.search = new URLSearchParams(query).toString();
-  }
+    if (params) {
+      for (const p in params) {
+        const value = params[p];
+        if (value) fetchURL.searchParams.set(p, value.toString());
+      }
+    }
 
-  const result = useAsync<T>(async () => {
-    const response = await fetch(fetchURL, fetchInit);
-    setResponse(response);
-    return (await response.json()) as T;
-  }, deps);
+    const promises = [fetch(fetchURL, { ...fetchInit, signal: controller.current.signal })];
+    if (timeout) promises.push(new Promise((_, rej) => setTimeout(rej, timeout)));
 
-  const { isLoading: isFetching, retry: refetch, ...rest } = result;
+    try {
+      const response = await Promise.race(promises);
+      setResponse(response);
+      return (await response.json()) as T;
+    } catch (error) {
+      controller.current.abort();
+      console.error(error);
+    }
+  }, deps ?? []);
 
-  return { response, isFetching, refetch, ...rest };
+  const result = useAsync<T | undefined>(fetchData, [fetchData]);
+
+  return { response, abort: controller.current.abort as Function, ...result };
 };
