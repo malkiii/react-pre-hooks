@@ -32,8 +32,8 @@
     "test:watch": "clear && vitest watch",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "version": "node -pe \"require('./package.json').version\" | echo \"v$(cat)\" | xargs -I {} git tag {} ",
-    "prepublish": "pnpm test && pnpm build && pnpm version && git push --tags"
+    "postversion": "node -pe \"require('./package.json').version\" | echo \"v$(cat)\" | xargs -I {} git tag {}",
+    "prepublish": "pnpm test && pnpm build && pnpm postversion && git push --tags"
   },
   "sideEffects": false,
   "devDependencies": {
