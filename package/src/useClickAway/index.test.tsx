@@ -1,6 +1,6 @@
 import { fireEvent, render, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { useClickAway } from '@/src';
+import { useClickAway } from '.';
 
 describe('useClickAway', () => {
   it('should call the handler when clicking outside the target element', () => {

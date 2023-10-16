@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { useDebouncedState } from '@/src';
+import { useDebouncedState } from '.';
 
 // Mock setTimeout and clearTimeout for testing
 vi.useFakeTimers();

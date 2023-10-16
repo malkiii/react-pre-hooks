@@ -1,6 +1,6 @@
 import { act, fireEvent, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, SpyInstance, vi } from 'vitest';
-import { useEventListener } from '@/src';
+import { useEventListener } from '.';
 
 describe('useEventListener', () => {
   let addEventListenerSpy: SpyInstance;

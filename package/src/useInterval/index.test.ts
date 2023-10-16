@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useInterval } from '@/src';
+import { useInterval } from '.';
 
 describe('useInterval', () => {
   const timeout = 1000;

@@ -1,6 +1,6 @@
 import { render, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useCss } from '@/src';
+import { useCss } from '.';
 
 describe('useCss', () => {
   it('should append style to the head when no ref is provided', () => {

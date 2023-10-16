@@ -1,6 +1,6 @@
 import { fireEvent, render, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useScroll } from '@/src';
+import { useScroll } from '.';
 
 describe('useScroll', () => {
   it('should update scroll position when scrolling', () => {

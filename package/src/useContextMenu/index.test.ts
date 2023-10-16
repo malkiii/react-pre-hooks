@@ -1,6 +1,6 @@
 import { fireEvent, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useContextMenu } from '@/src';
+import { useContextMenu } from '.';
 
 describe('useContextMenu', () => {
   it('should update position on right click', async () => {

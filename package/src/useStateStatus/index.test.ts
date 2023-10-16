@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { useStateStatus } from '@/src';
+import { useStateStatus } from '.';
 
 describe('useStateStatus', () => {
   it('should initialize with initial value and status', () => {

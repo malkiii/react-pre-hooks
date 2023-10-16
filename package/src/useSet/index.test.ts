@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useSet } from '@/src';
+import { useSet } from '.';
 
 describe('useSet', () => {
   it('should be an empty set by default', () => {

@@ -1,6 +1,6 @@
 import { fireEvent, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { useKeyboard } from '@/src';
+import { useKeyboard } from '.';
 
 describe('useKeyboard', () => {
   it('should bind and call all the keys handlers', async () => {

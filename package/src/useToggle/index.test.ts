@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useToggle } from '@/src';
+import { useToggle } from '.';
 
 describe('useToggle', () => {
   it('should initialize with [false, true] by default', () => {

@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useAsync } from '@/src';
+import { useAsync } from '.';
 
 describe('useAsync', () => {
   it('should fetch data successfully', async () => {

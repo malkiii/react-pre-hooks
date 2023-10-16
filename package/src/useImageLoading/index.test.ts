@@ -1,6 +1,6 @@
 import { fireEvent, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { useImageLoading } from '@/src';
+import { useImageLoading } from '.';
 
 describe('useImageLoading', () => {
   const imageSrc = '/image.jpeg';

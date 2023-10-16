@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useMap } from '@/src';
+import { useMap } from '.';
 
 describe('useMap', () => {
   it('should return the initial object', () => {
