@@ -24,7 +24,7 @@
     "url": "https://github.com/malkiii/realtime-hooks/issues"
   },
   "scripts": {
-    "build": "rm -rf dist/ && pnpm prebuild && tsc && vite build",
+    "build": "rm -rf dist/ && tsc && vite build",
     "prebuild": "pnpm lint && bash package/export-hooks.sh",
     "format": "prettier --write package/**/*.{ts,tsx}",
     "lint": "eslint package --ext ts,tsx --cache",
@@ -32,7 +32,8 @@
     "test:watch": "clear && vitest watch",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "prepublish": "node -pe \"require('./package.json').version\" | echo \"v$(cat)\" | xargs -I {} git tag {} && git push --tags"
+    "version": "node -pe \"require('./package.json').version\" | echo \"v$(cat)\" | xargs -I {} git tag {} ",
+    "prepublish": "pnpm test && pnpm build && pnpm version && git push --tags"
   },
   "sideEffects": false,
   "devDependencies": {
