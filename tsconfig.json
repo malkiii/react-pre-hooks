@@ -4,7 +4,7 @@
     "module": "CommonJS",
     "lib": ["ES2022", "DOM"],
     "moduleResolution": "Node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strict": true,
     "declaration": true,
     "isolatedModules": true,
