@@ -51,13 +51,12 @@ export { useUpdateEffect } from './useUpdateEffect';
 export { useVideo } from './useVideo';
 export { useViewport } from './useViewport';
 
-export type { TransitionProps, AnimatePresenceKeyframes, AnimatePresenceOptions } from './useAnimatePresence';
+export type { TransitionProps, AnimatePresenceOptions } from './useAnimatePresence';
 export type { AudioElementInit } from './useAudio';
 export type { AutoCompleteHandler, AutoCompleteOptions } from './useAutoComplete';
 export type { ClickAwayOptions } from './useClickAway';
 export type { CounterOptions } from './useCounter';
 export type { CSSObject, CSSProps, CSSOptions } from './useCss';
-export type { CursorType } from './useCursorType';
 export type { DeviceType } from './useDevice';
 export type { DragEventHandler } from './useDragAndDrop';
 export type { EasingFunction, EasingOption } from './useEasing';

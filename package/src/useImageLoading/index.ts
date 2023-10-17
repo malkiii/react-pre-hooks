@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
-export const useImageLoading = (imageSrc: string, handler?: (event: Event) => any) => {
+export const useImageLoading = (imageSrc: string, handler?: EventListener) => {
   const imageRef = useRef<HTMLImageElement>(new Image());
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

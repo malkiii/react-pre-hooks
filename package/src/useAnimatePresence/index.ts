@@ -4,16 +4,10 @@ export type TransitionProps = Omit<KeyframeAnimationOptions, 'easing'> & {
   easing: CSSProperties['transitionTimingFunction'];
 };
 
-export type AnimatePresenceKeyframes = Record<
-  keyof CSSProperties,
-  PropertyIndexedKeyframes[keyof PropertyIndexedKeyframes]
-> &
-  Pick<PropertyIndexedKeyframes, 'composite' | 'offset' | 'easing'>;
-
 export type AnimatePresenceOptions<T extends HTMLElement = HTMLElement> = {
   ref?: RefObject<T> | null;
   initialMount?: boolean;
-  keyframes?: AnimatePresenceKeyframes;
+  keyframes?: PropertyIndexedKeyframes;
   transition?: TransitionProps;
   onEnter?: (element: T) => any;
   onExit?: (element: T) => any;
