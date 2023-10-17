@@ -1,6 +1,6 @@
 {
   "name": "realtime-hooks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Simplify and clean up your components with this react hooks collection.",
   "author": {
@@ -13,8 +13,7 @@
   "types": "dist/index.d.ts",
   "homepage": "https://malkiii.github.io/realtime-hooks",
   "files": [
-    "dist/",
-    "package/README.md"
+    "dist/"
   ],
   "repository": {
     "type": "git",
@@ -32,8 +31,8 @@
     "test:watch": "clear && vitest watch",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "postversion": "node -pe \"require('./package.json').version\" | echo \"v$(cat)\" | xargs -I {} git tag {}",
-    "prepublish": "pnpm test && pnpm build && pnpm postversion && git push --tags"
+    "postversion": "node -pe \"require('./package.json').version\" | xargs -I {} git tag v{} && git push --tags",
+    "prepublish": "pnpm test && pnpm build && pnpm postversion"
   },
   "sideEffects": false,
   "devDependencies": {
@@ -49,6 +48,8 @@
     "eslint": "^8.48.0",
     "jsdom": "^22.1.0",
     "prettier": "^3.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "^5.0.2",
     "vite": "4.3.9",
     "vite-plugin-banner": "0.7.0",
