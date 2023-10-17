@@ -1,6 +1,6 @@
 {
   "name": "realtime-hooks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "Simplify and clean up your components with this react hooks collection.",
   "author": {
