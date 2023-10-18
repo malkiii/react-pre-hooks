@@ -1,22 +1,22 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node",
+    "rootDir": "./package/src",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "strict": true,
     "declaration": true,
     "isolatedModules": true,
-    "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noEmitOnError": true,
-    "noEmit": true,
+    "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./package/*"]
     }
   },
   "include": ["package/src"],
-  "exclude": ["node_modules", "dist", "*.test.ts*"]
+  "exclude": ["node_modules", "dist", "./**/*.test.ts*"]
 }
