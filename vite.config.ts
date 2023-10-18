@@ -16,7 +16,7 @@ export default defineConfig({
       name,
       entry: [path.resolve(__dirname, 'package/src/index.ts')],
       formats: ['es', 'umd'],
-      fileName: format => `${name}.${format}.js`
+      fileName: format => `index.${format}.js`
     }
   },
   test: {

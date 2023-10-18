@@ -1,21 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "CommonJS",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "moduleResolution": "Node",
+    "target": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "strict": true,
     "declaration": true,
     "isolatedModules": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noEmitOnError": true,
-    "allowJs": true,
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
@@ -23,6 +17,5 @@
     }
   },
   "include": ["package/src"],
-  "exclude": ["node_modules", "dist", "*.test.ts*"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": ["node_modules", "dist", "*.test.ts*"]
 }
