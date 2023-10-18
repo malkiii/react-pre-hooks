@@ -8,8 +8,8 @@
     "email": "malki.abdurrahmane@gmail.com"
   },
   "license": "MIT",
-  "main": "dist/realtime-hooks.umd.js",
-  "module": "dist/realtime-hooks.es.js",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "homepage": "https://malkiii.github.io/realtime-hooks",
   "files": [
