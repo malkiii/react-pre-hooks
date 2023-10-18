@@ -1,5 +1,5 @@
 import { SetStateAction, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { getStateActionValue } from '@/src/utils';
+import { getStateActionValue } from '.';
 
 type MediaElementType = 'video' | 'audio';
 export type MediaElement<T extends MediaElementType | undefined> = T extends 'video'

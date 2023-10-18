@@ -1,5 +1,5 @@
 import { SetStateAction, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { getStateActionValue } from '@/src/utils';
+import { getStateActionValue } from '../utils';
 
 export type MediaDeviceState = {
   devices: MediaDeviceInfo[];

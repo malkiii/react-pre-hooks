@@ -1,5 +1,5 @@
 import { RefObject, useEffect } from 'react';
-import { addEvents } from '@/src/utils';
+import { addEvents } from '../utils';
 
 export type EventMap<T extends EventTarget> = T extends Window
   ? WindowEventMap

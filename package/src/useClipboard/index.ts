@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useTimeout } from '@/src';
+import { useTimeout } from '..';
 
 export const useClipboard = ({ duration = 3000 } = {}) => {
   const [error, setError] = useState<Error>();

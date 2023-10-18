@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useDebouncedState } from '@/src';
+import { useDebouncedState } from '..';
 
 export type AutoCompleteHandler<T> = (search: string, value: T, index: number) => unknown;
 export type AutoCompleteOptions<T extends any> = {

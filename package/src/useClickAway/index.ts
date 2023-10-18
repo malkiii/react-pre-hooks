@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useRef } from 'react';
-import { useEventListener } from '@/src';
+import { useEventListener } from '..';
 
 export type ClickAwayOptions<T extends HTMLElement> = {
   ref?: RefObject<T> | null;

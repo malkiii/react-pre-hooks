@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
-import { addEvents } from '@/src/utils';
+import { addEvents } from '../utils';
 
 export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
 

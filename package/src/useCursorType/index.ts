@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { addEvents } from '@/src/utils';
+import { addEvents } from '../utils';
 
 export const useCursorType = <T extends HTMLElement = HTMLDivElement>(
   ref?: RefObject<T> | null

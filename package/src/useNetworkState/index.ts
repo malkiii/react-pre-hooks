@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
-import { useEventListener } from '@/src';
-import { getPrefixedProperty } from '@/src/utils';
+import { useEventListener } from '..';
+import { getPrefixedProperty } from '../utils';
 
 /**
  * Network Information API

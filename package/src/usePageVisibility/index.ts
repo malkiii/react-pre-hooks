@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
-import { useEventListener } from '@/src';
-import { getPrefixedProperty } from '@/src/utils';
+import { useEventListener } from '..';
+import { getPrefixedProperty } from '../utils';
 
 export const usePageVisibility = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);

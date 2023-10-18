@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import { download } from '@/src/utils';
+import { download } from '../utils';
 
 export type RecorderDownloadOptions = {
   download?: string;

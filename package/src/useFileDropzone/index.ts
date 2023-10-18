@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { useEventListener } from '@/src';
+import { useEventListener } from '..';
 
 type FileData<T extends FileDataType | undefined> = T extends undefined
   ? File

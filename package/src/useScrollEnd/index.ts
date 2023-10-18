@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { addEvents } from '@/src/utils';
+import { addEvents } from '../utils';
 
 export type ScrollEndOptions<T extends HTMLElement> = {
   ref?: RefObject<T> | null;

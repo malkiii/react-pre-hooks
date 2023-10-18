@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useEventListener } from '@/src';
+import { useEventListener } from '..';
 
 export const useViewport = () => {
   const [viewport, setViewport] = useState({ width: 0, height: 0 });

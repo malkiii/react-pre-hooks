@@ -1,5 +1,5 @@
 import { useLayoutEffect, useMemo, useState } from 'react';
-import { MediaElementInit, useMediaElement } from '@/src/utils/useMediaElement';
+import { MediaElementInit, useMediaElement } from '../utils/useMediaElement';
 
 export type VideoElementInit = MediaElementInit & {
   caption?: { lang?: string; enabled?: boolean };

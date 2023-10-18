@@ -1,4 +1,4 @@
-import { MediaElementInit, useMediaElement } from '@/src/utils/useMediaElement';
+import { MediaElementInit, useMediaElement } from '../utils/useMediaElement';
 
 export type AudioElementInit = MediaElementInit;
 

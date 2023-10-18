@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { addEvents } from '@/src/utils';
+import { addEvents } from '../utils';
 
 export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T> | null) => {
   const targetRef = ref ?? useRef<T>(null);

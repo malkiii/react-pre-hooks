@@ -1,5 +1,5 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
-import { useEventListener } from '@/src';
+import { useEventListener } from '..';
 
 const parseJSON = <T>(value: string | null): T => {
   try {

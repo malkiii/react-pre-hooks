@@ -1,5 +1,5 @@
 import { RefObject, useRef, useState } from 'react';
-import { useEventListener, useTimeout } from '@/src';
+import { useEventListener, useTimeout } from '..';
 
 export type HoverOptions<T extends HTMLElement> = {
   ref?: RefObject<T> | null;

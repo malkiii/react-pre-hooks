@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useRef } from 'react';
-import { useEventListener } from '@/src';
-import { getCurrentMousePosition } from '@/src/utils';
+import { useEventListener } from '..';
+import { getCurrentMousePosition } from '../utils';
 
 export interface SwipeAction {
   readonly state: 'start' | 'moving' | 'end';

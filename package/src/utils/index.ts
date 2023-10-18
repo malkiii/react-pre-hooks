@@ -1,5 +1,5 @@
 import { SetStateAction } from 'react';
-import { EventHandler, EventListenerOptions, EventMap } from '@/src';
+import { EventHandler, EventListenerOptions, EventMap } from '..';
 
 export function getStateActionValue<T extends any>(state: SetStateAction<T>, value: T) {
   return state instanceof Function ? state(value) : state;
