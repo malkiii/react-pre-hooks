@@ -63,9 +63,12 @@ const products = [...];
 
 export default function Products() {
   const [text, setText, result] = useAutoComplete(products, {
-    debounce: 250,
+    debounce: 300,
     filter: (text, product) => {
-      return product.name.toLowerCase().includes(text.toLowerCase());
+      const t = text.toLowerCase();
+      const name = product.name.toLowerCase();
+      const desc = product.description.toLowerCase();
+      return name.includes(t) || desc.includes(t);
     }
   });
 
@@ -84,3 +87,5 @@ export default function Products() {
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/useautocomplete-sqtl6k?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useAutoComplete" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

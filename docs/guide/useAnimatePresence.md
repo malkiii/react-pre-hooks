@@ -30,19 +30,22 @@ export default function Example() {
   const { ref, isMounted, toggle } = useAnimatePresence({
     keyframes: {
       opacity: [0, 1],
-      translate: ['0 70px', '0 0']
+      translate: ['0 -100px', '0 0'],
+      rotate: ['.25turn', '0']
     },
     transition: {
-      easing: 'ease',
-      duration: 200
+      easing: 'cubic-bezier(.68,-.6,.32,1.6)',
+      duration: 500
     }
   });
 
   return (
     <main>
+      {isMounted && <div ref={ref}></div>}
       <button onClick={() => toggle()}>Toggle</button>
-      {isMounted && <div ref={ref}>This is a modal!</div>}
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/useanimatepresence-h4dcmd?fontsize=14&hidenavigation=1&theme=dark&module=%2Fsrc%2FComponent.tsx" style="width:100%; height:500px; border:0; overflow:hidden;" title="useAnimatePresence" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

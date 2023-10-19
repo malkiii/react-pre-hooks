@@ -11,13 +11,14 @@ This hook returns the state and its current **status** using a state handler.
 
 ## Return Values
 
-It returns a tuple of 3 values:
+It returns a tuple of 4 values:
 
-| Index | Name         | Type     | Description                                                 |
-| :---: | ------------ | -------- | ----------------------------------------------------------- |
-|   0   | **value**    | Any      | the current value.                                          |
-|   1   | **setValue** | Function | updates the value.                                          |
-|   2   | **status**   | Any      | the status of the current value (what the handler returns). |
+| Index | Name          | Type     | Description                                                 |
+| :---: | ------------- | -------- | ----------------------------------------------------------- |
+|   0   | **value**     | Any      | the current value.                                          |
+|   1   | **setValue**  | Function | updates the value.                                          |
+|   2   | **status**    | Any      | the status of the current value (what the handler returns). |
+|   4   | **setStatus** | Function | updates the status value manually.                          |
 
 ## Example Usage
 
