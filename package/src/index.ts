@@ -10,7 +10,6 @@ export { useColorScheme } from './useColorScheme';
 export { useContextMenu } from './useContextMenu';
 export { useCounter } from './useCounter';
 export { useCss } from './useCss';
-export { useCursorType } from './useCursorType';
 export { useDebouncedState } from './useDebouncedState';
 export { useDevice } from './useDevice';
 export { useDragAndDrop } from './useDragAndDrop';
