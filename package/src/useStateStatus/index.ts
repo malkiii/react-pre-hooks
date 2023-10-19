@@ -21,5 +21,5 @@ export const useStateStatus = <T extends any, S = string>(
     [value, statusHandler]
   );
 
-  return [value, setState, status] as const;
+  return [value, setState, status, setStatus] as const;
 };
