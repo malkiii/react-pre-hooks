@@ -51,7 +51,7 @@ export const useFileDropzone = <
 ) => {
   const { ref, multiple = false, readAs, onUpload } = options;
 
-  const targetRef = ref ?? useRef<HTMLElement>(null);
+  const targetRef = ref ?? useRef<T>(null);
   const [files, setFiles] = useState<DroppedFile<F>[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -172,6 +172,7 @@ export const useFileDropzone = <
   };
 
   useEventListener('drop', handleFileDrop, { ref: targetRef });
+  useEventListener('dragover', handleDragOver, { ref: targetRef, passive: true });
   useEventListener('dragover', handleDragOver, { ref: window, passive: true });
   useEventListener('dragleave', handleDragLeave, { ref: window, passive: true });
 
