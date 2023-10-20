@@ -135,11 +135,21 @@ export default function Form() {
   return (
     <main>
       <form onSubmit={() => alert(form.toJSON(2))}>
-        <input type="email" onChange={e => form.set('email', e.target.value)} />
-        <input type="password" onChange={e => form.set('password', e.target.value)} />
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={e => form.set('email', e.currentTarget.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={e => form.set('password', e.currentTarget.value)}
+        />
         <button type="submit">Submit</button>
       </form>
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/usemap-t9v8wg?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="useMap" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

@@ -19,6 +19,6 @@ export default function Example() {
     console.log('the page is', isVisible ? 'visible' : 'hidden');
   }, [isVisible]);
 
-  return <main></main>;
+  return <main>Go to another tab and see the console..</main>;
 }
 ```

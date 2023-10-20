@@ -29,9 +29,11 @@ export default function Example() {
   return (
     <main>
       <label htmlFor="name">Name:</label>
-      <input id="name" type="text" onChange={e => setName(e.target.value)} />
-      <div>Current user name: {value}</div>
+      <input id="name" value={name} onChange={e => setName(e.target.value)} />
+      <p>Current user name: {name}</p>
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/uselocalstorage-r9dsgd?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useLocalStorage" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
