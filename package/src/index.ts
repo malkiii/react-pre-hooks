@@ -62,7 +62,7 @@ export type { EasingFunction, EasingOption } from './useEasing';
 export type { EventMap, EventHandler, EventListenerOptions } from './useEventListener';
 export type { RequestOptions } from './useFetch';
 export type { FileDataType, DropzoneError, DroppedFile, DropzoneOptions } from './useFileDropzone';
-export type { GeoLocationState } from './useGeolocation';
+export type { GeolocationState } from './useGeolocation';
 export type { HoverOptions } from './useHover';
 export type { IntersectionObserverOptions } from './useIntersection';
 export type { IntervalOptions } from './useInterval';
