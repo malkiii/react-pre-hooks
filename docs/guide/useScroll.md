@@ -24,15 +24,16 @@ a `ref` object of the target element (default is `window`).
 import { useScroll } from 'realtime-hooks';
 
 export default function Example() {
-  const { ref, x, y, isScrollDown } = useScroll();
+  const { x, y, isScrollDown } = useScroll();
 
   return (
     <main>
-      <div>
+      <p>
         x: {x}px, y: {y}px, You are scrolling {isScrollDown ? 'down' : 'up'}
-      </div>
-      <div ref={ref}></div>
+      </p>
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/usescroll-6ffxw8?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useScroll" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

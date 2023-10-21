@@ -18,6 +18,10 @@ It returns a tuple of 2 values:
 |   0   | **value**    | Any      | the current local storage value. |
 |   1   | **setValue** | Function | update the value.                |
 
+::: info
+When you update a value on the local storage, a [StorageEvent](https://developer.mozilla.org/en-US/docs/Web/API/StorageEvent) will be fired on `window`.
+:::
+
 ## Example Usage
 
 ```tsx
