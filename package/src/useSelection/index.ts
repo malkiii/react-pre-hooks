@@ -22,7 +22,7 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(ref?: RefOb
     setIsSelecting(!currentSelection?.isCollapsed);
   }, [targetRef]);
 
-  const eventOptions = { target: document, passive: true };
+  const eventOptions = { ref: document, passive: true };
 
   useEffect(handleSelectionChange, []);
   useEventListener('selectionchange', handleSelectionChange, eventOptions);
@@ -31,7 +31,7 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(ref?: RefOb
   return {
     ref: targetRef,
     value: selection,
-    text: selection?.toString() ?? null,
+    text: selection?.toString() ?? '',
     rect: getSelectionRect(),
     isSelecting
   };

@@ -31,16 +31,14 @@ export const useStorage = <T extends any>(
   const [storedValue, setStoredValue] = useState<T | null>(getStoredValue);
   const setCurrentStoredValue = () => setStoredValue(getStoredValue);
 
-  const updateStoredValue = useCallback((value: Parameters<typeof setStoredValue>[0]) => {
-    if (typeof window === 'undefined') {
-      console.warn(`Tried setting localStorage key “${key}” even in the server`);
-    }
+  const updateStoredValue: typeof setStoredValue = useCallback(value => {
+    if (typeof window === 'undefined') return;
 
     try {
-      const newValue = value instanceof Function ? value(storedValue) : value;
-      storage.setItem(key, JSON.stringify(newValue));
+      const newValue = JSON.stringify(value instanceof Function ? value(storedValue) : value);
+      storage.setItem(key, newValue);
 
-      window.dispatchEvent(new StorageEvent('storage', { key }));
+      window.dispatchEvent(new StorageEvent('storage', { key, newValue }));
     } catch (error) {
       throw new Error(`Value error: setting localStorage key “${key}” with ${value}: ${error}`);
     }

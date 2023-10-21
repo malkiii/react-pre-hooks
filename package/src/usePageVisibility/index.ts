@@ -7,7 +7,7 @@ export const usePageVisibility = () => {
 
   const handleVisibilityChange = useCallback((force?: boolean) => {
     if (force !== undefined) return setIsVisible(force);
-    setIsVisible(!!getPrefixedProperty(document, 'hidden'));
+    setIsVisible(!getPrefixedProperty(document, 'hidden'));
   }, []);
 
   useEventListener('blur', () => handleVisibilityChange(false), { ref: window });

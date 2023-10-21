@@ -12,18 +12,18 @@ export const useScroll = <T extends HTMLElement = HTMLDivElement>(ref?: RefObjec
   const prevPosition = useRef<typeof scrollPosition>(initialValues);
 
   const handleScrolling = useCallback(() => {
-    const x = targetRef.current?.scrollLeft || window.scrollX;
-    const y = targetRef.current?.scrollTop || window.scrollY;
+    const x = targetRef.current?.scrollLeft ?? window.scrollX;
+    const y = targetRef.current?.scrollTop ?? window.scrollY;
 
     const element = targetRef.current ?? document.body;
 
     const maxScrollX = element.scrollWidth - element.clientWidth;
     const maxScrollY = element.scrollHeight - element.clientHeight;
-    const progressX = (element.scrollLeft / maxScrollX) * 100;
-    const progressY = (element.scrollTop / maxScrollY) * 100;
+    const progressX = (x / maxScrollX) * 100;
+    const progressY = (y / maxScrollY) * 100;
 
-    const distanceX = scrollX - prevPosition.current.x;
-    const distanceY = scrollY - prevPosition.current.y;
+    const distanceX = x - prevPosition.current.x;
+    const distanceY = y - prevPosition.current.y;
 
     if (distanceX > 0) setIsScrollRight(true);
     else if (distanceX < 0) setIsScrollRight(false);
