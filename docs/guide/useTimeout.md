@@ -60,11 +60,13 @@ export default function Hello() {
 
   return (
     <main>
+      <div>{timeout.isRunning ? 'Wait...': 'Hello!'}</div>
       <button onClick={() => timeout.toggle()}>
         {timeout.isRunning ? 'Cancel' : 'Start'}
       </button>
-      <div>{timeout.isRunning ? 'Wait...': 'Hello!'}</div>
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/usetimeout-7lt8hx?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useTimeout" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

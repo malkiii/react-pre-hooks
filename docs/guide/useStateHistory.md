@@ -121,10 +121,12 @@ export default function Counter() {
 
   return (
     <main>
-      <button onClick={() => setCounter(c => c + 1)}>Increment</button>
-      <span>{counter}</span>
+      <p>Current value: {counter}</p>
       <p>previous values: {pointer.history.join(', ')}</p>
+      <button onClick={() => setCounter(c => c + 1)}>Increment</button>
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/usestatehistory-5x5937?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useStateHistory" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

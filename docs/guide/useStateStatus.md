@@ -60,9 +60,16 @@ export default function Username() {
 
   return (
     <main>
-      <input type="text" value={name} onChange={e => setName(e.target.value)} />
+      <input
+        type="text"
+        value={name}
+        placeholder="Username"
+        onChange={e => setName(e.target.value)}
+      />
       {status && <p>{status.message}</p>}
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/usestatestatus-75gynp?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useStateStatus" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
