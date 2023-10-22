@@ -55,7 +55,7 @@ export type { TransitionProps, AnimatePresenceOptions } from './useAnimatePresen
 export type { AudioElementInit } from './useAudio';
 export type { AutoCompleteHandler, AutoCompleteOptions } from './useAutoComplete';
 export type { ClickAwayOptions } from './useClickAway';
-export type { CookieEventDetail, CookieAttributes } from './useCookie';
+export type { CookieEvent, CookieAttributes } from './useCookie';
 export type { CounterOptions } from './useCounter';
 export type { CSSObject, CSSProps, CSSOptions } from './useCss';
 export type { DeviceType } from './useDevice';
