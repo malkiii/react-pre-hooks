@@ -53,21 +53,23 @@ export default function TextSpeaker() {
 
   const selectVocie = e => {
     const index = e.currentTarget.selectedIndex;
-    speech.setVoice(speech.voices.at(index));
+    speech.setVoice(speech.voices[index]);
   };
 
   return (
     <main>
-      <textarea></textarea>
       <div>
-        <button onClick={speak}>Speak</button>
         <select onChange={selectVocie}>
           {speech.voices.map(v => (
             <option key={v.name}>{v.name}</option>
           ))}
         </select>
+        <button onClick={speak}>Speak</button>
       </div>
+      <textarea></textarea>
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/usespeech-vvrf2s?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useSpeech" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

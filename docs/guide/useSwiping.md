@@ -31,14 +31,14 @@ a `ref` object of the target element.
 ```tsx
 import { useSwiping } from 'realtime-hooks';
 
-let scrollX = 0;
+let start = 0;
 
-export default function Example() {
+export default function Slider() {
   const ref = useSwiping(
     action => {
-      if (action.state === 'start') scrollX = window.scrollX;
+      if (action.state === 'start') start = window.scrollX;
 
-      window.scrollTo({ left: scrollX - action.deltaX });
+      window.scrollTo({ left: start + action.deltaX });
     },
     { mouse: true }
   );
@@ -54,3 +54,5 @@ export default function Example() {
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/useswiping-j743lq?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useSwiping" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
