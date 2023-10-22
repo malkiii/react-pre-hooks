@@ -21,6 +21,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useClipboard">useClipboard</a></td><td>Copy to clipboard and return a temporary <code>copied</code> state.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useColorScheme">useColorScheme</a></td><td>Returns the current system color scheme (<code>dark</code> or <code>light</code>).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useContextMenu">useContextMenu</a></td><td>Handle the user right clicks on a target element.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCookie">useCookie</a></td><td>Get and Set a specific http cookie value.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCounter">useCounter</a></td><td>Simple counter with <code>min</code> and <code>max</code> values, and a some methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useCss">useCss</a></td><td>Insert some actual CSS using a <code>CSS Object</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useDebouncedState">useDebouncedState</a></td><td>Update the state value after a delay.</td></tr>
