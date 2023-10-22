@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import { useEventListener } from '..';
 
-export type CookieEventDetail = {
+export type CookieEvent = CustomEvent<{
   name: string;
   oldValue: string;
   newValue: string;
-};
+}>;
 
 export type CookieAttributes = {
   domain?: string;
@@ -20,7 +20,7 @@ export type CookieAttributes = {
 
 declare global {
   interface WindowEventMap {
-    'cookiechange': CustomEvent<CookieEventDetail>;
+    'cookiechange': CookieEvent;
   }
 }
 
@@ -76,7 +76,7 @@ export const useCookie = (name: string, options: CookieAttributes & { initial?: 
     []
   );
 
-  const handleCookieChange = useCallback((e: CustomEvent<CookieEventDetail>) => {
+  const handleCookieChange = useCallback((e: CookieEvent) => {
     if (e.detail.name === name) updateValue(e.detail.newValue);
   }, []);
 
