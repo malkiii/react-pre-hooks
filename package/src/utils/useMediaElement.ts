@@ -1,4 +1,4 @@
-import { SetStateAction, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { RefObject, SetStateAction, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { getStateActionValue } from '.';
 
 type MediaElementType = 'video' | 'audio';
@@ -8,7 +8,8 @@ export type MediaElement<T extends MediaElementType | undefined> = T extends 'vi
   ? HTMLAudioElement
   : HTMLMediaElement;
 
-export type MediaElementInit = {
+export type MediaElementInit<T extends MediaElementType | undefined> = {
+  ref?: RefObject<MediaElement<T>> | null;
   autoPlay?: boolean;
   muted?: boolean;
   loop?: boolean;
@@ -18,9 +19,9 @@ export type MediaElementInit = {
 };
 
 export const useMediaElement = <T extends MediaElementType | undefined = undefined>(
-  initialState: MediaElementInit = {}
+  initialState: MediaElementInit<T>
 ) => {
-  const ref = useRef<MediaElement<T>>(null);
+  const ref = initialState.ref ?? useRef<MediaElement<T>>(null);
   const [state, setState] = useState({
     isReady: false,
     isPlaying: false,
@@ -29,6 +30,7 @@ export const useMediaElement = <T extends MediaElementType | undefined = undefin
     isMuted: !!initialState.muted,
     isWaiting: false,
     duration: 0,
+    progress: 0,
     buffered: 0,
     time: initialState.startTime ?? 0,
     volume: initialState.volume ?? 1,
@@ -49,10 +51,16 @@ export const useMediaElement = <T extends MediaElementType | undefined = undefin
       pause() {
         this.togglePlayState(false);
       },
-      mute(force: boolean = true) {
+      toggleMute(force?: boolean) {
         if (!mediaElement) return;
-        mediaElement.muted = force;
-        setState(state => ({ ...state, isMuted: force }));
+        mediaElement.muted = force ?? !state.isMuted;
+        setState(state => ({ ...state, isMuted: mediaElement.muted }));
+      },
+      mute() {
+        this.toggleMute(true);
+      },
+      unmute() {
+        this.toggleMute(false);
       },
       setTime(time: SetStateAction<number>) {
         if (!mediaElement) return;
@@ -88,10 +96,15 @@ export const useMediaElement = <T extends MediaElementType | undefined = undefin
     element.onplay = () => setState(state => ({ ...state, isPaused: false, isEnded: false }));
     element.onplaying = () => setState(state => ({ ...state, isPlaying: true, isWaiting: false }));
     element.onpause = () => setState(state => ({ ...state, isPlaying: false, isPaused: true }));
-    element.ontimeupdate = () => setState(state => ({ ...state, time: element.currentTime }));
     element.onvolumechange = () => setState(state => ({ ...state, volume: element.volume }));
     element.onratechange = () => setState(state => ({ ...state, speed: element.playbackRate }));
     element.onended = () => setState(state => ({ ...state, isEnded: true }));
+    element.ontimeupdate = () =>
+      setState(state => ({
+        ...state,
+        time: element.currentTime,
+        progress: element.currentTime / element.duration
+      }));
     element.onprogress = () =>
       setState(state => {
         if (!state.duration || !element.buffered.length) return state;
