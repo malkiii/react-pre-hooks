@@ -45,8 +45,10 @@ export const useStorage = <T extends any>(
   }, []);
 
   const handleStorageChange = useCallback(
-    (event: StorageEvent) => event?.key === key && setCurrentStoredValue(),
-    [key, getStoredValue]
+    (event: StorageEvent) => {
+      if (event?.key === key) setCurrentStoredValue();
+    },
+    [key]
   );
 
   useLayoutEffect(() => {

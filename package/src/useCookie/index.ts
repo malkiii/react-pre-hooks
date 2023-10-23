@@ -8,14 +8,13 @@ export type CookieEvent = CustomEvent<{
 }>;
 
 export type CookieAttributes = {
-  domain?: string;
-  path?: string;
   expires?: Date | string;
   maxAge?: number;
+  path?: string;
+  domain?: string;
+  sameSite?: 'Strict' | 'Lax' | 'None';
   secure?: boolean;
   httpOnly?: boolean;
-  sameSite?: 'Strict' | 'Lax' | 'None';
-  priority?: 'Low' | 'Medium' | 'High';
 };
 
 declare global {
@@ -47,15 +46,16 @@ function setCookie(name: string, value: string, options: CookieAttributes = {}) 
         return str + `; Path=${options['path']!}`;
       case 'sameSite':
         return str + `; SameSite=${options['sameSite']!}`;
-      case 'priority':
-        return str + `; Priority=${options['priority']!}`;
       default:
         return str + `; ${options[attr as keyof CookieAttributes]}`;
     }
   }, `${name}=${encodedValue}`);
 }
 
-export const useCookie = (name: string, options: CookieAttributes & { initial?: string }) => {
+export const useCookie = (
+  name: string,
+  options: CookieAttributes & { initial?: string | null } = {}
+) => {
   const [value, setValue] = useState(() => getCookie(name) ?? options.initial ?? null);
 
   const updateValue = useCallback(
@@ -76,9 +76,12 @@ export const useCookie = (name: string, options: CookieAttributes & { initial?: 
     []
   );
 
-  const handleCookieChange = useCallback((e: CookieEvent) => {
-    if (e.detail.name === name) updateValue(e.detail.newValue);
-  }, []);
+  const handleCookieChange = useCallback(
+    (e: CookieEvent) => {
+      if (e.detail.name === name) setValue(e.detail.newValue);
+    },
+    [name]
+  );
 
   useEventListener('cookiechange', handleCookieChange, { ref: window });
 
