@@ -93,8 +93,9 @@ export const useMediaElement = <T extends MediaElementType | undefined = undefin
 
     element.oncanplay = () => setState(state => ({ ...state, isReady: true }));
     element.ondurationchange = () => setState(state => ({ ...state, duration: element.duration }));
-    element.onplay = () => setState(state => ({ ...state, isPaused: false, isEnded: false }));
-    element.onplaying = () => setState(state => ({ ...state, isPlaying: true, isWaiting: false }));
+    element.onplay = () => setState(state => ({ ...state, isPlaying: true, isPaused: false }));
+    element.onplaying = () => setState(state => ({ ...state, isWaiting: false, isEnded: false }));
+    element.onwaiting = () => setState(state => ({ ...state, isWaiting: true }));
     element.onpause = () => setState(state => ({ ...state, isPlaying: false, isPaused: true }));
     element.onvolumechange = () => setState(state => ({ ...state, volume: element.volume }));
     element.onratechange = () => setState(state => ({ ...state, speed: element.playbackRate }));
