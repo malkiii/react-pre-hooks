@@ -4,14 +4,16 @@ This hook uses an audio element reference as well as its state and controller me
 
 ## Options
 
-| Name          | Type    | Description                                         |
-| ------------- | ------- | --------------------------------------------------- |
-| **autoPlay**  | Boolean | auto-play the audio when is mounted.                |
-| **muted**     | Boolean | whether the audio is muted initially or not.        |
-| **loop**      | Boolean | whether playback should restart after it completes. |
-| **startTime** | Number  | The initial playback time (in seconds).             |
-| **volume**    | Number  | The initial volume level (0 to 1) (default is `1`). |
-| **speed**     | Number  | The initial playback speed (default is `1`).        |
+| Name          | Type      | Description                                         |
+| ------------- | --------- | --------------------------------------------------- |
+| **ref**       | RefObject | the audio element reference.                        |
+| **src**       | String    | the audio src path.                                 |
+| **autoPlay**  | Boolean   | auto-play the audio when is mounted.                |
+| **muted**     | Boolean   | whether the audio is muted initially or not.        |
+| **loop**      | Boolean   | whether playback should restart after it completes. |
+| **startTime** | Number    | The initial playback time (in seconds).             |
+| **volume**    | Number    | The initial volume level (0 to 1) (default is `1`). |
+| **speed**     | Number    | The initial playback speed (default is `1`).        |
 
 ## Return Values
 
@@ -39,3 +41,5 @@ This hook uses an audio element reference as well as its state and controller me
 | **seekBy**          | Function  | Seeks the audio by a specified time (in seconds).                                    |
 
 ## Example Usage
+
+<iframe src="https://codesandbox.io/embed/useaudio-px7884?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useAudio" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
