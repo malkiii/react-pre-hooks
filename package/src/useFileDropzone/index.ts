@@ -8,7 +8,11 @@ type FileData<T extends FileDataType | undefined> = T extends undefined
   : string;
 
 export type FileDataType = 'array-buffer' | 'binary-string' | 'url' | 'text';
-export type DropzoneError = { type?: 'extention' | 'size' | (string & {}); message: string };
+
+export type DropzoneError<F extends FileDataType | undefined = undefined> = {
+  type?: 'extention' | 'size' | (string & {});
+  file: DroppedFile<F>;
+};
 
 export type DroppedFile<T extends FileDataType | undefined> = {
   name: string;
@@ -28,6 +32,7 @@ export type DropzoneOptions<
   maxSize?: number;
   readAs?: F;
   onUpload?: (files: File[]) => any;
+  validate?: (files: DroppedFile<F>[]) => unknown;
 };
 
 const readerMethods = {
@@ -54,35 +59,27 @@ export const useFileDropzone = <
   const targetRef = ref ?? useRef<T>(null);
   const [files, setFiles] = useState<DroppedFile<F>[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [error, setError] = useState<DropzoneError>();
+  const [error, setError] = useState<DropzoneError<F>>();
 
   const isValidFiles = useCallback(
     (files: DroppedFile<F>[]) => {
-      const { extensions, minSize = 0, maxSize = Infinity } = options;
-      return files.every(file => {
-        // validate the type
-        if (extensions && !extensions.includes(file.extension ?? '')) {
-          setError({ type: 'extention', message: `Invalid file extension of "${file.name}"` });
-          return false;
-        }
-        // validate the file size
-        if (file.size < minSize) {
-          setError({
-            type: 'size',
-            message: `"${file.name}" is too small. Minimum size is ${minSize}MB`
-          });
-          return false;
-        }
-        if (file.size > maxSize) {
-          setError({
-            type: 'size',
-            message: `"${file.name}" is too large. Maximum size is ${maxSize}MB`
-          });
-          return false;
-        }
-        return true;
-      });
+      const { extensions, minSize = 0, maxSize = Infinity, validate } = options;
+      return (
+        (!validate || validate(files)) &&
+        files.every(file => {
+          // validate the type
+          if (extensions && !extensions.includes(file.extension ?? '')) {
+            setError({ type: 'extention', file });
+            return false;
+          }
+          // validate the file size
+          if (file.size > maxSize || file.size < minSize) {
+            setError({ type: 'size', file });
+            return false;
+          }
+          return true;
+        })
+      );
     },
     [options]
   );
@@ -161,20 +158,12 @@ export const useFileDropzone = <
   const handleFileDrop = async (event: DragEvent) => {
     event.preventDefault();
     await getDropperFiles(event.dataTransfer?.files);
-    setIsDragging(false);
-  };
-  const handleDragOver = (event: DragEvent) => {
-    event.preventDefault();
-    setIsDragging(true);
-  };
-  const handleDragLeave = () => {
-    setIsDragging(false);
   };
 
-  useEventListener('drop', handleFileDrop, { ref: targetRef });
-  useEventListener('dragover', handleDragOver, { ref: targetRef, passive: true });
-  useEventListener('dragover', handleDragOver, { ref: window, passive: true });
-  useEventListener('dragleave', handleDragLeave, { ref: window, passive: true });
+  const eventOptions = { ref: targetRef };
 
-  return { ref: targetRef, files, isDragging, isLoading, error, setError };
+  useEventListener('drop', handleFileDrop, eventOptions);
+  useEventListener('dragover', e => e.preventDefault(), eventOptions);
+
+  return { ref: targetRef, files, isLoading, error, setError };
 };
