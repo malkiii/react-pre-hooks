@@ -2,15 +2,15 @@ import { RefObject, useCallback, useRef } from 'react';
 import { useEventListener } from '..';
 import { getCurrentMousePosition } from '../utils';
 
-export interface DragAction {
+export type DragAction = {
   readonly state: 'start' | 'moving' | 'end';
-  readonly offsetX: number;
-  readonly offsetY: number;
+  readonly clientX: number;
+  readonly clientY: number;
   readonly initialX: number;
   readonly initialY: number;
   readonly target: EventTarget;
   readonly event: MouseEvent | TouchEvent;
-}
+};
 
 export type DragEventHandler = (action: DragAction) => any;
 
@@ -33,12 +33,12 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
     (state: DragAction['state'], event: DragAction['event']) => {
       if (!draggedElement.current || !initialPosition.current) return;
 
-      const offset = getCurrentMousePosition(event);
+      const currentPosition = getCurrentMousePosition(event);
 
       handler({
         state,
-        offsetX: offset.x,
-        offsetY: offset.y,
+        clientX: currentPosition.x,
+        clientY: currentPosition.y,
         initialX: initialPosition.current.x,
         initialY: initialPosition.current.y,
         target: draggedElement.current,
