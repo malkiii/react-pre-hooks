@@ -4,22 +4,20 @@ import { useEventListener } from '..';
 export const useSelection = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T> | null) => {
   const targetRef = ref ?? useRef<T>(null);
 
-  const [selection, setSelection] = useState<Selection | null>(null);
+  const [text, setText] = useState<string>('');
+  const [rect, setRect] = useState<DOMRect>();
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
-
-  const getSelectionRect = useCallback(() => {
-    if (!selection || selection.isCollapsed) return;
-    return selection.getRangeAt(0).getBoundingClientRect();
-  }, [selection]);
 
   const handleSelectionChange = useCallback(() => {
     const currentSelection = document.getSelection();
     const target = currentSelection?.focusNode?.parentElement;
+    const isSelecting = !currentSelection?.isCollapsed;
 
     if (targetRef.current && !targetRef.current.contains(target!)) return;
 
-    setSelection(currentSelection);
-    setIsSelecting(!currentSelection?.isCollapsed);
+    setIsSelecting(isSelecting);
+    setText(currentSelection?.toString() ?? '');
+    if (isSelecting) setRect(currentSelection?.getRangeAt(0).getBoundingClientRect());
   }, [targetRef]);
 
   const eventOptions = { ref: document, passive: true };
@@ -28,11 +26,5 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(ref?: RefOb
   useEventListener('selectionchange', handleSelectionChange, eventOptions);
   useEventListener(['mouseup', 'touchend'], () => setIsSelecting(false), eventOptions);
 
-  return {
-    ref: targetRef,
-    value: selection,
-    text: selection?.toString() ?? '',
-    rect: getSelectionRect(),
-    isSelecting
-  };
+  return { ref: targetRef, text, rect, isSelecting };
 };
