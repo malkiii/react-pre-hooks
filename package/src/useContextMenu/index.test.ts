@@ -8,8 +8,8 @@ describe('useContextMenu', () => {
 
     fireEvent.contextMenu(window, { clientX: 50, clientY: 100 });
 
-    expect(result.current.offsetX).toBe(50);
-    expect(result.current.offsetY).toBe(100);
+    expect(result.current.clientX).toBe(50);
+    expect(result.current.clientY).toBe(100);
   });
 
   it('should show on right click and hide on left click', async () => {

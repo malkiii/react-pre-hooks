@@ -8,31 +8,34 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [canShow, setCanShow] = useState<boolean>(false);
 
-  const handleRightClick = useCallback((event: MouseEvent) => {
-    if (event.target !== event.currentTarget) return;
-    event.preventDefault();
-    setPosition({ x: event.pageX, y: event.pageY });
-    setCanShow(true);
-  }, []);
-
-  const handleLeftClick = useCallback(() => {
-    setCanShow(false);
-  }, []);
-
   const toggle = useCallback((show?: boolean) => {
     setCanShow(can => show ?? !can);
   }, []);
 
   useEffect(() => {
     const options = { ref: targetRef.current ?? window };
+
+    const handleRightClick = (event: MouseEvent) => {
+      event.preventDefault();
+      setPosition({ x: event.pageX, y: event.pageY });
+    };
+    const handleMouseDown = () => {
+      setCanShow(false);
+    };
+    const handleMouseUp = (event: MouseEvent) => {
+      setCanShow(event.button === 2);
+    };
+
     const clearRightClick = addEvents('contextmenu', handleRightClick, options);
-    const clearLeftClick = addEvents('click', handleLeftClick, options);
+    const clearMouseDown = addEvents('mousedown', handleMouseDown, options);
+    const clearMouseUp = addEvents('mouseup', handleMouseUp, options);
 
     return () => {
       clearRightClick();
-      clearLeftClick();
+      clearMouseDown();
+      clearMouseUp();
     };
   }, [ref]);
 
-  return { ref: targetRef, offsetX: position.x, offsetY: position.y, canShow, toggle };
+  return { ref: targetRef, clientX: position.x, clientY: position.y, canShow, toggle };
 };
