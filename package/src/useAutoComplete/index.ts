@@ -6,7 +6,7 @@ export type AutoCompleteOptions<T extends any> = {
   initial?: string;
   debounce?: number;
   filter?: AutoCompleteHandler<T>;
-  sort?: boolean;
+  sort?: boolean | Parameters<T[]['sort']>[0];
 };
 
 const defaultFilter: AutoCompleteHandler<any> = (search, value) => {
@@ -24,7 +24,8 @@ export const useAutoComplete = <T extends any = string>(
 
   const suggestions = useMemo(() => {
     const result = values.filter((v, i) => filter(debouncedValue, v, i));
-    if (options.sort) result.sort();
+    if (options.sort) result.sort(options.sort instanceof Function ? options.sort : undefined);
+
     return result;
   }, [values, options, debouncedValue]);
 
