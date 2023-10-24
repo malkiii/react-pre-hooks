@@ -11,5 +11,9 @@ describe('useScrollPosition', () => {
     fireEvent.scroll(window, { target: { scrollX: 200, scrollY: 300 } });
     expect(result.current.x).toBe(200);
     expect(result.current.y).toBe(300);
+
+    fireEvent.scroll(window, { target: { scrollX: 100, scrollY: 400 } });
+    expect(result.current.x).toBe(100);
+    expect(result.current.y).toBe(400);
   });
 });
