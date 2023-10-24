@@ -22,6 +22,8 @@ export const useScrollDirection = <T extends HTMLElement = HTMLDivElement>(
 
     if (distanceY > 0) setIsScrollDown(true);
     else if (distanceY < 0) setIsScrollDown(false);
+
+    prevPosition.current = { x, y };
   }, []);
 
   useEffect(() => {
