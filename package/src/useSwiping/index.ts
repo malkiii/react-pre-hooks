@@ -2,7 +2,7 @@ import { RefObject, useCallback, useRef } from 'react';
 import { useEventListener } from '..';
 import { getCurrentMousePosition } from '../utils';
 
-export interface SwipeAction {
+export type SwipeAction = {
   readonly state: 'start' | 'moving' | 'end';
   readonly direction?: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
   readonly deltaX: number;
@@ -11,7 +11,7 @@ export interface SwipeAction {
   readonly initialY: number;
   readonly isHolding: boolean;
   readonly event: TouchEvent | MouseEvent;
-}
+};
 
 export type SwipeEventHandler = (action: SwipeAction) => any;
 
