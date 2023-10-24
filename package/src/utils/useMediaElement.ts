@@ -104,7 +104,7 @@ export const useMediaElement = <T extends MediaElementType | undefined = undefin
       setState(state => ({
         ...state,
         time: element.currentTime,
-        progress: element.currentTime / element.duration
+        progress: (element.currentTime * 100) / element.duration
       }));
     element.onprogress = () =>
       setState(state => {
