@@ -6,6 +6,8 @@ export type RequestOptions = RequestInit & {
   params?: Record<string, string | number | null | undefined>;
 };
 
+type AbortCallback = (reason?: any) => void;
+
 export const useFetch = <T extends any>(options: RequestOptions, deps?: DependencyList) => {
   const [response, setResponse] = useState<Response>();
   const controller = useRef<AbortController>(new AbortController());
@@ -33,5 +35,5 @@ export const useFetch = <T extends any>(options: RequestOptions, deps?: Dependen
 
   const result = useAsync<T | undefined>(fetchData, [fetchData]);
 
-  return { response, abort: controller.current.abort as Function, ...result };
+  return { response, abort: controller.current.abort as AbortCallback, ...result };
 };

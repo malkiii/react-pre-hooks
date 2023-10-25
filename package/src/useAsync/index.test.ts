@@ -7,9 +7,9 @@ describe('useAsync', () => {
     const asyncFunction = async () => 'Success';
     const { result } = renderHook(() => useAsync(asyncFunction));
 
-    expect(result.current.isLoading).toBeTruthy();
+    expect(result.current.isPending).toBeTruthy();
 
-    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+    await waitFor(() => expect(result.current.isPending).toBeFalsy());
 
     expect(result.current.data).toBe('Success');
     expect(result.current.error).toBe(undefined);
@@ -22,7 +22,7 @@ describe('useAsync', () => {
 
     const { result } = renderHook(() => useAsync(asyncFunction));
 
-    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+    await waitFor(() => expect(result.current.isPending).toBeFalsy());
 
     expect(result.current.data).toBe(undefined);
     expect(result.current.error).toBeInstanceOf(Error);
@@ -37,7 +37,7 @@ describe('useAsync', () => {
 
     const { result } = renderHook(() => useAsync(asyncFunction));
 
-    await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+    await waitFor(() => expect(result.current.isPending).toBeFalsy());
 
     expect(result.current.data).toBe(undefined);
     expect(result.current.error).toBeInstanceOf(Error);
