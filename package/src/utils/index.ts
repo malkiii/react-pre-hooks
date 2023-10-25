@@ -1,6 +1,8 @@
 import { SetStateAction } from 'react';
 import { EventHandler, EventListenerOptions, EventMap } from '..';
 
+export const browserPrefixes = ['', 'moz', 'webkit', 'o', 'ms'] as const;
+
 export function getStateActionValue<T extends any>(state: SetStateAction<T>, value: T) {
   return state instanceof Function ? state(value) : state;
 }
@@ -15,7 +17,7 @@ export function getPrefixedProperty<T extends {}, K extends keyof T & string>(ob
   if (prop in obj) return obj[prop];
 
   const capitalizedProp = prop.charAt(0).toUpperCase() + prop.substring(1);
-  const prefixedProps = ['moz', 'webkit', 'o', 'ms'].map(pref => pref + capitalizedProp);
+  const prefixedProps = browserPrefixes.map(pref => pref + capitalizedProp);
   const property = prefixedProps.find(p => p in obj);
   if (property) return obj[property as K];
 }
