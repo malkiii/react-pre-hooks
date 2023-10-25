@@ -9,7 +9,7 @@ describe('useScrollDirection', () => {
     render(<div style={{ height: '2000px', width: '2000px' }} />);
 
     fireEvent.scroll(window, { target: { scrollY: 500 } });
-    expect(result.current.isScrollDown).toBe(true);
+    expect(result.current.isDown).toBe(true);
   });
 
   it('should update "isScrollRight" when scrolling right', async () => {
@@ -18,6 +18,6 @@ describe('useScrollDirection', () => {
     render(<div style={{ height: '2000px', width: '2000px' }} />);
 
     fireEvent.scroll(window, { target: { scrollX: 1000 } });
-    expect(result.current.isScrollRight).toBe(true);
+    expect(result.current.isRight).toBe(true);
   });
 });

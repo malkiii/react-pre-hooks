@@ -6,9 +6,13 @@ export const useScrollDirection = <T extends HTMLElement = HTMLDivElement>(
 ) => {
   const targetRef = ref ?? useRef<T>(null);
 
-  const [isScrollDown, setIsScrollDown] = useState<boolean>();
-  const [isScrollRight, setIsScrollRight] = useState<boolean>();
   const prevPosition = useRef({ x: 0, y: 0 });
+  const [direction, setDirection] = useState({
+    isUp: false,
+    isDown: false,
+    isLeft: false,
+    isRight: false
+  });
 
   const handleScrolling = useCallback(() => {
     const x = targetRef.current?.scrollLeft ?? window.scrollX;
@@ -17,13 +21,14 @@ export const useScrollDirection = <T extends HTMLElement = HTMLDivElement>(
     const distanceX = x - prevPosition.current.x;
     const distanceY = y - prevPosition.current.y;
 
-    if (distanceX > 0) setIsScrollRight(true);
-    else if (distanceX < 0) setIsScrollRight(false);
-
-    if (distanceY > 0) setIsScrollDown(true);
-    else if (distanceY < 0) setIsScrollDown(false);
-
     prevPosition.current = { x, y };
+
+    setDirection({
+      isLeft: distanceX < 0,
+      isRight: distanceX > 0,
+      isUp: distanceY < 0,
+      isDown: distanceY > 0
+    });
   }, []);
 
   useEffect(() => {
@@ -31,5 +36,5 @@ export const useScrollDirection = <T extends HTMLElement = HTMLDivElement>(
     return addEvents('scroll', handleScrolling, { ref: targetRef.current ?? window });
   }, [ref]);
 
-  return { ref: targetRef, isScrollDown, isScrollRight };
+  return { ref: targetRef, ...direction };
 };

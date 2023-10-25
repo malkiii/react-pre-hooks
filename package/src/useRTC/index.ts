@@ -198,7 +198,7 @@ export const useRTC = (options: StreamOptions = {}) => {
 
   return {
     ref,
-    stream: streamRef.current,
+    stream: streamRef,
     video: videoDevice,
     audio: audioDevice,
     start() {

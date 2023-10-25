@@ -18,7 +18,11 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
         const requestFullscreen = getPrefixedProperty(targetRef.current, 'requestFullscreen');
         if (!requestFullscreen) return;
 
-        await requestFullscreen(options);
+        try {
+          await requestFullscreen(options);
+        } catch (error) {
+          console.error(error);
+        }
 
         setIsEnabled(true);
       },
@@ -28,7 +32,11 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
         const exitFullscreen = getPrefixedProperty(document, 'exitFullscreen');
         if (!exitFullscreen) return;
 
-        await exitFullscreen();
+        try {
+          await exitFullscreen();
+        } catch (error) {
+          console.error(error);
+        }
 
         setIsEnabled(false);
       },
