@@ -4,46 +4,57 @@ import deepEqual from 'fast-deep-equal';
 type DefaultObject = Record<string, unknown>;
 type ObjectType<T> = keyof T extends never ? DefaultObject : T;
 
+export type ObjectToMap<T> = Map<keyof ObjectType<T>, ObjectType<T>[keyof ObjectType<T>]>;
+
 export const useMap = <T extends DefaultObject>(initial: ObjectType<T> = {} as any) => {
-  type TMap = typeof initial;
-  const [map, setMap] = useState<TMap>(initial);
+  const [map, setMap] = useState<ObjectToMap<T>>(new Map(Object.entries(initial)) as any);
   return useMemo(
     () => ({
       value: map,
-      size: Object.keys(map).length,
-      get(key: keyof TMap) {
-        return key in map ? map[key] : undefined;
+      size: map.size,
+      get(key: Parameters<(typeof map)['get']>[0]) {
+        return map.get(key);
       },
-      set<K extends keyof TMap>(key: K, value: TMap[K]) {
-        setMap(obj => ({ ...obj, [key]: value }));
+      set<K extends keyof ObjectType<T>>(key: K, value: ObjectType<T>[K]) {
+        setMap(m => new Map(m).set(key, value));
       },
-      delete(...keys: (keyof TMap)[]) {
-        const newEntries = Object.entries(map).map<any>(([k, _]) => !keys.includes(k));
-        setMap(Object.fromEntries(newEntries) as TMap);
+      delete(...keys: Array<keyof ObjectType<T>>) {
+        setMap(m => {
+          const newMap = new Map(m);
+          keys.forEach(k => newMap.delete(k));
+          return newMap;
+        });
       },
-      has(...keys: (keyof TMap)[]) {
-        return keys.every(k => k in map);
+      has(...keys: Array<keyof ObjectType<T>>) {
+        return keys.every(k => map.has(k));
       },
       keys() {
-        return Object.keys(map) as (keyof TMap)[];
+        return Array.from(map.keys());
       },
       values() {
-        return Object.values(map) as TMap[keyof TMap][];
+        return Array.from(map.values());
       },
       entries() {
-        return Object.entries(map) as { [K in keyof T]: [K, T[K]] }[keyof T][];
+        return Array.from(map.entries());
       },
-      isEqual(obj: Record<any, any>) {
-        return deepEqual(map, obj);
+      clear() {
+        setMap(new Map());
+      },
+      isEqual(m: Map<any, any> | Record<string | number | symbol, any>) {
+        return deepEqual(map, m instanceof Map ? m : new Map(Object.entries(m)));
       },
       copy() {
         return structuredClone(map);
       },
-      reset(value: SetStateAction<TMap> = initial) {
-        setMap(value);
+      reset(value: ObjectType<T> | SetStateAction<ObjectToMap<T>> = initial) {
+        const isObject = typeof value === 'object' && !(value instanceof Map);
+        setMap(isObject ? new Map(Object.entries(value)) : (value as any));
       },
-      toJSON(spaces?: number) {
-        return JSON.stringify(map, null, spaces);
+      toObject() {
+        return Object.fromEntries(map) as ObjectType<T>;
+      },
+      toJSON(space?: number) {
+        return JSON.stringify(Object.fromEntries(map), null, space);
       }
     }),
     [map]

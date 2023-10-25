@@ -7,13 +7,13 @@ describe('useMap', () => {
     const obj = { key: 'value' };
     const { result } = renderHook(() => useMap(obj));
 
-    expect(result.current.value).toEqual(obj);
+    expect(result.current.toObject()).toEqual(obj);
   });
 
   it('should get and set a value by key', () => {
     const { result } = renderHook(() => useMap());
 
-    expect(result.current.value).toEqual({});
+    expect(result.current.value).toEqual(new Map());
 
     act(() => result.current.set('key', 'value'));
     expect(result.current.get('key')).toBe('value');
@@ -46,21 +46,21 @@ describe('useMap', () => {
     expect(result.current.isEqual({ key1: 'value', key2: { key12: 10, key22: 20 } })).toBe(true);
   });
 
-  it('should copy the object', () => {
+  it('should copy the map', () => {
     const obj = { key1: 'value', key2: { key12: 10, key22: 20 } };
     const { result } = renderHook(() => useMap(obj));
 
-    const copiedObj = result.current.copy();
-    expect(copiedObj).toEqual(obj);
-    expect(copiedObj).not.toBe(result.current.value);
+    const copiedMap = result.current.copy();
+    expect(copiedMap).toEqual(new Map(Object.entries(obj)));
+    expect(copiedMap).not.toBe(result.current.value);
   });
 
-  it('should reset to initial object', () => {
+  it('should reset to initial map', () => {
     const { result } = renderHook(() => useMap({ key: null as string | null }));
 
     act(() => result.current.set('key', 'new value'));
     act(() => result.current.reset());
-    expect(result.current.value).toEqual({ key: null });
+    expect(result.current.value).toEqual(new Map([['key', null]]));
   });
 
   it('should convert object to string', () => {
