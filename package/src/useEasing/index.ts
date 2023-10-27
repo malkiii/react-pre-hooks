@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useAnimationFrame } from '..';
 
 export type EasingFunction = (x: number) => number;
-
 export type EasingOption = {
   interval?: [number, number];
   easing?: EasingFunction;
@@ -11,58 +11,43 @@ export type EasingOption = {
 
 export const useEasing = (options: EasingOption) => {
   const { interval = [0, 1], easing = x => x, duration = 1000, startOnMount = false } = options;
-
   const [start, end] = interval;
+
+  const animationRef = useRef(new Animation(new KeyframeEffect(null, null, { duration })));
   const [value, setValue] = useState<number>(start);
   const [state, setState] = useState({
-    isPlaying: false,
+    isPlaying: startOnMount,
     isPaused: false,
     isFinished: false,
     isReversed: false
   });
 
-  const animationRef = useRef(new Animation(new KeyframeEffect(null, null, { duration })));
-  const frameRequestId = useRef<number>();
-
-  const handleEasing = useCallback(() => {
+  const frame = useAnimationFrame(() => {
     const progress = ((animationRef.current.currentTime as number) ?? 0) / duration;
     setValue(start + easing(progress) * (end - start));
-
-    frameRequestId.current = window.requestAnimationFrame(handleEasing);
-  }, []);
-
-  const cancelAnimationFrame = useCallback(() => {
-    if (frameRequestId.current !== undefined) window.cancelAnimationFrame(frameRequestId.current);
-    frameRequestId.current = undefined;
-  }, []);
+  });
 
   const controls = useMemo(
     () => ({
       togglePlayState(play?: boolean) {
         const shouldPlay = play ?? !state.isPlaying;
-
-        if (shouldPlay) {
-          if (!state.isPaused) animationRef.current.currentTime = 0;
-          if (frameRequestId.current === undefined)
-            frameRequestId.current = window.requestAnimationFrame(handleEasing);
-
-          animationRef.current.play();
-        } else {
-          animationRef.current.pause();
-          cancelAnimationFrame();
-        }
-
+        shouldPlay ? this.play() : this.pause();
         setState(s => ({ ...s, isPlaying: shouldPlay, isPaused: !shouldPlay, isFinished: false }));
       },
       play() {
-        this.togglePlayState(true);
+        if (!state.isPaused) animationRef.current.currentTime = 0;
+        frame.start();
+        animationRef.current.play();
+        setState(s => ({ ...s, isPlaying: true, isPaused: false, isFinished: false }));
       },
       pause() {
-        this.togglePlayState(false);
+        animationRef.current.pause();
+        frame.cancel();
+        setState(s => ({ ...s, isPlaying: false, isPaused: true }));
       },
       cancel() {
-        cancelAnimationFrame();
         animationRef.current.cancel();
+        frame.cancel();
       },
       reverse() {
         animationRef.current.reverse();
@@ -77,7 +62,7 @@ export const useEasing = (options: EasingOption) => {
     const stopEasing = (isFinished: boolean = false) => {
       if (isFinished) setValue(state.isReversed ? start : end);
       setState(s => ({ ...s, isPlaying: false, isPaused: false, isFinished }));
-      cancelAnimationFrame();
+      frame.cancel();
     };
 
     animationRef.current.oncancel = () => stopEasing();
