@@ -30,16 +30,16 @@ export const useSpeech = (options: SpeechOptions = {}) => {
       },
       togglePlayState(play?: boolean) {
         const shouldPlay = play ?? speechSynthesis.paused;
-        shouldPlay ? speechSynthesis.resume() : speechSynthesis.pause();
+        shouldPlay ? this.resume() : this.pause();
       },
-      play() {
-        this.togglePlayState(true);
+      resume() {
+        speechSynthesis.resume();
       },
       pause() {
-        this.togglePlayState(false);
+        speechSynthesis.pause();
       },
       cancel() {
-        this.play();
+        this.resume();
         speechSynthesis.cancel();
       },
       setLang(lang: SetStateAction<string | undefined>) {

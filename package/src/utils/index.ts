@@ -22,17 +22,6 @@ export function getPrefixedProperty<T extends {}, K extends keyof T & string>(ob
   if (property) return obj[property as K];
 }
 
-export function download(url: string, name = '') {
-  const a = document.createElement('a');
-  a.style.display = 'none';
-  a.href = url;
-  a.download = name;
-
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-}
-
 export function addEvents<T extends EventTarget, E extends keyof EventMap<T> & string>(
   event: E | Array<E | false | null | undefined>,
   handler: EventHandler<T, E>,

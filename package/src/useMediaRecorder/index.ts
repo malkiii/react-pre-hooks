@@ -1,30 +1,25 @@
 import { useMemo, useRef, useState } from 'react';
-import { download } from '../utils';
 
 export type RecorderDownloadOptions = {
-  download?: string;
   type?:
     | `video/${'mp4' | 'mpeg' | 'webm' | 'ogg'}`
     | `audio/${'mpeg' | 'wav' | 'webm' | 'ogg'}`
     | (string & {});
 };
 
-export const useMediaRecorder = (stream: MediaStream) => {
+export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
   const recorderRef = useRef<MediaRecorder>();
   const recorderBlobParts = useRef<BlobPart[]>([]);
   const [recorderState, setRecorderState] = useState<RecordingState>('inactive');
 
-  const recorder = useMemo(
-    () => ({
-      isActive: recorderState !== 'inactive',
-      isRecording: recorderState == 'recording',
-      isPaused: recorderState == 'paused',
-      start(timeslice?: number) {
-        if (recorderState !== 'inactive') return;
+  const [error, setError] = useState<unknown>();
 
-        recorderRef.current = new MediaRecorder(stream, {
-          mimeType: 'video/webm;codecs=vp9,opus'
-        });
+  const controls = useMemo(
+    () => ({
+      start(stream: MediaStream, timeslice?: number) {
+        if (recorderRef.current?.state !== 'inactive') return;
+
+        recorderRef.current = new MediaRecorder(stream, options);
         recorderRef.current.ondataavailable = event => {
           if (event.data.size > 0) recorderBlobParts.current.push(event.data);
         };
@@ -38,11 +33,11 @@ export const useMediaRecorder = (stream: MediaStream) => {
         try {
           recorderRef.current.start(timeslice);
         } catch (error) {
-          console.error(error);
+          setError(error);
         }
       },
       async stop(options: RecorderDownloadOptions = {}) {
-        if (recorderState == 'inactive') return;
+        if (recorderRef.current?.state == 'inactive') return;
         recorderRef.current?.resume();
         recorderRef.current?.stop();
 
@@ -51,27 +46,30 @@ export const useMediaRecorder = (stream: MediaStream) => {
           setTimeout(() => resolve(new Blob(recorderBlobParts.current, { type })), 0);
         });
 
-        const videoURL = URL.createObjectURL(blob);
         recorderBlobParts.current = [];
 
-        if (options.download) download(videoURL, options.download);
-
-        return videoURL;
+        return blob;
       },
       togglePlayState(play?: boolean) {
-        if (recorderState == 'inactive') return;
-        const shouldPlay = play ?? recorderState == 'paused';
-        shouldPlay ? recorderRef.current?.resume() : recorderRef.current?.pause();
+        if (recorderRef.current?.state == 'inactive') return;
+        const shouldPlay = play ?? recorderRef.current?.state == 'paused';
+        shouldPlay ? this.resume() : this.pause();
       },
       pause() {
-        this.togglePlayState(false);
+        recorderRef.current?.pause();
       },
       resume() {
-        this.togglePlayState(true);
+        recorderRef.current?.resume();
       }
     }),
-    [recorderRef, recorderState]
+    [recorderRef]
   );
 
-  return recorder;
+  return {
+    ...controls,
+    isActive: recorderState !== 'inactive',
+    isRecording: recorderState == 'recording',
+    isPaused: recorderState == 'paused',
+    error
+  };
 };

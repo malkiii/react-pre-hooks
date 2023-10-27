@@ -24,9 +24,7 @@ export const useSize = <T extends HTMLElement = HTMLDivElement>(
 
     resizeObserver.observe(target, options);
 
-    return () => {
-      resizeObserver.disconnect();
-    };
+    return () => resizeObserver.disconnect();
   }, [options.ref]);
 
   return { ref: targetRef, ...size };

@@ -10,11 +10,9 @@ export const useColorScheme = () => {
     };
 
     handleChange(mediaQueryList);
-    mediaQueryList.addEventListener('change', handleChange);
 
-    return () => {
-      mediaQueryList.removeEventListener('change', handleChange);
-    };
+    mediaQueryList.addEventListener('change', handleChange);
+    return () => mediaQueryList.removeEventListener('change', handleChange);
   }, []);
 
   return colorScheme;

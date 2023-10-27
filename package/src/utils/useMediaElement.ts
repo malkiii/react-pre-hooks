@@ -41,26 +41,28 @@ export const useMediaElement = <T extends MediaElementType | undefined = undefin
     const mediaElement = ref.current;
     return {
       togglePlayState(play?: boolean) {
-        if (!mediaElement) return;
         const shouldPlay = play ?? !state.isPlaying;
-        shouldPlay ? mediaElement.play() : mediaElement.pause();
+        shouldPlay ? this.play() : this.pause();
       },
       play() {
-        this.togglePlayState(true);
+        mediaElement?.play();
       },
       pause() {
-        this.togglePlayState(false);
+        mediaElement?.pause();
       },
       toggleMute(force?: boolean) {
-        if (!mediaElement) return;
-        mediaElement.muted = force ?? !state.isMuted;
-        setState(state => ({ ...state, isMuted: mediaElement.muted }));
+        const shouldMute = force ?? !state.isMuted;
+        shouldMute ? this.mute() : this.unmute();
       },
       mute() {
-        this.toggleMute(true);
+        if (!mediaElement) return;
+        mediaElement.muted = true;
+        setState(state => ({ ...state, isMuted: true }));
       },
       unmute() {
-        this.toggleMute(false);
+        if (!mediaElement) return;
+        mediaElement.muted = false;
+        setState(state => ({ ...state, isMuted: false }));
       },
       setTime(time: SetStateAction<number>) {
         if (!mediaElement) return;
