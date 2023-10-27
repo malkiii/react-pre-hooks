@@ -9,7 +9,7 @@ type FileData<T extends FileDataType | undefined> = T extends undefined
 
 export type FileDataType = 'array-buffer' | 'binary-string' | 'url' | 'text';
 
-export type DropzoneError<F extends FileDataType | undefined = undefined> = {
+export type DropAreaError<F extends FileDataType | undefined = undefined> = {
   type?: 'extention' | 'size' | (string & {});
   file: DroppedFile<F>;
 };
@@ -21,7 +21,7 @@ export type DroppedFile<T extends FileDataType | undefined> = {
   data: FileData<T> | null;
 };
 
-export type DropzoneOptions<
+export type DropAreaOptions<
   T extends HTMLElement = HTMLDivElement,
   F extends FileDataType | undefined = undefined
 > = {
@@ -48,18 +48,18 @@ const getFileInputElement = (label: HTMLElement): HTMLInputElement | null => {
   return label.querySelector('input[type="file"]') as any;
 };
 
-export const useFileDropzone = <
+export const useFileDropArea = <
   T extends HTMLElement = HTMLDivElement,
   F extends FileDataType | undefined = undefined
 >(
-  options: DropzoneOptions<T, F> = {}
+  options: DropAreaOptions<T, F> = {}
 ) => {
   const { ref, multiple = false, readAs, onUpload } = options;
 
   const targetRef = ref ?? useRef<T>(null);
   const [files, setFiles] = useState<DroppedFile<F>[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<DropzoneError<F>>();
+  const [error, setError] = useState<DropAreaError<F>>();
 
   const isValidFiles = useCallback(
     (files: DroppedFile<F>[]) => {
@@ -150,9 +150,7 @@ export const useFileDropzone = <
     fileInput.multiple = !!options.multiple;
     fileInput.addEventListener('change', handleInputChange);
 
-    return () => {
-      fileInput?.removeEventListener('change', handleInputChange);
-    };
+    return () => fileInput?.removeEventListener('change', handleInputChange);
   }, [ref, options]);
 
   const handleFileDrop = async (event: DragEvent) => {
