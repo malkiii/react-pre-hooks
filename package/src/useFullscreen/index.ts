@@ -40,15 +40,13 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
 
         setIsEnabled(false);
       },
-      toggle(enable?: boolean) {
-        setIsEnabled(curr => {
-          const shouldEnable = enable ?? !curr;
-          shouldEnable ? this.enter() : this.exit();
-          return shouldEnable;
-        });
+      async toggle(enable?: boolean) {
+        const shouldEnable = enable ?? !isEnabled;
+        shouldEnable ? await this.enter() : await this.exit();
+        setIsEnabled(shouldEnable);
       }
     }),
-    []
+    [isEnabled]
   );
 
   const handleFullScreenChange = useCallback(() => {
