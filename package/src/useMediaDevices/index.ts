@@ -14,7 +14,7 @@ export type StreamOptions = {
   autoStart?: boolean;
 };
 
-export const useRTC = (options: StreamOptions = {}) => {
+export const useMediaDevices = (options: StreamOptions = {}) => {
   const ref = useRef<HTMLVideoElement>(null);
   const { autoStart = true, video = false, audio = false } = options;
 
