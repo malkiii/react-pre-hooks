@@ -1,6 +1,8 @@
-import { SetStateAction, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { RefObject, SetStateAction } from 'react';
 import { getStateActionValue } from '../utils';
 
+export type MediaDeviceType = 'video' | 'audio';
 export type MediaDeviceState = {
   devices: MediaDeviceInfo[];
   current?: MediaDeviceInfo;
@@ -8,205 +10,160 @@ export type MediaDeviceState = {
   hasPermission: boolean;
 };
 
-export type StreamOptions = {
-  video?: boolean | (MediaTrackConstraints & { display?: boolean });
-  audio?: boolean | MediaTrackConstraints;
-  autoStart?: boolean;
+export type MediaDevicesOptions = MediaStreamConstraints & {
+  ref?: RefObject<HTMLVideoElement> | null;
+  startOnMount?: boolean;
 };
 
-export const useMediaDevices = (options: StreamOptions = {}) => {
-  const ref = useRef<HTMLVideoElement>(null);
-  const { autoStart = true, video = false, audio = false } = options;
-
-  const videoConstraints = typeof video == 'boolean' ? {} : video;
-  const audioConstraints = typeof audio == 'boolean' ? {} : audio;
+export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
+  const { ref, startOnMount = true, ...constraints } = options;
+  const videoRef = ref ?? useRef<HTMLVideoElement>(null);
 
   const streamRef = useRef<MediaStream>(new MediaStream());
-  const [canStart, setCanStart] = useState<boolean>(autoStart);
+  const [isStarted, setIsStarted] = useState<boolean>(false);
 
-  const [camera, setCamera] = useState<MediaDeviceState>({
+  const [videoState, setVideoState] = useState<MediaDeviceState>({
     devices: [],
-    isEnabled: !!video,
+    isEnabled: !!constraints.video,
     hasPermission: false
   });
 
-  const [microphone, setMicrophone] = useState<MediaDeviceState>({
+  const [audioState, setAudioState] = useState<MediaDeviceState>({
     devices: [],
-    isEnabled: !!audio,
+    isEnabled: !!constraints.audio,
     hasPermission: false
   });
 
   const initializeStream = useCallback(() => {
-    if (!ref.current) return;
+    if (!videoRef.current) return;
     if (!streamRef.current.getTracks().length) return;
 
-    ref.current.muted = true;
-    ref.current.controls = false;
-    ref.current.autoplay = true;
-    ref.current.srcObject = streamRef.current;
+    videoRef.current.muted = true;
+    videoRef.current.autoplay = true;
+    videoRef.current.controls = false;
+    videoRef.current.srcObject = streamRef.current;
   }, [ref]);
 
-  const videoDevice = useMemo(
-    () => ({
-      ...camera,
-      use(value?: SetStateAction<MediaDeviceInfo | undefined>) {
-        setCamera(c => {
-          const device = getStateActionValue(value, c.current);
-          if (device && device.kind !== 'videoinput') return c;
-          return { ...c, current: device };
-        });
-      },
-      enable(force: SetStateAction<boolean> = true) {
-        setCamera(c => {
-          const resolvedValue = getStateActionValue(force, c.isEnabled);
-          streamRef.current.getVideoTracks()[0].enabled = resolvedValue;
-          return { ...c, isEnabled: resolvedValue };
-        });
-      }
-    }),
-    [camera]
-  );
-
-  const audioDevice = useMemo(
-    () => ({
-      ...microphone,
-      use(value?: SetStateAction<MediaDeviceInfo | undefined>) {
-        setMicrophone(m => {
-          const device = getStateActionValue(value, m.current);
-          if (device && device.kind !== 'audioinput') return m;
-          return { ...m, current: device };
-        });
-      },
-      enable(force: SetStateAction<boolean> = true) {
-        setMicrophone(m => {
-          const resolvedValue = getStateActionValue(force, m.isEnabled);
-          streamRef.current.getAudioTracks()[0].enabled = resolvedValue;
-          return { ...m, isEnabled: resolvedValue };
-        });
-      }
-    }),
-    [microphone]
-  );
-
-  const startVideo = useCallback(
-    async (isDisplay?: boolean) => {
-      videoConstraints.deviceId = videoDevice.current?.deviceId;
-      try {
-        const videoStream = isDisplay
-          ? await navigator.mediaDevices.getDisplayMedia({
-              video: videoConstraints,
-              audio: true
-            })
-          : await navigator.mediaDevices.getUserMedia({
-              video: videoConstraints
-            });
-
-        if (!isDisplay && !videoDevice.devices.length) {
-          const mediaDevices = await navigator.mediaDevices.enumerateDevices();
-          const devices = mediaDevices.filter(d => d.deviceId && d.kind === 'videoinput');
-
-          setCamera(c => ({ ...c, devices, current: devices[0] }));
-
-          // stop the current video tracks so that the next stream tracks start
-          videoStream.getVideoTracks().forEach(t => t.stop());
-
-          return;
+  const getMediaDevice = useCallback(
+    (type: MediaDeviceType) => {
+      const isVideo = type === 'video';
+      const deviceState = isVideo ? videoState : audioState;
+      const setState = isVideo ? setVideoState : setAudioState;
+      return {
+        ...deviceState,
+        set(device?: MediaDeviceInfo) {
+          if (device && device.kind !== `${type}input`) return;
+          setState(state => ({ ...state, current: device }));
+        },
+        enable(force: SetStateAction<boolean> = true) {
+          setState(state => {
+            const resolvedValue = getStateActionValue(force, state.isEnabled);
+            const currentTrack = isVideo
+              ? streamRef.current.getVideoTracks().at(0)
+              : streamRef.current.getAudioTracks().at(0);
+            if (currentTrack) currentTrack.enabled = resolvedValue;
+            return { ...state, isEnabled: resolvedValue };
+          });
         }
+      };
+    },
+    [videoState, audioState]
+  );
 
-        const tracks = videoStream.getVideoTracks();
-        if (isDisplay) tracks[0].onended = () => videoDevice.enable(false);
-        else tracks[0].enabled = videoDevice.isEnabled;
-        tracks.forEach(track => (track.contentHint = isDisplay ? 'screen' : 'camera'));
+  const camera = useMemo(() => getMediaDevice('video'), [getMediaDevice]);
+  const microphone = useMemo(() => getMediaDevice('audio'), [getMediaDevice]);
 
-        streamRef.current = new MediaStream([...streamRef.current.getAudioTracks(), ...tracks]);
+  const updateMediaDevices = useCallback(
+    async (type: MediaDeviceType) => {
+      const isVideo = type === 'video';
+      const device = isVideo ? camera.current : microphone.current;
+      const setState = isVideo ? setVideoState : setAudioState;
 
-        setCamera(c => ({ ...c, hasPermission: true }));
+      const mediaDevices = await navigator.mediaDevices.enumerateDevices();
+      const devices = mediaDevices.filter(d => d.deviceId && d.kind === `${type}}input`);
+
+      setState(state => ({
+        ...state,
+        devices,
+        current: device && devices.includes(device) ? device : devices[0]
+      }));
+    },
+    [camera.current, microphone.current]
+  );
+
+  const initMediaDevice = useCallback(
+    async (type: MediaDeviceType) => {
+      const isVideo = type === 'video';
+      const device = isVideo ? camera : microphone;
+      const setState = isVideo ? setVideoState : setAudioState;
+      const tracksGetterName = isVideo ? 'getVideoTracks' : 'getAudioTracks';
+
+      // stop the current stream tracks so that the next tracks will start
+      streamRef.current[tracksGetterName]().forEach(t => t.stop());
+
+      const excluded = isVideo ? 'audio' : 'video';
+      const { [type]: trackConstraints, [excluded]: _, ...otherProps } = constraints;
+
+      const mediaConstraints =
+        typeof trackConstraints === 'object'
+          ? trackConstraints
+          : { deviceId: device.current?.deviceId };
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          [type]: mediaConstraints,
+          ...otherProps
+        });
+
+        if (!device.devices.length) await updateMediaDevices(type);
+
+        const tracks = stream[tracksGetterName]();
+        const otherTracks = streamRef.current.getTracks().filter(t => t.kind === type);
+        tracks[0].enabled = videoState.isEnabled;
+        tracks[0].onmute = () => microphone.enable(false);
+        tracks[0].onunmute = () => microphone.enable(true);
+
+        streamRef.current = new MediaStream([...tracks, ...otherTracks]);
+        setState(state => ({ ...state, hasPermission: true }));
         initializeStream();
+
+        return true;
       } catch (error) {
         console.error(error);
-        setCamera(c => ({ ...c, hasPermission: false }));
+        setState(state => ({ ...state, hasPermission: false }));
+
+        return false;
       }
     },
-    [videoDevice]
+    [camera, microphone]
   );
 
-  const startAudio = useCallback(async () => {
-    audioConstraints.deviceId = audioDevice.current?.deviceId;
-    try {
-      const audioStream = await navigator.mediaDevices.getUserMedia({
-        audio: audioConstraints
-      });
+  const start = useCallback(async () => {
+    const { video, audio } = constraints;
+    const cameraIsStarted = !!video && (await initMediaDevice('video'));
+    const microphoneIsStarted = !!audio && (await initMediaDevice('audio'));
+    setIsStarted(cameraIsStarted || microphoneIsStarted);
 
-      if (!audioDevice.devices.length) {
-        const mediaDevices = await navigator.mediaDevices.enumerateDevices();
-        const devices = mediaDevices.filter(d => d.deviceId && d.kind === 'audioinput');
+    return cameraIsStarted || microphoneIsStarted;
+  }, []);
 
-        setMicrophone(m => ({ ...m, devices, current: devices[0] }));
-        audioStream.getAudioTracks().forEach(t => t.stop());
+  const stop = useCallback(() => {
+    if (videoRef.current) videoRef.current.srcObject = null;
+    streamRef.current.getTracks().forEach(t => t.stop());
+    setIsStarted(false);
+  }, []);
 
-        return;
-      }
-
-      const tracks = audioStream.getAudioTracks();
-      tracks[0].enabled = audioDevice.isEnabled;
-      tracks[0].onmute = () => audioDevice.enable(false);
-      tracks[0].onunmute = () => audioDevice.enable(true);
-      tracks.forEach(track => (track.contentHint = 'microphone'));
-
-      const currentTracks = streamRef.current
-        .getTracks()
-        .filter(t => t.contentHint !== 'microphone');
-
-      streamRef.current = new MediaStream([...currentTracks, ...tracks]);
-
-      setMicrophone(c => ({ ...c, hasPermission: true }));
-      initializeStream();
-    } catch (error) {
-      console.error(error);
-      setMicrophone(c => ({ ...c, hasPermission: false }));
-    }
-  }, [audioDevice]);
-
-  // start the video
-  useLayoutEffect(() => {
-    if (videoConstraints.display) return;
-    streamRef.current.getVideoTracks().forEach(t => t.stop());
-    if (!canStart || !video) return;
-
-    startVideo();
-  }, [videoDevice.current, canStart]);
-
-  // start the screen-capture
-  useLayoutEffect(() => {
-    if (!videoConstraints.display) return;
-    streamRef.current.getVideoTracks().forEach(t => t.stop());
-    if (!canStart || !camera.isEnabled) return;
-
-    startVideo(true);
-  }, [videoDevice.isEnabled, canStart]);
-
-  // start the audio
-  useLayoutEffect(() => {
-    streamRef.current
-      .getAudioTracks()
-      .filter(t => t.contentHint === 'microphone')
-      .forEach(t => t.stop());
-    if (!canStart || !audio) return;
-
-    startAudio();
-  }, [audioDevice.current, canStart]);
+  useEffect(() => {
+    if (startOnMount) start();
+  }, []);
 
   return {
-    ref,
+    ref: videoRef,
     stream: streamRef,
-    video: videoDevice,
-    audio: audioDevice,
-    start() {
-      setCanStart(true);
-    },
-    stop() {
-      if (ref.current) ref.current.srcObject = null;
-      setCanStart(false);
-    }
+    camera,
+    microphone,
+    isStarted,
+    start,
+    stop
   };
 };
