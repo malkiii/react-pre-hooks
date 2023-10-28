@@ -1,8 +1,8 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { addEvents } from '../utils';
 
-export type ScrollThresholdOptions<T extends HTMLElement> = {
-  ref?: RefObject<T> | null;
+export type ScrollThresholdHandler = (event?: Event) => boolean | undefined | null;
+export type ScrollThresholdOffset = {
   top?: number;
   bottom?: number;
   left?: number;
@@ -10,29 +10,33 @@ export type ScrollThresholdOptions<T extends HTMLElement> = {
 };
 
 export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(
-  options: ScrollThresholdOptions<T> = {}
+  thresholdHandler: ScrollThresholdOffset | ScrollThresholdHandler,
+  ref?: RefObject<T> | null
 ) => {
-  const { ref, ...offset } = options;
-
   const targetRef = ref ?? useRef<T>(null);
   const [passed, setPassed] = useState<boolean>(false);
 
-  const handleScrolling = useCallback(() => {
-    const x = targetRef.current?.scrollLeft ?? window.scrollX;
-    const y = targetRef.current?.scrollTop ?? window.scrollY;
+  const handleScrolling = useCallback(
+    (event?: Event) => {
+      if (thresholdHandler instanceof Function) return setPassed(!!thresholdHandler(event));
 
-    const target = targetRef.current ?? document.body;
-    const { top = 0, bottom = 3, left = 0, right = 3 } = offset;
-    const { clientWidth, clientHeight, scrollWidth, scrollHeight } = target;
+      const x = targetRef.current?.scrollLeft ?? window.scrollX;
+      const y = targetRef.current?.scrollTop ?? window.scrollY;
 
-    const passedLeft = x >= left;
-    const passedRight = x + clientWidth >= scrollWidth - right;
+      const target = targetRef.current ?? document.body;
+      const { top = 0, bottom = 3, left = 0, right = 3 } = thresholdHandler;
+      const { clientWidth, clientHeight, scrollWidth, scrollHeight } = target;
 
-    const passedTop = y >= top;
-    const passedBottom = y + clientHeight >= scrollHeight - bottom;
+      const passedLeft = x >= left;
+      const passedRight = x + clientWidth >= scrollWidth - right;
 
-    setPassed(passedLeft && passedRight && passedTop && passedBottom);
-  }, []);
+      const passedTop = y >= top;
+      const passedBottom = y + clientHeight >= scrollHeight - bottom;
+
+      setPassed(passedLeft && passedRight && passedTop && passedBottom);
+    },
+    [thresholdHandler]
+  );
 
   useEffect(() => {
     handleScrolling();
