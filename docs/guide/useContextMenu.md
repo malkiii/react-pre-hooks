@@ -4,17 +4,29 @@ Handle the user right clicks on a target element with this hook.
 
 ## Parameters
 
-a `target` element (default is `window`).
+- a `target` element (default is `window`).
 
 ## Return Values
 
 | Name        | Type      | Description                                                                                          |
 | ----------- | --------- | ---------------------------------------------------------------------------------------------------- |
 | **ref**     | RefObject | the target element reference.                                                                        |
-| **offsetX** | Number    | the `x` position of the mouse.                                                                       |
-| **offsetY** | Number    | the `y` position of the mouse.                                                                       |
+| **clientX** | Number    | the `x` position of the mouse.                                                                       |
+| **clientY** | Number    | the `y` position of the mouse.                                                                       |
 | **canShow** | Boolean   | determins whether you should show or hide the menu.                                                  |
 | **toggle**  | Function  | toggle between show and hide. you can force it using a boolean as the parameter like `toggle(true)`. |
+
+::: tip
+If you want to **cancel** the context menu, just use [stopPropagation](https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation) method of the mouse event:
+
+```ts
+const handleRightClick = (event) => {
+  event.stopPropagation();
+  ...
+}
+```
+
+:::
 
 ## Example Usage
 
@@ -22,12 +34,12 @@ a `target` element (default is `window`).
 import { useContextMenu } from 'realtime-hooks';
 
 export default function Example() {
-  const { ref, canShow, offsetX, offsetY } = useContextMenu();
+  const { ref, canShow, clientX, clientY } = useContextMenu();
 
   return (
     <div ref={ref}>
       {canShow && (
-        <ul style={{ top: offsetY, left: offsetX }}>
+        <ul style={{ left: clientX, top: clientY }}>
           <li>Item 1.</li>
           <li>Item 2.</li>
           <li>Item 3.</li>

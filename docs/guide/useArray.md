@@ -2,6 +2,10 @@
 
 This hook returns an array with with some common and useful array methods making the code minimal and maintainable.
 
+## Parameters
+
+- the initial array (default is `[]`).
+
 ## Props And Methods
 
 ### `values` and `length`

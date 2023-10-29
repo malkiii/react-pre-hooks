@@ -2,7 +2,10 @@
 
 Use a simple counter with `min` and `max` values, and some methods to minimalize the component.
 
-## Options
+## Parameters
+
+1. the initial counter value (default is `0`).
+2. and some counter options:
 
 | Name    | Type   | Description    |
 | ------- | ------ | -------------- |

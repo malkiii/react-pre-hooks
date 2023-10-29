@@ -28,7 +28,7 @@ This hook uses a text speaker with available voices as well as its state and con
 | **isEnded**         | Boolean  | Indicates if speech synthesis has ended.                                                                    |
 | **speak**           | Function | Initiates speech synthesis with the given text.                                                             |
 | **togglePlayState** | Function | Toggles the play/pause state of speech synthesis. Optional `play` parameter can force play.                 |
-| **play**            | Function | Resumes speech synthesis if paused.                                                                         |
+| **resume**          | Function | Resumes speech synthesis if paused.                                                                         |
 | **pause**           | Function | Pauses speech synthesis if playing.                                                                         |
 | **cancel**          | Function | Cancels speech synthesis.                                                                                   |
 | **setLang**         | Function | Sets the language for speech synthesis.                                                                     |

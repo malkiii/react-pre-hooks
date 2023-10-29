@@ -27,6 +27,7 @@ This hook uses a video element reference as well as its state and controller met
 | **isMuted**         | Boolean   | Indicates if the video is muted.                                                     |
 | **isWaiting**       | Boolean   | Indicates if the video is waiting to load.                                           |
 | **duration**        | Number    | The total duration of the video (in seconds).                                        |
+| **progress**        | Number    | The percentage of the played time.                                                   |
 | **buffered**        | Number    | The percentage of video buffered.                                                    |
 | **time**            | Number    | The current playback time (in seconds).                                              |
 | **volume**          | Number    | The current volume level (0 to 1).                                                   |

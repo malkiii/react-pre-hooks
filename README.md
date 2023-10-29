@@ -30,7 +30,8 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useEasing">useEasing</a></td><td>Change a value from <code>start</code> to <code>end</code> using an <code><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function">animation timing function</a></code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useEventListener">useEventListener</a></td><td>Add one or multiple event listeners.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFetch">useFetch</a></td><td>Fetch data using a URL and search queries...</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFileDropzone">useFileDropzone</a></td><td>Handles file dropping to a label of a file input.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFileDropzone">useFileDropArea</a></td><td>Handles file dropping to a label of a file input.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useFullscreen">useFullscreen</a></td><td>Toggle the fullscreen mode on a target element.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useGeolocation">useGeolocation</a></td><td>Track the current geo location of the client.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useHover">useHover</a></td><td>Returns a <code>hovered</code> state, and it can use a <code>delay</code> value as well.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useImageLoading">useImageLoading</a></td><td>Loads an image using its <code>URL</code> and returns the loading state and the loaded <code>image</code>.</td></tr>
@@ -39,14 +40,17 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useIsomorphicEffect">useIsomorphicEffect</a></td><td>Uses <code>useEffect</code> on the client and <code>useLayoutEffect</code> on the server.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useKeyboard">useKeyboard</a></td><td>Bind keyboard <code>keys</code> or <code>hotkeys</code> with handlers.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStorage">useLocalStorage</a></td><td>Get and Set a specific value in the local storage.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMap">useMap</a></td><td>Returns an object with common map methods such as <code>get</code>, <code>set</code>, <code>has</code>, <code>delete</code>...</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMap">useMap</a></td><td>Returns a map object with its props and methods such as <code>get</code>, <code>set</code>, <code>has</code>, <code>delete</code>...</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMediaDevices">useMediaDevices</a></td><td>Uses the user media devices (<code>camera</code> and <code>microphone</code>) and returns their states and controls as well as their stream object.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMediaRecorder">useMediaRecorder</a></td><td>Generate a recorded (video/audio) from a media <code>stream</code> object using a media recorder with its state and controller methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMount">useMount</a></td><td>Execute a callback after the component is mounted.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useMutation">useMutation</a></td><td>Handles <code>MutationObserver</code> and returns the current mutations (changes being made to the DOM tree).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useNetworkState">useNetworkState</a></td><td>Returns whether the user is online or not with some network informations.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useOientation">useOientation</a></td><td>Track the screen orientation type.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePageVisibility">usePageVisibility</a></td><td>Returns the tab visible state (the tab contents is visible or hidden).</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useWebRTC">useRTC</a></td><td>Uses the user media devices (<code>camera</code> and <code>microphone</code>) and <code>screen capture</code> and returns their states and controls as well as their stream object.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScroll">useScroll</a></td><td>Track the scroll <code>position</code> ,<code>progress</code> and <code>direction</code>.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScrollEnd">useScrollEnd</a></td><td>Execute a callback when the scrolling is close to the end with a specific <code>offset</code>.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScrollDirection">useScrollDirection</a></td><td>Detect the scroll direction of the window or a target element.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScrollPosition">useScrollPosition</a></td><td>Track the scroll <code>position</code> and <code>progress</code>.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScrollThreshold">useScrollThreshold</a></td><td>Returns a boolean state that indicates if the user has a specified scroll <code>threshold</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSelection">useSelection</a></td><td>Returns the current selected text as well as the target element and its rectangle...</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useStorage">useSessionStorage</a></td><td>Get and Set a specific value in the session storage.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useSet">useSet</a></td><td>Returns a set with common set methods.</td></tr>
@@ -61,7 +65,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useUnmount">useUnmount</a></td><td>Execute a callback before the component is unmounted.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useUpdateEffect">useUpdateEffect</a></td><td>Ignore the first render of the component.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useVideo">useVideo</a></td><td>Returns a video <code>ref</code> as well as its state and controller methods.</td></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useViewport">useViewport</a></td><td>Track the screen <code>viewport</code> (width and height) and <code>orientation</code>.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useViewport">useViewport</a></td><td>Track the screen <code>viewport</code> (width and height).</td></tr>
 </table>
 
 ## Contributing

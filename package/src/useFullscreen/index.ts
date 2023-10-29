@@ -9,33 +9,36 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
 ) => {
   const targetRef = ref ?? useRef<T>(null);
   const [isEnabled, setIsEnabled] = useState(false);
+  const [error, setError] = useState<unknown>();
 
   const methods = useMemo(
     () => ({
       async enter(options: FullscreenOptions = {}) {
-        if (!targetRef.current) return;
+        if (!targetRef.current || isEnabled) return;
 
         const requestFullscreen = getPrefixedProperty(targetRef.current, 'requestFullscreen');
         if (!requestFullscreen) return;
+        setError(undefined);
 
         try {
           await requestFullscreen(options);
         } catch (error) {
-          console.error(error);
+          setError(error);
         }
 
         setIsEnabled(true);
       },
       async exit() {
-        if (!targetRef.current) return;
+        if (!targetRef.current || !isEnabled) return;
 
         const exitFullscreen = getPrefixedProperty(document, 'exitFullscreen');
         if (!exitFullscreen) return;
+        setError(undefined);
 
         try {
           await exitFullscreen();
         } catch (error) {
-          console.error(error);
+          setError(error);
         }
 
         setIsEnabled(false);
@@ -56,5 +59,5 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
 
   useEventListener(fullscreenEvents, handleFullScreenChange, { ref: document });
 
-  return { ref: targetRef, ...methods, isEnabled };
+  return { ref: targetRef, ...methods, isEnabled, error };
 };

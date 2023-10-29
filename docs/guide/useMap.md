@@ -1,6 +1,10 @@
 # useMap
 
-This hook returns an object with with some common and useful map methods making the code minimal and maintainable.
+This hook returns a map object with with its props and methods to make the code minimal and maintainable.
+
+## Parameters
+
+- the initial map object value (default is `{}`).
 
 ## Props And Methods
 
@@ -11,7 +15,7 @@ This hook returns an object with with some common and useful map methods making 
 ```ts
 const map = useMap({ a: 1, b: 2 });
 
-map.value; // { a: 1, b: 2 }
+map.value; // Map { a: 1, b: 2 }
 map.size; // 2
 ```
 
@@ -67,6 +71,17 @@ map.values(); // [1, 'world', 0]
 map.entries(); // [['id', 1], ['name', 'world'], ['age', 0]]
 ```
 
+### `clear()`
+
+Clear the entire map:
+
+```ts
+const map = useMap({ a: 1, b: 2 });
+
+map.clear();
+// map -> {}
+```
+
 ### `isEqual()`
 
 Check if an map is **deeply equal** to the current map:
@@ -105,6 +120,16 @@ map.reset(prev => ({ ...prev, name: 'any' }));
 
 map.reset();
 // map -> { value: 'something' }
+```
+
+### `toObject()`
+
+Returns an object value from the map value:
+
+```ts
+const map = useMap({ name: 'unknown' });
+
+map.toObject(); // { name: 'unknown' }
 ```
 
 ### `toJSON()`

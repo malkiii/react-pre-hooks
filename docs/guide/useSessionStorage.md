@@ -4,10 +4,8 @@ Get and Set a specific value in the [session storage](https://developer.mozilla.
 
 ## Parameters
 
-| Name        | Type   | Description                                       |
-| ----------- | ------ | ------------------------------------------------- |
-| **key**     | String | the session storage key.                          |
-| **initial** | Any    | the initial value of the key (default is `null`). |
+1. the session storage key.
+2. the initial value of the key (default is `null`).
 
 ## Return Values
 

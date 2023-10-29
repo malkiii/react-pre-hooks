@@ -2,7 +2,9 @@
 
 Bind any keyboard **`keys`** or **`hotkeys`** with handlers in a very simple way.
 
-## Keys Record
+## Parameters
+
+1. the keys record:
 
 This hook bind the keys using an object format where the keys or hotkeys (separated with a `separator` if you use multiple keys with one handler) as the object keys, and the [`KeyboardEvent`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent) handlers as the values.
 
@@ -33,12 +35,12 @@ You can use any string case you want for the keys, for example:
 `ctrl+f`, `Ctrl + F`, and `ctrl + F` are the same.
 :::
 
-## Options
+2. and some options
 
-| Name           | Type   | Description                                                                                                   |
-| -------------- | ------ | ------------------------------------------------------------------------------------------------------------- |
-| **separator**  | String | the string separator between the keys in one handler (default is `\|`).                                       |
-| **...options** | Object | the event listener [options](./useEventListener.md#parameters), and the target element (default is `window`). |
+| Name          | Type      | Description                                                             |
+| ------------- | --------- | ----------------------------------------------------------------------- |
+| **ref**       | RefObject | the target element reference.                                           |
+| **separator** | String    | the string separator between the keys in one handler (default is `\|`). |
 
 ## Return Values
 

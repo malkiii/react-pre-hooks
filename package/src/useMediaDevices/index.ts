@@ -21,6 +21,7 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
 
   const streamRef = useRef<MediaStream>(new MediaStream());
   const [isStarted, setIsStarted] = useState<boolean>(false);
+  const [error, setError] = useState<unknown>();
 
   const [videoState, setVideoState] = useState<MediaDeviceState>({
     devices: [],
@@ -101,6 +102,7 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
       // stop the current stream tracks so that the next tracks will start
       streamRef.current[tracksGetterName]().forEach(t => t.stop());
 
+      setError(undefined);
       const excluded = isVideo ? 'audio' : 'video';
       const { [type]: trackConstraints, [excluded]: _, ...otherProps } = constraints;
 
@@ -119,9 +121,12 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
 
         const tracks = stream[tracksGetterName]();
         const otherTracks = streamRef.current.getTracks().filter(t => t.kind === type);
-        tracks[0].enabled = videoState.isEnabled;
-        tracks[0].onmute = () => microphone.enable(false);
-        tracks[0].onunmute = () => microphone.enable(true);
+        if (tracks[0]) {
+          tracks[0].enabled = videoState.isEnabled;
+          tracks[0].onmute = () => device.enable(false);
+          tracks[0].onended = () => device.enable(false);
+          tracks[0].onunmute = () => device.enable(true);
+        }
 
         streamRef.current = new MediaStream([...tracks, ...otherTracks]);
         setState(state => ({ ...state, hasPermission: true }));
@@ -129,7 +134,7 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
 
         return true;
       } catch (error) {
-        console.error(error);
+        setError(error);
         setState(state => ({ ...state, hasPermission: false }));
 
         return false;
@@ -155,6 +160,13 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
 
   useEffect(() => {
     if (startOnMount) start();
+
+    const handleDeviceChange = () => {
+      if (constraints.video) updateMediaDevices('video');
+      if (constraints.audio) updateMediaDevices('audio');
+    };
+    navigator.mediaDevices.addEventListener('devicechange', handleDeviceChange);
+    return () => navigator.mediaDevices.removeEventListener('devicechange', handleDeviceChange);
   }, []);
 
   return {
@@ -164,6 +176,7 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
     microphone,
     isStarted,
     start,
-    stop
+    stop,
+    error
   };
 };

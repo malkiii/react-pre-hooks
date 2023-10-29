@@ -4,7 +4,7 @@ This hook returns the current selected text on the window or a specific element,
 
 ## Parameters
 
-a `ref` object of the target element (default is `document`).
+- the `ref` object of the target element (default is `document`).
 
 ::: warning
 **Do not** use `window` as the target element, it will only work with HTML elements.
@@ -12,13 +12,12 @@ a `ref` object of the target element (default is `document`).
 
 ## Return Values
 
-| Name            | Type      | Description                                                                                |
-| --------------- | --------- | ------------------------------------------------------------------------------------------ |
-| **ref**         | RefObject | the target element reference.                                                              |
-| **text**        | String    | the selection text or `null`.                                                              |
-| **rect**        | Object    | the selection rectangle (`top`, `left`, `width`...).                                       |
-| **isSelecting** | Boolean   | whether the user is selecting or not.                                                      |
-| **value**       | Selection | the actual [Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection) object. |
+| Name            | Type      | Description                                          |
+| --------------- | --------- | ---------------------------------------------------- |
+| **ref**         | RefObject | the target element reference.                        |
+| **text**        | String    | the selection text or `null`.                        |
+| **rect**        | Object    | the selection rectangle (`top`, `left`, `width`...). |
+| **isSelecting** | Boolean   | whether the user is selecting or not.                |
 
 ## Example Usage
 
@@ -32,9 +31,9 @@ export default function Example() {
   return (
     <main>
       {!isSelecting && text && (
-        <div style={{ top: rect.top + 'px', left: rect.left + rect.width / 2 }}>
+        <span style={{ top: rect.top + 'px', left: rect.left + rect.width / 2 }}>
           Quote this!
-        </div>
+        </span>
       )}
       <article>
         <h1>Select anything.</h1>

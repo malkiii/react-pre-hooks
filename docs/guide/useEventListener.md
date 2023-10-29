@@ -4,11 +4,9 @@ Add one or multiple event listeners to a specific target element, `window`, or `
 
 ## Parameters
 
-| Name         | Type            | Description                                                                                                                                                                                                                                   |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **event(s)** | String or Array | the specified event(s).                                                                                                                                                                                                                       |
-| **handler**  | Function        | the event(s) handler.                                                                                                                                                                                                                         |
-| **options**  | Object          | specify the `ref` object that can be an **element** or a **ref** object element that has `addEventListener`, as well as the [addEventListener options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options) |
+1. the specified event(s).
+2. the event(s) handler.
+3. the [addEventListener options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options), as well as the `ref` object that can be an **element** or a **ref** object element that has `addEventListener` method.
 
 ::: warning
 You must always specify a `ref` object otherwise it will not work.

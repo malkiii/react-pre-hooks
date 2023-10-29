@@ -2,7 +2,10 @@
 
 This hook stores a specific number of the previous state values and uses a **pointer** to switch between them.
 
-## Options
+## Parameters
+
+1. the initial state value.
+2. and some history options:
 
 | Name      | Type   | Description                                                                |
 | --------- | ------ | -------------------------------------------------------------------------- |

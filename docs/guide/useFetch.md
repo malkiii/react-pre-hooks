@@ -1,6 +1,6 @@
 # useFetch
 
-Fetch data with a URL and search parameters using [useAsync](./useAsync) hook, and you can also specify a **timeout** for the fetch requeste.
+Fetch data with a URL and search parameters using [useAsync](./useAsync) hook.
 
 ## Options
 
@@ -8,7 +8,6 @@ Fetch data with a URL and search parameters using [useAsync](./useAsync) hook, a
 | ----------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **url**     | String or [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) | the fetch URL.                                                                                    |
 | **params**  | Object                                                                    | URL search params.                                                                                |
-| **timeout** | Number                                                                    | the request time limit in `ms`.                                                                   |
 | **...init** | Object                                                                    | [request init](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options) options. |
 
 ## Return Values
@@ -16,7 +15,7 @@ Fetch data with a URL and search parameters using [useAsync](./useAsync) hook, a
 | Name          | Type     | Description                                                                                                            |
 | ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
 | **data**      | Any      | resolved data from the function.                                                                                       |
-| **isLoading** | Boolean  | the loading state.                                                                                                     |
+| **isPending** | Boolean  | the loading state.                                                                                                     |
 | **response**  | Object   | [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) object from the fetch function.                  |
 | **retry**     | Fnuction | retry executing the fetch function.                                                                                    |
 | **abort**     | Fnuction | cancel the fetch request using an [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController). |
@@ -38,7 +37,7 @@ type Data = {
 };
 
 export default function Users() {
-  const { data, isLoading, retry, error } = useFetch<Data>({
+  const { data, isPending, retry, error } = useFetch<Data>({
     url: 'https://dummyjson.com/users',
     params: { limit: 12 }
   });
@@ -46,7 +45,7 @@ export default function Users() {
   return (
     <main>
       <button onClick={retry}>Refetch</button>
-      {isLoading ? (
+      {isPending ? (
         <p>Loading...</p>
       ) : error ? (
         <p>Something went wrong!</p>

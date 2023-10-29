@@ -4,10 +4,8 @@ Use this hook to load an image in the **background** using its URL, and returns 
 
 ## Parameters
 
-| Name        | Type     | Description              |
-| ----------- | -------- | ------------------------ |
-| **url**     | String   | the image URL.           |
-| **handler** | Function | the `load` event handler |
+1. the image URL.
+2. the **load** event handler function.
 
 ## Return Values
 

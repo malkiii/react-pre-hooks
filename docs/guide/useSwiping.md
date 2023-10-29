@@ -4,10 +4,13 @@ You can handle the user **swipe** actions using this hook, and it can also handl
 
 ## Parameters
 
-| Name        | Type     | Description                                                                                                                                                                                                                                    |
-| ----------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **handler** | Function | the swipe action handler that takes the [`SwipeAction`](#swipeaction-object) object                                                                                                                                                            |
-| **options** | Object   | the swipe options includs the `mouse` property which is a **boolean** that lets you track the mouse cursor swipes, and the target element ref (default is `window`) as well as the event listener [options](./useEventListener.md#parameters). |
+1.  the swipe action handler function that takes the [SwipeAction](#swipeaction-object) object as a parameter.
+2.  the swipe options:
+
+| Name      | Type      | Description                                            |
+| --------- | --------- | ------------------------------------------------------ |
+| **ref**   | RefObject | the container element reference (default is `window`). |
+| **mosue** | Boolean   | include the mouse cursor swipes.                       |
 
 ## Return Values
 

@@ -2,7 +2,10 @@
 
 Execute a function when the user clicks outside a target element.
 
-## Options
+## Parameters
+
+1. a click event callback funtion.
+2. and some options:
 
 | Name    | Type      | Description                   |
 | ------- | --------- | ----------------------------- |

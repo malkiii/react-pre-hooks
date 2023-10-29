@@ -2,7 +2,10 @@
 
 You can use and insert some actual CSS in `object` format with this hook, and it works also with [CSS nesting](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_nesting/Using_CSS_nesting).
 
-## Options
+## Parameters
+
+1. a CSS object that contains the actual css.
+2. and some options:
 
 | Name    | Type      | Description                                                                                                                 |
 | ------- | --------- | --------------------------------------------------------------------------------------------------------------------------- |

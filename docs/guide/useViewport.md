@@ -1,14 +1,13 @@
 # useViewport
 
-Track the screen **viewport** (screen width and height) and **orientation**.
+Track the screen **viewport** (screen width and height).
 
 ## Return Values
 
-| Name            | Type   | Description                                                                                                                |
-| --------------- | ------ | -------------------------------------------------------------------------------------------------------------------------- |
-| **width**       | Number | the viewport width.                                                                                                        |
-| **height**      | Number | the viewport height.                                                                                                       |
-| **orientation** | String | the screen orientation that can be `portrait-primary`, `portrait-secondary`, `landscape-primary`, or `landscape-secondary` |
+| Name       | Type   | Description          |
+| ---------- | ------ | -------------------- |
+| **width**  | Number | the viewport width.  |
+| **height** | Number | the viewport height. |
 
 ## Example Usage
 
@@ -16,7 +15,7 @@ Track the screen **viewport** (screen width and height) and **orientation**.
 import { useViewport } from 'realtime-hooks';
 
 export default function Example() {
-  const { width, height, orientation } = useViewport();
+  const { width, height } = useViewport();
 
   return (
     <main>
@@ -24,7 +23,6 @@ export default function Example() {
       <p>
         width: {width}, height: {height}
       </p>
-      <p>the orientation is {orientation}</p>
     </main>
   );
 }

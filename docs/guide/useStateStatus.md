@@ -4,10 +4,8 @@ This hook returns the state and its current **status** using a state handler.
 
 ## Parameters
 
-| Name        | Type     | Description                                                                                       |
-| ----------- | -------- | ------------------------------------------------------------------------------------------------- |
-| **initial** | Any      | the initial value.                                                                                |
-| **handler** | Function | the handler of the current state that takes the value as the parameter and return a status value. |
+1. the initial state value.
+2. the handler of the current state that takes the value as the parameter and return a status value.
 
 ## Return Values
 

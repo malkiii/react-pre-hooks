@@ -4,10 +4,8 @@ Handles the [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/AP
 
 ## Parameters
 
-| Name        | Type     | Description                                                                                                                                                         |
-| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **handler** | Function | the `MutationObserver` [handler](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/MutationObserver#callback).                                      |
-| **options** | Object   | the `ref` object of the target element and the other [MutationObserver options](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/observe#options). |
+1. the [MutationObserver callback](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/MutationObserver#callback) function.
+2. the [MutationObserver options](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/observe#options), as well as the `ref` object of the target element.
 
 ## Return Values
 

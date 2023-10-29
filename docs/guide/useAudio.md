@@ -27,6 +27,7 @@ This hook uses an audio element reference as well as its state and controller me
 | **isMuted**         | Boolean   | Indicates if the audio is muted.                                                     |
 | **isWaiting**       | Boolean   | Indicates if the audio is waiting to load.                                           |
 | **duration**        | Number    | The total duration of the audio (in seconds).                                        |
+| **progress**        | Number    | The percentage of the played time.                                                   |
 | **buffered**        | Number    | The percentage of audio buffered.                                                    |
 | **time**            | Number    | The current playback time (in seconds).                                              |
 | **volume**          | Number    | The current volume level (0 to 1).                                                   |

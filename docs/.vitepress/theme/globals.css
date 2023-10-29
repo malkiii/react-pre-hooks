@@ -39,8 +39,8 @@ img.VPImage {
   user-select: none;
 }
 
-.custom-block.info code {
-  color: var(--vp-c-text-1);
+.custom-block code {
+  color: var(--vp-c-text-1) !important;
 }
 
 @media (min-width: 640px) {

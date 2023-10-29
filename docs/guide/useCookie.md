@@ -4,15 +4,14 @@ Get and Set a specific http [cookie](https://developer.mozilla.org/en-US/docs/We
 
 ## Parameters
 
-| Name        | Type   | Description                                                                                    |
-| ----------- | ------ | ---------------------------------------------------------------------------------------------- |
-| **name**    | String | the cookie name.                                                                               |
-| **options** | Object | the optional cookie [attributes](#cookie-attributes) with `initial` value (default is `null`). |
+It takes two parameters:
 
-### Cookie Attributes
+- the cookie name.
+- the optional cookie attributes:
 
 | Name         | Type           | Description                                                                                                         |
 | ------------ | -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **initial**  | String         | the initial cookie value (default is `null`).                                                                       |
 | **expires**  | Date or String | indicates the maximum lifetime of the cookie as an HTTP-date timestamp.                                             |
 | **maxAge**   | Number         | indicates the number of **seconds** until the cookie expires.                                                       |
 | **path**     | String         | indicates the path that must exist in the requested URL for the browser to send the Cookie header.                  |

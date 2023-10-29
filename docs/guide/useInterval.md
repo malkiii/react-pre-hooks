@@ -2,7 +2,10 @@
 
 This hook makes [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) easy to use and control with some useful methods.
 
-## Options
+## Parameters
+
+1. the `setInterval` callback function.
+2. and some options:
 
 | Name             | Type    | Description                                                                 |
 | ---------------- | ------- | --------------------------------------------------------------------------- |

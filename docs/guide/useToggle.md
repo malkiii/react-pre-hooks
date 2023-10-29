@@ -4,7 +4,7 @@ Toggles a state between an array of values.
 
 ## Parameters
 
-an **array** of any values to toggle between (default is `[false, true]`).
+- an array of given values to toggle between (default is `[false, true]`).
 
 ::: warning
 **Do not** include duplicate values in the array, otherwise, it will not work properly.

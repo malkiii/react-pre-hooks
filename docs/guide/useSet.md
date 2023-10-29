@@ -2,6 +2,10 @@
 
 This hook returns an set with with some common and useful set methods making the code minimal and maintainable.
 
+## Parameters
+
+- the initial set object (default is `{}`);
+
 ## Props And Methods
 
 ### `value` and `size`

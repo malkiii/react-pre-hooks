@@ -2,7 +2,10 @@
 
 This hook returns a state that Updates its value after a specific delay to handle fast updated values.
 
-## Options
+## Parameters
+
+1. the initial state value.
+2. and the debouce options:
 
 | Name      | Type   | Description                                                        |
 | --------- | ------ | ------------------------------------------------------------------ |

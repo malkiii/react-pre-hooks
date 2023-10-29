@@ -4,7 +4,7 @@ Track the current geolocation of the client using this hook.
 
 ## Options
 
-It takes the geolocation [position options](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition#options).
+- It takes the geolocation [position options](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition#options).
 
 ## Return Values
 

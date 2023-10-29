@@ -4,10 +4,8 @@ Get and Set a specific value in the [local storage](https://developer.mozilla.or
 
 ## Parameters
 
-| Name        | Type   | Description                                       |
-| ----------- | ------ | ------------------------------------------------- |
-| **key**     | String | the local storage key.                            |
-| **initial** | Any    | the initial value of the key (default is `null`). |
+1. the local storage key.
+2. the initial value of the key (default is `null`).
 
 ## Return Values
 

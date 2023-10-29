@@ -92,18 +92,18 @@ import { useEasing } from 'realtime-hooks';
 
 export default function Example() {
   const easing = useEasing({
-    interval: [100, 0],
+    interval: [0, 100],
     easing: easeInOutExpo,
     duration: 1500
   });
 
   return (
     <main>
+      <div style={{ left: easing.value + '%' }}></div>
       <button onClick={() => easing.togglePlayState()}>
         {easing.isPlaying ? 'pause' : 'play'}
       </button>
       <button onClick={() => easing.reverse()}>Reverse</button>
-      <div style={{ left: easing.value + '%' }}></div>
     </main>
   );
 }
