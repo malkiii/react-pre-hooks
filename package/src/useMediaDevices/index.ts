@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { RefObject, SetStateAction } from 'react';
 import { getStateActionValue } from '../utils';
+import { useNewRef } from '../utils/useNewRef';
 
 export type MediaDeviceType = 'video' | 'audio';
 export type MediaDeviceState = {
@@ -17,7 +18,7 @@ export type MediaDevicesOptions = MediaStreamConstraints & {
 
 export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
   const { ref, startOnMount = true, ...constraints } = options;
-  const videoRef = ref ?? useRef<HTMLVideoElement>(null);
+  const videoRef = useNewRef<HTMLVideoElement>(options.ref);
 
   const streamRef = useRef<MediaStream>(new MediaStream());
   const [isStarted, setIsStarted] = useState<boolean>(false);

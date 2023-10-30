@@ -1,6 +1,7 @@
 import { RefObject, useCallback, useRef } from 'react';
 import { useEventListener } from '..';
 import { getCurrentMousePosition } from '../utils';
+import { useNewRef } from '../utils/useNewRef';
 
 export type DragAction = {
   readonly state: 'start' | 'moving' | 'end';
@@ -24,7 +25,7 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
   options: DraggingOptions<T> = {}
 ) => {
   const { ref, touches = false } = options;
-  const targetRef = ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(ref);
 
   const draggedElement = useRef<EventTarget>();
   const initialPosition = useRef<{ x: number; y: number }>();

@@ -60,7 +60,7 @@ export const useTimer = (options: TimerOptions = {}) => {
             ? new Date(date.getTime() + timeout)
             : date;
 
-        nextDatetime.getTime() - initialDate.getTime() == duration && timer.stop();
+        if (nextDatetime.getTime() - initialDate.getTime() == duration) timer.stop();
 
         return nextDatetime;
       });

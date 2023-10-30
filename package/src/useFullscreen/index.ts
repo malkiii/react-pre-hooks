@@ -1,13 +1,14 @@
 import { RefObject, useCallback, useMemo, useRef, useState } from 'react';
 import { useEventListener } from '..';
 import { browserPrefixes, getPrefixedProperty } from '../utils';
+import { useNewRef } from '../utils/useNewRef';
 
 const fullscreenEvents = browserPrefixes.map(pref => pref + 'fullscreenchange') as any[];
 
 export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
   ref?: RefObject<T> | null
 ) => {
-  const targetRef = ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(ref);
   const [isEnabled, setIsEnabled] = useState(false);
   const [error, setError] = useState<unknown>();
 

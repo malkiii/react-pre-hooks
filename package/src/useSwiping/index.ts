@@ -1,6 +1,7 @@
 import { RefObject, useCallback, useRef } from 'react';
 import { useEventListener } from '..';
 import { getCurrentMousePosition } from '../utils';
+import { useNewRef } from '../utils/useNewRef';
 
 export type SwipeAction = {
   readonly state: 'start' | 'moving' | 'end';
@@ -25,7 +26,7 @@ export const useSwiping = <T extends EventTarget = Window>(
   options: SwipeOptions<T> = {}
 ) => {
   const { ref, mouse = false } = options;
-  const targetRef = ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(options.ref);
 
   const delta = useRef({ x: 0, y: 0 });
   const initialPosition = useRef<typeof delta.current>();

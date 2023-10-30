@@ -1,4 +1,5 @@
 import { CSSProperties, RefObject, SetStateAction, useCallback, useRef, useState } from 'react';
+import { useNewRef } from '../utils/useNewRef';
 
 export type TransitionProps = Omit<KeyframeAnimationOptions, 'easing'> & {
   easing: CSSProperties['transitionTimingFunction'];
@@ -18,7 +19,7 @@ export const useAnimatePresence = <T extends HTMLElement = HTMLDivElement>(
 ) => {
   const { initialMount = false, keyframes = {}, onEnter, onExit } = options;
 
-  const targetRef = options.ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(options.ref);
   const animationRef = useRef<Animation>();
   const isAnimating = useRef<boolean>(false);
   const isToggled = useRef<boolean>(initialMount);

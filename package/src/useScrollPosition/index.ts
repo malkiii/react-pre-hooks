@@ -1,10 +1,11 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { addEvents } from '../utils';
+import { useNewRef } from '../utils/useNewRef';
 
 export const useScrollPosition = <T extends HTMLElement = HTMLDivElement>(
   ref?: RefObject<T> | null
 ) => {
-  const targetRef = ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(ref);
   const [position, setPosition] = useState({ x: 0, y: 0, progressX: 0, progressY: 0 });
 
   const handleScrolling = useCallback(() => {

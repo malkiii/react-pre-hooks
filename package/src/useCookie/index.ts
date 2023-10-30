@@ -23,14 +23,14 @@ declare global {
   }
 }
 
-function getCookie(name: string): string | null {
+const getCookie = (name: string): string | null => {
   if (typeof window === 'undefined') return null;
 
   const match = document.cookie.match(new RegExp(`(?:^|;)\\s*${name}=([^;]*)`));
   return match ? decodeURIComponent(match[1]) : null;
-}
+};
 
-function setCookie(name: string, value: string, options: CookieAttributes = {}) {
+const setCookie = (name: string, value: string, options: CookieAttributes = {}) => {
   const encodedValue = encodeURIComponent(value);
 
   document.cookie = Object.keys(options).reduce((str, attr) => {
@@ -50,7 +50,7 @@ function setCookie(name: string, value: string, options: CookieAttributes = {}) 
         return str + `; ${options[attr as keyof CookieAttributes]}`;
     }
   }, `${name}=${encodedValue}`);
-}
+};
 
 export const useCookie = (
   name: string,

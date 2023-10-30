@@ -18,5 +18,5 @@ export type EventListenerOptions<T extends EventTarget> = AddEventListenerOption
 };
 
 export const useEventListener: typeof addEvents = (event, handler, options = {}): any => {
-  useEffect(() => addEvents(event, handler, options), [options.ref]);
+  useEffect(() => addEvents(event, handler, options), [handler]);
 };

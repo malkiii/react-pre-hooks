@@ -1,8 +1,9 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useEventListener } from '..';
+import { useNewRef } from '../utils/useNewRef';
 
 export const useSelection = <T extends HTMLElement = HTMLDivElement>(ref?: RefObject<T> | null) => {
-  const targetRef = ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(ref);
 
   const [text, setText] = useState<string>('');
   const [rect, setRect] = useState<DOMRect>();

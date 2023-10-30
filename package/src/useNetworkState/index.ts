@@ -28,7 +28,7 @@ const getCurrentConnectionState = (): NetworkInformation => {
 };
 
 export const useNetworkState = () => {
-  const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
+  const [isOnline, setIsOnline] = useState<boolean>(true);
   const [networkInfo, setNetworkInfo] = useState<NetworkInformation>(getCurrentConnectionState);
 
   const updateConnection = useCallback(async () => {

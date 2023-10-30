@@ -1,5 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { addEvents } from '../utils';
+import { useNewRef } from '../utils/useNewRef';
 
 export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
 
@@ -22,7 +23,7 @@ const isPressed = (keyModifier: string, event: KeyboardEvent): boolean => {
       case 'meta':
         return event.metaKey;
       default:
-        return event.key.toLowerCase() === key;
+        return event.key.toLowerCase() === key || event.code.toLowerCase() === key;
     }
   });
 };
@@ -36,7 +37,7 @@ export const useKeyboard = <T extends EventTarget = Window>(
   keysRecord: KeysRecord = {},
   options: KeyboardOptions<T> = {}
 ) => {
-  const targetRef = options.ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(options.ref);
 
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
@@ -50,9 +51,10 @@ export const useKeyboard = <T extends EventTarget = Window>(
     [keysRecord]
   );
 
-  useEffect(() => {
-    addEvents('keydown', handleKeydown, { ref: targetRef.current ?? window });
-  }, [options.ref]);
+  useEffect(
+    () => addEvents('keydown', handleKeydown, { ref: targetRef.current ?? window }),
+    [handleKeydown]
+  );
 
   return targetRef;
 };

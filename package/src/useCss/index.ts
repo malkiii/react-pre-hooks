@@ -1,5 +1,6 @@
 import { CSSProperties, RefObject, useLayoutEffect, useRef, useState } from 'react';
 import deepEqual from 'fast-deep-equal';
+import { useNewRef } from '../utils/useNewRef';
 
 export type CSSObject = { [K in string]: CSSProps };
 export type CSSProps = CSSProperties & { [K in string]?: string | number | null | CSSProps };
@@ -36,7 +37,7 @@ export const useCss = <T extends HTMLElement = HTMLDivElement>(
   css: CSSObject = {},
   options: CSSOptions<T> = {}
 ) => {
-  const rootRef = options.ref ?? useRef<T>(null);
+  const rootRef = useNewRef<T>(options.ref);
   const [currentCss, setCurrentCss] = useState<CSSObject>({});
   const styleRef = useRef<HTMLStyleElement>(document.createElement('style'));
 

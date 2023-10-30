@@ -1,5 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useEventListener } from '..';
+import { useNewRef } from '../utils/useNewRef';
 
 type FileData<T extends FileDataType | undefined> = T extends undefined
   ? File
@@ -56,7 +57,7 @@ export const useFileDropArea = <
 ) => {
   const { ref, multiple = false, readAs, onUpload } = options;
 
-  const targetRef = ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(ref);
   const [files, setFiles] = useState<DroppedFile<F>[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<DropAreaError<F>>();
@@ -81,7 +82,7 @@ export const useFileDropArea = <
         })
       );
     },
-    [options]
+    [options.validate]
   );
 
   const readFilesAs = useCallback(
@@ -106,7 +107,7 @@ export const useFileDropArea = <
         });
       });
     },
-    [options]
+    [readAs]
   );
 
   const getDropperFiles = useCallback(
@@ -153,10 +154,10 @@ export const useFileDropArea = <
     return () => fileInput?.removeEventListener('change', handleInputChange);
   }, [ref, options]);
 
-  const handleFileDrop = async (event: DragEvent) => {
+  const handleFileDrop = useCallback(async (event: DragEvent) => {
     event.preventDefault();
     await getDropperFiles(event.dataTransfer?.files);
-  };
+  }, []);
 
   const eventOptions = { ref: targetRef };
 

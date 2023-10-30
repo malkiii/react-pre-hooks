@@ -1,4 +1,5 @@
 import { RefObject, useMemo, useRef, useState } from 'react';
+import { useNewRef } from '../utils/useNewRef';
 
 export type ScreenCaptureOptions = MediaStreamConstraints & {
   ref?: RefObject<HTMLVideoElement> | null;
@@ -8,7 +9,7 @@ export const useScreenCapture = (options: ScreenCaptureOptions = {}) => {
   const { ref, ...constraints } = options;
 
   const streamRef = useRef<MediaStream>();
-  const videoRef = ref ?? useRef<HTMLVideoElement>(null);
+  const videoRef = useNewRef<HTMLVideoElement>(options.ref);
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [error, setError] = useState<unknown>();
 

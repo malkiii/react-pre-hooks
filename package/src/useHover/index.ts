@@ -1,5 +1,6 @@
 import { RefObject, useRef, useState } from 'react';
 import { useEventListener, useTimeout } from '..';
+import { useNewRef } from '../utils/useNewRef';
 
 export type HoverOptions<T extends HTMLElement> = {
   ref?: RefObject<T> | null;
@@ -7,7 +8,7 @@ export type HoverOptions<T extends HTMLElement> = {
 };
 
 export const useHover = <T extends HTMLElement = HTMLDivElement>(options: HoverOptions<T> = {}) => {
-  const targetRef = options.ref ?? useRef<T>(null);
+  const targetRef = useNewRef<T>(options.ref);
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
