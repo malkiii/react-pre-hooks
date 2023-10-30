@@ -2,13 +2,14 @@
   "root": true,
   "env": { "browser": true, "es2020": true },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint/eslint-plugin"],
+  "plugins": ["@typescript-eslint/eslint-plugin", "react-hooks"],
   "parserOptions": { "project": ["./tsconfig.json"] },
   "overrides": [
     {
-      "files": ["**/src/use*.ts"],
+      "files": ["**/src/use*/index.ts"],
       "rules": {
-        "func-style": ["error", "expression"]
+        "func-style": ["error", "expression"],
+        "react-hooks/rules-of-hooks": "error"
       }
     }
   ]
