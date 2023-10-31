@@ -83,7 +83,7 @@ export const useCookie = (
     [name]
   );
 
-  useEventListener('cookiechange', handleCookieChange, { ref: window });
+  useEventListener('cookiechange', handleCookieChange, { target: window });
 
   return [value, updateValue];
 };

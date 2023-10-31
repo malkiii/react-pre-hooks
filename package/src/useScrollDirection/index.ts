@@ -34,7 +34,7 @@ export const useScrollDirection = <T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     handleScrolling();
-    return addEvents('scroll', handleScrolling, { ref: targetRef.current ?? window });
+    return addEvents('scroll', handleScrolling, { target: targetRef.current ?? window });
   }, []);
 
   return { ref: targetRef, ...direction };

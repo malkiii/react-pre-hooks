@@ -1,4 +1,4 @@
-import { RefObject, useRef, useState } from 'react';
+import { RefObject, useCallback, useState } from 'react';
 import { useEventListener, useTimeout } from '..';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -9,7 +9,6 @@ export type HoverOptions<T extends HTMLElement> = {
 
 export const useHover = <T extends HTMLElement = HTMLDivElement>(options: HoverOptions<T> = {}) => {
   const targetRef = useNewRef<T>(options.ref);
-
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const delay =
@@ -20,18 +19,18 @@ export const useHover = <T extends HTMLElement = HTMLDivElement>(options: HoverO
   const hoverTimeout = useTimeout(() => setIsHovered(true), { timeout: delay.hover ?? 0 });
   const unhoverTimeout = useTimeout(() => setIsHovered(false), { timeout: delay.unhover ?? 0 });
 
-  const hover = () => {
+  const handleHover = useCallback(() => {
     hoverTimeout.start();
     unhoverTimeout.cancel();
-  };
+  }, [hoverTimeout]);
 
-  const unhover = () => {
+  const handleUnhover = useCallback(() => {
     unhoverTimeout.start();
     hoverTimeout.cancel();
-  };
+  }, [unhoverTimeout]);
 
-  useEventListener('mouseenter', hover, { ref: targetRef });
-  useEventListener('mouseleave', unhover, { ref: targetRef });
+  useEventListener('mouseenter', handleHover, { target: targetRef });
+  useEventListener('mouseleave', handleUnhover, { target: targetRef });
 
   return { ref: targetRef, isHovered };
 };

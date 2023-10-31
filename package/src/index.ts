@@ -76,7 +76,7 @@ export type { DragAction, DragEventHandler } from './useDragAndDrop';
 export type { EasingFunction, EasingOption } from './useEasing';
 export type { EventMap, EventHandler, EventListenerOptions } from './useEventListener';
 export type { RequestOptions } from './useFetch';
-export type { FileDataType, DropAreaError, DroppedFile, DropAreaOptions } from './useFileDropArea';
+export type { DropAreaOptions } from './useFileDropArea';
 export type { GeolocationState } from './useGeolocation';
 export type { HoverOptions } from './useHover';
 export type { IntersectionObserverOptions } from './useIntersectionObserver';

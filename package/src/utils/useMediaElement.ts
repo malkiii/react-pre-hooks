@@ -1,5 +1,6 @@
 import { RefObject, SetStateAction, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { getStateActionValue } from '.';
+import { useNewRef } from './useNewRef';
 
 type MediaElementType = 'video' | 'audio';
 export type MediaElement<T extends MediaElementType | undefined> = T extends 'video'
@@ -21,7 +22,7 @@ export type MediaElementInit<T extends MediaElementType | undefined> = {
 export const useMediaElement = <T extends MediaElementType | undefined = undefined>(
   initialState: MediaElementInit<T>
 ) => {
-  const ref = initialState.ref ?? useRef<MediaElement<T>>(null);
+  const ref = useNewRef<MediaElement<T>>(initialState.ref);
   const [state, setState] = useState({
     isReady: false,
     isPlaying: false,

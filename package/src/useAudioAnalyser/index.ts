@@ -44,8 +44,9 @@ export const useAudioAnalyser = (
       // fix the AudioContext suspending in Chrome
       if (context.current.state === 'suspended') {
         const audioContextResume = () => context.current?.resume().then(frame.start);
-        navigator.mediaDevices.enumerateDevices().then(audioContextResume);
-        source.addEventListener('play', audioContextResume, { passive: true, once: true });
+
+        if (isStream) navigator.mediaDevices.enumerateDevices().then(audioContextResume);
+        else source.addEventListener('play', audioContextResume, { passive: true, once: true });
       } else {
         frame.start();
       }

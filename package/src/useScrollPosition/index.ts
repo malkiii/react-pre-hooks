@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useState } from 'react';
 import { addEvents } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -24,7 +24,7 @@ export const useScrollPosition = <T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     handleScrolling();
-    return addEvents('scroll', handleScrolling, { ref: targetRef.current ?? window });
+    return addEvents('scroll', handleScrolling, { target: targetRef.current ?? window });
   }, [ref]);
 
   return { ref: targetRef, ...position };

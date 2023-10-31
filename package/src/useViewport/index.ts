@@ -10,7 +10,7 @@ export const useViewport = () => {
     };
 
     getWindowSize();
-    return addEvents('resize', getWindowSize, { ref: window, passive: true });
+    return addEvents('resize', getWindowSize, { target: window, passive: true });
   }, []);
 
   return viewport;

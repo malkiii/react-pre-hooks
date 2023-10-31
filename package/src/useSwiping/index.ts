@@ -87,7 +87,7 @@ export const useSwiping = <T extends EventTarget = Window>(
     [callback]
   );
 
-  const eventOptions = { ref: targetRef };
+  const eventOptions = { target: targetRef };
 
   useEventListener(['touchmove', mouse && 'mousemove'], handleTouchMove, eventOptions);
   useEventListener(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);

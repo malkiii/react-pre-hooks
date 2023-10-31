@@ -8,7 +8,7 @@ export const useOrientation = () => {
     const getOrientation = () => setOrientation(screen.orientation.type);
     getOrientation();
 
-    return addEvents('change', getOrientation, { ref: screen.orientation, passive: true });
+    return addEvents('change', getOrientation, { target: screen.orientation, passive: true });
   }, []);
 
   return orientation;

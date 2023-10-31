@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { addEvents, getCurrentMousePosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -11,7 +11,7 @@ export const useMousePosition = <T extends HTMLElement = HTMLDivElement>(ref?: R
       setPosition(getCurrentMousePosition(event));
     };
 
-    return addEvents('mousemove', handleMouseMove, { ref: targetRef.current ?? window });
+    return addEvents('mousemove', handleMouseMove, { target: targetRef.current ?? window });
   }, []);
 
   return { ref: targetRef, ...position };

@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useMemo, useRef, useState } from 'react';
+import { RefObject, useCallback, useMemo, useState } from 'react';
 import { useEventListener } from '..';
 import { browserPrefixes, getPrefixedProperty } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
@@ -58,7 +58,7 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
     setIsEnabled(getPrefixedProperty(document, 'fullscreenElement') === targetRef.current);
   }, []);
 
-  useEventListener(fullscreenEvents, handleFullScreenChange, { ref: document });
+  useEventListener(fullscreenEvents, handleFullScreenChange, { target: document });
 
   return { ref: targetRef, ...methods, isEnabled, error };
 };

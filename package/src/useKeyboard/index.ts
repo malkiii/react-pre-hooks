@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef } from 'react';
+import { RefObject, useCallback, useEffect } from 'react';
 import { addEvents } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -52,7 +52,7 @@ export const useKeyboard = <T extends EventTarget = Window>(
   );
 
   useEffect(
-    () => addEvents('keydown', handleKeydown, { ref: targetRef.current ?? window }),
+    () => addEvents('keydown', handleKeydown, { target: targetRef.current ?? window }),
     [handleKeydown]
   );
 

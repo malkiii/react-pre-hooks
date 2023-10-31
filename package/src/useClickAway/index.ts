@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useRef } from 'react';
+import { RefObject, useCallback } from 'react';
 import { useEventListener } from '..';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -19,7 +19,7 @@ export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
     [handler]
   );
 
-  useEventListener('click', callback, { ref: window });
+  useEventListener('click', callback, { target: window });
 
   return targetRef;
 };

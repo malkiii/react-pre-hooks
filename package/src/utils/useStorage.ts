@@ -55,7 +55,7 @@ export const useStorage = <T extends any>(
     setCurrentStoredValue();
   }, []);
 
-  useEventListener('storage', handleStorageChange, { ref: window });
+  useEventListener('storage', handleStorageChange, { target: window });
 
   return [storedValue, updateStoredValue] as const;
 };

@@ -25,14 +25,14 @@ export function getPrefixedProperty<T extends {}, K extends keyof T & string>(ob
 export function addEvents<T extends EventTarget, E extends keyof EventMap<T> & string>(
   event: E | Array<E | false | null | undefined>,
   handler: EventHandler<T, E>,
-  { ref, ...options }: EventListenerOptions<T> = {}
+  { target, ...options }: EventListenerOptions<T> = {}
 ) {
-  if (!ref) return () => {};
-  const target = 'addEventListener' in ref ? ref : ref.current;
   if (!target) return () => {};
+  const element = 'addEventListener' in target ? target : target.current;
+  if (!element) return () => {};
 
-  const addEvent = (e: string) => target.addEventListener(e, handler as any, options);
-  const removeEvent = (e: string) => target.removeEventListener(e, handler as any, options);
+  const addEvent = (e: string) => element.addEventListener(e, handler as any, options);
+  const removeEvent = (e: string) => element.removeEventListener(e, handler as any, options);
 
   const hasMultipleEvents = Array.isArray(event);
   const resolvedEvents = hasMultipleEvents ? (event.filter(Boolean) as any) : [event];

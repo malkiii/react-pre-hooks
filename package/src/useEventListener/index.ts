@@ -14,7 +14,7 @@ export type EventHandler<T extends EventTarget, E extends keyof EventMap<T>> = (
 ) => any;
 
 export type EventListenerOptions<T extends EventTarget> = AddEventListenerOptions & {
-  ref?: T | RefObject<T> | null;
+  target?: T | RefObject<T> | null;
 };
 
 export const useEventListener: typeof addEvents = (event, handler, options = {}): any => {

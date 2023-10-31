@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useState } from 'react';
 import { addEvents } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -14,7 +14,7 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
   }, []);
 
   useEffect(() => {
-    const options = { ref: targetRef.current ?? window };
+    const options = { target: targetRef.current ?? window };
 
     const handleRightClick = (event: MouseEvent) => {
       event.preventDefault();
