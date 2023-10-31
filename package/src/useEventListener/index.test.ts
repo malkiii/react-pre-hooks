@@ -18,7 +18,7 @@ describe('useEventListener', () => {
 
   it('should attach and detach event listener', () => {
     const handler = vi.fn();
-    const options = { ref: document.createElement('div') };
+    const options = { target: document.createElement('div') };
     const { unmount } = renderHook(() => useEventListener('click', handler, options));
 
     expect(addEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
@@ -30,7 +30,7 @@ describe('useEventListener', () => {
 
   it('should attach multiple event listeners', () => {
     const handler = vi.fn();
-    const options = { ref: document.createElement('input') };
+    const options = { target: document.createElement('input') };
     const { unmount } = renderHook(() => useEventListener(['click', 'keydown'], handler, options));
 
     expect(addEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
@@ -44,7 +44,7 @@ describe('useEventListener', () => {
 
   it('should add .scrolling class to the body on scroll', async () => {
     const handleScrolling = () => document.body.classList.add('scrolling');
-    renderHook(() => useEventListener('scroll', handleScrolling, { ref: window }));
+    renderHook(() => useEventListener('scroll', handleScrolling, { target: window }));
 
     fireEvent.scroll(window);
     await waitFor(() => expect(document.body.classList.contains('scrolling')).toBe(true));
@@ -53,7 +53,9 @@ describe('useEventListener', () => {
   it('should add .cursor class on mouse enter and leave', async () => {
     const input = document.createElement('input');
     const handleClick = () => input.classList.add('cursor');
-    renderHook(() => useEventListener(['mouseenter', 'mouseleave'], handleClick, { ref: input }));
+    renderHook(() =>
+      useEventListener(['mouseenter', 'mouseleave'], handleClick, { target: input })
+    );
 
     fireEvent.mouseEnter(input);
     await waitFor(() => expect(input.classList.contains('cursor')).toBe(true));
