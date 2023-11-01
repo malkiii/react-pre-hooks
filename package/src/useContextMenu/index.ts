@@ -18,6 +18,7 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
 
     const handleRightClick = (event: MouseEvent) => {
       event.preventDefault();
+      event.stopPropagation();
       setPosition({ x: event.pageX, y: event.pageY });
     };
     const handleMouseDown = () => {

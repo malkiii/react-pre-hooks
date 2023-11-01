@@ -1,4 +1,5 @@
-import { useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
+import { useIsomorphicEffect } from '..';
 
 export type DeviceType = 'desktop' | 'mobile' | 'tablet' | 'smartTV' | 'console';
 
@@ -13,7 +14,7 @@ const deviceTypePatterns: Record<Exclude<DeviceType, 'desktop'>, RegExp> = {
 export const useDevice = () => {
   const [device, setDevice] = useState<DeviceType>();
 
-  useLayoutEffect(() => {
+  useIsomorphicEffect(() => {
     const ua = navigator.userAgent;
 
     setDevice(

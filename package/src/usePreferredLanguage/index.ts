@@ -1,4 +1,5 @@
-import { useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
+import { useIsomorphicEffect } from '..';
 import { addEvents } from '../utils';
 
 export type PreferredLanguage = {
@@ -9,7 +10,7 @@ export type PreferredLanguage = {
 export const usePreferredLanguage = () => {
   const [language, setLanguage] = useState<PreferredLanguage>();
 
-  useLayoutEffect(() => {
+  useIsomorphicEffect(() => {
     const updatePreferredLanguage = () => {
       const code = navigator.language;
       const name = new Intl.DisplayNames([code], { type: 'language' }).of(code);

@@ -14,7 +14,7 @@ export type SwipeAction = {
   readonly event: TouchEvent | MouseEvent;
 };
 
-export type SwipeEventHandler = (action: SwipeAction) => any;
+export type SwipeActionHandler = (action: SwipeAction) => any;
 
 export type SwipeOptions<T extends EventTarget> = {
   ref?: RefObject<T> | null;
@@ -22,7 +22,7 @@ export type SwipeOptions<T extends EventTarget> = {
 };
 
 export const useSwiping = <T extends EventTarget = Window>(
-  handler: SwipeEventHandler,
+  handler: SwipeActionHandler,
   options: SwipeOptions<T> = {}
 ) => {
   const { ref, mouse = false } = options;

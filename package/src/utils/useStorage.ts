@@ -1,5 +1,5 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
-import { useEventListener } from '..';
+import { useCallback, useState } from 'react';
+import { useEventListener, useIsomorphicEffect } from '..';
 
 const parseJSON = <T>(value: string | null): T => {
   try {
@@ -10,14 +10,17 @@ const parseJSON = <T>(value: string | null): T => {
 };
 
 export const useStorage = <T extends any>(
-  type: 'localStorage' | 'sessionStorage',
+  type: 'local' | 'session',
   key: string,
   initialValue: T | null = null
 ) => {
-  const storage = type === 'localStorage' ? window.localStorage : window.sessionStorage;
+  const [storedValue, setStoredValue] = useState<T | null>(initialValue ?? null);
+  const setCurrentStoredValue = () => setStoredValue(getStoredValue);
+
+  const getStorage = useCallback(() => (type === 'local' ? localStorage : sessionStorage), []);
 
   const getStoredValue = useCallback(() => {
-    if (typeof window === 'undefined') return initialValue;
+    const storage = getStorage();
 
     try {
       const item = storage.getItem(key);
@@ -27,12 +30,8 @@ export const useStorage = <T extends any>(
     }
   }, [key]);
 
-  // stored value state
-  const [storedValue, setStoredValue] = useState<T | null>(getStoredValue);
-  const setCurrentStoredValue = () => setStoredValue(getStoredValue);
-
   const updateStoredValue: typeof setStoredValue = useCallback(value => {
-    if (typeof window === 'undefined') return;
+    const storage = getStorage();
 
     try {
       const newValue = JSON.stringify(value instanceof Function ? value(storedValue) : value);
@@ -51,9 +50,7 @@ export const useStorage = <T extends any>(
     [key]
   );
 
-  useLayoutEffect(() => {
-    setCurrentStoredValue();
-  }, []);
+  useIsomorphicEffect(setCurrentStoredValue, []);
 
   useEventListener('storage', handleStorageChange, { target: window });
 

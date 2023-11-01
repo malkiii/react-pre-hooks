@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useEventListener } from '..';
+import { useEventListener, useIsomorphicEffect } from '..';
 
 export type CookieEvent = CustomEvent<{
   name: string;
@@ -52,29 +52,23 @@ const setCookie = (name: string, value: string, options: CookieAttributes = {}) 
   }, `${name}=${encodedValue}`);
 };
 
-export const useCookie = (
-  name: string,
-  options: CookieAttributes & { initial?: string | null } = {}
-) => {
-  const [value, setValue] = useState(() => getCookie(name) ?? options.initial ?? null);
+export const useCookie = (name: string, options: CookieAttributes = {}) => {
+  const [value, setValue] = useState<string | null>(null);
 
-  const updateValue = useCallback(
-    (value: Parameters<typeof setValue>[0], options?: CookieAttributes) => {
-      setValue(oldValue => {
-        const newValue = (value instanceof Function ? value(oldValue) : value) ?? '';
-        setCookie(name, newValue, options);
+  const updateValue: typeof setValue = useCallback(val => {
+    setValue(oldValue => {
+      const newValue = (val instanceof Function ? val(oldValue) : value) ?? '';
+      setCookie(name, newValue, options);
 
-        const cookieEvent = new CustomEvent('cookiechange', {
-          detail: { name, oldValue, newValue }
-        });
-
-        window.dispatchEvent(cookieEvent);
-
-        return newValue;
+      const cookieEvent = new CustomEvent('cookiechange', {
+        detail: { name, oldValue, newValue }
       });
-    },
-    []
-  );
+
+      window.dispatchEvent(cookieEvent);
+
+      return newValue;
+    });
+  }, []);
 
   const handleCookieChange = useCallback(
     (e: CookieEvent) => {
@@ -82,6 +76,10 @@ export const useCookie = (
     },
     [name]
   );
+
+  useIsomorphicEffect(() => {
+    getCookie(name);
+  }, []);
 
   useEventListener('cookiechange', handleCookieChange, { target: window });
 

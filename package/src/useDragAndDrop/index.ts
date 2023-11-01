@@ -13,7 +13,7 @@ export type DragAction = {
   readonly event: MouseEvent | TouchEvent;
 };
 
-export type DragEventHandler = (action: DragAction) => any;
+export type DragActionHandler = (action: DragAction) => any;
 
 type DraggingOptions<T extends HTMLElement> = {
   ref?: RefObject<T> | null;
@@ -21,7 +21,7 @@ type DraggingOptions<T extends HTMLElement> = {
 };
 
 export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
-  handler: DragEventHandler,
+  handler: DragActionHandler,
   options: DraggingOptions<T> = {}
 ) => {
   const { ref, touches = false } = options;

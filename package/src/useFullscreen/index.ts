@@ -3,14 +3,15 @@ import { useEventListener } from '..';
 import { browserPrefixes, getPrefixedProperty } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
-const fullscreenEvents = browserPrefixes.map(pref => pref + 'fullscreenchange') as any[];
+const fullscreenChangeEvents = browserPrefixes.map(pref => pref + 'fullscreenchange') as any[];
+const fullscreenErrorEvents = browserPrefixes.map(pref => pref + 'fullscreenerror') as any[];
 
 export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
   ref?: RefObject<T> | null
 ) => {
   const targetRef = useNewRef<T>(ref);
   const [isEnabled, setIsEnabled] = useState(false);
-  const [error, setError] = useState<unknown>();
+  const [isError, setIsError] = useState<boolean>(false);
 
   const methods = useMemo(
     () => ({
@@ -19,14 +20,9 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
 
         const requestFullscreen = getPrefixedProperty(targetRef.current, 'requestFullscreen');
         if (!requestFullscreen) return;
-        setError(undefined);
+        setIsError(false);
 
-        try {
-          await requestFullscreen(options);
-        } catch (error) {
-          setError(error);
-        }
-
+        await requestFullscreen(options);
         setIsEnabled(true);
       },
       async exit() {
@@ -34,20 +30,14 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
 
         const exitFullscreen = getPrefixedProperty(document, 'exitFullscreen');
         if (!exitFullscreen) return;
-        setError(undefined);
+        setIsError(false);
 
-        try {
-          await exitFullscreen();
-        } catch (error) {
-          setError(error);
-        }
-
+        await exitFullscreen();
         setIsEnabled(false);
       },
       async toggle(enable?: boolean) {
         const shouldEnable = enable ?? !isEnabled;
         shouldEnable ? await this.enter() : await this.exit();
-        setIsEnabled(shouldEnable);
       }
     }),
     [isEnabled]
@@ -58,7 +48,13 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
     setIsEnabled(getPrefixedProperty(document, 'fullscreenElement') === targetRef.current);
   }, []);
 
-  useEventListener(fullscreenEvents, handleFullScreenChange, { target: document });
+  const handleFullScreenError = useCallback(() => {
+    setIsError(true);
+  }, []);
 
-  return { ref: targetRef, ...methods, isEnabled, error };
+  const eventOptions = { target: document };
+  useEventListener(fullscreenChangeEvents, handleFullScreenChange, eventOptions);
+  useEventListener(fullscreenErrorEvents, handleFullScreenError, eventOptions);
+
+  return { ref: targetRef, ...methods, isEnabled, isError };
 };

@@ -1,5 +1,5 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
-import { useEventListener } from '..';
+import { useCallback, useState } from 'react';
+import { useEventListener, useIsomorphicEffect } from '..';
 import { getPrefixedProperty } from '../utils';
 
 /**
@@ -41,7 +41,7 @@ export const useNetworkState = () => {
     }
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicEffect(() => {
     updateConnection();
   }, []);
 
