@@ -6,17 +6,14 @@ Bind any keyboard **`keys`** or **`hotkeys`** with handlers in a very simple way
 
 1. the keys record:
 
-This hook bind the keys using an object format where the keys or hotkeys (separated with a `separator` if you use multiple keys with one handler) as the object keys, and the [`KeyboardEvent`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent) handlers as the values.
+This hook bind the keys using an object format where the **keys** or **hotkeys** or key **codes** (separated with a `separator` if you use multiple keys with one handler) as the object keys, and the [`KeyboardEvent`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent) handlers as the values.
 
 ```ts
-useKeyboard(
-  {
-    'w': e => {},
-    'alt+p': e => {},
-    'q | Ctrl+A | alt+shift+d': e => {}
-  },
-  { ref: document.body }
-);
+useKeyboard({
+  'w': e => {},
+  'alt+p': e => {},
+  'q | Ctrl+A | alt+shift+d': e => {}
+});
 ```
 
 or you can specify your own separator:
@@ -26,13 +23,13 @@ useKeyboard(
   {
     'd, alt+f, meta+f': e => {}
   },
-  { separator: ',', ref: window }
+  { separator: ',' }
 );
 ```
 
 :::info
 You can use any string case you want for the keys, for example:
-`ctrl+f`, `Ctrl + F`, and `ctrl + F` are the same.
+`ctrl+f`, `Ctrl + F`, and `ctrl + KeyF` are the same.
 :::
 
 2. and some options
@@ -52,14 +49,11 @@ a `ref` object of the target element.
 import { useKeyboard } from 'realtime-hooks';
 
 export default function Example() {
-  useKeyboard(
-    {
-      'F': () => console.log('you pressed F'),
-      '1|2|3': e => console.log(`you pressed ${e.key}`),
-      'Ctrl+x': () => console.log('you pressed Ctrl and X')
-    },
-    { ref: window }
-  );
+  useKeyboard({
+    'F': () => console.log('you pressed F'),
+    '1|2|3': e => console.log(`you pressed ${e.key}`),
+    'Ctrl+x': () => console.log('you pressed Ctrl and X')
+  });
 
   return <main>Press any key from the keys above..</main>;
 }

@@ -7,7 +7,6 @@ This hook uses an audio element reference as well as its state and controller me
 | Name          | Type      | Description                                         |
 | ------------- | --------- | --------------------------------------------------- |
 | **ref**       | RefObject | the audio element reference.                        |
-| **src**       | String    | the audio src path.                                 |
 | **autoPlay**  | Boolean   | auto-play the audio when is mounted.                |
 | **muted**     | Boolean   | whether the audio is muted initially or not.        |
 | **loop**      | Boolean   | whether playback should restart after it completes. |

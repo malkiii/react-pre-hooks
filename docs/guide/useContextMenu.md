@@ -4,7 +4,7 @@ Handle the user right clicks on a target element with this hook.
 
 ## Parameters
 
-- a `target` element (default is `window`).
+- the `ref` object of the target element (default is `window`).
 
 ## Return Values
 

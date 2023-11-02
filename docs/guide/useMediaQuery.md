@@ -1,18 +1,24 @@
-# useColorScheme
+# useMediaQuery
 
-you can track the system color scheme using this hook.
+Track the [matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) changes of a media query using this hook.
+
+## Parameters
+
+- the media query string.
 
 ## Return Values
 
-It returns the current system color scheme (`dark` or `light`).
+It returns a `boolean`, which indicates whether the query has matched or not.
 
 ## Example Usage
 
 ```tsx
-import { useColorScheme } from 'realtime-hooks';
+import { useMediaQuery } from 'realtime-hooks';
 
 export default function Example() {
-  const colorScheme = useColorScheme();
+  const matches = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const colorScheme = matches ? 'dark' : 'light';
 
   return (
     <main style={{ colorScheme }}>

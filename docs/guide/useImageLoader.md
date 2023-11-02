@@ -1,4 +1,4 @@
-# useImageLoading
+# useImageLoader
 
 Use this hook to load an image in the **background** using its URL, and returns its loading state.
 
@@ -17,12 +17,12 @@ Use this hook to load an image in the **background** using its URL, and returns 
 ## Example Usage
 
 ```tsx
-import { useImageLoading } from 'realtime-hooks';
+import { useImageLoader } from 'realtime-hooks';
 
 const url = 'https://picsum.photos/1280/960';
 
 export default function Example() {
-  const { isLoading, image } = useImageLoading(url, () => console.log('Loaded.'));
+  const { isLoading, image } = useImageLoader(url, () => console.log('Loaded.'));
 
   return (
     <main>

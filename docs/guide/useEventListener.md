@@ -6,10 +6,10 @@ Add one or multiple event listeners to a specific target element, `window`, or `
 
 1. the specified event(s).
 2. the event(s) handler.
-3. the [addEventListener options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options), as well as the `ref` object that can be an **element** or a **ref** object element that has `addEventListener` method.
+3. the [addEventListener options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options), as well as the `target` object that can be an **element** or a **ref** object element that has `addEventListener` method.
 
 ::: warning
-You must always specify a `ref` object otherwise it will not work.
+You must always specify a `target` object otherwise it will not work.
 :::
 
 ## Example Usage
@@ -25,7 +25,7 @@ export default function Example() {
     event => {
       console.log('width', window.innerWidth, ', height', window.innerHeight);
     },
-    { ref: window }
+    { target: window }
   );
 
   return <main></main>;
@@ -46,7 +46,7 @@ export default function Example() {
     event => {
       console.log({ x: event.offsetX, y: event.offsetY });
     },
-    { ref }
+    { target: ref }
   );
 
   return <div ref={ref}>Click or move your cursor..</div>;

@@ -1,14 +1,10 @@
 # useSize
 
-Track the element size easily using [`ResizeObserver`](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver).
+Track the element size easily using [useResizeObserver](./useResizeObserver).
 
 ## Options
 
-| Name           | Type      | Description                                                                                                              |
-| -------------- | --------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **ref**        | RefObject | the target element reference (default is the `body` element).                                                            |
-| **handler**    | Function  | the `ResizeObserver` [handler](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver/ResizeObserver#callback). |
-| **...options** | Object    | the [ResizeObserver options](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver/observe#options)            |
+- It takes [useIntersectionObserver options](./useResizeObserver#parameters).
 
 ## Return Values
 

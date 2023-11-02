@@ -18,15 +18,15 @@ a `ref` object of the **container** element.
 
 ### `DragAction` Object
 
-| Name           | Type    | Description                                                                                                                                                                                         |
-| -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`state`**    | String  | the drag state which can be `start`, `end`, or `dragging`.                                                                                                                                          |
-| **`clientX`**  | Number  | the `x` position.                                                                                                                                                                                   |
-| **`clientY`**  | Number  | the `y` position.                                                                                                                                                                                   |
-| **`initialX`** | Number  | the initial `x` position.                                                                                                                                                                           |
-| **`initialY`** | Number  | the initial `y` position.                                                                                                                                                                           |
-| **`target`**   | Element | the current dragged element in the container.                                                                                                                                                       |
-| **`event`**    | Event   | the [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) or [TouchEvent](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent) if you are using the `touches` property. |
+| Name         | Type    | Description                                                                                                                                                                                         |
+| ------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **state**    | String  | the drag state which can be `start`, `end`, or `dragging`.                                                                                                                                          |
+| **clientX**  | Number  | the `x` position.                                                                                                                                                                                   |
+| **clientY**  | Number  | the `y` position.                                                                                                                                                                                   |
+| **initialX** | Number  | the initial `x` position.                                                                                                                                                                           |
+| **initialY** | Number  | the initial `y` position.                                                                                                                                                                           |
+| **target**   | Element | the current dragged element in the container.                                                                                                                                                       |
+| **event**    | Event   | the [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) or [TouchEvent](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent) if you are using the `touches` property. |
 
 ## Example Usage
 

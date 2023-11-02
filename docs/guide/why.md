@@ -45,7 +45,7 @@ export default function Component({ scrolling }) {
     event => {
       console.log('handling...');
     },
-    { ref: window }
+    { target: window }
   );
 
   return (

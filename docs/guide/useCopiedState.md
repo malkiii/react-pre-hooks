@@ -1,6 +1,6 @@
-# useClipboard
+# useCopiedState
 
-Copy to clipboard and return a temporary `copied` state for tooltips.
+Copy to the clipboard and return a temporary `copied` state.
 
 ## Options
 
@@ -20,10 +20,10 @@ Copy to clipboard and return a temporary `copied` state for tooltips.
 ## Example Usage
 
 ```tsx
-import { useClipboard } from 'realtime-hooks';
+import { useCopiedState } from 'realtime-hooks';
 
 export default function Example() {
-  const { copy, isCopied, reset } = useClipboard({ duration: 2000 });
+  const { copy, isCopied, reset } = useCopiedState({ duration: 2000 });
 
   const text = 'a text to copy!';
 

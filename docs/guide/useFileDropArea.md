@@ -1,28 +1,18 @@
 # useFileDropArea
 
-Build a **file drop areazone** component easily with this hook, it handles file dropping to a label of a file input.
+Build a **file drop area** component easily with this hook, it handles file dropping to a label of a file input.
 
 ## Options
 
-| Name           | Type     | Description                                                                                                                                                                        |
-| -------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **multiple**   | Boolean  | use multiple files or not (default is `false`).                                                                                                                                    |
-| **extensions** | Array    | an array of allowed file extensions.                                                                                                                                               |
-| **minSize**    | Number   | the minimum file size in `MB`.                                                                                                                                                     |
-| **maxSize**    | Number   | the maximum file size in `MB`.                                                                                                                                                     |
-| **readAs**     | String   | the file data type which can be `array-buffer`, `binary-string`, `url`, or `text`.                                                                                                 |
-| **onUpload**   | Function | a handler that will be executed when the user uploads any files, and it takes an array of [Files](https://developer.mozilla.org/en-US/docs/Web/API/File).                          |
-| **validate**   | Function | a handler that will be **validate** the uploaded files before updating the `files` array, and it takes an array of [Files](https://developer.mozilla.org/en-US/docs/Web/API/File). |
+| Name         | Type      | Description                                                                                                                                               |
+| ------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ref**      | RefObject | the target element reference.                                                                                                                             |
+| **multiple** | Boolean   | use multiple files or not (default is `false`).                                                                                                           |
+| **onUpload** | Function  | a handler that will be executed when the user uploads any files, and it takes an array of [Files](https://developer.mozilla.org/en-US/docs/Web/API/File). |
 
 ## Return Values
 
-| Name          | Type      | Description                                                 |
-| ------------- | --------- | ----------------------------------------------------------- |
-| **ref**       | RefObject | the target element reference.                               |
-| **files**     | Array     | an array of the [DroppedFile](#droppedfile-object) objects. |
-| **isLoading** | Boolean   | whether the uploaded files are in progress or not.          |
-| **error**     | Error     | the [DropAreaError](#dropareaerror-object) error.           |
-| **setError**  | Function  | set your own error.                                         |
+a `ref` object of the target element.
 
 ### `DroppedFile` Object
 
@@ -33,48 +23,34 @@ Build a **file drop areazone** component easily with this hook, it handles file 
 | **extension** | String   | the file extension.                                                                                                                                       |
 | **data**      | FileData | the file data type depends on `readAs` option, if you don't use this it will be a [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) object. |
 
-### `DropAreaError` Object
-
-| Name     | Type   | Description                                                                                                                                                                                                |
-| -------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **type** | String | the error type can be any string, it will be `size` if an uploaded file doesn't satisfy the `minSize` or `maxSize`, and it will be `extension` if its extension is not included in the `extensions` array. |
-| **file** | String | the error's [DroppedFile](#droppedfile-object) target.                                                                                                                                                     |
-
 ::: info
-You can add `<input type="file" />` inside the area element and the input files will also be included in the `files` array.
+You can add `<input type="file" />` **inside** the area element and the input files will also be included.
 :::
 
 ## Example Usage
 
 ```tsx
-import { useFileDropArea } from 'realtime-hooks';
+import { useArray, useFileDropArea } from 'realtime-hooks';
 
 export default function Example() {
-  const { ref, files, isLoading, error } = useFileDropArea({
-    multiple: true,
-    extensions: ['jpg', 'png', 'svg'],
-    readAs: 'url',
-    maxSize: 10
-  });
+  const images = useArray<string>([]);
 
-  const getError = () => {
-    switch (error?.type) {
-      case 'size':
-        return `"${error.file.name}" is too small. Maximum size is 10MB`;
-      case 'extension':
-        return `Invalid file extension of "${error.file.name}"`;
-      default:
-        return;
-    }
-  };
+  const ref = useFileDropArea({
+    multiple: true,
+    onUpload: files =>
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => images.push(reader.result);
+        reader.readAsDataURL(file);
+      })
+  });
 
   return (
     <main>
       <h1>Drop images to this box!</h1>
-      {error && <p>{getError()}</p>}
-      <label ref={ref} className={isLoading ? 'uploading' : ''}>
-        {files.map(image => (
-          <img key={image.name} alt={image.name} src={image.data} />
+      <label ref={ref}>
+        {images.map((image, index) => (
+          <img key={index} alt={`image-${index}`} src={image} />
         ))}
         <input type="file" accept="image/*" hidden />
       </label>

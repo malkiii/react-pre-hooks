@@ -1,6 +1,6 @@
-# useMutation
+# useMutationObserver
 
-Handles the [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) and tracks changes being made to the DOM tree.
+Handles the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) and tracks changes being made to the DOM tree.
 
 ## Parameters
 
@@ -9,17 +9,20 @@ Handles the [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/AP
 
 ## Return Values
 
-a `ref` object of the target element.
+| Name         | Type      | Description                                                                                                                  |
+| ------------ | --------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **ref**      | RefObject | the target element reference.                                                                                                |
+| **observer** | RefObject | the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/MutationObserver) object reference. |
 
 ## Example Usage
 
 ```tsx
-import { useArray, useMutation } from 'realtime-hooks';
+import { useArray, useMutationObserver } from 'realtime-hooks';
 
 export default function Items() {
   const items = useArray<number>();
 
-  const ref = useMutation(
+  const ref = useMutationObserver(
     records => {
       records.forEach(record => {
         console.log(`the item ${record.addedNodes[0].textContent} is added.`);

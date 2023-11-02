@@ -1,6 +1,6 @@
 # useIsomorphicEffect
 
-This hook works in both browser and server, it uses [useEffect](https://react.dev/reference/react/useEffect) on the client side, and [useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) on the server side.
+This hook is a replacement for [useEffect](https://react.dev/reference/react/useEffect) that works in both browser and server.
 
 ## Example Usage
 

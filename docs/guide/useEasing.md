@@ -62,12 +62,12 @@ easing.cancel();
 
 It also returns the easing stats:
 
-| Name             | Type    | Description                                                     |
-| ---------------- | ------- | --------------------------------------------------------------- |
-| **`isPlaying`**  | Boolean | the easing is playing.                                          |
-| **`isPaused`**   | Boolean | the easing is paused.                                           |
-| **`isReversed`** | Boolean | the easing is reversed.                                         |
-| **`isFinished`** | Boolean | the easing has reached the end (or the start if it's reversed). |
+| Name           | Type    | Description                                                     |
+| -------------- | ------- | --------------------------------------------------------------- |
+| **isPlaying**  | Boolean | the easing is playing.                                          |
+| **isPaused**   | Boolean | the easing is paused.                                           |
+| **isReversed** | Boolean | the easing is reversed.                                         |
+| **isFinished** | Boolean | the easing has reached the end (or the start if it's reversed). |
 
 ## Example Usage
 
