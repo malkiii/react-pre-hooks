@@ -25,6 +25,7 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
       setCanShow(false);
     };
     const handleMouseUp = (event: MouseEvent) => {
+      event.stopPropagation();
       setCanShow(event.button === 2);
     };
 

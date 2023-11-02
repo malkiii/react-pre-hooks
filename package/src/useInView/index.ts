@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { IntersectionObserverOptions, useIntersectionObserver } from '..';
 import { useNewRef } from '../utils/useNewRef';
 

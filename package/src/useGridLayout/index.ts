@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useState } from 'react';
 import { useResizeObserver } from '..';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -13,8 +13,9 @@ export const useGridLayout = <T extends HTMLElement = HTMLDivElement>(
     if (!container) return;
 
     const containerStyle = window.getComputedStyle(container);
-    const columns = containerStyle.gridTemplateColumns.split(' ').length;
-    const rows = containerStyle.gridTemplateRows.split(' ').length;
+    const rows = containerStyle.gridTemplateRows.trim().split(/\s+/).length;
+    const columns = containerStyle.gridTemplateColumns.trim().split(/\s+/).length;
+
     setLayoutValues({ rows, columns });
   }, []);
 
