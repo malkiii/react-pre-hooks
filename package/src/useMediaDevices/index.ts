@@ -13,8 +13,15 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
 
   const videoRef = useNewRef<HTMLVideoElement>(options.ref);
   const streamRef = useRef<MediaStream>(new MediaStream());
-  const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
-  const [error, setError] = useState<Record<MediaDeviceType, unknown>>();
+
+  const [camera, setCamera] = useState({
+    devices: [] as MediaDeviceInfo[],
+    isEnabled: false
+  });
+  const [microphone, setMicrophone] = useState<typeof camera>({
+    devices: [],
+    isEnabled: false
+  });
 
   const initializeStream = useCallback(() => {
     if (!videoRef.current) return;
@@ -29,12 +36,12 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
   const initMediaDevice = useCallback(
     async (type: MediaDeviceType, constraints: MediaStreamConstraints) => {
       const isVideo = type === 'video';
+      const setState = isVideo ? setCamera : setMicrophone;
       const tracksGetterName = isVideo ? 'getVideoTracks' : 'getAudioTracks';
 
       // stop the current stream tracks so that the next tracks will start
       streamRef.current[tracksGetterName]().forEach(t => t.stop());
 
-      setError(undefined);
       const excluded = isVideo ? 'audio' : 'video';
       const { [type]: trackConstraints, [excluded]: _, ...otherProps } = constraints;
 
@@ -45,14 +52,17 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
         });
 
         const tracks = stream[tracksGetterName]();
-        const otherTracks = streamRef.current.getTracks().filter(t => t.kind === type);
+        if (tracks[0]) tracks[0].onended = () => setState(s => ({ ...s, isEnabled: false }));
 
+        const otherTracks = streamRef.current.getTracks().filter(t => t.kind === type);
         streamRef.current = new MediaStream([...tracks, ...otherTracks]);
+
+        setState(s => (s.isEnabled ? s : { ...s, isEnabled: true }));
         initializeStream();
 
         return true;
       } catch (error) {
-        setError(err => ({ [type]: error, [excluded]: err && err[excluded] }) as any);
+        setState(s => (!s.isEnabled ? s : { ...s, isEnabled: false }));
         return false;
       }
     },
@@ -75,7 +85,10 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
   }, []);
 
   const updateMediaDevices = useCallback(async () => {
-    setDevices(await navigator.mediaDevices.enumerateDevices());
+    const devices = await navigator.mediaDevices.enumerateDevices();
+
+    setCamera(s => ({ ...s, devices: devices.filter(d => d.kind === 'videoinput') }));
+    setMicrophone(s => ({ ...s, devices: devices.filter(d => d.kind === 'audioinput') }));
   }, []);
 
   useEffect(() => {
@@ -86,5 +99,5 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
     return () => navigator.mediaDevices.removeEventListener('devicechange', updateMediaDevices);
   }, []);
 
-  return { ref: videoRef, stream: streamRef, devices, start, stop, error };
+  return { ref: videoRef, stream: streamRef, camera, microphone, start, stop };
 };
