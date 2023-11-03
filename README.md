@@ -12,7 +12,6 @@ Simplify and clean up your components with this react hooks collection.
 
 <table align=center>
   <tr><th width="200">Name</th><th width="800">Description</th></tr>
-  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAnimatePresence">useAnimatePresence</a></td><td>Animate an element when it enters or leaves the DOM.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAnimationFrame">useAnimationFrame</a></td><td>Handle the <code>requestAnimationFrame</code> of the window object.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useArray">useArray</a></td><td>Returns an array with common array methods.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useAsync">useAsync</a></td><td>Execute an <code>async</code> function and returns a loading state, return data and other values.</td></tr>
