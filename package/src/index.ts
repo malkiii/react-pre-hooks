@@ -1,5 +1,4 @@
 /** @run "pnpm prebuild" to modify this file */
-export { useAnimatePresence } from './useAnimatePresence';
 export { useAnimationFrame } from './useAnimationFrame';
 export { useArray } from './useArray';
 export { useAsync } from './useAsync';
@@ -65,7 +64,6 @@ export { useUpdateEffect } from './useUpdateEffect';
 export { useVideo } from './useVideo';
 export { useViewport } from './useViewport';
 
-export type { TransitionProps, AnimatePresenceOptions } from './useAnimatePresence';
 export type { AnimationFrameOptions } from './useAnimationFrame';
 export type { AudioElementInit } from './useAudio';
 export type { SourceObject, SourceNode, FrequencyDataHandler, AudioAnalyserOptions } from './useAudioAnalyser';
