@@ -26,7 +26,7 @@ export const usePointerLock = <T extends HTMLElement = HTMLDivElement>(
         if (!requestPointerLock) return;
         setIsError(false);
 
-        requestPointerLock(options);
+        requestPointerLock.bind(targetRef.current)(options);
         setIsEnabled(true);
       },
       exit() {
@@ -36,7 +36,7 @@ export const usePointerLock = <T extends HTMLElement = HTMLDivElement>(
         if (!exitPointerLock) return;
         setIsError(false);
 
-        exitPointerLock();
+        exitPointerLock.bind(document)();
         setIsEnabled(false);
       },
       toggle(enable?: boolean) {

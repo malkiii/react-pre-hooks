@@ -46,27 +46,26 @@ export const useTimer = (options: TimerOptions = {}) => {
 
   const passing = Math.abs(datetime.getTime() - initialDate.getTime());
 
-  const timer = useInterval(
-    () => {
-      if (!isTimer) return setDatetime(new Date());
-      const duration = options.duration ?? Infinity;
+  const handleTimer = useCallback(() => {
+    if (!isTimer) return setDatetime(new Date());
+    const duration = options.duration ?? Infinity;
 
-      setDatetime(date => {
-        const currentDuration = date.getTime() - initialDate.getTime();
-        const nextDatetime =
-          currentDuration > duration
-            ? new Date(date.getTime() - timeout)
-            : currentDuration < duration
-            ? new Date(date.getTime() + timeout)
-            : date;
+    setDatetime(date => {
+      const currentDuration = date.getTime() - initialDate.getTime();
+      const nextDatetime =
+        currentDuration > duration
+          ? new Date(date.getTime() - timeout)
+          : currentDuration < duration
+          ? new Date(date.getTime() + timeout)
+          : date;
 
-        if (nextDatetime.getTime() - initialDate.getTime() == duration) timer.stop();
+      if (nextDatetime.getTime() - initialDate.getTime() == duration) timer.stop();
 
-        return nextDatetime;
-      });
-    },
-    { timeout, startOnMount }
-  );
+      return nextDatetime;
+    });
+  }, []);
+
+  const timer = useInterval(handleTimer, { timeout, startOnMount });
 
   const reset = useCallback(
     (value: SetStateAction<Date> | DateProps = initialDate) => {

@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useState } from 'react';
-import { addEvents } from '../utils';
+import { addEvents, getCurrentMousePosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
@@ -19,7 +19,7 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
     const handleRightClick = (event: MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
-      setPosition({ x: event.pageX, y: event.pageY });
+      setPosition(getCurrentMousePosition(event));
     };
     const handleMouseDown = () => {
       setCanShow(false);

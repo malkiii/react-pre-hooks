@@ -2,7 +2,7 @@ import { RefObject, useCallback, useEffect } from 'react';
 import { useEventListener } from '..';
 import { useNewRef } from '../utils/useNewRef';
 
-export type DropAreaOptions<T extends HTMLElement = HTMLDivElement> = {
+export type DropAreaOptions<T extends HTMLElement> = {
   ref?: RefObject<T> | null;
   multiple?: boolean;
   onUpload?: (files: File[]) => any | Promise<any>;
@@ -14,7 +14,7 @@ const getFileInputElement = (label: HTMLElement): HTMLInputElement | null => {
   return label.querySelector('input[type="file"]') as any;
 };
 
-export const useFileDropArea = <T extends HTMLElement = HTMLDivElement>(
+export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
   options: DropAreaOptions<T> = {}
 ) => {
   const { ref, multiple = false, onUpload } = options;

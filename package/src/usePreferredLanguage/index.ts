@@ -18,6 +18,8 @@ export const usePreferredLanguage = () => {
       setLanguage({ code, name });
     };
 
+    updatePreferredLanguage();
+
     return addEvents('languagechange', updatePreferredLanguage, { target: window });
   }, []);
 

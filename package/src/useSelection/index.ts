@@ -18,7 +18,7 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(ref?: RefOb
 
     setIsCollapsed(isCollapsed);
     setText(currentSelection?.toString() ?? '');
-    if (isCollapsed) setRect(currentSelection?.getRangeAt(0).getBoundingClientRect());
+    if (!isCollapsed) setRect(currentSelection?.getRangeAt(0).getBoundingClientRect());
   }, [targetRef]);
 
   useEffect(handleSelectionChange, []);

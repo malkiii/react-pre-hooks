@@ -54,7 +54,7 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
         const tracks = stream[tracksGetterName]();
         if (tracks[0]) tracks[0].onended = () => setState(s => ({ ...s, isEnabled: false }));
 
-        const otherTracks = streamRef.current.getTracks().filter(t => t.kind === type);
+        const otherTracks = streamRef.current.getTracks().filter(t => t.kind === excluded);
         streamRef.current = new MediaStream([...tracks, ...otherTracks]);
 
         setState(s => (s.isEnabled ? s : { ...s, isEnabled: true }));
