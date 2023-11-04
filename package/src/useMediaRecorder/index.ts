@@ -17,7 +17,8 @@ export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
   const controls = useMemo(
     () => ({
       start(stream: MediaStream, timeslice?: number) {
-        if (recorderRef.current?.state !== 'inactive') return;
+        const state = recorderRef.current?.state ?? 'inactive';
+        if (state !== 'inactive') return;
 
         recorderRef.current = new MediaRecorder(stream, options);
         recorderRef.current.ondataavailable = event => {
@@ -37,7 +38,8 @@ export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
         }
       },
       async stop(options: RecorderDownloadOptions = {}) {
-        if (recorderRef.current?.state == 'inactive') return;
+        const state = recorderRef.current?.state ?? 'inactive';
+        if (state === 'inactive') return;
         recorderRef.current?.resume();
         recorderRef.current?.stop();
 
@@ -51,7 +53,6 @@ export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
         return blob;
       },
       togglePlayState(play?: boolean) {
-        if (recorderRef.current?.state == 'inactive') return;
         const shouldPlay = play ?? recorderRef.current?.state == 'paused';
         shouldPlay ? this.resume() : this.pause();
       },

@@ -9,7 +9,7 @@ export type MediaDevicesOptions = MediaStreamConstraints & {
 };
 
 export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
-  const { ref, startOnMount = true, ...globalConstraints } = options;
+  const { ref, startOnMount = false, ...globalConstraints } = options;
 
   const videoRef = useNewRef<HTMLVideoElement>(options.ref);
   const streamRef = useRef<MediaStream>(new MediaStream());
