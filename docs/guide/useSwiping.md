@@ -39,15 +39,16 @@ let start = 0;
 export default function Slider() {
   const ref = useSwiping(
     action => {
-      if (action.state === 'start') start = window.scrollX;
+      if (action.state === 'start') start = window.scrollY;
 
-      window.scrollTo({ left: start + action.deltaX });
+      window.scrollTo({ top: start + action.deltaY });
     },
     { mouse: true }
   );
 
   return (
     <div ref={ref}>
+      <p>Swipe to the left!</p>
       <ul>
         {new Array(10).fill(null).map((_, i) => (
           <li key={i}>{i}</li>

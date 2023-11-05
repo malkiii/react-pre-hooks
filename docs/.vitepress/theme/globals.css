@@ -43,6 +43,17 @@ img.VPImage {
   color: var(--vp-c-text-1) !important;
 }
 
+.VPNavScreen {
+  z-index: -1;
+}
+.VPNavScreen::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-color: inherit;
+  z-index: -1;
+}
+
 @media (min-width: 640px) {
   :root {
     --vp-home-hero-image-filter: blur(56px);

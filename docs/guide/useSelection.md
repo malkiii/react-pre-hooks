@@ -12,12 +12,12 @@ This hook returns the current selected text on the window or a specific element,
 
 ## Return Values
 
-| Name            | Type      | Description                                          |
-| --------------- | --------- | ---------------------------------------------------- |
-| **ref**         | RefObject | the target element reference.                        |
-| **text**        | String    | the selection text or `null`.                        |
-| **rect**        | Object    | the selection rectangle (`top`, `left`, `width`...). |
-| **isSelecting** | Boolean   | whether the user is selecting or not.                |
+| Name            | Type      | Description                                                    |
+| --------------- | --------- | -------------------------------------------------------------- |
+| **ref**         | RefObject | the target element reference.                                  |
+| **text**        | String    | the selection text or `null`.                                  |
+| **rect**        | Object    | the selection rectangle (`top`, `left`, `width`...).           |
+| **isCollapsed** | Boolean   | indicates whether or not there is currently any text selected. |
 
 ## Example Usage
 

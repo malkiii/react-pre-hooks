@@ -40,7 +40,7 @@ export default function Example() {
     onUpload: files =>
       files.forEach(file => {
         const reader = new FileReader();
-        reader.onload = () => images.push(reader.result);
+        reader.onload = () => images.push(reader.result as string);
         reader.readAsDataURL(file);
       })
   });
@@ -49,7 +49,7 @@ export default function Example() {
     <main>
       <h1>Drop images to this box!</h1>
       <label ref={ref}>
-        {images.map((image, index) => (
+        {images.values.map((image, index) => (
           <img key={index} alt={`image-${index}`} src={image} />
         ))}
         <input type="file" accept="image/*" hidden />
@@ -59,4 +59,4 @@ export default function Example() {
 }
 ```
 
-<iframe src="https://codesandbox.io/embed/usefiledropzone-m466pj?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useFileDropzone" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<iframe src="https://codesandbox.io/embed/usefiledroparea-m466pj?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useFileDropArea" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

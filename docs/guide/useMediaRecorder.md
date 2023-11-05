@@ -35,27 +35,32 @@ const recorder = useMediaRecorder({ mimeType: 'video/webm;codecs=vp9,opus' });
 ```tsx
 import { useMediaDevices, useMediaRecorder } from 'realtime-hooks';
 
-export default function Example() {
-  const { ref, stream } = useMediaDevices({ video: true, audio: true });
+export default function VideoRecorder() {
+  const media = useMediaDevices({ startOnMount: false });
   const recorder = useMediaRecorder({ mimeType: 'video/webm;codecs=vp8' });
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (recorder.isRecording) {
-      recorder
-        .stop({ type: 'video/mp4' })
-        .then(blob => download(URL.createObjectURL(blob)))
+      const blob = await recorder.stop({ type: 'video/mp4' });
+      download(URL.createObjectURL(blob));
+
+      media.stop();
     } else {
-      recorder.start(stream.current);
+      await media.start({ video: true, audio: true });
+
+      recorder.start(media.stream.current);
     }
   };
 
   return (
     <main>
-      <video ref={ref} />
+      <video ref={media.ref} />
       <button onClick={handleClick}>
-        {video.isRecording ? 'stop' : 'start'}
+        {recorder.isRecording ? 'stop' : 'start'} Recording
       </button>
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/usemediarecorder-hqgfxh?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useMediaRecorder" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>

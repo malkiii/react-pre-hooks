@@ -30,7 +30,7 @@ bun add realtime-hooks
 
 :::
 
-## Importing
+## Usage
 
 Just import the hook that you want to use:
 
