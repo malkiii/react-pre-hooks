@@ -3,12 +3,13 @@ import { useLayoutEffect, useRef, useState } from 'react';
 export const useImageLoader = (src: string, handler?: EventListener) => {
   const imageRef = useRef<HTMLImageElement>(new Image());
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useLayoutEffect(() => {
-    const handleLoad = (event: Event | string) => {
+    const handleLoad = (event: any) => {
       setIsLoading(false);
-      if (typeof event === 'string') return;
-      if (handler && event.type !== 'error') handler(event);
+      if (event.type === 'error') setIsError(true);
+      else if (handler) handler(event);
     };
 
     imageRef.current.onload = handleLoad;
@@ -17,5 +18,5 @@ export const useImageLoader = (src: string, handler?: EventListener) => {
     imageRef.current.src = src;
   }, []);
 
-  return { image: imageRef.current, isLoading };
+  return { image: imageRef.current, isLoading, isError };
 };

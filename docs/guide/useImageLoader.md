@@ -9,10 +9,11 @@ Use this hook to load an image in the **background** using its URL, and returns 
 
 ## Return Values
 
-| Name          | Type             | Description              |
-| ------------- | ---------------- | ------------------------ |
-| **isLoading** | Boolean          | the image loading state. |
-| **image**     | HTMLImageElement | the loaded image.        |
+| Name          | Type             | Description                                 |
+| ------------- | ---------------- | ------------------------------------------- |
+| **image**     | HTMLImageElement | the loaded image.                           |
+| **isLoading** | Boolean          | the image loading state.                    |
+| **isError**   | Boolean          | indicates whether there is an error or not. |
 
 ## Example Usage
 
