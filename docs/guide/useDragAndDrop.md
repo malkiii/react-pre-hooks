@@ -20,7 +20,7 @@ a `ref` object of the **container** element.
 
 | Name         | Type    | Description                                                                                                                                                                                         |
 | ------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **state**    | String  | the drag state which can be `start`, `end`, or `dragging`.                                                                                                                                          |
+| **type**     | String  | the drag type which can be `start`, `end`, or `moving`.                                                                                                                                             |
 | **clientX**  | Number  | the `x` position.                                                                                                                                                                                   |
 | **clientY**  | Number  | the `y` position.                                                                                                                                                                                   |
 | **initialX** | Number  | the initial `x` position.                                                                                                                                                                           |
