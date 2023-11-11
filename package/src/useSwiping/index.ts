@@ -4,7 +4,7 @@ import { getCurrentMousePosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export type SwipeAction = {
-  readonly state: 'start' | 'moving' | 'end';
+  readonly type: 'start' | 'moving' | 'end';
   readonly direction?: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
   readonly deltaX: number;
   readonly deltaY: number;
@@ -32,7 +32,7 @@ export const useSwiping = <T extends EventTarget = Window>(
   const initialPosition = useRef<typeof delta.current>();
 
   const callback = useCallback(
-    (state: SwipeAction['state'], event: SwipeAction['event']) => {
+    (type: SwipeAction['type'], event: SwipeAction['event']) => {
       if (!initialPosition.current) return;
 
       const currentPosition = getCurrentMousePosition(event);
@@ -51,13 +51,13 @@ export const useSwiping = <T extends EventTarget = Window>(
           : 'DOWN';
 
       handler({
-        state,
+        type,
         direction,
         deltaX: delta.current.x,
         deltaY: delta.current.y,
         initialX: initialPosition.current.x,
         initialY: initialPosition.current.y,
-        isHolding: state !== 'end',
+        isHolding: type !== 'end',
         event
       });
     },

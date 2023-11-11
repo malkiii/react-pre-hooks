@@ -4,7 +4,7 @@ import { getCurrentMousePosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export type DragAction = {
-  readonly state: 'start' | 'moving' | 'end';
+  readonly type: 'start' | 'moving' | 'end';
   readonly clientX: number;
   readonly clientY: number;
   readonly initialX: number;
@@ -31,13 +31,13 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
   const initialPosition = useRef<{ x: number; y: number }>();
 
   const callback = useCallback(
-    (state: DragAction['state'], event: DragAction['event']) => {
+    (type: DragAction['type'], event: DragAction['event']) => {
       if (!draggedElement.current || !initialPosition.current) return;
 
       const currentPosition = getCurrentMousePosition(event);
 
       handler({
-        state,
+        type,
         clientX: currentPosition.x,
         clientY: currentPosition.y,
         initialX: initialPosition.current.x,

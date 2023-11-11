@@ -20,7 +20,7 @@ a `ref` object of the target element.
 
 | Name          | Type    | Description                                                                                                                                                                                       |
 | ------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **state**     | String  | the swipe state which can be `start`, `end`, or `moving`.                                                                                                                                         |
+| **type**      | String  | the swipe type which can be `start`, `end`, or `moving`.                                                                                                                                          |
 | **deltaX**    | Number  | the swipe distance `x` from the `initialX` value.                                                                                                                                                 |
 | **deltaY**    | Number  | the swipe distance `y` from the `initialY` value.                                                                                                                                                 |
 | **initialX**  | Number  | the initial `x` position.                                                                                                                                                                         |
@@ -39,7 +39,7 @@ let start = 0;
 export default function Slider() {
   const ref = useSwiping(
     action => {
-      if (action.state === 'start') start = window.scrollY;
+      if (action.type === 'start') start = window.scrollY;
 
       window.scrollTo({ top: start + action.deltaY });
     },
