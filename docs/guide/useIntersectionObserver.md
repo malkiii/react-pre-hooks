@@ -7,6 +7,10 @@ Handle the [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/A
 1. the [IntersectionObserver callback](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#callback) function.
 2. the [IntersectionObserver options](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#options), as well as the `ref` object of the target element.
 
+::: info
+the `root` option of the observer is replaced by `container` which is a **function** that returns the root element in this hook.
+:::
+
 ## Return Values
 
 | Name         | Type      | Description                                                                                                                              |

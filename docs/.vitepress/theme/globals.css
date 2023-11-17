@@ -35,7 +35,7 @@ html {
   border-radius: 10px;
 }
 
-img.VPImage {
+img {
   user-select: none;
 }
 
@@ -52,6 +52,10 @@ img.VPImage {
   inset: 0;
   background-color: inherit;
   z-index: -1;
+}
+
+footer {
+  padding: 1rem !important;
 }
 
 @media (min-width: 640px) {
