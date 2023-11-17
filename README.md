@@ -55,6 +55,7 @@ Simplify and clean up your components with this react hooks collection.
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useOientation">useOientation</a></td><td>Track the screen orientation type.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePageVisibility">usePageVisibility</a></td><td>Returns the tab visible state (the tab contents is visible or hidden).</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePointerLock">usePointerLock</a></td><td>Toggle the pointer lock mode on a target element.</td></tr>
+  <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePointers">usePointers</a></td><td>Handles all the pointer events easily.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/usePreferredLanguage">usePreferredLanguage</a></td><td>Track the current user preferred language.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useResizeObserver">useResizeObserver</a></td><td>Handle the <code>ResizeObserver</code>.</td></tr>
   <tr><td><a href="https://malkiii.github.io/realtime-hooks/guide/useScreenCapture">useScreenCapture</a></td><td>Use the user <b>screen capture</b> and returns its states and controls as well as the media stream object.</td></tr>
