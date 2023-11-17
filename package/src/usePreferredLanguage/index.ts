@@ -20,7 +20,7 @@ export const usePreferredLanguage = () => {
 
     updatePreferredLanguage();
 
-    return addEvents('languagechange', updatePreferredLanguage, { target: window });
+    return addEvents('languagechange', updatePreferredLanguage, { target: () => window });
   }, []);
 
   return language;

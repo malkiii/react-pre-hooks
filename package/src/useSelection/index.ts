@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useState } from 'react';
+import { RefObject, useCallback, useState } from 'react';
 import { useEventListener } from '..';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -21,8 +21,13 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(ref?: RefOb
     if (!isCollapsed) setRect(currentSelection?.getRangeAt(0).getBoundingClientRect());
   }, [targetRef]);
 
-  useEffect(handleSelectionChange, []);
-  useEventListener('selectionchange', handleSelectionChange, { target: document, passive: true });
+  useEventListener('selectionchange', handleSelectionChange, {
+    passive: true,
+    target: () => {
+      handleSelectionChange();
+      return document;
+    }
+  });
 
   return { ref: targetRef, text, rect, isCollapsed };
 };

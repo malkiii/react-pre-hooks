@@ -22,13 +22,13 @@ export function getCurrentMousePosition(event: MouseEvent | TouchEvent) {
     : { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
 }
 
-export function addEvents<T extends EventTarget, E extends keyof EventMap<T> & string>(
+export function addEvents<T extends EventTarget, E extends keyof EventMap<T>>(
   event: E | Array<E | false | null | undefined>,
   handler: EventHandler<T, E>,
-  { target, ...options }: EventListenerOptions<T> = {}
+  { ref, target, ...options }: EventListenerOptions<T> = {}
 ) {
-  if (!target) return () => {};
-  const element = 'addEventListener' in target ? target : target.current;
+  if (!ref && !target) return () => {};
+  const element = ref?.current ?? (target && target());
   if (!element) return () => {};
 
   const addEvent = (e: string) => element.addEventListener(e, handler as any, options);

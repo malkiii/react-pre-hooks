@@ -18,7 +18,7 @@ export const useHash = (initialValue?: string) => {
     if (initialValue) handleHashChange();
   }, []);
 
-  useEventListener('hashchange', handleHashChange, { target: window });
+  useEventListener('hashchange', handleHashChange, { target: () => window });
 
   return [hash, updateHash] as const;
 };

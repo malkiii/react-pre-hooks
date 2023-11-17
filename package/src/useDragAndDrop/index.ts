@@ -76,7 +76,7 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
     [callback]
   );
 
-  const eventOptions = { target: targetRef };
+  const eventOptions = { ref: targetRef };
 
   useEventListener(['mousemove', touches && 'touchmove'], handleDragging, eventOptions);
   useEventListener(['mousedown', touches && 'touchstart'], handleMouseDown, eventOptions);

@@ -1,5 +1,6 @@
-import { RefObject, useCallback, useEffect, useState } from 'react';
-import { addEvents, getCurrentMousePosition } from '../utils';
+import { RefObject, useCallback, useState } from 'react';
+import { useEventListener } from '..';
+import { getCurrentMousePosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
@@ -13,32 +14,26 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
     setCanShow(can => show ?? !can);
   }, []);
 
-  useEffect(() => {
-    const options = { target: targetRef.current ?? window };
+  const handleRightClick = useCallback((event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setPosition(getCurrentMousePosition(event));
+  }, []);
 
-    const handleRightClick = (event: MouseEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
-      setPosition(getCurrentMousePosition(event));
-    };
-    const handleMouseDown = () => {
-      setCanShow(false);
-    };
-    const handleMouseUp = (event: MouseEvent) => {
-      event.stopPropagation();
-      setCanShow(event.button === 2);
-    };
+  const handleMouseDown = useCallback(() => {
+    setCanShow(false);
+  }, []);
 
-    const clearRightClick = addEvents('contextmenu', handleRightClick, options);
-    const clearMouseDown = addEvents('mousedown', handleMouseDown, options);
-    const clearMouseUp = addEvents('mouseup', handleMouseUp, options);
+  const handleMouseUp = useCallback((event: MouseEvent) => {
+    event.stopPropagation();
+    setCanShow(event.button === 2);
+  }, []);
 
-    return () => {
-      clearRightClick();
-      clearMouseDown();
-      clearMouseUp();
-    };
-  }, [ref]);
+  const options = { target: () => targetRef.current ?? window };
+
+  useEventListener('mouseup', handleMouseUp, options);
+  useEventListener('mousedown', handleMouseDown, options);
+  useEventListener('contextmenu', handleRightClick, options);
 
   return { ref: targetRef, clientX: position.x, clientY: position.y, canShow, toggle };
 };
