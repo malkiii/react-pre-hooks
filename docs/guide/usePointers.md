@@ -48,7 +48,7 @@ export default function Example() {
 
     if (event.type === 'pointerdown') {
       document.body.appendChild(pointer);
-    } else if (!list.includes(event)) {
+    } else if (!list.find(e => e.pointerId === event.pointerId)) {
       pointer.remove();
     }
   });

@@ -38,13 +38,13 @@ export const usePointers = <T extends HTMLElement = HTMLDivElement>(
   }, []);
 
   const removePointer = useCallback((event: PointerEvent) => {
-    pointersList.current = pointersList.current.filter(e => e.pointerId === event.pointerId);
+    pointersList.current = pointersList.current.filter(e => e.pointerId !== event.pointerId);
   }, []);
 
   const handlePointerEvents = useCallback(
     (event: PointerEvent) => {
       if (event.type === 'pointerdown') addPointer(event);
-      if (['pointerup', 'pointercancel', 'pointerout'].includes(event.type)) removePointer(event);
+      if (['pointerup', 'pointercancel'].includes(event.type)) removePointer(event);
 
       handler(event, pointersList.current);
     },
