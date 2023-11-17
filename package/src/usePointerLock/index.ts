@@ -56,7 +56,7 @@ export const usePointerLock = <T extends HTMLElement = HTMLDivElement>(
     setIsError(true);
   }, []);
 
-  const eventOptions = { target: document };
+  const eventOptions = { target: () => document };
   useEventListener('pointerlockchange', handlePointerLockChange, eventOptions);
   useEventListener('pointerlockerror', handlePointerLockError, eventOptions);
 

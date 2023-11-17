@@ -29,7 +29,7 @@ const getCurrentConnectionState = (): NetworkInformation => {
 
 export const useNetworkState = () => {
   const [isOnline, setIsOnline] = useState<boolean>(true);
-  const [networkInfo, setNetworkInfo] = useState<NetworkInformation>(getCurrentConnectionState);
+  const [networkInfo, setNetworkInfo] = useState<NetworkInformation>({});
 
   const updateConnection = useCallback(async () => {
     setNetworkInfo(getCurrentConnectionState);

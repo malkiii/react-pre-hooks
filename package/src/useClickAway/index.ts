@@ -11,7 +11,8 @@ export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
   options: ClickAwayOptions<T> = {}
 ) => {
   const targetRef = useNewRef<T>(options.ref);
-  const callback = useCallback(
+
+  const handleClick = useCallback(
     (event: MouseEvent) => {
       const element = targetRef.current;
       element && !element.contains(event.target as Node) && handler(event);
@@ -19,7 +20,7 @@ export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
     [handler]
   );
 
-  useEventListener('click', callback, { target: window });
+  useEventListener('click', handleClick, { target: () => window });
 
   return targetRef;
 };

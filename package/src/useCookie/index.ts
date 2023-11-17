@@ -81,7 +81,7 @@ export const useCookie = (name: string, options: CookieAttributes = {}) => {
     getCookie(name);
   }, []);
 
-  useEventListener('cookiechange', handleCookieChange, { target: window });
+  useEventListener('cookiechange', handleCookieChange, { target: () => window });
 
   return [value, updateValue];
 };

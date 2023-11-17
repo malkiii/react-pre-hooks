@@ -29,8 +29,8 @@ export const useHover = <T extends HTMLElement = HTMLDivElement>(options: HoverO
     hoverTimeout.cancel();
   }, [unhoverTimeout]);
 
-  useEventListener('mouseenter', handleHover, { target: targetRef });
-  useEventListener('mouseleave', handleUnhover, { target: targetRef });
+  useEventListener('mouseenter', handleHover, { ref: targetRef });
+  useEventListener('mouseleave', handleUnhover, { ref: targetRef });
 
   return { ref: targetRef, isHovered };
 };

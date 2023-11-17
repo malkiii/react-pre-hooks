@@ -55,7 +55,7 @@ export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
     await getDropperFiles(event.dataTransfer?.files);
   }, []);
 
-  const eventOptions = { target: targetRef };
+  const eventOptions = { ref: targetRef };
 
   useEventListener('drop', handleFileDrop, eventOptions);
   useEventListener('dragover', e => e.preventDefault(), eventOptions);

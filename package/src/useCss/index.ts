@@ -39,10 +39,12 @@ export const useCss = <T extends HTMLElement = HTMLDivElement>(
 ) => {
   const rootRef = useNewRef<T>(options.ref);
   const [currentCss, setCurrentCss] = useState<CSSObject>({});
-  const styleRef = useRef<HTMLStyleElement>(document.createElement('style'));
+  const styleRef = useRef<HTMLStyleElement>();
 
   useLayoutEffect(() => {
     if (deepEqual(css, currentCss)) return;
+
+    if (!styleRef.current) styleRef.current = document.createElement('style');
     styleRef.current.innerHTML = styleObjectToString(css);
     setCurrentCss(css);
 
@@ -52,5 +54,5 @@ export const useCss = <T extends HTMLElement = HTMLDivElement>(
     }
   }, [rootRef, css]);
 
-  return { rootRef, cssText: styleRef.current.innerHTML };
+  return { rootRef, cssText: styleRef.current?.innerHTML ?? '' };
 };

@@ -52,7 +52,7 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
     setIsError(true);
   }, []);
 
-  const eventOptions = { target: document };
+  const eventOptions = { target: () => document };
   useEventListener(fullscreenChangeEvents, handleFullScreenChange, eventOptions);
   useEventListener(fullscreenErrorEvents, handleFullScreenError, eventOptions);
 

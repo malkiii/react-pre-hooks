@@ -1,5 +1,5 @@
-import { RefObject, useCallback, useEffect, useState } from 'react';
-import { addEvents } from '../utils';
+import { RefObject, useCallback, useState } from 'react';
+import { useEventListener } from '..';
 import { useNewRef } from '../utils/useNewRef';
 
 export type ScrollThresholdHandler = (event?: Event) => boolean | undefined | null;
@@ -39,10 +39,12 @@ export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(
     [thresholdHandler]
   );
 
-  useEffect(() => {
-    handleScrolling();
-    return addEvents('scroll', handleScrolling, { target: targetRef.current ?? window });
-  }, [thresholdHandler]);
+  useEventListener('scroll', handleScrolling, {
+    target: () => {
+      handleScrolling();
+      return targetRef.current ?? window;
+    }
+  });
 
   return { ref: targetRef, passed };
 };
