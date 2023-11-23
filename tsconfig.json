@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
+    "module": "commonjs",
     "jsx": "react-jsx",
-    "moduleResolution": "Bundler",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "strict": true,
     "declaration": true,
