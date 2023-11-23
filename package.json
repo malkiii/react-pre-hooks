@@ -1,6 +1,6 @@
 {
   "name": "realtime-hooks",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "type": "module",
   "description": "Simplify and clean up your components with this react hooks collection.",
   "author": {
@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "homepage": "https://malkiii.github.io/realtime-hooks",
   "files": [
@@ -23,7 +23,7 @@
     "url": "https://github.com/malkiii/realtime-hooks/issues"
   },
   "scripts": {
-    "build": "rm -rf dist/ && tsc -p tsconfig.build.json",
+    "build": "rm -rf dist/ && CONFIG=\"tsconfig.build.json\" && tsc -p $CONFIG && tsc -m ESNext --outDir dist/esm -p $CONFIG",
     "prebuild": "pnpm lint && bash package/export-hooks.sh",
     "format": "prettier --write package/**/*.{ts,tsx}",
     "lint": "eslint package --ext ts,tsx --cache",
