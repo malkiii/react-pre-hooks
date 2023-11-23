@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "CommonJS",
     "jsx": "react-jsx",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "strict": true,
     "declaration": true,
     "esModuleInterop": true,
