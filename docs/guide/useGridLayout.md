@@ -20,15 +20,21 @@ Track the number of **rows** and **columns** of a grid layout using this hook.
 import { useGridLayout } from 'realtime-hooks';
 
 export default function Example() {
-  const { rows, columns } = useGridLayout();
+  const { ref, rows, columns } = useGridLayout();
 
   return (
     <main>
       <p>
-        rows: {rows}, columns: {columns}
+        Rows: {rows}, Columns: {columns}
       </p>
-      <div ref={ref} style={{ display: 'grid' }}></div>
+      <div ref={ref} style={{ display: 'grid' }}>
+        {new Array(12).fill(null).map((_, i) => (
+          <span key={i}></span>
+        ))}
+      </div>
     </main>
   );
 }
 ```
+
+<iframe src="https://codesandbox.io/embed/rt7jsp?view=Editor+%2B+Preview&module=%2Fsrc%2FComponent.tsx&hidenavigation=1" style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;" title="useGridLayout" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
