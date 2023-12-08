@@ -1,6 +1,6 @@
-import { DependencyList, useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-export const useAsync = <T extends any>(callback: () => Promise<T>, deps: DependencyList = []) => {
+export const useAsync = <T extends any>(callback: () => Promise<T>) => {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [error, setError] = useState<unknown>();
   const [data, setData] = useState<T>();
@@ -18,9 +18,5 @@ export const useAsync = <T extends any>(callback: () => Promise<T>, deps: Depend
     }
   }, [callback, isPending]);
 
-  useEffect(() => {
-    callbackMemo();
-  }, deps);
-
-  return { data, isPending, error, retry: callbackMemo };
+  return { data, isPending, error, callback: callbackMemo };
 };

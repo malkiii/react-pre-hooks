@@ -1,14 +1,15 @@
-import { DependencyList, useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAsync } from '..';
 
 export type RequestOptions = RequestInit & {
   url: string | URL;
   params?: Record<string, string | number | null | undefined>;
+  fetchOnMount?: boolean;
 };
 
 type AbortCallback = (reason?: any) => void;
 
-export const useFetch = <T extends any>(options: RequestOptions, deps?: DependencyList) => {
+export const useFetch = <T extends any>(options: RequestOptions) => {
   const [response, setResponse] = useState<Response>();
   const controller = useRef<AbortController>(new AbortController());
 
@@ -31,9 +32,13 @@ export const useFetch = <T extends any>(options: RequestOptions, deps?: Dependen
       controller.current.abort();
       console.error(error);
     }
-  }, deps ?? []);
+  }, [options]);
 
-  const result = useAsync<T | undefined>(fetchData, [fetchData]);
+  const result = useAsync<T | undefined>(fetchData);
+
+  useEffect(() => {
+    if (options.fetchOnMount) result.callback();
+  }, []);
 
   return { response, abort: controller.current.abort as AbortCallback, ...result };
 };
