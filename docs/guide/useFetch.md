@@ -4,11 +4,12 @@ Fetch data with a URL and search parameters using [useAsync](./useAsync) hook.
 
 ## Options
 
-| Name        | Type                                                                      | Description                                                                                       |
-| ----------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **url**     | String or [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) | the fetch URL.                                                                                    |
-| **params**  | Object                                                                    | URL search params.                                                                                |
-| **...init** | Object                                                                    | [request init](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options) options. |
+| Name             | Type                                                                      | Description                                                                                       |
+| ---------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **url**          | String or [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) | the fetch URL.                                                                                    |
+| **params**       | Object                                                                    | URL search params.                                                                                |
+| **fetchOnMount** | Boolean                                                                   | start fetching when the component is mounted.                                                     |
+| **...init**      | Object                                                                    | [request init](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options) options. |
 
 ## Return Values
 
@@ -17,7 +18,7 @@ Fetch data with a URL and search parameters using [useAsync](./useAsync) hook.
 | **data**      | Any      | resolved data from the function.                                                                                       |
 | **isPending** | Boolean  | the loading state.                                                                                                     |
 | **response**  | Object   | [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) object from the fetch function.                  |
-| **retry**     | Fnuction | retry executing the fetch function.                                                                                    |
+| **callback**  | Fnuction | the fatch callback function.                                                                                           |
 | **abort**     | Fnuction | cancel the fetch request using an [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController). |
 | **error**     | Unknown  | cached error if it exists.                                                                                             |
 
@@ -37,14 +38,15 @@ type Data = {
 };
 
 export default function Users() {
-  const { data, isPending, retry, error } = useFetch<Data>({
+  const { data, isPending, callback, error } = useFetch<Data>({
     url: 'https://dummyjson.com/users',
-    params: { limit: 12 }
+    params: { limit: 12 },
+    fetchOnMount: true
   });
 
   return (
     <main>
-      <button onClick={retry}>Refetch</button>
+      <button onClick={callback}>Refetch</button>
       {isPending ? (
         <p>Loading...</p>
       ) : error ? (

@@ -4,17 +4,16 @@ This hook simplifies the execution of an `async` function by returning its state
 
 ## Parameters
 
-1. an [async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) (a function that returns a promise).
-2. the dependency array (default is `[]`)
+- an [async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) (a function that returns a promise).
 
 ## Return Values
 
-| Name          | Type                   | Description                         |
-| ------------- | ---------------------- | ----------------------------------- |
-| **data**      | `callback` return type | resolved data from the function.    |
-| **isPending** | Boolean                | the loading state.                  |
-| **retry**     | Fnuction               | retry executing the async function. |
-| **error**     | Unknown                | cached error if it exists.          |
+| Name          | Type                   | Description                      |
+| ------------- | ---------------------- | -------------------------------- |
+| **data**      | `callback` return type | resolved data from the function. |
+| **isPending** | Boolean                | the loading state.               |
+| **callback**  | Fnuction               | the async callback function.     |
+| **error**     | Unknown                | cached error if it exists.       |
 
 ## Example Usage
 
@@ -26,14 +25,14 @@ const getData = (ms: number) => {
 };
 
 export default function Example() {
-  const { data, isPending, retry } = useAsync(async () => {
+  const { data, isPending, callback } = useAsync(async () => {
     return await getData(2200);
   });
 
   return (
     <main>
-      <div>{isPending ? 'Loading...' : data}</div>
-      <button onClick={retry}>Retry</button>
+      <div>{isPending ? 'Loading...' : data ?? 'No data.'}</div>
+      <button onClick={callback}>Start</button>
     </main>
   );
 }
