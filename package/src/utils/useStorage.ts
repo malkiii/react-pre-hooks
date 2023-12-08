@@ -50,7 +50,9 @@ export const useStorage = <T extends any>(
     [key]
   );
 
-  useIsomorphicEffect(setCurrentStoredValue, []);
+  useIsomorphicEffect(() => {
+    setCurrentStoredValue();
+  }, []);
 
   useEventListener('storage', handleStorageChange, { target: () => window });
 
