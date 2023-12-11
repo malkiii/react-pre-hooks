@@ -1,14 +1,14 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useDebouncedState = <T extends any = any>(initial: T, { delay = 500 } = {}) => {
   const [value, setValue] = useState<T>(initial);
   const [debouncedValue, setDebouncedValue] = useState<T>(initial);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setValue(initial);
   }, [initial]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const timeout = setTimeout(() => setDebouncedValue(value), delay);
     return () => clearTimeout(timeout);
   }, [value]);

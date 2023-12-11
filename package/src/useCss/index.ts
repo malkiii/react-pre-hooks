@@ -1,4 +1,4 @@
-import { CSSProperties, RefObject, useLayoutEffect, useRef, useState } from 'react';
+import { CSSProperties, RefObject, useEffect, useRef, useState } from 'react';
 import deepEqual from 'fast-deep-equal';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -41,7 +41,7 @@ export const useCss = <T extends HTMLElement = HTMLDivElement>(
   const [currentCss, setCurrentCss] = useState<CSSObject>({});
   const styleRef = useRef<HTMLStyleElement>();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (deepEqual(css, currentCss)) return;
 
     if (!styleRef.current) styleRef.current = document.createElement('style');
