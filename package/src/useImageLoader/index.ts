@@ -1,11 +1,11 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const useImageLoader = (src: string, handler?: EventListener) => {
   const imageRef = useRef<HTMLImageElement>(new Image());
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const handleLoad = (event: any) => {
       setIsLoading(false);
       if (event.type === 'error') setIsError(true);

@@ -1,4 +1,4 @@
-import { SetStateAction, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export type SpeechOptions = Partial<
   Pick<SpeechSynthesisUtterance, 'lang' | 'voice' | 'rate' | 'pitch' | 'volume'>
@@ -90,7 +90,7 @@ export const useSpeech = (options: SpeechOptions = {}) => {
     [controls]
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const speech = speechRef.current;
     if (lang) speech.lang = lang;
     speech.rate = rate;

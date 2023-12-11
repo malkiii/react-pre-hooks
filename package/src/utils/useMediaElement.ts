@@ -1,4 +1,4 @@
-import { RefObject, SetStateAction, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { RefObject, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { getStateActionValue } from '.';
 import { useNewRef } from './useNewRef';
 
@@ -83,7 +83,7 @@ export const useMediaElement = <T extends MediaElementType | undefined = undefin
     };
   }, [ref, state]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const element = ref.current;
     if (!element) return;
 
