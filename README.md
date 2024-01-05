@@ -1,4 +1,8 @@
-# react-pre-hooks ✨
+<div align=center>
+
+<img alt="Logo" src="https://raw.githubusercontent.com/malkiii/react-pre-hooks/master/docs/public/logo.svg" width="200"><br/>
+
+# react-pre-hooks
 
 Simplify and clean up your components with this react hooks collection.
 
@@ -7,6 +11,8 @@ Simplify and clean up your components with this react hooks collection.
 <a href="https://malkiii.github.io/react-pre-hooks"><img alt="Documentation" src="https://img.shields.io/badge/-Documentation-1a1a1a?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjgwMCIgdmlld0JveD0iMCAwIDgwMCA4MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJMb2dvIiBjbGlwLXBhdGg9InVybCgjY2xpcDBfMjA2XzIzKSI+CjxnIGlkPSJib2R5Ij4KPHBhdGggaWQ9ImJpZy1lbGlwIiBkPSJNMTAwIDgwMEMyMDYuMDg3IDgwMCAzMDcuODI4IDc1Ny44NTcgMzgyLjg0MyA2ODIuODQzQzQ1Ny44NTcgNjA3LjgyOCA1MDAgNTA2LjA4NyA1MDAgNDAwQzUwMCAyOTMuOTEzIDQ1Ny44NTcgMTkyLjE3MiAzODIuODQzIDExNy4xNTdDMzA3LjgyOCA0Mi4xNDI4IDIwNi4wODcgMi4wNjU1OGUtMDUgMTAwIDBMMTAwIDQwMEwxMDAgODAwWiIgZmlsbD0iI0YwMDMzQyIvPgo8cGF0aCBpZD0ic21hbGwtZWxpcCIgZD0iTTcwMCA4MDBDNTkzLjkxMyA4MDAgNDkyLjE3MiA3NTcuODU3IDQxNy4xNTcgNjgyLjg0M0MzNDIuMTQzIDYwNy44MjggMzAwIDUwNi4wODcgMzAwIDQwMEw3MDAgNDAwTDcwMCA4MDBaIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXJfMjA2XzIzKSIvPgo8L2c+CjwvZz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8yMDZfMjMiIHgxPSI3MDAiIHkxPSI0MDAiIHgyPSItMTQwNy41IiB5Mj0iMjI5NS41IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGMUVGRUYiLz4KPHN0b3Agb2Zmc2V0PSIxIi8+CjwvbGluZWFyR3JhZGllbnQ+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMjA2XzIzIj4KPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI4MDAiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==" /></a>
 <a href="https://github.com/malkiii/react-pre-hooks/blob/master/.github/CONTRIBUTING.md"><img alt="Contribution" src="https://img.shields.io/badge/-Contribution-f0033c" /></a>
 <a href="https://github.com/malkiii/react-pre-hooks/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/malkiii/react-pre-hooks" /></a>
+
+</div><br/>
 
 ## List Of Hooks
 

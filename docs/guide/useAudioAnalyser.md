@@ -52,7 +52,7 @@ export default function Example() {
         const x = index * barWidth * 2;
         const y = canvas.height - barHeight;
 
-        ctx.fillStyle = '#fa0d46';
+        ctx.fillStyle = '#00cde0';
         ctx.fillRect(x, y, barWidth, barHeight);
       });
     },
