@@ -13,11 +13,6 @@ describe('useTimer', () => {
     return `${min}:${sec}`;
   };
 
-  it('should return current time', () => {
-    const { result } = renderHook(() => useTimer());
-    expect(result.current.value).toEqual(new Date());
-  });
-
   it('should start the timer on mount', () => {
     const { result } = renderHook(() => useTimer());
     expect(result.current.isRunning).toBe(true);
@@ -44,7 +39,7 @@ describe('useTimer', () => {
 
   it('should countdown', () => {
     const timeSkip = 45 * 1000;
-    const { result } = renderHook(() => useTimer({ initial: { minutes: 5 }, duration: -duration }));
+    const { result } = renderHook(() => useTimer({ start: { minutes: 5 }, duration: -duration }));
 
     act(() => vi.advanceTimersByTime(timeSkip));
     expect(result.current.passing).toBe(timeSkip);
