@@ -24,6 +24,12 @@ export default defineConfig({
   base: site.url.pathname,
   head: [
     ['link', { rel: 'icon', href: site.url.pathname + site.logo, type: 'image/svg+xml' }],
+    ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-G7X3ML41SG' }],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-G7X3ML41SG');`
+    ],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: site.title }],
     ['meta', { property: 'og:description', content: site.description }],
