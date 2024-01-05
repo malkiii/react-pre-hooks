@@ -12,7 +12,7 @@ export type DateProps = Partial<{
 }>;
 
 export type TimerOptions = {
-  initial?: DateProps;
+  start?: DateProps;
   duration?: number;
   timeout?: number;
   startOnMount?: boolean;
@@ -37,17 +37,15 @@ const getResolvedDate = (date?: Date | DateProps) => {
 
 export const useTimer = (options: TimerOptions = {}) => {
   const timeout = Math.abs(Math.floor(options.timeout ?? 1000));
-  const initial = options.initial ?? (options.duration ? {} : undefined);
+  const initial = options.start ?? (options.duration ? {} : undefined);
   const startOnMount = options.startOnMount ?? true;
 
-  const isTimer = !!(options.initial || options.duration);
   const initialDate = useMemo(() => getResolvedDate(initial), []);
   const [datetime, setDatetime] = useState<Date>(initialDate);
 
   const passing = Math.abs(datetime.getTime() - initialDate.getTime());
 
   const handleTimer = useCallback(() => {
-    if (!isTimer) return setDatetime(new Date());
     const duration = options.duration ?? Infinity;
 
     setDatetime(date => {
@@ -69,7 +67,6 @@ export const useTimer = (options: TimerOptions = {}) => {
 
   const reset = useCallback(
     (value: SetStateAction<Date> | DateProps = initialDate) => {
-      if (!isTimer) return;
       timer.stop();
       setDatetime(v => getResolvedDate(value instanceof Function ? value(v) : value));
     },
