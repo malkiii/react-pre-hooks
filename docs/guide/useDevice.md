@@ -16,7 +16,7 @@ Detect the device type with some boolean values.
 ## Example Usage
 
 ```tsx
-import { useDevice } from 'realtime-hooks';
+import { useDevice } from 'react-pre-hooks';
 
 export default function Example() {
   const { device } = useDevice();

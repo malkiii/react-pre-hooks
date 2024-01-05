@@ -29,7 +29,7 @@ It returns a tuple of 3 values:
 let's say we have a list of products, each product has `name` and `description`, and we will create a component from it:
 
 ```tsx
-import { useAutoComplete } from 'realtime-hooks';
+import { useAutoComplete } from 'react-pre-hooks';
 
 const products = [...];
 

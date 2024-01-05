@@ -23,7 +23,7 @@ This hook returns the current selected text on the window or a specific element,
 
 <!-- prettier-ignore -->
 ```tsx
-import { useSelection } from 'realtime-hooks';
+import { useSelection } from 'react-pre-hooks';
 
 export default function Example() {
   const { text, rect, isSelecting } = useSelection();

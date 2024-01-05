@@ -33,7 +33,7 @@ const recorder = useMediaRecorder({ mimeType: 'video/webm;codecs=vp9,opus' });
 
 <!-- prettier-ignore -->
 ```tsx
-import { useMediaDevices, useMediaRecorder } from 'realtime-hooks';
+import { useMediaDevices, useMediaRecorder } from 'react-pre-hooks';
 
 export default function VideoRecorder() {
   const media = useMediaDevices({ startOnMount: false });

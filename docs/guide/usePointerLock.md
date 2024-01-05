@@ -20,7 +20,7 @@ Toggle the [pointer lock](https://developer.mozilla.org/en-US/docs/Web/API/Point
 ## Example Usage
 
 ```tsx
-import { usePointerLock } from 'realtime-hooks';
+import { usePointerLock } from 'react-pre-hooks';
 
 export default function Example() {
   const pointerLock = usePointerLock();

@@ -20,7 +20,7 @@ This hook detects the scroll **direction** of the window or a target element.
 
 <!-- prettier-ignore -->
 ```tsx
-import { useScrollDirection } from 'realtime-hooks';
+import { useScrollDirection } from 'react-pre-hooks';
 
 export default function Example() {
   const direction = useScrollDirection();

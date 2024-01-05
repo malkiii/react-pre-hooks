@@ -61,7 +61,7 @@ counter.reset();
 ## Example Usage
 
 ```tsx
-import { useCounter } from 'realtime-hooks';
+import { useCounter } from 'react-pre-hooks';
 
 export default function Example() {
   const counter = useCounter(1, { min: 1, max: 20 });

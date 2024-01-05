@@ -5,7 +5,7 @@ This hook is a replacement for [useEffect](https://react.dev/reference/react/use
 ## Example Usage
 
 ```tsx
-import { useIsomorphicEffect } from 'realtime-hooks';
+import { useIsomorphicEffect } from 'react-pre-hooks';
 
 export default function Example() {
   useIsomorphicEffect(() => {

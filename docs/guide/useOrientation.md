@@ -9,7 +9,7 @@ the screen [orientation type](https://developer.mozilla.org/en-US/docs/Web/API/S
 ## Example Usage
 
 ```tsx
-import { useOrientation } from 'realtime-hooks';
+import { useOrientation } from 'react-pre-hooks';
 
 export default function Example() {
   const type = useOrientation();

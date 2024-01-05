@@ -17,7 +17,7 @@ This hook tracks the mouse cursor `position` of a target element.
 ## Example Usage
 
 ```tsx
-import { useMousePosition } from 'realtime-hooks';
+import { useMousePosition } from 'react-pre-hooks';
 
 export default function Trailer() {
   const { x: left, y: top } = useMousePosition();

@@ -19,7 +19,7 @@ This hook returns whether the target element is hovered or not, and it can use a
 ## Example Usage
 
 ```tsx
-import { useHover } from 'realtime-hooks';
+import { useHover } from 'react-pre-hooks';
 
 export default function Example() {
   const { ref, isHovered } = useHover({ delay: { hover: 300, unhover: 750 } });

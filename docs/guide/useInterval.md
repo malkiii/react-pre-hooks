@@ -53,7 +53,7 @@ interval.isRunning; // false
 
 <!-- prettier-ignore -->
 ```tsx
-import { useCounter, useInterval } from 'realtime-hooks';
+import { useCounter, useInterval } from 'react-pre-hooks';
 
 export default function Counter() {
   const counter = useCounter();

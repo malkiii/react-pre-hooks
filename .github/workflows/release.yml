@@ -15,7 +15,7 @@ jobs:
 
     environment:
       name: Release
-      url: https://www.npmjs.com/package/realtime-hooks
+      url: https://www.npmjs.com/package/react-pre-hooks
 
     steps:
       - uses: actions/checkout@v3

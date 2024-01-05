@@ -21,7 +21,7 @@ Just use [useSize](./useSize) if you want to get an element size in a state.
 :::
 
 ```tsx
-import { useResizeObserver } from 'realtime-hooks';
+import { useResizeObserver } from 'react-pre-hooks';
 
 export default function Example() {
   const { ref } = useResizeObserver(entries => {

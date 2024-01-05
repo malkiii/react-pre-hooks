@@ -27,7 +27,7 @@ If you specified a custom scroll threshold `handler`, the **offset** values will
 1. Using a custom handler:
 
 ```tsx
-import { useScrollThreshold } from 'realtime-hooks';
+import { useScrollThreshold } from 'react-pre-hooks';
 
 export default function Example() {
   const { passed } = useScrollThreshold(() => {
@@ -46,7 +46,7 @@ export default function Example() {
 2. Using the offset values:
 
 ```tsx
-import { useScrollThreshold } from 'realtime-hooks';
+import { useScrollThreshold } from 'react-pre-hooks';
 
 export default function Example() {
   const { passed } = useScrollThreshold({ bottom: 200 });

@@ -16,7 +16,7 @@ Some of the `NetworkInformation` properties may not supported in other browsers.
 ## Example Usage
 
 ```tsx
-import { useNetworkState } from 'realtime-hooks';
+import { useNetworkState } from 'react-pre-hooks';
 
 export default function Example() {
   const { isOnline } = useNetworkState();

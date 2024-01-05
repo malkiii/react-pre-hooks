@@ -25,7 +25,7 @@ Just use [useInView](./useInView) if you want to check if an element is **inters
 :::
 
 ```tsx
-import { useIntersectionObserver } from 'realtime-hooks';
+import { useIntersectionObserver } from 'react-pre-hooks';
 
 export default function Example() {
   const { ref } = useIntersectionObserver(

@@ -13,19 +13,19 @@ Install it with:
 ::: code-group
 
 ```sh [npm]
-npm i realtime-hooks
+npm i react-pre-hooks
 ```
 
 ```sh [pnpm]
-pnpm i realtime-hooks
+pnpm i react-pre-hooks
 ```
 
 ```sh [yarn]
-yarn add realtime-hooks
+yarn add react-pre-hooks
 ```
 
 ```sh [bun]
-bun add realtime-hooks
+bun add react-pre-hooks
 ```
 
 :::
@@ -36,5 +36,5 @@ Just import the hook that you want to use:
 
 <!-- prettier-ignore -->
 ```tsx
-import { /* hook */ } from 'realtime-hooks';
+import { /* hook */ } from 'react-pre-hooks';
 ```

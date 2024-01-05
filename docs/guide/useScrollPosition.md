@@ -19,7 +19,7 @@ This hook tracks the scroll `position` and `progress` of a target element.
 ## Example Usage
 
 ```tsx
-import { useScrollPosition } from 'realtime-hooks';
+import { useScrollPosition } from 'react-pre-hooks';
 
 export default function Example() {
   const { x, progressY } = useScrollPosition();

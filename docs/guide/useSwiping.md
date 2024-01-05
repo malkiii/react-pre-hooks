@@ -32,7 +32,7 @@ a `ref` object of the target element.
 ## Example Usage
 
 ```tsx
-import { useSwiping } from 'realtime-hooks';
+import { useSwiping } from 'react-pre-hooks';
 
 let start = 0;
 

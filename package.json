@@ -1,25 +1,25 @@
 {
-  "name": "realtime-hooks",
-  "version": "1.1.6",
+  "name": "react-pre-hooks",
+  "version": "1.2.0",
   "description": "Simplify and clean up your components with this react hooks collection.",
   "author": {
-    "name": "Malki Abdurrahman",
+    "name": "Malki Abderrahmane",
     "email": "malki.abdurrahmane@gmail.com"
   },
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
-  "homepage": "https://malkiii.github.io/realtime-hooks",
+  "homepage": "https://malkiii.github.io/react-pre-hooks",
   "files": [
     "dist/"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/malkiii/realtime-hooks"
+    "url": "https://github.com/malkiii/react-pre-hooks"
   },
   "bugs": {
-    "url": "https://github.com/malkiii/realtime-hooks/issues"
+    "url": "https://github.com/malkiii/react-pre-hooks/issues"
   },
   "scripts": {
     "build": "rm -rf dist/ && CONFIG=\"tsconfig.build.json\" && tsc -p $CONFIG && tsc --outDir dist/esm -p $CONFIG",

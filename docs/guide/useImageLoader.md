@@ -18,7 +18,7 @@ Use this hook to load an image in the **background** using its URL, and returns 
 ## Example Usage
 
 ```tsx
-import { useImageLoader } from 'realtime-hooks';
+import { useImageLoader } from 'react-pre-hooks';
 
 const url = 'https://picsum.photos/1280/960';
 

@@ -20,7 +20,7 @@ Toggle the fullscreen mode on a target element using this hook.
 ## Example Usage
 
 ```tsx
-import { useFullscreen } from 'realtime-hooks';
+import { useFullscreen } from 'react-pre-hooks';
 
 export default function Example() {
   const fullscreen = useFullscreen();

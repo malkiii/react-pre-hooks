@@ -17,7 +17,7 @@ You must always specify a `target` object otherwise it will not work.
 1. Using a single event:
 
 ```tsx
-import { useEventListener } from 'realtime-hooks';
+import { useEventListener } from 'react-pre-hooks';
 
 export default function Example() {
   useEventListener(
@@ -36,7 +36,7 @@ export default function Example() {
 
 ```tsx
 import { useRef } from 'react';
-import { useEventListener } from 'realtime-hooks';
+import { useEventListener } from 'react-pre-hooks';
 
 export default function Example() {
   const ref = useRef<HTMLDivElement>(null);

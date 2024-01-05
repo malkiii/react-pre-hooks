@@ -21,7 +21,7 @@ You can use and insert some actual CSS in `object` format with this hook, and it
 ## Example Usage
 
 ```tsx
-import { useCss } from 'realtime-hooks';
+import { useCss } from 'react-pre-hooks';
 
 export default function Example() {
   const containerColor = 'var(--pr)';

@@ -24,7 +24,7 @@ Handle the [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/
 
 <!-- prettier-ignore -->
 ```tsx
-import { useAnimationFrame } from 'realtime-hooks';
+import { useAnimationFrame } from 'react-pre-hooks';
 
 export default function Example() {
   const frame = useAnimationFrame(() => {

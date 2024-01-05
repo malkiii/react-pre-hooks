@@ -17,7 +17,7 @@ This hook uses [useIntersectionObserver](./useIntersectionObserver) hook and ret
 
 <!-- prettier-ignore -->
 ```tsx
-import { useInView } from 'realtime-hooks';
+import { useInView } from 'react-pre-hooks';
 
 export default function Example() {
   const { ref, isInView } = useInView({ threshold: 0.85 });

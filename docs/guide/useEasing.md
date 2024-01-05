@@ -88,7 +88,7 @@ function easeInOutExpo(x: number): number {
 to create an easing animation using this function:
 
 ```tsx
-import { useEasing } from 'realtime-hooks';
+import { useEasing } from 'react-pre-hooks';
 
 export default function Example() {
   const easing = useEasing({

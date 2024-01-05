@@ -17,7 +17,7 @@ Track the element size easily using [useResizeObserver](./useResizeObserver).
 ## Example Usage
 
 ```tsx
-import { useSize } from 'realtime-hooks';
+import { useSize } from 'react-pre-hooks';
 
 export default function Example() {
   const { ref, width, height } = useSize<HTMLTextAreaElement>();

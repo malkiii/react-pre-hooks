@@ -36,7 +36,7 @@ const [debounced] = useDebouncedState(value, { delay: 500 });
 ## Example Usage
 
 ```tsx
-import { useDebouncedState } from 'realtime-hooks';
+import { useDebouncedState } from 'react-pre-hooks';
 
 export default function Example() {
   const [debounced, setText, current] = useDebouncedState('Hello', { delay: 400 });

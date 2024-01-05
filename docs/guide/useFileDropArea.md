@@ -30,7 +30,7 @@ You can add `<input type="file" />` **inside** the area element and the input fi
 ## Example Usage
 
 ```tsx
-import { useArray, useFileDropArea } from 'realtime-hooks';
+import { useArray, useFileDropArea } from 'react-pre-hooks';
 
 export default function Example() {
   const images = useArray<string>([]);

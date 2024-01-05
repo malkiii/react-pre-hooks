@@ -41,7 +41,7 @@ This hook uses a text speaker with available voices as well as its state and con
 ## Example Usage
 
 ```tsx
-import { useSpeech } from 'realtime-hooks';
+import { useSpeech } from 'react-pre-hooks';
 
 export default function TextSpeaker() {
   const speech = useSpeech();

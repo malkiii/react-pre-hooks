@@ -5,7 +5,7 @@ Execute a callback function **before** the component is unmounted (leaves the DO
 ## Example Usage
 
 ```tsx
-import { useUnmount } from 'realtime-hooks';
+import { useUnmount } from 'react-pre-hooks';
 
 export default function Example() {
   useUnmount(() => {

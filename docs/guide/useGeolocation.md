@@ -17,7 +17,7 @@ Track the current geolocation of the client using this hook.
 ## Example Usage
 
 ```tsx
-import { useGeolocation } from 'realtime-hooks';
+import { useGeolocation } from 'react-pre-hooks';
 
 export default function Example() {
   const { isLoading, error, ...coords } = useGeolocation();

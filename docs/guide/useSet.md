@@ -128,7 +128,7 @@ set.reset();
 ## Example Usage
 
 ```tsx
-import { useSet } from 'realtime-hooks';
+import { useSet } from 'react-pre-hooks';
 
 export default function Balls() {
   const set = useSet<number>();

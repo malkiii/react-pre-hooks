@@ -46,7 +46,7 @@ a `ref` object of the target element.
 ## Example Usage
 
 ```tsx
-import { useKeyboard } from 'realtime-hooks';
+import { useKeyboard } from 'react-pre-hooks';
 
 export default function Example() {
   useKeyboard({

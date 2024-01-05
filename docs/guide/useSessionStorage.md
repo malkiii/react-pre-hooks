@@ -23,7 +23,7 @@ When you update a value on the session storage, a [StorageEvent](https://develop
 ## Example Usage
 
 ```tsx
-import { useSessionStorage } from 'realtime-hooks';
+import { useSessionStorage } from 'react-pre-hooks';
 
 export default function Example() {
   const [counter, setCounter] = useSessionStorage('counter', 0);

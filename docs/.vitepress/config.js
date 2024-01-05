@@ -4,10 +4,10 @@ import { defineConfig } from 'vitepress';
 import { author, description, homepage, repository } from '../../package.json';
 
 const site = {
-  title: 'Realtime hooks',
+  title: 'react-pre-hooks',
   description,
   url: new URL(homepage),
-  logo: '/realtime-hooks-logo.svg',
+  logo: '/logo.svg',
   og: new URL(homepage).href + '/og.png'
 };
 
@@ -24,10 +24,6 @@ export default defineConfig({
   base: site.url.pathname,
   head: [
     ['link', { rel: 'icon', href: site.url.pathname + site.logo, type: 'image/svg+xml' }],
-    [
-      'meta',
-      { name: 'google-site-verification', content: 'ubDLNlQdcrGfwU6G1GfJWwwzgPVwDI6s3eKcG3Exj3M' }
-    ],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: site.title }],
     ['meta', { property: 'og:description', content: site.description }],

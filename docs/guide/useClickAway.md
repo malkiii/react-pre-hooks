@@ -30,7 +30,7 @@ const handleClick = (event) => {
 ## Example Usage
 
 ```tsx
-import { useClickAway } from 'realtime-hooks';
+import { useClickAway } from 'react-pre-hooks';
 
 export default function Example() {
   const ref = useClickAway(() => ref.current.classList.add('hide'));

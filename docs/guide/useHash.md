@@ -18,7 +18,7 @@ It returns a tuple of 2 values:
 ## Example Usage
 
 ```tsx
-import { useHash } from 'realtime-hooks';
+import { useHash } from 'react-pre-hooks';
 
 export default function Example() {
   const [hash, setHash] = useHash();

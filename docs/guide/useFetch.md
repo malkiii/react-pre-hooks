@@ -25,7 +25,7 @@ Fetch data with a URL and search parameters using [useAsync](./useAsync) hook.
 ## Example Usage
 
 ```tsx
-import { useFetch } from 'realtime-hooks';
+import { useFetch } from 'react-pre-hooks';
 
 type Data = {
   users: {

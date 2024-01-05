@@ -23,7 +23,7 @@ When you update a value on the local storage, a [StorageEvent](https://developer
 ## Example Usage
 
 ```tsx
-import { useLocalStorage } from 'realtime-hooks';
+import { useLocalStorage } from 'react-pre-hooks';
 
 export default function Example() {
   const [name, setName] = useLocalStorage('name', 'unknown');

@@ -5,7 +5,7 @@ Execute a callback function when the component is mounted, it's similar to `useE
 ## Example Usage
 
 ```tsx
-import { useMount } from 'realtime-hooks';
+import { useMount } from 'react-pre-hooks';
 
 export default function Example() {
   useMount(() => {

@@ -9,7 +9,7 @@ a `boolean` value ensure that the component renders on the client side.
 ## Example Usage
 
 ```tsx
-import { useClient } from 'realtime-hooks';
+import { useClient } from 'react-pre-hooks';
 
 export default function Example() {
   const isClient = useClient();

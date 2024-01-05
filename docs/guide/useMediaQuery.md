@@ -13,7 +13,7 @@ It returns a `boolean`, which indicates whether the query has matched or not.
 ## Example Usage
 
 ```tsx
-import { useMediaQuery } from 'realtime-hooks';
+import { useMediaQuery } from 'react-pre-hooks';
 
 export default function Example() {
   const matches = useMediaQuery('(prefers-color-scheme: dark)');

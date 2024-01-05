@@ -5,7 +5,7 @@ This hook is just like `useEffect` but ignores the component's first render.
 ## Example Usage
 
 ```tsx
-import { useToggle, useUpdateEffect } from 'realtime-hooks';
+import { useToggle, useUpdateEffect } from 'react-pre-hooks';
 
 export default function Example() {
   const [value, toggle] = useToggle();

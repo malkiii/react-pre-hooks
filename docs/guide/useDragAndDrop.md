@@ -31,7 +31,7 @@ a `ref` object of the **container** element.
 ## Example Usage
 
 ```tsx
-import { useDragAndDrop } from 'realtime-hooks';
+import { useDragAndDrop } from 'react-pre-hooks';
 
 export default function Example() {
   const ref = useDragAndDrop(

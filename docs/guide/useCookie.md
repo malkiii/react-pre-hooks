@@ -46,7 +46,7 @@ It's a [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEven
 ## Example Usage
 
 ```tsx
-import { useCookie } from 'realtime-hooks';
+import { useCookie } from 'react-pre-hooks';
 
 export default function Example() {
   const [email, setEmail] = useCookie('email');

@@ -17,7 +17,7 @@ Handles the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/
 ## Example Usage
 
 ```tsx
-import { useMutationObserver, useSet } from 'realtime-hooks';
+import { useMutationObserver, useSet } from 'react-pre-hooks';
 
 export default function Items() {
   const items = useSet<number>();

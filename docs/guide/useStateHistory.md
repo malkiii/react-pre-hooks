@@ -117,7 +117,7 @@ pointer.position; // 0
 ## Example Usage
 
 ```tsx
-import { useStateHistory } from 'realtime-hooks';
+import { useStateHistory } from 'react-pre-hooks';
 
 export default function Counter() {
   const [counter, setCounter, pointer] = useStateHistory(0, { limit: 5 });

@@ -20,7 +20,7 @@ Copy to the clipboard and return a temporary `copied` state.
 ## Example Usage
 
 ```tsx
-import { useCopiedState } from 'realtime-hooks';
+import { useCopiedState } from 'react-pre-hooks';
 
 export default function Example() {
   const { copy, isCopied, reset } = useCopiedState({ duration: 2000 });

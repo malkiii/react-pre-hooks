@@ -10,7 +10,7 @@ a `boolean` value determines whether the page tab is **visible** or not.
 
 ```tsx
 import { useEffect } from 'react';
-import { usePageVisibility } from 'realtime-hooks';
+import { usePageVisibility } from 'react-pre-hooks';
 
 export default function Example() {
   const isVisible = usePageVisibility();

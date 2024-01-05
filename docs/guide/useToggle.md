@@ -22,7 +22,7 @@ It returns a tuple of 2 values:
 ## Example Usage
 
 ```tsx
-import { useToggle } from 'realtime-hooks';
+import { useToggle } from 'react-pre-hooks';
 
 export default function Example() {
   const [background, toggle] = useToggle(['red', 'green', 'blue', 'white']);

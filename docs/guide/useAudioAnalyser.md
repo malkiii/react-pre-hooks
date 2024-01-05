@@ -32,7 +32,7 @@ You should set `crossOrigin` to `anonymous` if you're trying to use the analyser
 ## Example Usage
 
 ```tsx
-import { useAudioAnalyser } from 'realtime-hooks';
+import { useAudioAnalyser } from 'react-pre-hooks';
 
 export default function Example() {
   const analyser = useAudioAnalyser(

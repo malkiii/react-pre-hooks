@@ -31,7 +31,7 @@ const handleRightClick = (event) => {
 ## Example Usage
 
 ```tsx
-import { useContextMenu } from 'realtime-hooks';
+import { useContextMenu } from 'react-pre-hooks';
 
 export default function Example() {
   const { ref, canShow, clientX, clientY } = useContextMenu();

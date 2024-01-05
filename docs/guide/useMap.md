@@ -152,7 +152,7 @@ map.toString({ id: 10 }, 2);
 ## Example Usage
 
 ```tsx
-import { useMap } from 'realtime-hooks';
+import { useMap } from 'react-pre-hooks';
 
 export default function Form() {
   const form = useMap({ email: '', password: '' });

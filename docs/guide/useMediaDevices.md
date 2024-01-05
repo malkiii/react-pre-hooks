@@ -25,7 +25,7 @@ This hook uses the user media devices (**camera** and **microphone**) and return
 ## Example Usage
 
 ```tsx
-import { useMediaDevices } from 'realtime-hooks';
+import { useMediaDevices } from 'react-pre-hooks';
 
 export default function Example() {
   const { ref, start, stop, camera, microphone } = useMediaDevices({

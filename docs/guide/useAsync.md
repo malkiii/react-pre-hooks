@@ -18,7 +18,7 @@ This hook simplifies the execution of an `async` function by returning its state
 ## Example Usage
 
 ```tsx
-import { useAsync } from 'realtime-hooks';
+import { useAsync } from 'react-pre-hooks';
 
 const getData = (ms: number) => {
   return new Promise<string>(res => setTimeout(() => res('Resolved!'), ms));

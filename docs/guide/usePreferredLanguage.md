@@ -12,7 +12,7 @@ Track the current user preferred language using this hook.
 ## Example Usage
 
 ```tsx
-import { usePreferredLanguage } from 'realtime-hooks';
+import { usePreferredLanguage } from 'react-pre-hooks';
 
 export default function Example() {
   const language = usePreferredLanguage();

@@ -30,7 +30,7 @@ touch-action: none;
 ## Example Usage
 
 ```tsx
-import { usePointers } from 'realtime-hooks';
+import { usePointers } from 'react-pre-hooks';
 
 export default function Example() {
   const ref = usePointers((event, list) => {

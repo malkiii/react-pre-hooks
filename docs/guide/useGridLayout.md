@@ -17,7 +17,7 @@ Track the number of **rows** and **columns** of a grid layout using this hook.
 ## Example Usage
 
 ```tsx
-import { useGridLayout } from 'realtime-hooks';
+import { useGridLayout } from 'react-pre-hooks';
 
 export default function Example() {
   const { ref, rows, columns } = useGridLayout();

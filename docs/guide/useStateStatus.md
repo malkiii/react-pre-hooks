@@ -21,7 +21,7 @@ It returns a tuple of 4 values:
 ## Example Usage
 
 ```tsx
-import { useStateStatus } from 'realtime-hooks';
+import { useStateStatus } from 'react-pre-hooks';
 
 export default function Email() {
   const [email, setEmail, status] = useStateStatus('', value => {
@@ -41,7 +41,7 @@ export default function Email() {
 You can use **objects** instead:
 
 ```tsx
-import { useStateStatus } from 'realtime-hooks';
+import { useStateStatus } from 'react-pre-hooks';
 
 export default function Username() {
   const [name, setName, status] = useStateStatus('', value => {

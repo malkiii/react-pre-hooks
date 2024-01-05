@@ -12,7 +12,7 @@ Track the screen **viewport** (screen width and height).
 ## Example Usage
 
 ```tsx
-import { useViewport } from 'realtime-hooks';
+import { useViewport } from 'react-pre-hooks';
 
 export default function Example() {
   const { width, height } = useViewport();

@@ -53,7 +53,7 @@ timeout.isRunning; // false
 
 <!-- prettier-ignore -->
 ```tsx
-import { useTimeout } from 'realtime-hooks';
+import { useTimeout } from 'react-pre-hooks';
 
 export default function Hello() {
   const timeout = useTimeout(() => console.log('done!'), {

@@ -22,7 +22,7 @@ This hook uses the user **screen capture** and returns its states and controls a
 
 <!-- prettier-ignore -->
 ```tsx
-import { useScreenCapture } from 'realtime-hooks';
+import { useScreenCapture } from 'react-pre-hooks';
 
 export default function Example() {
   const capture = useScreenCapture();

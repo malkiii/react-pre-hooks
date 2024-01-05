@@ -162,7 +162,7 @@ array.reset();
 ## Example Usage
 
 ```tsx
-import { useArray } from 'realtime-hooks';
+import { useArray } from 'react-pre-hooks';
 
 export default function ToDoList() {
   const array = useArray(['apple', 'dolphin', 'giraffe', 'iguana']);

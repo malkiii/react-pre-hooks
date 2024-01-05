@@ -1,14 +1,14 @@
 # useTimer
 
-You can do a lot of things using this hook, create a **timer**, a **countdown**, or use it as a real clock with many options.
+You can create a **timer** or a **countdown** with many options using this hook.
 
 ## Options
 
 | Name             | Type    | Description                                                                                                                                                                                                          |
 | ---------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **initial**      | Object  | initial date value that can be a string or [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date), or it can be a an object with `seconds`, `minutes`, `hours`... values |
-| **timeout**      | Number  | the time between the current and the next date value (default is `1000` which is 1 second).                                                                                                                          |
+| **start**        | Object  | initial date value that can be a string or [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date), or it can be a an object with `seconds`, `minutes`, `hours`... values |
 | **duration**     | Number  | the duration of the timer (if you'r using the timer mode).                                                                                                                                                           |
+| **timeout**      | Number  | the time between the current and the next date value (default is `1000` which is 1 second).                                                                                                                          |
 | **startOnMount** | Boolean | start the clock or timer when the component is **mounted** (default is `true`).                                                                                                                                      |
 
 ::: tip
@@ -79,7 +79,7 @@ timer.reset();
 
 <!-- prettier-ignore -->
 ```tsx
-import { useTimer } from 'realtime-hooks';
+import { useTimer } from 'react-pre-hooks';
 
 export default function Timer() {
   const timer = useTimer({
@@ -110,7 +110,7 @@ export default function Timer() {
 ### 2. Create a countdown
 
 ```tsx
-import { useTimer } from 'realtime-hooks';
+import { useTimer } from 'react-pre-hooks';
 
 export default function Countdown() {
   const duration = 100 * 1000; // 100s
@@ -125,25 +125,3 @@ export default function Countdown() {
 ```
 
 <iframe src="https://codesandbox.io/embed/usetimer-2-g6hjlx?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useTimer-2" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
-
-### 3. Create a simple clock
-
-::: info
-If you **don't** specify the `initial` value or a `duration`, the timer will be a normal **clock** that uses the current date.
-:::
-
-```tsx
-import { useTimer } from 'realtime-hooks';
-
-export default function Clock() {
-  const clock = useTimer();
-
-  return (
-    <main>
-      <p>{clock.value.toUTCString()}</p>
-    </main>
-  );
-}
-```
-
-<iframe src="https://codesandbox.io/embed/usetimer-3-pyw438?fontsize=14&hidenavigation=1&module=%2Fsrc%2FComponent.tsx&theme=dark" style="width:100%; height:500px; border:0; overflow:hidden;" title="useTimer-3" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
