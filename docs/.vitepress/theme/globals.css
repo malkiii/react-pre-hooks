@@ -11,16 +11,16 @@
   );
 
   --vp-button-brand-bg: var(--vp-c-brand-1);
-  --vp-home-hero-image-background-image: linear-gradient(135deg, #0086e06f 39%, #fff5);
-  --vp-home-hero-image-filter: blur(40px);
-}
-
-.dark:root {
   --vp-home-hero-image-background-image: linear-gradient(135deg, #0086e0f2 39%, #fff5);
+  --vp-home-hero-image-filter: blur(40px);
 }
 
 html {
   scrollbar-gutter: stable;
+}
+
+.image-bg {
+  opacity: 0.3;
 }
 
 ::selection {
