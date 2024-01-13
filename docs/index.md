@@ -14,7 +14,7 @@ hero:
       link: /guide/
     - theme: alt
       text: API References
-      link: https://tsdocs.dev/docs/react-pre-hooks
+      link: https://tsdocs.dev/search/docs/react-pre-hooks
     - theme: alt
       text: View On GitHub
       link: https://github.com/malkiii/react-pre-hooks

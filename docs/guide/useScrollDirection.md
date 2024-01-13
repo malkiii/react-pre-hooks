@@ -23,13 +23,11 @@ This hook detects the scroll **direction** of the window or a target element.
 import { useScrollDirection } from 'react-pre-hooks';
 
 export default function Example() {
-  const direction = useScrollDirection();
+  const { isDown, isUp } = useScrollDirection();
 
   return (
     <main>
-      <p>
-        You are scrolling {direction.isDown ? 'down' : direction.isUp ? 'up' : ''}.
-      </p>
+      <nav className={isUp || !isDown ? "show" : ""}>Navigation</nav>
     </main>
   );
 }
