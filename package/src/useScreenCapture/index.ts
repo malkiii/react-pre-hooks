@@ -10,7 +10,7 @@ export const useScreenCapture = (options: ScreenCaptureOptions = {}) => {
 
   const streamRef = useRef<MediaStream>();
   const videoRef = useNewRef<HTMLVideoElement>(options.ref);
-  const [isStarted, setIsStarted] = useState<boolean>(false);
+  const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [error, setError] = useState<unknown>();
 
   const controls = useMemo(
@@ -22,29 +22,27 @@ export const useScreenCapture = (options: ScreenCaptureOptions = {}) => {
         try {
           streamRef.current = await navigator.mediaDevices.getDisplayMedia(constraints);
           const videoTrack = streamRef.current.getVideoTracks().at(0);
-          if (videoTrack) videoTrack.onended = () => setIsStarted(false);
-          setIsStarted(true);
+          if (videoTrack) videoTrack.onended = () => setIsEnabled(false);
 
-          return true;
+          setIsEnabled(true);
         } catch (error) {
           setError(error);
-          setIsStarted(false);
-
-          return false;
+          setIsEnabled(false);
+          streamRef.current = undefined;
         }
       },
       stop() {
         if (videoRef.current) videoRef.current.srcObject = null;
         streamRef.current?.getTracks().forEach(t => t.stop());
-        setIsStarted(false);
+        setIsEnabled(false);
       },
       async toggle(start?: boolean) {
-        const shouldStart = start ?? !isStarted;
+        const shouldStart = start ?? !isEnabled;
         shouldStart ? await this.start() : this.stop();
       }
     }),
-    [isStarted]
+    [isEnabled]
   );
 
-  return { ref: videoRef, ...controls, stream: streamRef, isStarted, error };
+  return { ref: videoRef, ...controls, stream: streamRef, isEnabled, error };
 };
