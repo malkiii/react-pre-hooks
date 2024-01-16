@@ -12,7 +12,7 @@ This hook uses the user **screen capture** and returns its states and controls a
 | ------------- | --------- | ------------------------------------------------------------------------------------------------- |
 | **ref**       | RefObject | a `<video>` element reference.                                                                    |
 | **stream**    | RefObject | the [MediaStream](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream) object reference. |
-| **isStarted** | Boolean   | indicates if the screen capture is started or not.                                                |
+| **isEnabled** | Boolean   | indicates if the screen capture is enabled or not.                                                |
 | **error**     | Unknown   | cached error if it exists.                                                                        |
 | **start**     | Function  | an async function to start streaming.                                                             |
 | **stop**      | Function  | a function to stop streaming.                                                                     |
@@ -30,7 +30,7 @@ export default function Example() {
   return (
     <main>
       <button onClick={capture.toggle}>
-        {capture.isStarted ? 'stop' : 'start'}
+        {capture.isEnabled ? 'stop' : 'start'}
       </button>
       <video ref={capture.ref} />
     </main>
