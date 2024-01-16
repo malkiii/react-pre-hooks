@@ -88,7 +88,7 @@ export type { IntervalOptions } from './useInterval';
 export type { ViewOptions } from './useInView';
 export type { KeysRecord, KeyboardOptions } from './useKeyboard';
 export type { ObjectToMap } from './useMap';
-export type { MediaDeviceType, MediaDevicesOptions } from './useMediaDevices';
+export type { MediaDevicesOptions } from './useMediaDevices';
 export type { RecorderDownloadOptions } from './useMediaRecorder';
 export type { MutationObserverOptions } from './useMutationObserver';
 export type { NetworkInformation } from './useNetworkState';
