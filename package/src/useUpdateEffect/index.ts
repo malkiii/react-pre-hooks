@@ -4,7 +4,7 @@ export const useUpdateEffect: typeof useEffect = (effect, deps) => {
   const isFirstMount = useRef(true);
 
   useEffect(() => {
-    if (!isFirstMount) return effect();
+    if (!isFirstMount.current) return effect();
     isFirstMount.current = false;
   }, deps);
 };
