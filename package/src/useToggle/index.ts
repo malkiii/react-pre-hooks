@@ -9,7 +9,7 @@ export const useToggle = <T extends any = boolean>(values: T[] = [false, true] a
       setCurrentIndex(index => {
         const currentValue = values[index];
         const newValue = value instanceof Function ? value(currentValue) : value;
-        if (newValue) return values.includes(newValue) ? values.indexOf(newValue) : index;
+        if (newValue !== undefined) values.includes(newValue) ? values.indexOf(newValue) : index;
 
         return index === values.length - 1 ? 0 : index + 1;
       });
