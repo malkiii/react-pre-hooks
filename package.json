@@ -23,13 +23,14 @@
   },
   "scripts": {
     "build": "rm -rf dist/ && CONFIG=\"tsconfig.build.json\" && tsc -p $CONFIG && tsc --outDir dist/esm -p $CONFIG",
-    "prebuild": "pnpm lint && bash package/export-hooks.sh",
+    "prebuild": "pnpm lint && node package/export-hooks.cjs",
     "format": "prettier --write package/**/*.{ts,tsx}",
     "lint": "eslint package --ext ts,tsx --cache",
     "test": "vitest run --coverage",
     "test:watch": "clear && vitest watch",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
+    "docs:readme": "node docs/create-readme-table.cjs",
     "postversion": "node -pe \"require('./package.json').version\" | xargs -I {} git tag v{} && git push --tags",
     "prepublish": "pnpm test && pnpm build && pnpm postversion"
   },
@@ -46,6 +47,7 @@
     "eslint": "^8.48.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jsdom": "^22.1.0",
+    "marked": "^12.0.0",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
