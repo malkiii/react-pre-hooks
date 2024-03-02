@@ -45,6 +45,9 @@ importers:
       jsdom:
         specifier: ^22.1.0
         version: 22.1.0
+      marked:
+        specifier: ^12.0.0
+        version: 12.0.0
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -66,6 +69,8 @@ importers:
       vitest:
         specifier: ^0.32.2
         version: 0.32.2(jsdom@22.1.0)
+
+  docs: {}
 
   package: {}
 
@@ -2712,6 +2717,12 @@ packages:
 
   /mark.js@8.11.1:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
+    dev: true
+
+  /marked@12.0.0:
+    resolution: {integrity: sha512-Vkwtq9rLqXryZnWaQc86+FHLC6tr/fycMfYAhiOIXkrNmeGAyhSxjqu0Rs1i0bBqw5u0S7+lV9fdH2ZSVaoa0w==}
+    engines: {node: '>= 18'}
+    hasBin: true
     dev: true
 
   /md5-hex@3.0.1:
