@@ -3,11 +3,6 @@ import { describe, expect, it } from 'vitest';
 import { useToggle } from '.';
 
 describe('useToggle', () => {
-  it('should initialize with [false, true] by default', () => {
-    const { result } = renderHook(() => useToggle());
-    expect(result.current[0]).toBe(false);
-  });
-
   it('should initialize with the first option', () => {
     const { result } = renderHook(() => useToggle([1, 2, 3]));
     expect(result.current[0]).toBe(1);

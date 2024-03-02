@@ -11,13 +11,6 @@ export type DateProps = Partial<{
   milliseconds: number;
 }>;
 
-export type TimerOptions = {
-  start?: DateProps;
-  duration?: number;
-  timeout?: number;
-  startOnMount?: boolean;
-};
-
 const getResolvedDate = (date?: Date | DateProps) => {
   if (!date) return new Date();
   if (date instanceof Date) return date;
@@ -33,6 +26,13 @@ const getResolvedDate = (date?: Date | DateProps) => {
   } = date;
 
   return new Date(year, month - 1, day, hours + 1, minutes, seconds, milliseconds);
+};
+
+export type TimerOptions = {
+  start?: DateProps;
+  duration?: number;
+  timeout?: number;
+  startOnMount?: boolean;
 };
 
 export const useTimer = (options: TimerOptions = {}) => {
