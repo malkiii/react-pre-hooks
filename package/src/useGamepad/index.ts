@@ -1,9 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAnimationFrame, useEventListener } from '..';
 
 export type GamepadHandler = (gamepad: Gamepad) => any;
 
 export const useGamepad = (index: number, handler: GamepadHandler) => {
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+
   const handleGamepadState = useCallback(() => {
     const gamepad = navigator.getGamepads()[index];
     if (gamepad) handler(gamepad);
@@ -11,17 +13,22 @@ export const useGamepad = (index: number, handler: GamepadHandler) => {
 
   const frame = useAnimationFrame(handleGamepadState, { startOnMount: false });
 
-  const handleGamepadConnection = useCallback(
-    (event: GamepadEvent) => {
-      if (!navigator.getGamepads) return;
-      if (event.gamepad.index !== index) return;
-      if (event.type === 'gamepadconnected') return frame.start();
-      frame.cancel();
-    },
-    [index, frame]
-  );
+  const handleGamepadConnection = useCallback(() => {
+    if (!navigator.getGamepads) return;
+
+    const gamepad = navigator.getGamepads()[index];
+
+    setIsConnected(!!gamepad);
+    gamepad ? frame.start() : frame.cancel();
+  }, [index, frame]);
+
+  useEffect(() => {
+    handleGamepadConnection();
+  }, [index]);
 
   useEventListener(['gamepadconnected', 'gamepaddisconnected'], handleGamepadConnection, {
     target: () => window
   });
+
+  return isConnected;
 };
