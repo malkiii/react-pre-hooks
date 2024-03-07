@@ -19,6 +19,7 @@ export { type EventMap, type EventHandler, type EventListenerOptions, useEventLi
 export { type RequestOptions, useFetch } from './useFetch';
 export { type DropAreaOptions, useFileDropArea } from './useFileDropArea';
 export { useFullscreen } from './useFullscreen';
+export { type GamepadHandler, useGamepad } from './useGamepad';
 export { type GeolocationState, useGeolocation } from './useGeolocation';
 export { useGridLayout } from './useGridLayout';
 export { useHash } from './useHash';
