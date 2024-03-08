@@ -48,7 +48,6 @@ export { type ScreenCaptureOptions, useScreenCapture } from './useScreenCapture'
 export { useScrollDirection } from './useScrollDirection';
 export { useScrollPosition } from './useScrollPosition';
 export { type ScrollThresholdHandler, type ScrollThresholdOffset, useScrollThreshold } from './useScrollThreshold';
-export { useScrolling } from './useScrolling';
 export { useSelection } from './useSelection';
 export { useSessionStorage } from './useSessionStorage';
 export { useSet } from './useSet';
