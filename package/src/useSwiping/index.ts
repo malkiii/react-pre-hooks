@@ -1,31 +1,27 @@
 import { RefObject, useCallback, useRef } from 'react';
 import { useEventListener } from '..';
-import { getCurrentMousePosition } from '../utils';
+import { getPointerPosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export type SwipeAction = {
   readonly type: 'start' | 'moving' | 'end';
-  readonly direction?: 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
   readonly deltaX: number;
   readonly deltaY: number;
   readonly initialX: number;
   readonly initialY: number;
-  readonly isHolding: boolean;
-  readonly event: TouchEvent | MouseEvent;
+  readonly event: PointerEvent;
 };
 
 export type SwipeActionHandler = (action: SwipeAction) => any;
 
 export type SwipeOptions<T extends EventTarget> = {
   ref?: RefObject<T> | null;
-  mouse?: boolean;
 };
 
-export const useSwiping = <T extends EventTarget = Window>(
+export const useSwiping = <T extends HTMLElement>(
   handler: SwipeActionHandler,
   options: SwipeOptions<T> = {}
 ) => {
-  const { ref, mouse = false } = options;
   const targetRef = useNewRef<T>(options.ref);
 
   const delta = useRef({ x: 0, y: 0 });
@@ -35,29 +31,18 @@ export const useSwiping = <T extends EventTarget = Window>(
     (type: SwipeAction['type'], event: SwipeAction['event']) => {
       if (!initialPosition.current) return;
 
-      const currentPosition = getCurrentMousePosition(event);
+      const currentPosition = getPointerPosition(event);
       delta.current = {
         x: initialPosition.current.x - currentPosition.x,
         y: initialPosition.current.y - currentPosition.y
       };
 
-      const direction =
-        Math.abs(delta.current.x) >= Math.abs(delta.current.y)
-          ? delta.current.x > 0
-            ? 'LEFT'
-            : 'RIGHT'
-          : delta.current.y > 0
-          ? 'UP'
-          : 'DOWN';
-
       handler({
         type,
-        direction,
         deltaX: delta.current.x,
         deltaY: delta.current.y,
         initialX: initialPosition.current.x,
         initialY: initialPosition.current.y,
-        isHolding: type !== 'end',
         event
       });
     },
@@ -66,7 +51,8 @@ export const useSwiping = <T extends EventTarget = Window>(
 
   const handleTouchStart = useCallback(
     (event: SwipeAction['event']) => {
-      initialPosition.current = getCurrentMousePosition(event);
+      initialPosition.current = getPointerPosition(event);
+      targetRef.current?.setPointerCapture(event.pointerId);
 
       callback('start', event);
     },
@@ -82,6 +68,7 @@ export const useSwiping = <T extends EventTarget = Window>(
     (event: SwipeAction['event']) => {
       callback('end', event);
 
+      targetRef.current?.releasePointerCapture(event.pointerId);
       initialPosition.current = undefined;
     },
     [callback]
@@ -89,10 +76,9 @@ export const useSwiping = <T extends EventTarget = Window>(
 
   const eventOptions = { ref: targetRef };
 
-  useEventListener(['touchmove', mouse && 'mousemove'], handleTouchMove, eventOptions);
-  useEventListener(['touchstart', mouse && 'mousedown'], handleTouchStart, eventOptions);
-  // prettier-ignore
-  useEventListener(['touchend', 'touchcancel', mouse && 'mouseup', mouse && 'mouseleave'], handleTouchEnd, eventOptions);
+  useEventListener('pointermove', handleTouchMove, eventOptions);
+  useEventListener('pointerdown', handleTouchStart, eventOptions);
+  useEventListener(['pointerup', 'pointercancel'], handleTouchEnd, eventOptions);
 
   return targetRef;
 };

@@ -16,10 +16,10 @@ export function getStateActionValue<T extends any>(state: SetStateAction<T>, val
   return state instanceof Function ? state(value) : state;
 }
 
-export function getCurrentMousePosition(event: MouseEvent | TouchEvent) {
-  return event instanceof MouseEvent
-    ? { x: event.clientX, y: event.clientY }
-    : { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
+export function getPointerPosition(event: MouseEvent | TouchEvent | PointerEvent) {
+  return event instanceof TouchEvent
+    ? { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }
+    : { x: event.clientX, y: event.clientY };
 }
 
 export function addEvents<T extends EventTarget, E extends keyof EventMap<T>>(

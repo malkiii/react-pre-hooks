@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useRef } from 'react';
 import { useEventListener } from '..';
-import { getCurrentMousePosition } from '../utils';
+import { getPointerPosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export type DragAction = {
@@ -10,22 +10,20 @@ export type DragAction = {
   readonly initialX: number;
   readonly initialY: number;
   readonly target: EventTarget;
-  readonly event: MouseEvent | TouchEvent;
+  readonly event: PointerEvent;
 };
 
 export type DragActionHandler = (action: DragAction) => any;
 
 type DraggingOptions<T extends HTMLElement> = {
   ref?: RefObject<T> | null;
-  touches?: boolean;
 };
 
 export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
   handler: DragActionHandler,
   options: DraggingOptions<T> = {}
 ) => {
-  const { ref, touches = false } = options;
-  const targetRef = useNewRef<T>(ref);
+  const targetRef = useNewRef<T>(options.ref);
 
   const draggedElement = useRef<EventTarget>();
   const initialPosition = useRef<{ x: number; y: number }>();
@@ -34,7 +32,7 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
     (type: DragAction['type'], event: DragAction['event']) => {
       if (!draggedElement.current || !initialPosition.current) return;
 
-      const currentPosition = getCurrentMousePosition(event);
+      const currentPosition = getPointerPosition(event);
 
       handler({
         type,
@@ -54,7 +52,7 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
       if (!event.target || event.target === targetRef.current) return;
 
       draggedElement.current = event.target;
-      initialPosition.current = getCurrentMousePosition(event);
+      initialPosition.current = getPointerPosition(event);
 
       callback('start', event);
     },
@@ -78,10 +76,9 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
 
   const eventOptions = { ref: targetRef };
 
-  useEventListener(['mousemove', touches && 'touchmove'], handleDragging, eventOptions);
-  useEventListener(['mousedown', touches && 'touchstart'], handleMouseDown, eventOptions);
-  // prettier-ignore
-  useEventListener(['mouseup', touches && 'touchend', touches && 'touchcancel'], handleDropping, eventOptions);
+  useEventListener('pointermove', handleDragging, eventOptions);
+  useEventListener('pointerdown', handleMouseDown, eventOptions);
+  useEventListener(['pointerup', 'pointerleave', 'pointercancel'], handleDropping, eventOptions);
 
   return targetRef;
 };

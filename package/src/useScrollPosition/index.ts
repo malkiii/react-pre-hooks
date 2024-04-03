@@ -16,8 +16,8 @@ export const useScrollPosition = <T extends HTMLElement = HTMLDivElement>(
 
     const maxScrollX = element.scrollWidth - element.clientWidth;
     const maxScrollY = element.scrollHeight - element.clientHeight;
-    const progressX = maxScrollX ? (x / maxScrollX) * 100 : 1;
-    const progressY = maxScrollY ? (y / maxScrollY) * 100 : 1;
+    const progressX = maxScrollX ? x / maxScrollX : 1;
+    const progressY = maxScrollY ? y / maxScrollY : 1;
 
     setPosition({ x, y, progressX, progressY });
   }, []);
