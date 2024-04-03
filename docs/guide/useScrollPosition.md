@@ -8,13 +8,13 @@ This hook tracks the scroll `position` and `progress` of a target element.
 
 ## Return Values
 
-| Name          | Type      | Description                     |
-| ------------- | --------- | ------------------------------- |
-| **ref**       | RefObject | the target element reference.   |
-| **x**         | Number    | the `x` scroll position.        |
-| **y**         | Number    | the `y` scroll position.        |
-| **progressX** | Number    | the `x` scroll progress in `%`. |
-| **progressY** | Number    | the `y` scroll progress in `%`. |
+| Name          | Type      | Description                                    |
+| ------------- | --------- | ---------------------------------------------- |
+| **ref**       | RefObject | the target element reference.                  |
+| **x**         | Number    | the `x` scroll position.                       |
+| **y**         | Number    | the `y` scroll position.                       |
+| **progressX** | Number    | the `x` scroll progress (between `0` and `1`). |
+| **progressY** | Number    | the `y` scroll progress (between `0` and `1`). |
 
 ## Example Usage
 

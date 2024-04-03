@@ -7,10 +7,9 @@ You can handle the user **swipe** actions using this hook, and it can also handl
 1.  the swipe action handler function that takes the [SwipeAction](#swipeaction-object) object as a parameter.
 2.  the swipe options:
 
-| Name      | Type      | Description                                            |
-| --------- | --------- | ------------------------------------------------------ |
-| **ref**   | RefObject | the container element reference (default is `window`). |
-| **mosue** | Boolean   | include the mouse cursor swipes.                       |
+| Name    | Type      | Description                                            |
+| ------- | --------- | ------------------------------------------------------ |
+| **ref** | RefObject | the container element reference (default is `window`). |
 
 ## Return Values
 
@@ -18,16 +17,14 @@ a `ref` object of the target element.
 
 ### `SwipeAction` Object
 
-| Name          | Type    | Description                                                                                                                                                                                       |
-| ------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **type**      | String  | the swipe type which can be `start`, `end`, or `moving`.                                                                                                                                          |
-| **deltaX**    | Number  | the swipe distance `x` from the `initialX` value.                                                                                                                                                 |
-| **deltaY**    | Number  | the swipe distance `y` from the `initialY` value.                                                                                                                                                 |
-| **initialX**  | Number  | the initial `x` position.                                                                                                                                                                         |
-| **initialY**  | Number  | the initial `y` position.                                                                                                                                                                         |
-| **direction** | String  | the swipe direction which can be `UP`, `DOWN`, `RIGHT`, or `LEFT`.                                                                                                                                |
-| **isHolding** | Boolean | determines whether the user is still swiping or not.                                                                                                                                              |
-| **event**     | Event   | the [TouchEvent](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent) or [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) if you are using the `mouse` property. |
+| Name         | Type   | Description                                                                                                                                                                                       |
+| ------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **type**     | String | the swipe type which can be `start`, `end`, or `moving`.                                                                                                                                          |
+| **deltaX**   | Number | the swipe distance `x` from the `initialX` value.                                                                                                                                                 |
+| **deltaY**   | Number | the swipe distance `y` from the `initialY` value.                                                                                                                                                 |
+| **initialX** | Number | the initial `x` position.                                                                                                                                                                         |
+| **initialY** | Number | the initial `y` position.                                                                                                                                                                         |
+| **event**    | Event  | the [TouchEvent](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent) or [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent) if you are using the `mouse` property. |
 
 ## Example Usage
 
@@ -37,14 +34,11 @@ import { useSwiping } from 'react-pre-hooks';
 let start = 0;
 
 export default function Slider() {
-  const ref = useSwiping(
-    action => {
-      if (action.type === 'start') start = window.scrollY;
+  const ref = useSwiping(action => {
+    if (action.type === 'start') start = window.scrollY;
 
-      window.scrollTo({ top: start + action.deltaY });
-    },
-    { mouse: true }
-  );
+    window.scrollTo({ top: start + action.deltaY });
+  });
 
   return (
     <div ref={ref}>

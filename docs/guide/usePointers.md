@@ -34,8 +34,7 @@ import { usePointers } from 'react-pre-hooks';
 
 export default function Example() {
   const ref = usePointers((event, list) => {
-    let pointer;
-    pointer = document.getElementById(event.pointerId + '');
+    let pointer = document.getElementById(event.pointerId + '');
 
     if (!pointer) {
       pointer = document.createElement('div');

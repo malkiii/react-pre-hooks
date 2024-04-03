@@ -7,10 +7,9 @@ You can handle the user **drag** actions on a container element using this hook,
 1. the drag action handler function that takes the [DragAction](#dragaction-object) object as a parameter.
 2. and some drag options:
 
-| Name        | Type      | Description                                            |
-| ----------- | --------- | ------------------------------------------------------ |
-| **ref**     | RefObject | the container element reference (default is `window`). |
-| **touches** | Boolean   | include the mobile touches.                            |
+| Name    | Type      | Description                                            |
+| ------- | --------- | ------------------------------------------------------ |
+| **ref** | RefObject | the container element reference (default is `window`). |
 
 ## Return Values
 
@@ -34,15 +33,12 @@ a `ref` object of the **container** element.
 import { useDragAndDrop } from 'react-pre-hooks';
 
 export default function Example() {
-  const ref = useDragAndDrop(
-    action => {
-      const target = action.target as HTMLSpanElement;
+  const ref = useDragAndDrop(action => {
+    const target = action.target as HTMLSpanElement;
 
-      target.style.left = action.clientX + 'px';
-      target.style.top = action.clientY + 'px';
-    },
-    { touches: true }
-  );
+    target.style.left = action.clientX + 'px';
+    target.style.top = action.clientY + 'px';
+  });
 
   return (
     <div ref={ref}>
