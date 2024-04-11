@@ -1,42 +1,22 @@
 {
-  "name": "react-pre-hooks",
-  "version": "2.0.2",
-  "description": "Simplify and clean up your components with this react hooks collection.",
-  "author": {
-    "name": "Malki Abderrahmane",
-    "email": "malki.abdurrahmane@gmail.com"
-  },
-  "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/index.d.ts",
-  "homepage": "https://malkiii.github.io/react-pre-hooks",
-  "files": [
-    "dist/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/malkiii/react-pre-hooks"
-  },
-  "bugs": {
-    "url": "https://github.com/malkiii/react-pre-hooks/issues"
-  },
+  "private": true,
+  "type": "module",
   "scripts": {
-    "build": "rm -rf dist/ && CONFIG=\"tsconfig.build.json\" && tsc -p $CONFIG && tsc --outDir dist/esm -p $CONFIG",
-    "prebuild": "pnpm lint && node package/export-hooks.cjs",
+    "prebuild": "pnpm lint && pnpm generate:exports",
+    "build": "pnpm prebuild && cd packages/hooks && pnpm build",
+    "lint": "tsc --noEmit && eslint --ext ts,tsx --cache",
+    "test": "cd packages/hooks && pnpm test",
+    "test:watch": "cd packages/hooks && pnpm test:watch",
     "format": "prettier --write package/**/*.{ts,tsx}",
-    "lint": "eslint package --ext ts,tsx --cache",
-    "test": "vitest run --coverage",
-    "test:watch": "clear && vitest watch",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:readme": "node docs/create-readme-table.cjs",
-    "postversion": "node -pe \"require('./package.json').version\" | xargs -I {} git tag v{} && git push --tags",
-    "prepublish": "pnpm test && pnpm build && pnpm postversion"
+    "docs:dev": "cd docs && pnpm dev",
+    "docs:build": "cd docs && pnpm build",
+    "generate:exports": "node scripts/export-hooks.cjs",
+    "generate:readme": "node scripts/create-readme-table.cjs",
+    "postversion": "pnpm test && pnpm build && pnpm generate:readme && bash scripts/post-version.sh"
   },
-  "sideEffects": false,
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
+    "@repo/typescript-config": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "@types/node": "^20.3.3",
     "@types/react": "^18.0.37",
@@ -49,34 +29,11 @@
     "jsdom": "^22.1.0",
     "marked": "^12.0.0",
     "prettier": "^3.0.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "typescript": "^5.0.2",
-    "vite-tsconfig-paths": "^4.2.0",
-    "vitepress": "1.0.0-rc.13",
     "vitest": "^0.32.2"
-  },
-  "dependencies": {
-    "fast-deep-equal": "^3.1.3"
-  },
-  "peerDependencies": {
-    "react": ">=18.2.0",
-    "react-dom": ">=18.2.0"
   },
   "packageManager": "pnpm@8.6.2",
   "engines": {
     "node": ">=17"
-  },
-  "keywords": [
-    "react",
-    "hooks",
-    "react-hooks",
-    "react-use",
-    "library",
-    "use",
-    "frontend",
-    "next",
-    "ts",
-    "js"
-  ]
+  }
 }

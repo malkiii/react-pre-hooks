@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Default",
+  "compilerOptions": {
+    "strict": true,
+    "target": "ESNext",
+    "incremental": false,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "jsx": "react-jsx",
+    "allowJs": true
+  }
+}

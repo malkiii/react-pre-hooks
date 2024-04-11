@@ -3,10 +3,10 @@
   "env": { "browser": true, "es2020": true },
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint/eslint-plugin", "react-hooks"],
-  "parserOptions": { "project": ["./tsconfig.json"] },
+  "parserOptions": { "project": true },
   "overrides": [
     {
-      "files": ["**/src/use*/index.ts"],
+      "files": ["packages/hooks/src/use*/index.ts"],
       "rules": {
         "func-style": ["error", "expression"],
         "react-hooks/rules-of-hooks": "error"

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const srcDirectory = path.join(__dirname, 'src');
+const srcDirectory = path.join(__dirname, '../packages/hooks/src');
 const indexFile = path.join(srcDirectory, 'index.ts');
 const hooksFolders = fs
   .readdirSync(srcDirectory, { withFileTypes: true })
