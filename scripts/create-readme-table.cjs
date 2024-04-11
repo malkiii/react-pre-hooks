@@ -46,7 +46,7 @@ function replaceTableContent(filePath, tableRows) {
 }
 
 const guideDirectory = path.join(__dirname, '../docs/guide');
-const readmeFilePath = path.join(__dirname, '../README.md');
+const readmeFilePath = path.join(__dirname, '../packages/hooks/README.md');
 
 const pages = getHooksPages(guideDirectory);
 
