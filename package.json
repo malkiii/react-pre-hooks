@@ -29,7 +29,7 @@
     "jsdom": "^22.1.0",
     "marked": "^12.0.0",
     "prettier": "^3.0.3",
-    "typescript": "^5.0.2",
+    "typescript": "^5.4.5",
     "vitest": "^0.32.2"
   },
   "packageManager": "pnpm@8.6.2",
