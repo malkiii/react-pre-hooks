@@ -1,19 +1,23 @@
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vitepress';
-import { author, description, homepage, repository } from '../../package.json';
+import pkg from '../../packages/hooks/package.json';
 
 const site = {
-  title: 'react-pre-hooks',
-  description,
-  url: new URL(homepage),
+  title: pkg.name,
+  description: pkg.description,
+  author: pkg.author,
+  repository: pkg.repository.url,
+  url: new URL(pkg.homepage),
   logo: '/logo.svg',
-  og: new URL(homepage).href + '/og.png'
+  og: new URL(pkg.homepage).href + '/og.png'
 };
+
+const hooksDir = path.join(__dirname, '../../packages/hooks/src');
 
 function getHooksSectionItems() {
   return fs
-    .readdirSync(path.join(__dirname, '../../package/src'), { withFileTypes: true })
+    .readdirSync(hooksDir, { withFileTypes: true })
     .filter(file => file.isDirectory() && file.name.startsWith('use'))
     .map(({ name }) => ({ text: name, link: `/guide/${name}` }));
 }
@@ -46,7 +50,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' }
     ],
-    socialLinks: [{ icon: 'github', link: repository.url }],
+    socialLinks: [{ icon: 'github', link: site.repository }],
     sidebar: {
       '/guide/': [
         {
@@ -65,11 +69,11 @@ export default defineConfig({
     lastUpdated: true,
     editLink: {
       text: 'Edit this page',
-      pattern: `${repository.url}/edit/master/docs/:path`
+      pattern: `${site.repository}/edit/master/docs/:path`
     },
     footer: {
       message: 'Released under the MIT License.',
-      copyright: `Copyright &copy; 2023-PRESENT ${author.name}`
+      copyright: `Copyright &copy; 2023-PRESENT ${site.author.name}`
     }
   }
 });

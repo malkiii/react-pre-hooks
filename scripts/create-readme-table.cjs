@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const marked = require('marked').marked;
-const homePage = require('../package.json').homepage;
+const homePage = require('../packages/hooks/package.json').homepage;
 
 function getHookPageURL(name) {
   return `${homePage}/guide/${name}`;
@@ -45,7 +45,7 @@ function replaceTableContent(filePath, tableRows) {
   );
 }
 
-const guideDirectory = path.join(__dirname, './guide');
+const guideDirectory = path.join(__dirname, '../docs/guide');
 const readmeFilePath = path.join(__dirname, '../README.md');
 
 const pages = getHooksPages(guideDirectory);
