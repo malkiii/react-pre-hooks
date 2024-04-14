@@ -4,10 +4,11 @@
   "scripts": {
     "prebuild": "pnpm lint && pnpm generate:exports",
     "build": "pnpm prebuild && cd packages/hooks && pnpm build",
-    "lint": "tsc --noEmit && eslint --ext ts,tsx --cache",
+    "format": "prettier --write packages/**/*.{ts,tsx}",
+    "lint": "eslint --ext ts,tsx --cache",
+    "typecheck": "tsc --noEmit",
     "test": "cd packages/hooks && pnpm test",
     "test:watch": "cd packages/hooks && pnpm test:watch",
-    "format": "prettier --write packages/**/*.{ts,tsx}",
     "docs:dev": "cd docs && pnpm dev",
     "docs:build": "cd docs && pnpm build",
     "generate:exports": "node scripts/export-hooks.cjs",
@@ -34,6 +35,6 @@
   },
   "packageManager": "pnpm@8.6.2",
   "engines": {
-    "node": ">=17"
+    "node": ">=18"
   }
 }

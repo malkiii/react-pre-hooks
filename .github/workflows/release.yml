@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies and Build
         run: pnpm i && pnpm build
 
-      - run: pnpm test
+      - run: pnpm typecheck && pnpm test
 
       - name: Publish package on NPM
         run: cd packages/hooks && npm publish --provenance --access public
