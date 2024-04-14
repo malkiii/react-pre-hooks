@@ -16,9 +16,9 @@ Simplify and clean up your components with this react hooks collection.
 
 ## List Of Hooks
 
-<!-- pnpm docs:readme -->
+<!-- pnpm generate:readme -->
 <table align=center>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/guide/useAnimationFrame">useAnimationFrame</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a> method of the <code>window</code> object.</p></td></tr>
+<tr align=left><th>Name</th><th>Description</th></tr><tr><td><a href="https://malkiii.github.io/react-pre-hooks/guide/useAnimationFrame">useAnimationFrame</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a> method of the <code>window</code> object.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/guide/useArray">useArray</a></td><td><p>This hook returns an array with with some common and useful array methods making the code minimal and maintainable.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/guide/useAsync">useAsync</a></td><td><p>This hook simplifies the execution of an <code>async</code> function by returning its states and results.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/guide/useAudioAnalyser">useAudioAnalyser</a></td><td><p>This hook uses and audio analyser to create and an <strong>audio visualizer</strong> from a media element (audio/video) or the user microphone.</p></td></tr>

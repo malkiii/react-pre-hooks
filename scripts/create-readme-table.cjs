@@ -37,7 +37,7 @@ function replaceTableContent(filePath, tableRows) {
   const tableStartIndex = fileContent.indexOf('<table');
   const tableEndIndex = fileContent.indexOf('</table>') + '</table>'.length;
 
-  const newTableContent = `<table align=center>\n${tableRows}\n</table>`;
+  const newTableContent = `<table align=center>\n<tr align=left><th>Name</th><th>Description</th></tr>${tableRows}\n</table>`;
 
   fs.writeFileSync(
     filePath,
