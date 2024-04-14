@@ -31,7 +31,7 @@ export { type IntervalOptions, useInterval } from './useInterval';
 export { useIsomorphicEffect } from './useIsomorphicEffect';
 export { type KeysRecord, type KeyboardOptions, useKeyboard } from './useKeyboard';
 export { useLocalStorage } from './useLocalStorage';
-export { type ObjectToMap, useMap } from './useMap';
+export { useMap } from './useMap';
 export { type MediaDevicesOptions, useMediaDevices } from './useMediaDevices';
 export { useMediaQuery } from './useMediaQuery';
 export { type RecorderDownloadOptions, useMediaRecorder } from './useMediaRecorder';
