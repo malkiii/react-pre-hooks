@@ -16,7 +16,6 @@ export const useSpeech = (options: SpeechOptions = {}) => {
     rate,
     pitch,
     volume,
-    text: '',
     isSpeaking: false,
     isPaused: false,
     isEnded: false
@@ -26,7 +25,6 @@ export const useSpeech = (options: SpeechOptions = {}) => {
     () => ({
       speak(text: string) {
         startSpeech(text);
-        setState(s => ({ ...s, text: '' }));
       },
       togglePlayState(play?: boolean) {
         const shouldPlay = play ?? speechSynthesis.paused;
@@ -101,17 +99,9 @@ export const useSpeech = (options: SpeechOptions = {}) => {
     speech.onend = () => setState(s => ({ ...s, isSpeaking: false, isEnded: true }));
     speech.onpause = () => setState(s => ({ ...s, isSpeaking: false, isPaused: true }));
     speech.onresume = () => setState(s => ({ ...s, isSpeaking: true, isPaused: false }));
-    speech.onboundary = e =>
-      setState(s => {
-        charIndex.current = e.charIndex;
-        const nextWord = speechRef.current.text.substring(e.charIndex).split(/\s+/g).shift() ?? '';
-        const text = s.text + (s.text.endsWith(nextWord) ? '' : ' ' + nextWord);
-
-        return { ...s, text: text.trim() };
-      });
 
     speechSynthesis.onvoiceschanged = () => {
-      const voices = speechSynthesis.getVoices().filter(v => v.localService);
+      const voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith(lang ?? ''));
       speechRef.current.voice = options.voice ?? voices.find(v => v.default) ?? null;
       setVoices(voices);
     };

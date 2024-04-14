@@ -1,31 +1,26 @@
 import { SetStateAction, useMemo, useState } from 'react';
 import deepEqual from 'fast-deep-equal';
 
-type DefaultObject = Record<string, unknown>;
-type ObjectType<T> = keyof T extends never ? DefaultObject : T;
-
-export type ObjectToMap<T> = Map<keyof ObjectType<T>, ObjectType<T>[keyof ObjectType<T>]>;
-
-export const useMap = <T extends DefaultObject>(initial: ObjectType<T> = {} as any) => {
-  const [map, setMap] = useState<ObjectToMap<T>>(new Map(Object.entries(initial)) as any);
+export const useMap = <K = any, V = any>(initial: Map<K, V> = new Map()) => {
+  const [map, setMap] = useState(initial);
   return useMemo(
     () => ({
       value: map,
       size: map.size,
-      get(key: Parameters<(typeof map)['get']>[0]) {
+      get(key: K) {
         return map.get(key);
       },
-      set<K extends keyof ObjectType<T>>(key: K, value: ObjectType<T>[K]) {
+      set(key: K, value: V) {
         setMap(m => new Map(m).set(key, value));
       },
-      delete(...keys: Array<keyof ObjectType<T>>) {
+      delete(...keys: K[]) {
         setMap(m => {
           const newMap = new Map(m);
           keys.forEach(k => newMap.delete(k));
           return newMap;
         });
       },
-      has(...keys: Array<keyof ObjectType<T>>) {
+      has(...keys: K[]) {
         return keys.every(k => map.has(k));
       },
       keys() {
@@ -40,21 +35,14 @@ export const useMap = <T extends DefaultObject>(initial: ObjectType<T> = {} as a
       clear() {
         setMap(new Map());
       },
-      isEqual(m: Map<any, any> | Record<string | number | symbol, any>) {
-        return deepEqual(map, m instanceof Map ? m : new Map(Object.entries(m)));
+      isEqual(m: Map<any, any>) {
+        return deepEqual(map, m);
       },
       copy() {
         return structuredClone(map);
       },
-      reset(value: ObjectType<T> | SetStateAction<ObjectToMap<T>> = initial) {
-        const isObject = typeof value === 'object' && !(value instanceof Map);
-        setMap(isObject ? new Map(Object.entries(value)) : (value as any));
-      },
-      toObject() {
-        return Object.fromEntries(map) as ObjectType<T>;
-      },
-      toJSON(space?: number) {
-        return JSON.stringify(Object.fromEntries(map), null, space);
+      reset(value: SetStateAction<typeof map> = initial) {
+        setMap(value);
       }
     }),
     [map]

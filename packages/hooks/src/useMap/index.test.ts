@@ -3,11 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { useMap } from '.';
 
 describe('useMap', () => {
-  it('should return the initial object', () => {
-    const obj = { key: 'value' };
-    const { result } = renderHook(() => useMap(obj));
+  it('should return the initial map', () => {
+    const map = new Map([['key', 'value']]);
+    const { result } = renderHook(() => useMap(map));
 
-    expect(result.current.toObject()).toEqual(obj);
+    expect(result.current.value).toEqual(map);
   });
 
   it('should get and set a value by key', () => {
@@ -24,49 +24,43 @@ describe('useMap', () => {
   });
 
   it('should return keys and values', () => {
-    const { result } = renderHook(() => useMap({ key1: 'value1', key2: 'value2' }));
+    const obj = { key1: 'value1', key2: 'value2' };
+    const { result } = renderHook(() => useMap(new Map(Object.entries(obj))));
 
-    expect(result.current.keys()).toEqual(['key1', 'key2']);
-    expect(result.current.values()).toEqual(['value1', 'value2']);
+    expect(result.current.keys()).toEqual(Object.keys(obj));
+    expect(result.current.values()).toEqual(Object.values(obj));
   });
 
   it('should return entries', () => {
-    const { result } = renderHook(() => useMap({ key1: 'value1', key2: 'value2' }));
-    expect(result.current.entries()).toEqual([
-      ['key1', 'value1'],
-      ['key2', 'value2']
-    ]);
+    const obj = { key1: 'value1', key2: { key3: 'value2' } };
+    const { result } = renderHook(() => useMap(new Map(Object.entries(obj))));
+
+    expect(result.current.entries()).toEqual(Object.entries(obj));
   });
 
-  it('should check equality with another object', () => {
+  it('should have the keys', () => {
     const obj = { key1: 'value', key2: { key12: 10, key22: 20 } };
-    const { result } = renderHook(() => useMap(obj));
+    const { result } = renderHook(() => useMap(new Map(Object.entries(obj))));
 
     expect(result.current.has('key1', 'key2')).toBe(true);
-    expect(result.current.isEqual({ key1: 'value', key2: { key12: 10, key22: 20 } })).toBe(true);
+    expect(result.current.has('key1', 'key3')).toBe(false);
   });
 
   it('should copy the map', () => {
-    const obj = { key1: 'value', key2: { key12: 10, key22: 20 } };
-    const { result } = renderHook(() => useMap(obj));
+    const obj = Object.entries({ key1: 'value', key2: { key12: 10, key22: 20 } });
+    const { result } = renderHook(() => useMap(new Map(obj)));
 
     const copiedMap = result.current.copy();
-    expect(copiedMap).toEqual(new Map(Object.entries(obj)));
+    expect(copiedMap).toEqual(new Map(obj));
     expect(copiedMap).not.toBe(result.current.value);
   });
 
   it('should reset to initial map', () => {
-    const { result } = renderHook(() => useMap({ key: null as string | null }));
+    const map = new Map<string, string | null>([['key', null]]);
+    const { result } = renderHook(() => useMap(map));
 
     act(() => result.current.set('key', 'new value'));
     act(() => result.current.reset());
     expect(result.current.value).toEqual(new Map([['key', null]]));
-  });
-
-  it('should convert object to string', () => {
-    const { result } = renderHook(() => useMap({ key: 'value' }));
-    const jsonString = result.current.toJSON();
-
-    expect(jsonString).toBe('{"key":"value"}');
   });
 });
