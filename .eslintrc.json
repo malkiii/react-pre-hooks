@@ -3,7 +3,6 @@
   "env": { "browser": true, "es2020": true },
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint/eslint-plugin", "react-hooks"],
-  "parserOptions": { "project": true },
   "overrides": [
     {
       "files": ["packages/hooks/src/use*/index.ts"],
