@@ -1,9 +1,14 @@
 node_modules
-dist
 *.local
 
 # testing
 coverage
+
+# Build Outputs
+.next
+out
+build
+dist
 
 # docs
 docs/.vitepress/dist
