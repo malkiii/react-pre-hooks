@@ -23,7 +23,7 @@
     "url": "https://github.com/malkiii/react-pre-hooks/issues"
   },
   "scripts": {
-    "build": "rimraf dist/ && tsc",
+    "build": "rm -rf dist/ && tsc",
     "test": "vitest run --coverage",
     "test:watch": "clear && vitest watch"
   },
