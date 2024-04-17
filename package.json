@@ -6,7 +6,7 @@
     "build": "pnpm prebuild && cd packages/hooks && pnpm build",
     "format": "prettier --write packages/**/*.{ts,tsx}",
     "lint": "eslint --ext ts,tsx --cache",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "cd packages/hooks && tsc --noEmit",
     "test": "cd packages/hooks && pnpm test",
     "test:watch": "cd packages/hooks && pnpm test:watch",
     "docs:dev": "cd docs && pnpm dev",

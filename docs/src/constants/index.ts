@@ -1,4 +1,4 @@
-import pkg from '../../packages/hooks/package.json';
+import pkg from '../../../packages/hooks/package.json';
 
 export const site = {
   title: pkg.name,
