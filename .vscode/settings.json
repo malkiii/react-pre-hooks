@@ -5,6 +5,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+  "auto-rename-tag.activationOnLanguage": ["mdx"],
   "search.exclude": {
     "public/**": true,
     "node_modules/**": true,

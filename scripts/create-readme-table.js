@@ -1,10 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const marked = require('marked').marked;
-const homePage = require('../packages/hooks/package.json').homepage;
+import fs from 'fs';
+import path from 'path';
+import marked from 'marked';
+import { homepage } from '../packages/hooks/package.json';
+import { hooksFolders, indexFile, srcDirectory } from './utils.js';
 
 function getHookPageURL(name) {
-  return `${homePage}/guide/${name}`;
+  return `${homepage}/guide/${name}`;
 }
 
 function getHooksPages(directory) {

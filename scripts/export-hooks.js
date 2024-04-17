@@ -1,11 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-
-const srcDirectory = path.join(__dirname, '../packages/hooks/src');
-const indexFile = path.join(srcDirectory, 'index.ts');
-const hooksFolders = fs
-  .readdirSync(srcDirectory, { withFileTypes: true })
-  .filter(file => file.isDirectory() && file.name.startsWith('use'));
+import fs from 'fs';
+import path from 'path';
+import { hooksFolders, indexFile, srcDirectory } from './utils.js';
 
 // Create or overwrite the index.ts file
 fs.writeFileSync(indexFile, '/** @run "pnpm prebuild" to modify this file */\n');

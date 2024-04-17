@@ -11,8 +11,8 @@
     "test:watch": "cd packages/hooks && pnpm test:watch",
     "docs:dev": "cd docs && pnpm dev",
     "docs:build": "cd docs && pnpm build",
-    "generate:exports": "node scripts/export-hooks.cjs",
-    "generate:readme": "node scripts/create-readme-table.cjs",
+    "generate:exports": "node scripts/export-hooks.js",
+    "generate:readme": "node scripts/create-readme-table.js",
     "postversion": "pnpm test && pnpm build && pnpm generate:readme && bash scripts/post-version.sh"
   },
   "devDependencies": {
