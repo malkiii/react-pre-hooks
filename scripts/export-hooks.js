@@ -1,13 +1,14 @@
 import fs from 'fs';
 import path from 'path';
-import { hooksFolders, indexFile, srcDirectory } from './utils.js';
+import { hooksFolders } from './utils.js';
+
+const indexFile = path.join(hooksFolders[0].path, 'index.ts');
 
 // Create or overwrite the index.ts file
 fs.writeFileSync(indexFile, '/** @run "pnpm prebuild" to modify this file */\n');
 
 hooksFolders.forEach(folder => {
-  const folderPath = path.join(srcDirectory, folder.name);
-  const folderIndexFile = path.join(folderPath, 'index.ts');
+  const folderIndexFile = path.join(folder.path, folder.name, 'index.ts');
 
   try {
     const fileContent = fs.readFileSync(folderIndexFile, 'utf8');

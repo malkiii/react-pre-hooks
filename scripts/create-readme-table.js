@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import marked from 'marked';
 import { homepage } from '../packages/hooks/package.json';
-import { hooksFolders, indexFile, srcDirectory } from './utils.js';
+import { hooksFolders, indexFile } from './utils.js';
 
 function getHookPageURL(name) {
   return `${homepage}/guide/${name}`;
