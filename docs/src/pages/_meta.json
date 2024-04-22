@@ -1,15 +1,26 @@
 {
-  "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
-  "about": {
-    "title": "About",
+  "index": {
+    "title": "Home",
+    "type": "page",
+    "theme": {
+      "layout": "raw"
+    }
+  },
+  "guide": {
+    "title": "Guide",
     "type": "page"
+  },
+  "faq": {
+    "title": "FAQ",
+    "type": "page",
+    "theme": {
+      "layout": "raw"
+    }
   },
   "contact": {
     "title": "Contact ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://x.com/MalkiAbduu",
     "newWindow": true
   }
 }
