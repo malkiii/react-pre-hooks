@@ -2,13 +2,20 @@
   "root": true,
   "env": { "browser": true, "es2020": true },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint/eslint-plugin", "react-hooks"],
+  "plugins": ["@typescript-eslint/eslint-plugin", "react-hooks", "jsdoc"],
   "overrides": [
     {
-      "files": ["packages/hooks/src/use*/index.ts"],
+      "files": ["packages/hooks/src/use*/*.ts"],
       "rules": {
         "func-style": ["error", "expression"],
-        "react-hooks/rules-of-hooks": "error"
+        "react-hooks/rules-of-hooks": "error",
+        "jsdoc/check-param-names": "error",
+        "jsdoc/check-property-names": "error",
+        "jsdoc/check-syntax": "error",
+        "jsdoc/check-tag-names": ["error", { "definedTags": ["info", "tip", "warn"] }],
+        "jsdoc/check-types": "error",
+        "jsdoc/no-undefined-types": "error",
+        "jsdoc/valid-types": "error"
       }
     }
   ]
