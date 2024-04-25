@@ -13,7 +13,9 @@ export default function CodeBlock({ name, children, className, ...props }: CodeB
         />{' '}
         {name}.tsx
       </div>
-      <div className="ml-4 pt-2 pb-16">{children}</div>
+      <div className="sm:ml-4 pt-2 [&_pre]:overflow-auto [&_pre]:pb-16 [&_::-webkit-scrollbar]:hidden">
+        {children}
+      </div>
     </div>
   );
 }

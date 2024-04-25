@@ -1,20 +1,46 @@
 import CodeBlock from '~/components/code-block';
 import Home from '~/components/home';
 
-{/* prettier-ignore */}
 <Home>
 <CodeBlock name="before">
 ```tsx showLineNumbers
-console.log('Hello, world!');
-console.log('Hello, world!');
-console.log('Hello, world!');
+import { useEffect, useState } from 'react';
+
+export function Counter() {
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    function handleKeyPress(event) {
+      if (event.code === 'Space') {
+        setCount(prev => prev + 1);
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
+  return <div>{count}</div>;
+}
+
 ```
 </CodeBlock>
 
 <CodeBlock name="after">
 ```tsx showLineNumbers
-console.log('Hello, world!');
-console.log('Hello, world!');
+import { useCounter, useKeyboard } from 'react-pre-hooks';
+
+export function Counter() {
+  const counter = useCounter();
+
+  useKeyboard({ 'space': () => counter.inc() });
+
+  return <div>{counter}</div>;
+}
+
 ```
 </CodeBlock>
 </Home>

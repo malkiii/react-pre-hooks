@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { DocsThemeConfig } from 'nextra-theme-docs';
+import SourceCodeLink from './components/source-code-link';
 import { site } from './constants/site';
 
 const config: DocsThemeConfig = {
@@ -16,12 +17,16 @@ const config: DocsThemeConfig = {
   },
   toc: {
     float: true,
-    backToTop: true
+    backToTop: true,
+    extraContent: <SourceCodeLink />
+  },
+  docsRepositoryBase: `${site.github}/blob/master/docs`,
+  editLink: {
+    text: 'Edit this page on GitHub →'
   },
   nextThemes: {
     defaultTheme: 'dark'
   },
-  docsRepositoryBase: `${site.github}/tree/master/docs`,
   useNextSeoProps() {
     const { pathname } = useRouter();
     return { titleTemplate: pathname == '/' ? site.title : `%s | ${site.title}` };
@@ -45,7 +50,7 @@ const config: DocsThemeConfig = {
   footer: {
     text: (
       <p className="text-sm font-semibold">
-        © Copyright 2023-{new Date().getFullYear()} Malki Abderrahmane
+        © Copyright 2023-{new Date().getFullYear()} {site.author}
       </p>
     )
   }

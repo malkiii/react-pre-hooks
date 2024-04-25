@@ -6,8 +6,8 @@ export const site = {
   url: pkg.homepage,
   description: pkg.description,
   github: pkg.repository.url,
-  author: 'Malki Abderrahmane',
-  directory: `${pkg.repository.url}/${pkg.repository.directory}`,
+  author: pkg.author.name,
+  srcDirectory: `${pkg.repository.url}/blob/master/${pkg.repository.directory}/src`,
   icon: `${basePath}/logo.svg`,
   og: `${basePath}/og.png`
 } as const;

@@ -6,7 +6,9 @@ const fontSans = FontSans({ subsets: ['latin'], display: 'swap', preload: true }
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={`${fontSans.className} font-medium antialiased`}>
+    <main
+      className={`${fontSans.className} font-medium antialiased [&_::selection]:bg-primary [&_::selection]:text-white [&_[tabindex]]:ring-[none!important]`}
+    >
       <Component {...pageProps} />
     </main>
   );
