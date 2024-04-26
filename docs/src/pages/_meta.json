@@ -22,11 +22,5 @@
     "theme": {
       "layout": "raw"
     }
-  },
-  "contact": {
-    "title": "Contact ↗",
-    "type": "page",
-    "href": "https://x.com/MalkiAbduu",
-    "newWindow": true
   }
 }

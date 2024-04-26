@@ -1,9 +1,10 @@
 const { name, homepage } = require('../packages/hooks/package.json');
 
-const withNextra = require('nextra')({
+/** @type {import('nextra').NextraConfig} */
+const nextraConfig = {
   theme: 'nextra-theme-docs',
   themeConfig: './src/theme.config.tsx'
-});
+};
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,4 +13,4 @@ const nextConfig = {
   basePath: new URL(homepage).pathname
 };
 
-module.exports = withNextra(nextConfig);
+module.exports = require('nextra')(nextraConfig)(nextConfig);

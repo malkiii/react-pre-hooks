@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { DocsThemeConfig } from 'nextra-theme-docs';
+import ContactLink from './components/contact-link';
 import SourceCodeLink from './components/source-code-link';
 import { site } from './constants/site';
 
@@ -14,6 +15,9 @@ const config: DocsThemeConfig = {
   ),
   project: {
     link: site.github
+  },
+  navbar: {
+    extraContent: <ContactLink />
   },
   toc: {
     float: true,
@@ -50,7 +54,7 @@ const config: DocsThemeConfig = {
   footer: {
     text: (
       <p className="text-sm font-semibold">
-        © Copyright 2023-{new Date().getFullYear()} {site.author}
+        © Copyright 2023-{new Date().getFullYear()} {site.author.name}
       </p>
     )
   }

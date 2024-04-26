@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply font-medium antialiased;
+  }
+
+  ::selection {
+    @apply text-white bg-primary;
+  }
+
+  [tabindex] {
+    @apply ring-[none!important];
+  }
+}
+
+.nextra-code-block pre {
+  @apply border dark:border-neutral-600;
+  background-color: theme(colors.neutral.100) !important;
+  .dark & {
+    background-color: #202020 !important;
+  }
+}
+
+.nextra-button {
+  background-color: #00000010 !important;
+}
