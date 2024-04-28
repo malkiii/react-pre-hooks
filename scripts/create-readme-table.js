@@ -4,10 +4,16 @@ import marked from 'marked';
 import { homepage } from '../packages/hooks/package.json';
 import { hooksFolders, indexFile } from './utils.js';
 
+/**
+ * @param {string} name
+ */
 function getHookPageURL(name) {
   return `${homepage}/guide/${name}`;
 }
 
+/**
+ * @param {string} directory
+ */
 function getHooksPages(directory) {
   return fs
     .readdirSync(directory)
@@ -23,6 +29,9 @@ function getHooksPages(directory) {
     });
 }
 
+/**
+ * @param {ReturnType<typeof getHooksPages>} data
+ */
 function convertToTableRows(data) {
   return data
     .map(

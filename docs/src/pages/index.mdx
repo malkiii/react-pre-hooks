@@ -1,8 +1,8 @@
-import CodeBlock from '~/components/code-block';
+import CodeTab from '~/components/code-tab';
 import Home from '~/components/home';
 
 <Home>
-<CodeBlock name="before">
+<CodeTab name="before">
 ```tsx showLineNumbers
 import { useEffect, useState } from 'react';
 
@@ -27,9 +27,9 @@ export function Counter() {
 }
 
 ```
-</CodeBlock>
+</CodeTab>
 
-<CodeBlock name="after">
+<CodeTab name="after">
 ```tsx showLineNumbers
 import { useCounter, useKeyboard } from 'react-pre-hooks';
 
@@ -38,9 +38,9 @@ export function Counter() {
 
   useKeyboard({ 'space': () => counter.inc() });
 
-  return <div>{counter}</div>;
+  return <div>{counter.value}</div>;
 }
 
 ```
-</CodeBlock>
+</CodeTab>
 </Home>

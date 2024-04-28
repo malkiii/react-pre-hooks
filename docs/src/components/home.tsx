@@ -1,15 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { site } from '~/constants/site';
-import { useMediaQuery, useSwiping } from 'react-pre-hooks';
 import { ArrowRight as ArrowRightIcon } from './icons';
 
 export default function Home({ children }: React.PropsWithChildren) {
-  const codeBlocks = React.Children.toArray(children).filter(
-    child => React.isValidElement(child) && (child.type as any).displayName === 'CodeBlock'
+  const codeTabs = React.Children.toArray(children).filter(
+    child => React.isValidElement(child) && (child.type as any).displayName === 'CodeTab'
   );
 
-  if (codeBlocks.length !== 2) {
+  if (codeTabs.length !== 2) {
     throw new Error('Home component must have exactly 2 CodeBlock children.');
   }
 
@@ -36,45 +35,19 @@ export default function Home({ children }: React.PropsWithChildren) {
           </a>
         </div>
       </div>
-      <DemoCode blocks={codeBlocks} />
+      <DemoCode tabs={codeTabs} />
     </div>
   );
 }
 
-function DemoCode({ blocks }: { blocks: React.ReactNode[] }) {
-  const containerSize = React.useRef(0);
-  const isVertical = useMediaQuery('(max-width: 1160px)');
-
-  const resizerRef = useSwiping<HTMLDivElement>(action => {
-    const container = resizerRef.current?.parentElement;
-    if (!container) return;
-
-    if (action.type === 'start') {
-      containerSize.current = isVertical ? container.offsetHeight : container.offsetWidth;
-      return;
-    }
-
-    if (isVertical) {
-      container.style.height = containerSize.current - action.deltaY + 'px';
-      container.style.width = '';
-    } else {
-      container.style.width = containerSize.current - action.deltaX + 'px';
-      container.style.height = '';
-    }
-  });
-
+function DemoCode({ tabs }: { tabs: React.ReactNode[] }) {
   return (
-    <div
-      className={`dark touch-none mx-auto mb-24 flex bg-[rgb(14,14,14)] shadow-[0_0_250px_0] shadow-primary [--tw-text-opacity:0.3] hover:[--tw-text-opacity:0.5] max-[1160px]:h-[800px] min-[1160px]:*:w-1/2 *:min-w-[33%] *:min-h-[15%] max-w-6xl border-solid border-[0.75rem] border-neutral-900 rounded-xl transition-shadow duration-300 max-[1160px]:flex-col`}
-    >
-      <div className="relative max-[1160px]:border-b overflow-hidden min-[1160px]:border-r border-white/30">
-        {blocks[0]}
-        <div
-          ref={resizerRef}
-          className={`absolute right-0 ${isVertical ? 'bottom-0 translate-y-1/2 h-2 w-full cursor-ns-resize' : 'top-0 translate-x-1/2 w-2 h-full cursor-ew-resize'}`}
-        ></div>
+    <div className="dark touch-none mx-auto mb-24 flex bg-[rgb(14,14,14)] shadow-[0_0_250px_0] shadow-primary [--tw-text-opacity:0.3] hover:[--tw-text-opacity:0.5] lg:*:w-1/2 *:min-w-[33%] *:min-h-[15%] max-w-6xl border-solid border-[0.75rem] border-neutral-900 rounded-xl transition-shadow duration-300 max-lg:flex-col">
+      <div className="relative max-lg:border-b overflow-hidden lg:border-r max-lg:border-white/30 lg:border-white/30">
+        {tabs[0]}
+        <div className="absolute right-0 'max-lg:bottom-0 max-lg:translate-y-1/2 max-lg:h-2 max-lg:w-full max-lg:cursor-ns-resize lg:top-0 lg:translate-x-1/2 lg:w-2 lg:h-full lg:cursor-ew-resize"></div>
       </div>
-      {blocks[1]}
+      {tabs[1]}
     </div>
   );
 }

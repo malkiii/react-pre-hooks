@@ -1,6 +1,6 @@
 type CodeBlockProps = React.ComponentProps<'div'> & { name: string };
 
-export default function CodeBlock({ name, children, className, ...props }: CodeBlockProps) {
+export default function CodeTab({ name, children, className, ...props }: CodeBlockProps) {
   return (
     <div {...props} className={`[counter-reset:line] ${className}`}>
       <div className="p-2 select-none text-sm text-white font-light w-fit flex items-center gap-2 border-t">
@@ -20,4 +20,4 @@ export default function CodeBlock({ name, children, className, ...props }: CodeB
   );
 }
 
-CodeBlock.displayName = 'CodeBlock';
+CodeTab.displayName = 'CodeTab';

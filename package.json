@@ -6,13 +6,15 @@
     "build": "pnpm prebuild && cd packages/hooks && pnpm build",
     "format": "prettier --write packages/**/*.{ts,tsx}",
     "lint": "eslint --ext ts,tsx --cache --max-warnings 0",
+    "clean": "rimraf packages/**/dist docs/.next docs/out",
     "typecheck": "cd packages/hooks && tsc --noEmit",
     "test": "cd packages/hooks && pnpm test",
     "test:watch": "cd packages/hooks && pnpm test:watch",
-    "docs:dev": "cd docs && pnpm dev",
+    "docs:dev": "concurrently \"chokidar packages/hooks/src -c 'pnpm generate:pages' --initial\" \"pnpm --filter=docs dev\"",
     "docs:build": "cd docs && pnpm build",
     "generate:exports": "node scripts/export-hooks.js",
     "generate:readme": "node scripts/create-readme-table.js",
+    "generate:pages": "node --no-warnings scripts/create-doc-pages.js",
     "postversion": "pnpm test && pnpm build && pnpm generate:readme && bash scripts/post-version.sh"
   },
   "devDependencies": {
@@ -26,6 +28,8 @@
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.2.1",
     "@vitest/coverage-v8": "^0.32.2",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.2.2",
     "doctrine": "^3.0.0",
     "eslint": "^8.48.0",
     "eslint-plugin-jsdoc": "^48.2.3",
@@ -39,6 +43,6 @@
   },
   "packageManager": "pnpm@8.15.7",
   "engines": {
-    "node": ">=17"
+    "node": ">=20"
   }
 }

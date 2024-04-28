@@ -17,10 +17,10 @@
 }
 
 .nextra-code-block pre {
-  @apply border dark:border-neutral-600;
-  background-color: theme(colors.neutral.100) !important;
+  @apply border dark:border-neutral-700;
+  background-color: theme(colors.neutral.50) !important;
   .dark & {
-    background-color: #202020 !important;
+    background-color: #141414 !important;
   }
 }
 
