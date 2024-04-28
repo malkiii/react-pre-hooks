@@ -5,18 +5,20 @@
   "plugins": ["@typescript-eslint/eslint-plugin", "react-hooks", "jsdoc"],
   "overrides": [
     {
-      "files": ["packages/hooks/src/use*/*.ts"],
+      "files": ["packages/hooks/src/use*/index.ts"],
       "rules": {
         "func-style": ["error", "expression"],
-        "react-hooks/rules-of-hooks": "error",
-        "jsdoc/check-param-names": "error",
-        "jsdoc/check-property-names": "error",
-        "jsdoc/check-syntax": "error",
-        "jsdoc/check-tag-names": ["error", { "definedTags": ["info", "tip", "warn"] }],
-        "jsdoc/check-types": "error",
-        "jsdoc/no-undefined-types": "error",
-        "jsdoc/valid-types": "error"
+        "react-hooks/rules-of-hooks": "error"
       }
     }
-  ]
+  ],
+  "rules": {
+    "jsdoc/check-param-names": "error",
+    "jsdoc/check-property-names": "error",
+    "jsdoc/check-syntax": "error",
+    "jsdoc/check-tag-names": ["error", { "definedTags": ["info", "tip", "warn"] }],
+    "jsdoc/check-types": "error",
+    "jsdoc/no-undefined-types": "error",
+    "jsdoc/valid-types": "error"
+  }
 }
