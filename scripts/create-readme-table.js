@@ -1,32 +1,46 @@
 import fs from 'fs';
 import path from 'path';
-import marked from 'marked';
-import { homepage } from '../packages/hooks/package.json';
-import { hooksFolders, indexFile } from './utils.js';
+import extractComments from 'extract-comments';
+import { marked } from 'marked';
+import { hooksFolders, pkg, rootDir } from './utils.js';
+
+// const marked = import('marked');
+
+const hooksDirectory = path.join(rootDir, 'docs/src/pages/docs/hooks');
+const readmeFilePath = path.join(rootDir, 'packages/hooks/README.md');
+
+const pages = getHooksPages(hooksDirectory);
+
+const tableRows = convertToTableRows(pages);
+
+console.log(tableRows);
+
+// replaceTableContent(readmeFilePath, tableRows);
+
+// console.log('✅ README table updated successfully!');
 
 /**
  * @param {string} name
  */
 function getHookPageURL(name) {
-  return `${homepage}/guide/${name}`;
+  return `${pkg.homepage}/docs/hooks/${name}`;
 }
 
-/**
- * @param {string} directory
- */
-function getHooksPages(directory) {
-  return fs
-    .readdirSync(directory)
-    .filter(file => file.startsWith('use'))
-    .map(file => {
-      const filePath = path.join(directory, file);
-      const contentLines = fs.readFileSync(filePath, 'utf8').split('\n');
+function getHooksPages() {
+  return hooksFolders.map(folder => {
+    const pagePath = path.join(folder.path, folder.name, 'index.page.tsx');
 
-      const title = contentLines[0].replace('#', '').trim();
-      const description = contentLines[2].trim();
+    /** @type {{ value: string }[]} */
+    const pageContent = extractComments(fs.readFileSync(pagePath, 'utf8'));
 
-      return { title, description };
-    });
+    const title = folder.name;
+    const description = pageContent
+      .find(({ value }) => value.includes('@description'))
+      ?.value.replace('@description', '')
+      .trim();
+
+    return { title, description };
+  });
 }
 
 /**
@@ -42,6 +56,10 @@ function convertToTableRows(data) {
     .join('\n');
 }
 
+/**
+ * @param {string} filePath
+ * @param {string} tableRows
+ */
 function replaceTableContent(filePath, tableRows) {
   const fileContent = fs.readFileSync(filePath, 'utf8');
   const tableStartIndex = fileContent.indexOf('<table');
@@ -54,14 +72,3 @@ function replaceTableContent(filePath, tableRows) {
     fileContent.slice(0, tableStartIndex) + newTableContent + fileContent.slice(tableEndIndex)
   );
 }
-
-const guideDirectory = path.join(__dirname, '../docs/guide');
-const readmeFilePath = path.join(__dirname, '../packages/hooks/README.md');
-
-const pages = getHooksPages(guideDirectory);
-
-const tableRows = convertToTableRows(pages);
-
-replaceTableContent(readmeFilePath, tableRows);
-
-console.log('README table updated successfully!');

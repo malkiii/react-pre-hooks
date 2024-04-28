@@ -58,7 +58,7 @@ import Callout from '~/components/callout';
  * @param {string} fileContent
  */
 function parsePageFile(fileContent) {
-  /** @type {any[]} */
+  /** @type {{ value: string; code: Record<string, any> }[]} */
   const comments = extractComments(fileContent);
 
   const contentLines = fileContent.split('\n');
