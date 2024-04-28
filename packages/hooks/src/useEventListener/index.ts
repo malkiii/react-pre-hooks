@@ -4,10 +4,10 @@ import { addEvents } from '../utils';
 export type EventMap<T extends EventTarget> = T extends Window
   ? WindowEventMap
   : T extends Document
-  ? DocumentEventMap
-  : T extends HTMLElement
-  ? HTMLElementEventMap
-  : GlobalEventHandlersEventMap;
+    ? DocumentEventMap
+    : T extends HTMLElement
+      ? HTMLElementEventMap
+      : GlobalEventHandlersEventMap;
 
 export type EventHandler<T extends EventTarget, E extends keyof EventMap<T>> = (
   event: EventMap<T>[E]
