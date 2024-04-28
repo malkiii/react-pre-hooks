@@ -4,8 +4,6 @@ import extractComments from 'extract-comments';
 import { marked } from 'marked';
 import { hooksFolders, pkg, rootDir } from './utils.js';
 
-// const marked = import('marked');
-
 const hooksDirectory = path.join(rootDir, 'docs/src/pages/docs/hooks');
 const readmeFilePath = path.join(rootDir, 'packages/hooks/README.md');
 
@@ -15,9 +13,9 @@ const tableRows = convertToTableRows(pages);
 
 console.log(tableRows);
 
-// replaceTableContent(readmeFilePath, tableRows);
+replaceTableContent(readmeFilePath, tableRows);
 
-// console.log('✅ README table updated successfully!');
+console.log('✅ README table updated successfully!');
 
 /**
  * @param {string} name
