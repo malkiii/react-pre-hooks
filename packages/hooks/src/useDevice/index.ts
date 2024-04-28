@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIsomorphicEffect } from '..';
+import { useIsomorphicEffect } from '../useIsomorphicEffect';
 
 export type DeviceType = 'desktop' | 'mobile' | 'tablet' | 'smartTV' | 'console';
 

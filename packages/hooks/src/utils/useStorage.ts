@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
-import { useEventListener, useIsomorphicEffect } from '..';
+import { useEventListener } from '../useEventListener';
+import { useIsomorphicEffect } from '../useIsomorphicEffect';
 
 const parseJSON = <T>(value: string | null): T => {
   try {

@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useState } from 'react';
-import { useResizeObserver } from '..';
+import { useResizeObserver } from '../useResizeObserver';
 import { useNewRef } from '../utils/useNewRef';
 
 export const useGridLayout = <T extends HTMLElement = HTMLDivElement>(

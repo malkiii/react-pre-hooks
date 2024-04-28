@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAnimationFrame } from '..';
+import { useAnimationFrame } from '../useAnimationFrame';
 
 export type SourceObject = HTMLAudioElement | HTMLVideoElement | MediaStream;
 export type SourceNode<T extends SourceObject> = T extends MediaStream

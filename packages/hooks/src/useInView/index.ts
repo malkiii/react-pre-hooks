@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { IntersectionObserverOptions, useIntersectionObserver } from '..';
+import { IntersectionObserverOptions, useIntersectionObserver } from '../useIntersectionObserver';
 import { useNewRef } from '../utils/useNewRef';
 
 export type ViewOptions<T extends HTMLElement> = IntersectionObserverOptions<T> & {

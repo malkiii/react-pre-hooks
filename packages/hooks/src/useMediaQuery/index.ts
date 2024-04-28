@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIsomorphicEffect } from '..';
+import { useIsomorphicEffect } from '../useIsomorphicEffect';
 
 export const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState<boolean>();

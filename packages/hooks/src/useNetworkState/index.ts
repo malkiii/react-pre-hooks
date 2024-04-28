@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
-import { useEventListener, useIsomorphicEffect } from '..';
+import { useEventListener } from '../useEventListener';
+import { useIsomorphicEffect } from '../useIsomorphicEffect';
 import { getPrefixedProperty } from '../utils';
 
 /**

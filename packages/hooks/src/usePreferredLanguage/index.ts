@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIsomorphicEffect } from '..';
+import { useIsomorphicEffect } from '../useIsomorphicEffect';
 import { addEvents } from '../utils';
 
 export type PreferredLanguage = {

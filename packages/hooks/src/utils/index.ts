@@ -1,5 +1,5 @@
 import { SetStateAction } from 'react';
-import { EventHandler, EventListenerOptions, EventMap } from '..';
+import { EventHandler, EventListenerOptions, EventMap } from '../useEventListener';
 
 export const browserPrefixes = ['', 'moz', 'webkit', 'o', 'ms'] as const;
 

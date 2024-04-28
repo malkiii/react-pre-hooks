@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useEventListener } from '..';
+import { useEventListener } from '../useEventListener';
 
 export const useBeforeUnload = (returnValue: unknown) => {
   const handleBeforeUnload = useCallback(

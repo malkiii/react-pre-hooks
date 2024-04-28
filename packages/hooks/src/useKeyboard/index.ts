@@ -1,5 +1,5 @@
 import { RefObject, useCallback } from 'react';
-import { useEventListener } from '..';
+import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
 export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;

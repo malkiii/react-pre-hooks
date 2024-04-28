@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAsync } from '..';
+import { useAsync } from '../useAsync';
 
 export type RequestOptions = RequestInit & {
   url: string | URL;

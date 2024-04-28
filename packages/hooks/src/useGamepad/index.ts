@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useAnimationFrame, useEventListener } from '..';
+import { useAnimationFrame } from '../useAnimationFrame';
+import { useEventListener } from '../useEventListener';
 
 export type GamepadHandler = (gamepad: Gamepad) => any;
 

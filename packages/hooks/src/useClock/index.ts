@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useInterval } from '..';
+import { useInterval } from '../useInterval';
 
 export type ClockOptions = {
   timeout?: number;

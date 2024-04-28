@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useEventListener } from '..';
+import { useEventListener } from '../useEventListener';
 import { getPrefixedProperty } from '../utils';
 
 export const usePageVisibility = () => {

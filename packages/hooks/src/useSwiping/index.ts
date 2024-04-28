@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useRef } from 'react';
-import { useEventListener } from '..';
+import { useEventListener } from '../useEventListener';
 import { getPointerPosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 

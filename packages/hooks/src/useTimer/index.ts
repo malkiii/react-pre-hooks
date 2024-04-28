@@ -1,5 +1,5 @@
 import { SetStateAction, useCallback, useMemo, useState } from 'react';
-import { useInterval } from '..';
+import { useInterval } from '../useInterval';
 
 export type DateProps = Partial<{
   year: number;

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useAnimationFrame } from '..';
+import { useAnimationFrame } from '../useAnimationFrame';
 
 export type EasingFunction = (x: number) => number;
 export type EasingOption = {

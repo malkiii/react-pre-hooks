@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useMemo, useState } from 'react';
-import { useEventListener } from '..';
+import { useEventListener } from '../useEventListener';
 import { browserPrefixes, getPrefixedProperty } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 

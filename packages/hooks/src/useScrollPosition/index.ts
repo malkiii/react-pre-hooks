@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useState } from 'react';
-import { useEventListener } from '..';
+import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
 export const useScrollPosition = <T extends HTMLElement = HTMLDivElement>(

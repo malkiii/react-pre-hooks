@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useRef } from 'react';
-import { useEventListener } from '..';
+import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
 export type PointerEventHandler = (event: PointerEvent, pointers: PointerEvent[]) => any;

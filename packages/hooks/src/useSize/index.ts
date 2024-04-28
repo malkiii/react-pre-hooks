@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ResizeOptions, useResizeObserver } from '..';
+import { ResizeOptions, useResizeObserver } from '../useResizeObserver';
 
 export const useSize = <T extends HTMLElement = HTMLDivElement>(options: ResizeOptions<T> = {}) => {
   const { ref, ...resizeOptions } = options;
