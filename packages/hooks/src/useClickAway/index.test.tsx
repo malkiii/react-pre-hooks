@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, render, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { useClickAway } from '.';
@@ -5,7 +6,7 @@ import { useClickAway } from '.';
 describe('useClickAway', () => {
   it('should call the handler when clicking outside the target element', () => {
     const handler = vi.fn();
-    const { result } = renderHook(() => useClickAway(handler));
+    const { result } = renderHook(() => useClickAway({ handler }));
 
     const outside = document.createElement('div');
     document.body.appendChild(outside);
@@ -18,7 +19,7 @@ describe('useClickAway', () => {
 
   it('should not call the handler when clicking inside the target element', () => {
     const handler = vi.fn();
-    const { result } = renderHook(() => useClickAway(handler));
+    const { result } = renderHook(() => useClickAway({ handler }));
 
     render(<div ref={result.current}>Click inside</div>);
 

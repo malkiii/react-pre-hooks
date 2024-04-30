@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export const useDebouncedState = <T extends any = any>(initial: T, { delay = 500 } = {}) => {
-  const [value, setValue] = useState<T>(initial);
-  const [debouncedValue, setDebouncedValue] = useState<T>(initial);
+export const useDebouncedState = <T extends any = any>(args: { initial: T; delay?: number }) => {
+  const [value, setValue] = useState<T>(args.initial);
+  const [debouncedValue, setDebouncedValue] = useState<T>(args.initial);
 
   useEffect(() => {
-    setValue(initial);
-  }, [initial]);
+    setValue(args.initial);
+  }, [args.initial]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setDebouncedValue(value), delay);
+    const timeout = setTimeout(() => setDebouncedValue(value), args.delay ?? 500);
     return () => clearTimeout(timeout);
   }, [value]);
 

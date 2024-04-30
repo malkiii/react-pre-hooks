@@ -7,12 +7,12 @@ describe('useImageLoader', () => {
 
   it('should load image and set isLoading to false when image is loaded', async () => {
     const handler = vi.fn();
-    const { result } = renderHook(() => useImageLoader(imageSrc, handler));
+    const { result } = renderHook(() => useImageLoader({ src: imageSrc, handler }));
 
     // Check initial isLoading state
     expect(result.current.isLoading).toBe(true);
 
-    fireEvent.load(result.current.image);
+    fireEvent.load(result.current.ref.current);
 
     // Check isLoading state after image load
     expect(result.current.isLoading).toBe(false);

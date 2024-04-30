@@ -54,13 +54,4 @@ describe('useMap', () => {
     expect(copiedMap).toEqual(new Map(obj));
     expect(copiedMap).not.toBe(result.current.value);
   });
-
-  it('should reset to initial map', () => {
-    const map = new Map<string, string | null>([['key', null]]);
-    const { result } = renderHook(() => useMap(map));
-
-    act(() => result.current.set('key', 'new value'));
-    act(() => result.current.reset());
-    expect(result.current.value).toEqual(new Map([['key', null]]));
-  });
 });

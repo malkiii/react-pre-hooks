@@ -4,26 +4,22 @@ import { getPointerPosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export type DragAction = {
-  readonly type: 'start' | 'moving' | 'end';
-  readonly clientX: number;
-  readonly clientY: number;
-  readonly initialX: number;
-  readonly initialY: number;
-  readonly target: EventTarget;
-  readonly event: PointerEvent;
+  type: 'start' | 'moving' | 'end';
+  clientX: number;
+  clientY: number;
+  initialX: number;
+  initialY: number;
+  target: EventTarget;
+  event: PointerEvent;
 };
 
 export type DragActionHandler = (action: DragAction) => any;
 
-type DraggingOptions<T extends HTMLElement> = {
+export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(args: {
+  handler: DragActionHandler;
   ref?: RefObject<T> | null;
-};
-
-export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
-  handler: DragActionHandler,
-  options: DraggingOptions<T> = {}
-) => {
-  const targetRef = useNewRef<T>(options.ref);
+}) => {
+  const targetRef = useNewRef<T>(args.ref);
 
   const draggedElement = useRef<EventTarget>();
   const initialPosition = useRef<{ x: number; y: number }>();
@@ -34,7 +30,7 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
 
       const currentPosition = getPointerPosition(event);
 
-      handler({
+      args.handler({
         type,
         clientX: currentPosition.x,
         clientY: currentPosition.y,
@@ -44,7 +40,7 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
         event
       });
     },
-    [handler]
+    [args.handler]
   );
 
   const handleMouseDown = useCallback(
@@ -74,11 +70,13 @@ export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(
     [callback]
   );
 
-  const eventOptions = { ref: targetRef };
-
-  useEventListener('pointermove', handleDragging, eventOptions);
-  useEventListener('pointerdown', handleMouseDown, eventOptions);
-  useEventListener(['pointerup', 'pointerleave', 'pointercancel'], handleDropping, eventOptions);
+  useEventListener({ event: 'pointermove', handler: handleDragging, ref: targetRef });
+  useEventListener({ event: 'pointerdown', handler: handleMouseDown, ref: targetRef });
+  useEventListener({
+    event: ['pointerup', 'pointerleave', 'pointercancel'],
+    handler: handleDropping,
+    ref: targetRef
+  });
 
   return targetRef;
 };

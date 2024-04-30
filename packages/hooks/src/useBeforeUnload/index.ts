@@ -11,10 +11,15 @@ export const useBeforeUnload = (returnValue: unknown) => {
       event.preventDefault();
       event.returnValue = value;
 
-      return value; // For Chrome, Safari, IE8+ and Opera 12+
+      // For Chrome, Safari, IE8+ and Opera 12+
+      return value;
     },
     [returnValue]
   );
 
-  useEventListener('beforeunload', handleBeforeUnload, { target: () => window });
+  useEventListener({
+    event: 'beforeunload',
+    handler: handleBeforeUnload,
+    target: () => window
+  });
 };

@@ -28,17 +28,17 @@ const getResolvedDate = (date?: Date | DateProps) => {
   return new Date(year, month - 1, day, hours + 1, minutes, seconds, milliseconds);
 };
 
-export type TimerOptions = {
-  start?: DateProps;
-  duration?: number;
-  timeout?: number;
-  startOnMount?: boolean;
-};
-
-export const useTimer = (options: TimerOptions = {}) => {
-  const timeout = Math.abs(Math.floor(options.timeout ?? 1000));
-  const initial = options.start ?? (options.duration ? {} : undefined);
-  const startOnMount = options.startOnMount ?? true;
+export const useTimer = (
+  args: {
+    start?: DateProps;
+    duration?: number;
+    timeout?: number;
+    startOnMount?: boolean;
+  } = {}
+) => {
+  const timeout = Math.abs(Math.floor(args.timeout ?? 1000));
+  const initial = args.start ?? (args.duration ? {} : undefined);
+  const startOnMount = args.startOnMount ?? true;
 
   const initialDate = useMemo(() => getResolvedDate(initial), []);
   const [datetime, setDatetime] = useState<Date>(initialDate);
@@ -46,7 +46,7 @@ export const useTimer = (options: TimerOptions = {}) => {
   const passing = Math.abs(datetime.getTime() - initialDate.getTime());
 
   const handleTimer = useCallback(() => {
-    const duration = options.duration ?? Infinity;
+    const duration = args.duration ?? Infinity;
 
     setDatetime(date => {
       const currentDuration = date.getTime() - initialDate.getTime();
@@ -54,8 +54,8 @@ export const useTimer = (options: TimerOptions = {}) => {
         currentDuration > duration
           ? new Date(date.getTime() - timeout)
           : currentDuration < duration
-          ? new Date(date.getTime() + timeout)
-          : date;
+            ? new Date(date.getTime() + timeout)
+            : date;
 
       if (nextDatetime.getTime() - initialDate.getTime() == duration) timer.stop();
 
@@ -63,7 +63,7 @@ export const useTimer = (options: TimerOptions = {}) => {
     });
   }, []);
 
-  const timer = useInterval(handleTimer, { timeout, startOnMount });
+  const timer = useInterval({ callback: handleTimer, timeout, startOnMount });
 
   const reset = useCallback(
     (value: SetStateAction<Date> | DateProps = initialDate) => {

@@ -18,33 +18,43 @@ describe('useEventListener', () => {
 
   it('should attach and detach event listener', () => {
     const handler = vi.fn();
-    const options = { target: () => document.createElement('div') };
-    const { unmount } = renderHook(() => useEventListener('click', handler, options));
+    const args = { event: 'click', handler, target: () => document.createElement('div') };
+    const { unmount } = renderHook(() => useEventListener(args as any));
 
-    expect(addEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
+    expect(addEventListenerSpy).toHaveBeenCalledWith(args.event, args.handler, args);
 
     unmount();
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(args.event, args.handler, args);
   });
 
   it('should attach multiple event listeners', () => {
     const handler = vi.fn();
-    const options = { target: () => document.createElement('input') };
-    const { unmount } = renderHook(() => useEventListener(['click', 'keydown'], handler, options));
+    const args = {
+      event: ['click', 'keydown'],
+      handler,
+      target: () => document.createElement('input')
+    };
+    const { unmount } = renderHook(() => useEventListener(args as any));
 
-    expect(addEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
-    expect(addEventListenerSpy).toHaveBeenCalledWith('keydown', handler, {});
+    expect(addEventListenerSpy).toHaveBeenCalledWith(args.event[0], args.handler, args);
+    expect(addEventListenerSpy).toHaveBeenCalledWith(args.event[1], args.handler, args);
 
     unmount();
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('click', handler, {});
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', handler, {});
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(args.event[0], args.handler, args);
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(args.event[1], args.handler, args);
   });
 
   it('should add .scrolling class to the body on scroll', async () => {
     const handleScrolling = () => document.body.classList.add('scrolling');
-    renderHook(() => useEventListener('scroll', handleScrolling, { target: () => window }));
+    renderHook(() =>
+      useEventListener({
+        event: 'scroll',
+        handler: handleScrolling,
+        target: () => window
+      })
+    );
 
     fireEvent.scroll(window);
     await waitFor(() => expect(document.body.classList.contains('scrolling')).toBe(true));
@@ -54,7 +64,11 @@ describe('useEventListener', () => {
     const input = document.createElement('input');
     const handleClick = () => input.classList.add('cursor');
     renderHook(() =>
-      useEventListener(['mouseenter', 'mouseleave'], handleClick, { target: () => input })
+      useEventListener({
+        event: ['mouseenter', 'mouseleave'],
+        handler: handleClick,
+        target: () => input
+      })
     );
 
     fireEvent.mouseEnter(input);

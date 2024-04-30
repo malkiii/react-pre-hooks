@@ -10,9 +10,23 @@ export const usePageVisibility = () => {
     setIsVisible(!getPrefixedProperty(document, 'hidden'));
   }, []);
 
-  useEventListener('blur', () => handleVisibilityChange(false), { target: () => window });
-  useEventListener('focus', () => handleVisibilityChange(true), { target: () => window });
-  useEventListener('visibilitychange', () => handleVisibilityChange(), { target: () => document });
+  useEventListener({
+    event: 'blur',
+    handler: () => handleVisibilityChange(false),
+    target: () => window
+  });
+
+  useEventListener({
+    event: 'focus',
+    handler: () => handleVisibilityChange(true),
+    target: () => window
+  });
+
+  useEventListener({
+    event: 'visibilitychange',
+    handler: () => handleVisibilityChange(),
+    target: () => document
+  });
 
   return isVisible;
 };

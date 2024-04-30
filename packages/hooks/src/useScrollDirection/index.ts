@@ -1,9 +1,9 @@
-import { RefObject, useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
 export const useScrollDirection = <T extends HTMLElement = HTMLDivElement>(
-  ref?: RefObject<T> | null
+  ref?: React.RefObject<T> | null
 ) => {
   const targetRef = useNewRef<T>(ref);
 
@@ -32,7 +32,9 @@ export const useScrollDirection = <T extends HTMLElement = HTMLDivElement>(
     });
   }, []);
 
-  useEventListener('scroll', handleScrolling, {
+  useEventListener({
+    event: 'scroll',
+    handler: handleScrolling,
     target: () => {
       handleScrolling();
       return targetRef.current ?? window;

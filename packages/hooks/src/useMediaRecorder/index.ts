@@ -1,12 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
 
-export type RecorderDownloadOptions = {
-  type?:
-    | `video/${'mp4' | 'mpeg' | 'webm' | 'ogg'}`
-    | `audio/${'mpeg' | 'wav' | 'webm' | 'ogg'}`
-    | (string & {});
-};
-
 export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
   const recorderRef = useRef<MediaRecorder>();
   const recorderBlobParts = useRef<BlobPart[]>([]);
@@ -16,6 +9,10 @@ export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
 
   const controls = useMemo(
     () => ({
+      isActive: recorderState !== 'inactive',
+      isRecording: recorderState == 'recording',
+      isPaused: recorderState == 'paused',
+      error,
       start(stream: MediaStream, timeslice?: number) {
         const state = recorderRef.current?.state ?? 'inactive';
         if (state !== 'inactive') return;
@@ -37,15 +34,16 @@ export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
           setError(error);
         }
       },
-      async stop(options: RecorderDownloadOptions = {}) {
+      async stop() {
         const state = recorderRef.current?.state ?? 'inactive';
         if (state === 'inactive') return;
         recorderRef.current?.resume();
         recorderRef.current?.stop();
 
         const blob = await new Promise<Blob>(resolve => {
-          const type = options.type ?? 'video/mp4';
-          setTimeout(() => resolve(new Blob(recorderBlobParts.current, { type })), 0);
+          setTimeout(() => {
+            resolve(new Blob(recorderBlobParts.current, { type: options.mimeType }));
+          }, 0);
         });
 
         recorderBlobParts.current = [];
@@ -63,14 +61,8 @@ export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
         recorderRef.current?.resume();
       }
     }),
-    [recorderRef]
+    [recorderState, error]
   );
 
-  return {
-    ...controls,
-    isActive: recorderState !== 'inactive',
-    isRecording: recorderState == 'recording',
-    isPaused: recorderState == 'paused',
-    error
-  };
+  return controls;
 };

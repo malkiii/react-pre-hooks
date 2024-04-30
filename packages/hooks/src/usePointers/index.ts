@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -17,21 +17,18 @@ const pointerEvents: PointerEventName[] = [
   'pointerout'
 ];
 
-export type PointerOptions<T extends HTMLElement> = {
-  ref?: RefObject<T> | null;
+export const usePointers = <T extends HTMLElement = HTMLDivElement>(args: {
+  handler: PointerEventHandler;
+  ref?: React.RefObject<T> | null;
   capture?: boolean;
-};
-
-export const usePointers = <T extends HTMLElement = HTMLDivElement>(
-  handler: PointerEventHandler,
-  options: PointerOptions<T> = {}
-) => {
-  const targetRef = useNewRef<T>(options.ref);
+}) => {
+  const targetRef = useNewRef<T>(args.ref);
   const pointersList = useRef<PointerEvent[]>([]);
 
   const addPointer = useCallback((event: PointerEvent) => {
     const pointerIndex = pointersList.current.findIndex(e => e.pointerId === event.pointerId);
-    if (options.capture) targetRef.current?.setPointerCapture(event.pointerId);
+
+    if (args.capture) targetRef.current?.setPointerCapture(event.pointerId);
     if (pointerIndex === -1) pointersList.current.push(event);
 
     pointersList.current[pointerIndex] = event;
@@ -46,12 +43,12 @@ export const usePointers = <T extends HTMLElement = HTMLDivElement>(
       if (event.type === 'pointerdown') addPointer(event);
       if (['pointerup', 'pointercancel'].includes(event.type)) removePointer(event);
 
-      handler(event, pointersList.current);
+      args.handler(event, pointersList.current);
     },
-    [handler]
+    [args.handler]
   );
 
-  useEventListener(pointerEvents, handlePointerEvents, { ref: targetRef });
+  useEventListener({ event: pointerEvents, handler: handlePointerEvents, ref: targetRef });
 
   return targetRef;
 };

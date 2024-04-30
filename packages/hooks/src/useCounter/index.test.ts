@@ -11,7 +11,7 @@ describe('useCounter', () => {
 
   it('should increments and decrements', () => {
     const step = 3;
-    const { result } = renderHook(() => useCounter(0));
+    const { result } = renderHook(() => useCounter({ initial: 0 }));
 
     act(() => result.current.inc(step));
     expect(result.current.value).toBe(step * 1);
@@ -25,7 +25,7 @@ describe('useCounter', () => {
   });
 
   it('should change to 69', () => {
-    const { result } = renderHook(() => useCounter(0));
+    const { result } = renderHook(() => useCounter({ initial: 0 }));
 
     act(() => result.current.set(69));
     expect(result.current.value).toBe(69);
@@ -33,7 +33,7 @@ describe('useCounter', () => {
 
   it('should reset to the initial value', () => {
     const initial = 10;
-    const { result } = renderHook(() => useCounter(initial));
+    const { result } = renderHook(() => useCounter({ initial }));
 
     act(() => result.current.set(1));
     act(() => result.current.reset());
@@ -43,7 +43,7 @@ describe('useCounter', () => {
   it('should be between 50 and 100', () => {
     const [min, max] = [50, 100];
 
-    const { result } = renderHook(() => useCounter(min, { min: min + 1, max }));
+    const { result } = renderHook(() => useCounter({ initial: min, min: min + 1, max }));
     expect(result.current.value).toBe(min);
 
     act(() => result.current.set(45));

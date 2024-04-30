@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useIsomorphicEffect } from '../useIsomorphicEffect';
 
-export const useHash = (initialValue?: string) => {
-  const [hash, setHash] = useState<string | undefined>(initialValue);
+export const useHash = (initial?: string) => {
+  const [hash, setHash] = useState<string | undefined>(initial);
 
   const updateHash: typeof setHash = useCallback(value => {
     setHash(curr => {
@@ -16,10 +16,10 @@ export const useHash = (initialValue?: string) => {
   const handleHashChange = useCallback(() => updateHash(window.location.hash), []);
 
   useIsomorphicEffect(() => {
-    if (initialValue) handleHashChange();
+    if (initial) handleHashChange();
   }, []);
 
-  useEventListener('hashchange', handleHashChange, { target: () => window });
+  useEventListener({ event: 'hashchange', handler: handleHashChange, target: () => window });
 
   return [hash, updateHash] as const;
 };

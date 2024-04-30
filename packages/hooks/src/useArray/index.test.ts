@@ -35,7 +35,7 @@ describe('useArray', () => {
     expect(result.current.values).toEqual([1]);
   });
 
-  it('should insert and remove values', () => {
+  it('should insert values', () => {
     const { result } = renderHook(() => useArray([1, 2, 3]));
 
     act(() => result.current.insert(0, -1, 0));
@@ -43,10 +43,6 @@ describe('useArray', () => {
     expect(result.current.values).toEqual([-1, 0, 1, 2, 3]);
     act(() => result.current.insert(5, 4, 5));
     expect(result.current.values).toEqual([-1, 0, 1, 2, 3, 4, 5]);
-
-    act(() => result.current.remove(-1, 0));
-    expect(result.current.has(0, 1)).toBe(false);
-    expect(result.current.values).toEqual([1, 2, 3, 4, 5]);
   });
 
   it('should shift and unshift', () => {
@@ -59,19 +55,5 @@ describe('useArray', () => {
     expect(result.current.values).toEqual([2, 3]);
     act(() => result.current.shift());
     expect(result.current.values).toEqual([3]);
-  });
-
-  it('should apply a callback on all the elements', () => {
-    const { result } = renderHook(() => useArray([-2, -1, 0, 1, 2]));
-
-    act(() => result.current.apply(value => value * 2));
-    expect(result.current.values).toEqual([-4, -2, 0, 2, 4]);
-  });
-
-  it('should concat and merge', () => {
-    const { result } = renderHook(() => useArray([1, 2, 3]));
-
-    act(() => result.current.reset(_ => [0]));
-    expect(result.current.values).toEqual([0]);
   });
 });

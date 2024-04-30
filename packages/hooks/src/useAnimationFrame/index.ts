@@ -1,24 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export type AnimationFrameOptions = {
+export const useAnimationFrame = (args: {
+  callback: FrameRequestCallback;
   startOnMount?: boolean;
-};
-
-export const useAnimationFrame = (
-  callback: FrameRequestCallback,
-  options: AnimationFrameOptions = {}
-) => {
-  const { startOnMount = false } = options;
-
+}) => {
   const frameRequestId = useRef<number>();
-  const [isStarted, setIsStarted] = useState<boolean>(startOnMount);
+  const [isStarted, setIsStarted] = useState<boolean>(!!args.startOnMount);
 
   const handleAnimationFrameRequest: FrameRequestCallback = useCallback(
     timestamp => {
-      callback(timestamp);
+      args.callback(timestamp);
       frameRequestId.current = window.requestAnimationFrame(handleAnimationFrameRequest);
     },
-    [callback]
+    [args.callback]
   );
 
   const startAnimationFrame = useCallback(() => {
@@ -42,7 +36,7 @@ export const useAnimationFrame = (
   );
 
   useEffect(() => {
-    if (startOnMount) startAnimationFrame();
+    if (args.startOnMount) startAnimationFrame();
   }, []);
 
   return { start: startAnimationFrame, cancel: stopAnimationFrame, toggle, isStarted };

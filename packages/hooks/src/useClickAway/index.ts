@@ -1,26 +1,26 @@
-import { RefObject, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
-export type ClickAwayOptions<T extends HTMLElement> = {
-  ref?: RefObject<T> | null;
-};
-
-export const useClickAway = <T extends HTMLElement = HTMLDivElement>(
-  handler: (event: MouseEvent) => any,
-  options: ClickAwayOptions<T> = {}
-) => {
-  const targetRef = useNewRef<T>(options.ref);
+export const useClickAway = <T extends HTMLElement = HTMLDivElement>(args: {
+  handler: (event: MouseEvent) => any;
+  ref?: React.RefObject<T> | null;
+}) => {
+  const targetRef = useNewRef<T>(args.ref);
 
   const handleClick = useCallback(
     (event: MouseEvent) => {
       const element = targetRef.current;
-      element && !element.contains(event.target as Node) && handler(event);
+      element && !element.contains(event.target as Node) && args.handler(event);
     },
-    [handler]
+    [args.handler]
   );
 
-  useEventListener('click', handleClick, { target: () => window });
+  useEventListener({
+    event: 'click',
+    handler: handleClick,
+    target: () => document
+  });
 
   return targetRef;
 };

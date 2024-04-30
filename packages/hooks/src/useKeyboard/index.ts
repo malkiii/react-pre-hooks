@@ -1,10 +1,11 @@
-import { RefObject, useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
-export type KeysRecord = Record<string, (event: KeyboardEvent) => any>;
+export type KeyboardEventCallback = (event: KeyboardEvent) => any;
+export type KeysRecord = Record<string, KeyboardEventCallback>;
 
-const getKeyboardEventList = (record: KeysRecord, sep = '|') => {
+const getKeyboardEventList = (record: KeysRecord = {}, sep = '|') => {
   return Object.keys(record).map(key => {
     const resolvedKeys = key.split(sep).map(k => k.trim().toLowerCase());
     return [resolvedKeys, record[key]] as const;
@@ -28,30 +29,34 @@ const isPressed = (keyModifier: string, event: KeyboardEvent): boolean => {
   });
 };
 
-export type KeyboardOptions<T extends EventTarget> = {
-  ref?: RefObject<T> | null;
+export const useKeyboard = <T extends EventTarget = Window>(args: {
+  keys: KeysRecord;
+  ref?: React.RefObject<T> | null;
   separator?: string;
-};
+}) => {
+  const targetRef = useNewRef<T>(args.ref);
 
-export const useKeyboard = <T extends EventTarget = Window>(
-  keysRecord: KeysRecord = {},
-  options: KeyboardOptions<T> = {}
-) => {
-  const targetRef = useNewRef<T>(options.ref);
+  const keyboardEventList = useMemo(
+    () => getKeyboardEventList(args.keys, args.separator),
+    [args.keys]
+  );
 
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
-      const keyboardEventList = getKeyboardEventList(keysRecord, options.separator);
       const pressedKeyEvent = keyboardEventList.find(([keys, _]) => {
         return keys.some(key => isPressed(key, event));
       });
 
       if (pressedKeyEvent) pressedKeyEvent[1](event);
     },
-    [keysRecord]
+    [keyboardEventList]
   );
 
-  useEventListener('keydown', handleKeydown, { target: () => targetRef.current ?? window });
+  useEventListener({
+    event: 'keydown',
+    handler: handleKeydown,
+    target: () => targetRef.current ?? window
+  });
 
   return targetRef;
 };

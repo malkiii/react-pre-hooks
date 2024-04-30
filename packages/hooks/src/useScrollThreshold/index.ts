@@ -10,22 +10,22 @@ export type ScrollThresholdOffset = {
   right?: number;
 };
 
-export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(
-  thresholdHandler: ScrollThresholdOffset | ScrollThresholdHandler,
-  ref?: RefObject<T> | null
-) => {
-  const targetRef = useNewRef<T>(ref);
-  const [passed, setPassed] = useState<boolean>(false);
+export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(args: {
+  threshold: ScrollThresholdOffset | ScrollThresholdHandler;
+  ref?: RefObject<T> | null;
+}) => {
+  const targetRef = useNewRef<T>(args.ref);
+  const [isPassed, setIsPassed] = useState<boolean>(false);
 
   const handleScrolling = useCallback(
     (event?: Event) => {
-      if (thresholdHandler instanceof Function) return setPassed(!!thresholdHandler(event));
+      if (args.threshold instanceof Function) return setIsPassed(!!args.threshold(event));
 
       const x = targetRef.current?.scrollLeft ?? window.scrollX;
       const y = targetRef.current?.scrollTop ?? window.scrollY;
 
       const target = targetRef.current ?? document.body;
-      const { top = 0, bottom = 3, left = 0, right = 3 } = thresholdHandler;
+      const { top = 0, bottom = 3, left = 0, right = 3 } = args.threshold;
       const { clientWidth, clientHeight, scrollWidth, scrollHeight } = target;
 
       const passedLeft = x >= left;
@@ -34,17 +34,19 @@ export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(
       const passedTop = y >= top;
       const passedBottom = y + clientHeight >= scrollHeight - bottom;
 
-      setPassed(passedLeft && passedRight && passedTop && passedBottom);
+      setIsPassed(passedLeft && passedRight && passedTop && passedBottom);
     },
-    [thresholdHandler]
+    [args.threshold]
   );
 
-  useEventListener('scroll', handleScrolling, {
+  useEventListener({
+    event: 'scroll',
+    handler: handleScrolling,
     target: () => {
       handleScrolling();
       return targetRef.current ?? window;
     }
   });
 
-  return { ref: targetRef, passed };
+  return { ref: targetRef, isPassed };
 };

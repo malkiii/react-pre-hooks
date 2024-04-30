@@ -8,14 +8,14 @@ vi.useFakeTimers();
 describe('useDebouncedState', () => {
   const delay = 500;
   it('should return initial value', () => {
-    const { result } = renderHook(() => useDebouncedState(0));
+    const { result } = renderHook(() => useDebouncedState({ initial: 0 }));
     const [debouncedValue] = result.current;
 
     expect(debouncedValue).toBe(0);
   });
 
   it('should update debounced value after delay', () => {
-    const { result } = renderHook(() => useDebouncedState(0, { delay }));
+    const { result } = renderHook(() => useDebouncedState({ initial: 0, delay }));
     const setValue = result.current[1];
 
     act(() => setValue(5));

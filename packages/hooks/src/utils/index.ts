@@ -1,5 +1,4 @@
 import { SetStateAction } from 'react';
-import { EventHandler, EventListenerOptions, EventMap } from '../useEventListener';
 
 export const browserPrefixes = ['', 'moz', 'webkit', 'o', 'ms'] as const;
 
@@ -20,26 +19,4 @@ export function getPointerPosition(event: MouseEvent | TouchEvent | PointerEvent
   return event instanceof TouchEvent
     ? { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }
     : { x: event.clientX, y: event.clientY };
-}
-
-export function addEvents<T extends EventTarget, E extends keyof EventMap<T>>(
-  event: E | Array<E | false | null | undefined>,
-  handler: EventHandler<T, E>,
-  { ref, target, ...options }: EventListenerOptions<T> = {}
-) {
-  if (!ref && !target) return () => {};
-  const element = ref?.current ?? (target && target());
-  if (!element) return () => {};
-
-  const addEvent = (e: string) => element.addEventListener(e, handler as any, options);
-  const removeEvent = (e: string) => element.removeEventListener(e, handler as any, options);
-
-  const hasMultipleEvents = Array.isArray(event);
-  const resolvedEvents = hasMultipleEvents ? (event.filter(Boolean) as any) : [event];
-
-  resolvedEvents.forEach(addEvent);
-
-  return () => {
-    resolvedEvents.forEach(removeEvent);
-  };
 }

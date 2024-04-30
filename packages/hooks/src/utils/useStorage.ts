@@ -2,60 +2,45 @@ import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useIsomorphicEffect } from '../useIsomorphicEffect';
 
-const parseJSON = <T>(value: string | null): T => {
-  try {
-    return value === 'undefined' ? null : JSON.parse(value || '');
-  } catch {
-    throw new Error(`Parsing error: can't parse ${value}`);
-  }
-};
-
-export const useStorage = <T extends any>(
-  type: 'local' | 'session',
-  key: string,
-  initialValue: T | null = null
-) => {
-  const [storedValue, setStoredValue] = useState<T | null>(initialValue ?? null);
+export const useStorage = <T extends any>(args: {
+  type: 'local' | 'session';
+  key: string;
+  default?: T | null;
+}) => {
+  const defaultValue = args.default ?? null;
+  const [storedValue, setStoredValue] = useState<T | null>(defaultValue);
   const setCurrentStoredValue = () => setStoredValue(getStoredValue);
 
-  const getStorage = useCallback(() => (type === 'local' ? localStorage : sessionStorage), []);
+  const getStorage = useCallback(() => (args.type === 'local' ? localStorage : sessionStorage), []);
 
   const getStoredValue = useCallback(() => {
     const storage = getStorage();
 
-    try {
-      const item = storage.getItem(key);
-      return item ? parseJSON<T>(item) : initialValue;
-    } catch (error) {
-      throw new Error(`Error reading localStorage key “${key}”: ${error}`);
-    }
-  }, [key]);
+    const item = storage.getItem(args.key);
+    return item ? (item === 'undefined' ? null : JSON.parse(item ?? '')) : defaultValue;
+  }, [args.key]);
 
   const updateStoredValue: typeof setStoredValue = useCallback(value => {
     const storage = getStorage();
 
-    try {
-      const newValue = JSON.stringify(value instanceof Function ? value(storedValue) : value);
-      storage.setItem(key, newValue);
+    const newValue = JSON.stringify(value instanceof Function ? value(storedValue) : value);
+    storage.setItem(args.key, newValue);
 
-      window.dispatchEvent(new StorageEvent('storage', { key, newValue }));
-    } catch (error) {
-      throw new Error(`Value error: setting localStorage key “${key}” with ${value}: ${error}`);
-    }
+    window.dispatchEvent(new StorageEvent('storage', { key: args.key, newValue }));
   }, []);
 
   const handleStorageChange = useCallback(
     (event: StorageEvent) => {
-      if (event?.key === key) setCurrentStoredValue();
+      if (event?.key === args.key) setCurrentStoredValue();
     },
-    [key]
+    [args.key]
   );
 
   useIsomorphicEffect(() => {
     setCurrentStoredValue();
   }, []);
 
-  useEventListener('storage', handleStorageChange, { target: () => window });
+  useEventListener({ event: 'storage', handler: handleStorageChange, target: () => window });
 
   return [storedValue, updateStoredValue] as const;
 };

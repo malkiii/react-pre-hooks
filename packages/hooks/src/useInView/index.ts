@@ -1,24 +1,26 @@
 import { useCallback, useState } from 'react';
-import { IntersectionObserverOptions, useIntersectionObserver } from '../useIntersectionObserver';
+import { useIntersectionObserver } from '../useIntersectionObserver';
 import { useNewRef } from '../utils/useNewRef';
 
-export type ViewOptions<T extends HTMLElement> = IntersectionObserverOptions<T> & {
-  once?: boolean;
-};
+type IntersectionObserverOptions<T extends HTMLElement> = Parameters<
+  typeof useIntersectionObserver<T>
+>[0];
 
-export const useInView = <T extends HTMLElement = HTMLDivElement>(options: ViewOptions<T> = {}) => {
-  const { ref, once = false, ...observerInit } = options;
-
-  const targetRef = useNewRef<T>(ref);
+export const useInView = <T extends HTMLElement = HTMLDivElement>(
+  args: IntersectionObserverOptions<T> & {
+    once?: boolean;
+  }
+) => {
+  const targetRef = useNewRef<T>(args.ref);
   const [isInView, setIsInView] = useState<boolean>(false);
 
   const handleIntersecting: IntersectionObserverCallback = useCallback((entries, observer) => {
     const { isIntersecting } = entries[0];
-    if (isIntersecting && once) observer.unobserve(targetRef.current!);
+    if (isIntersecting && args.once) observer.unobserve(targetRef.current!);
     setIsInView(isIntersecting);
   }, []);
 
-  useIntersectionObserver(handleIntersecting, { ref: targetRef, ...observerInit });
+  useIntersectionObserver({ ...args, ref: targetRef, handler: handleIntersecting });
 
   return { ref: targetRef, isInView };
 };

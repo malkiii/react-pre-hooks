@@ -48,8 +48,15 @@ export const useNetworkState = () => {
     updateConnection();
   }, []);
 
-  useEventListener(['change', 'typechange' as any], updateConnection, { ref: connection as any });
-  useEventListener(['online', 'offline'], () => setIsOnline(navigator.onLine), {
+  useEventListener({
+    event: ['change', 'typechange' as any],
+    handler: updateConnection,
+    ref: connection as any
+  });
+
+  useEventListener({
+    event: ['online', 'offline'],
+    handler: () => setIsOnline(navigator.onLine),
     target: () => window
   });
 

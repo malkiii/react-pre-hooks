@@ -1,14 +1,6 @@
-import { SetStateAction, useMemo, useState } from 'react';
-import deepEqual from 'fast-deep-equal';
+import { useMemo, useState } from 'react';
 
 type NonEmptyArray<T> = [T, ...T[]];
-type IterationParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
-
-const toSpliced = <T extends any>(arr: T[], ...args: Parameters<T[]['splice']>) => {
-  const copy = [...arr];
-  copy.splice(...args);
-  return copy;
-};
 
 export const useArray = <T extends any = any>(initial: T[] = []) => {
   const [array, setArray] = useState<T[]>(initial);
@@ -20,23 +12,19 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
         return array.at(index);
       },
       set(index: number, element: T) {
-        setArray(arr => toSpliced(arr, index, 1, element));
+        setArray(arr => arr.toSpliced(index, 1, element));
       },
       has(...elements: T[]) {
         return elements.every(value => array.includes(value));
       },
-      isEqual(arr: any[]) {
-        return deepEqual(array, arr);
-      },
-      count(cond: T | ((...args: IterationParameters<T>) => unknown)) {
-        const canIncrement = cond instanceof Function ? cond : (value: T) => deepEqual(value, cond);
-        return array.reduce((count, ...args) => (canIncrement(...args) ? count + 1 : count), 0);
+      count(element: T) {
+        return array.reduce((acc, value) => (value === element ? acc + 1 : acc), 0);
       },
       push(...elements: NonEmptyArray<T>) {
-        setArray(arr => toSpliced(arr, arr.length, 0, ...elements));
+        setArray(arr => arr.toSpliced(arr.length, 0, ...elements));
       },
       pop(index: number = -1) {
-        setArray(arr => toSpliced(arr, index, 1));
+        setArray(arr => arr.toSpliced(index, 1));
         return array.at(index);
       },
       shift() {
@@ -46,19 +34,10 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
         this.insert(0, ...elements);
       },
       insert(index: number, ...elements: NonEmptyArray<T>) {
-        setArray(arr => toSpliced(arr, index, 0, ...elements));
-      },
-      remove(...elements: NonEmptyArray<T>) {
-        setArray(arr => arr.filter(el => !elements.includes(el)));
-      },
-      apply(callback: (...args: IterationParameters<T>) => T) {
-        setArray(arr => arr.map(callback));
+        setArray(arr => arr.toSpliced(index, 0, ...elements));
       },
       copy() {
         return structuredClone(array);
-      },
-      reset(value: SetStateAction<T[]> = initial) {
-        setArray(value);
       }
     }),
     [array]

@@ -11,7 +11,7 @@ describe('useTimeout', () => {
 
   it('should not start on mount', () => {
     const callback = vi.fn();
-    renderHook(() => useTimeout(callback, { timeout }));
+    renderHook(() => useTimeout({ callback, timeout }));
 
     expect(callback).not.toHaveBeenCalled();
     act(() => vi.advanceTimersByTime(timeout));
@@ -21,7 +21,7 @@ describe('useTimeout', () => {
 
   it(`should execute the callback after ${timeout}ms`, () => {
     const callback = vi.fn();
-    renderHook(() => useTimeout(callback, options));
+    renderHook(() => useTimeout({ callback, ...options }));
 
     expect(callback).not.toHaveBeenCalled();
     act(() => vi.advanceTimersByTime(timeout));
@@ -31,7 +31,7 @@ describe('useTimeout', () => {
 
   it('should start and execute the callback', () => {
     const callback = vi.fn();
-    const { result } = renderHook(() => useTimeout(callback, options));
+    const { result } = renderHook(() => useTimeout({ callback, ...options }));
 
     expect(result.current.isRunning).toBe(options.startOnMount);
     expect(callback).not.toHaveBeenCalled();
@@ -48,7 +48,7 @@ describe('useTimeout', () => {
 
   it('should cancel the timeout', () => {
     const callback = vi.fn();
-    const { result } = renderHook(() => useTimeout(callback, options));
+    const { result } = renderHook(() => useTimeout({ callback, ...options }));
 
     act(() => result.current.start());
     act(() => result.current.cancel());

@@ -1,4 +1,4 @@
-import { SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 export const useStateHistory = <T extends any>(initial: T, { limit = 10 } = {}) => {
   if (limit <= 0) throw new Error(`useStateHistory: Limit must be grater than 0, got ${limit}`);
@@ -8,10 +8,10 @@ export const useStateHistory = <T extends any>(initial: T, { limit = 10 } = {}) 
   const pointerRef = useRef<number>(0);
 
   const getPointerValue = () => historyRef.current[pointerRef.current];
-  const setHistory = () => setValue(getPointerValue);
+  const updateHistory = () => setValue(getPointerValue);
 
   const setState = useCallback(
-    (value: SetStateAction<T>) => {
+    (value: React.SetStateAction<T>) => {
       setValue(currentValue => {
         const resolvedValue = value instanceof Function ? value(currentValue) : value;
         if (getPointerValue() === resolvedValue) return resolvedValue;
@@ -39,26 +39,26 @@ export const useStateHistory = <T extends any>(initial: T, { limit = 10 } = {}) 
         const nextPointer = pointerRef.current + step;
         pointerRef.current =
           nextPointer < 0 ? 0 : nextPointer > lastIndex ? lastIndex : nextPointer;
-        setHistory();
+        updateHistory();
       },
       next() {
         if (pointerRef.current >= historyRef.current.length - 1) return;
         pointerRef.current++;
-        setHistory();
+        updateHistory();
       },
       prev() {
         if (pointerRef.current <= 0) return;
         pointerRef.current--;
-        setHistory();
+        updateHistory();
       },
       reset() {
         pointerRef.current = historyRef.current.length - 1;
-        setHistory();
+        updateHistory();
       },
       clear() {
         pointerRef.current = 0;
         historyRef.current = [];
-        setHistory();
+        updateHistory();
       }
     }),
     [value]

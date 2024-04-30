@@ -1,8 +1,7 @@
-import { SetStateAction, useMemo, useState } from 'react';
-import deepEqual from 'fast-deep-equal';
+import { useMemo, useState } from 'react';
 
-export const useMap = <K = any, V = any>(initial: Map<K, V> = new Map()) => {
-  const [map, setMap] = useState(initial);
+export const useMap = <K = any, V = any>(initial?: Map<K, V> | Iterable<readonly [K, V]>) => {
+  const [map, setMap] = useState(new Map(initial));
   return useMemo(
     () => ({
       value: map,
@@ -35,14 +34,8 @@ export const useMap = <K = any, V = any>(initial: Map<K, V> = new Map()) => {
       clear() {
         setMap(new Map());
       },
-      isEqual(m: Map<any, any>) {
-        return deepEqual(map, m);
-      },
       copy() {
         return structuredClone(map);
-      },
-      reset(value: SetStateAction<typeof map> = initial) {
-        setMap(value);
       }
     }),
     [map]

@@ -1,9 +1,9 @@
-import { RefObject, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useResizeObserver } from '../useResizeObserver';
 import { useNewRef } from '../utils/useNewRef';
 
 export const useGridLayout = <T extends HTMLElement = HTMLDivElement>(
-  ref?: RefObject<T> | null
+  ref?: React.RefObject<T> | null
 ) => {
   const targetRef = useNewRef<T>(ref);
   const [layoutValues, setLayoutValues] = useState({ rows: 0, columns: 0 });
@@ -21,7 +21,7 @@ export const useGridLayout = <T extends HTMLElement = HTMLDivElement>(
 
   useEffect(updateLayoutValues, []);
 
-  useResizeObserver(updateLayoutValues, { ref: targetRef });
+  useResizeObserver({ handler: updateLayoutValues, ref: targetRef });
 
   return { ref: targetRef, ...layoutValues };
 };

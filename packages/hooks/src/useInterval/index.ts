@@ -1,41 +1,40 @@
-import { DependencyList, useCallback, useEffect, useRef, useState } from 'react';
+import { DependencyList, useEffect, useMemo, useRef, useState } from 'react';
 
-export type IntervalOptions = {
+export const useInterval = (args: {
+  callback: () => any;
   timeout: number;
   startOnMount?: boolean;
   deps?: DependencyList;
-};
-
-export const useInterval = (
-  handler: Function,
-  { timeout, startOnMount = false, deps = [] }: IntervalOptions
-) => {
+}) => {
   const intervalRef = useRef<any>();
-  const handlerMemo = useCallback(handler, [handler]);
-  const [isRunning, setIsRunning] = useState<boolean>(startOnMount);
+  const [isRunning, setIsRunning] = useState<boolean>(!!args.startOnMount);
 
-  const clear = (): void => {
-    if (!intervalRef.current) return;
-    setIsRunning(false);
-    window.clearInterval(intervalRef.current);
-  };
-
-  const start = () => {
-    clear();
-    intervalRef.current = setInterval(handlerMemo, timeout);
-    setIsRunning(true);
-  };
-
-  const toggle = (force?: boolean) => {
-    const shouldStart = force ?? !isRunning;
-    shouldStart ? start() : clear();
-  };
+  const controls = useMemo(
+    () => ({
+      isRunning,
+      start() {
+        this.stop();
+        intervalRef.current = setInterval(args.callback, args.timeout);
+        setIsRunning(true);
+      },
+      stop() {
+        if (!intervalRef.current) return;
+        setIsRunning(false);
+        window.clearInterval(intervalRef.current);
+      },
+      toggle(force?: boolean) {
+        const shouldStart = force ?? !isRunning;
+        shouldStart ? this.start() : this.stop();
+      }
+    }),
+    [args.callback, isRunning]
+  );
 
   useEffect(() => {
-    if (!startOnMount) return;
-    start();
-    return clear;
-  }, [timeout, ...deps]);
+    if (!args.startOnMount) return;
+    controls.start();
+    return controls.stop;
+  }, args.deps ?? []);
 
-  return { start, stop: clear, toggle, isRunning } as const;
+  return controls;
 };

@@ -1,44 +1,45 @@
-import { DependencyList, useCallback, useEffect, useRef, useState } from 'react';
+import { DependencyList, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-export type TimoutOptions = {
+export const useTimeout = (args: {
+  callback?: () => any;
   timeout: number;
   startOnMount?: boolean;
   deps?: DependencyList;
-};
-
-export const useTimeout = (
-  callback: () => any,
-  { timeout, startOnMount = false, deps = [] }: TimoutOptions
-) => {
-  const [isRunning, setIsRunning] = useState<boolean>(startOnMount);
+}) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-  const callbackMemo = useCallback(() => {
-    callback();
+  const [isRunning, setIsRunning] = useState<boolean>(!!args.startOnMount);
+
+  const callback = useCallback(() => {
+    args.callback?.();
     setIsRunning(false);
-  }, [callback]);
+  }, [args.callback]);
 
-  const cancel = (): void => {
-    if (!timeoutRef.current) return;
-    setIsRunning(false);
-    clearTimeout(timeoutRef.current);
-  };
-
-  const start = () => {
-    cancel();
-    timeoutRef.current = setTimeout(callbackMemo, timeout);
-    setIsRunning(true);
-  };
-
-  const toggle = (force?: boolean) => {
-    const shouldStart = force ?? !isRunning;
-    shouldStart ? start() : cancel();
-  };
+  const controls = useMemo(
+    () => ({
+      isRunning,
+      start() {
+        this.cancel();
+        timeoutRef.current = setTimeout(callback, args.timeout);
+        setIsRunning(true);
+      },
+      cancel() {
+        if (!timeoutRef.current) return;
+        setIsRunning(false);
+        clearTimeout(timeoutRef.current);
+      },
+      toggle(force?: boolean) {
+        const shouldStart = force ?? !isRunning;
+        shouldStart ? this.start() : this.cancel();
+      }
+    }),
+    [callback, isRunning]
+  );
 
   useEffect(() => {
-    if (!startOnMount) return;
-    start();
-    return cancel;
-  }, [timeout, startOnMount, ...deps]);
+    if (!args.startOnMount) return;
+    controls.start();
+    return controls.cancel;
+  }, args.deps ?? []);
 
-  return { start, cancel, toggle, isRunning } as const;
+  return controls;
 };

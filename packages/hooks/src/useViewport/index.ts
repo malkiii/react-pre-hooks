@@ -1,17 +1,22 @@
-import { useEffect, useState } from 'react';
-import { addEvents } from '../utils';
+import { useCallback, useState } from 'react';
+import { useEventListener } from '../useEventListener';
 
 export const useViewport = () => {
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
-  useEffect(() => {
-    const getWindowSize = () => {
-      setViewport({ width: window.innerWidth ?? 0, height: window.innerHeight ?? 0 });
-    };
-
-    getWindowSize();
-    return addEvents('resize', getWindowSize, { target: () => window, passive: true });
+  const updateViewport = useCallback(() => {
+    setViewport({ width: window.innerWidth ?? 0, height: window.innerHeight ?? 0 });
   }, []);
+
+  useEventListener({
+    event: 'resize',
+    handler: updateViewport,
+    target: () => {
+      updateViewport();
+      return window;
+    },
+    passive: true
+  });
 
   return viewport;
 };

@@ -7,16 +7,16 @@ describe('useInterval', () => {
   const options = { timeout, startOnMount: true };
 
   beforeEach(() => {
-    vi.useFakeTimers(); // Use fake timers before each test
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    vi.clearAllTimers(); // Clear timers after each test
+    vi.clearAllTimers();
   });
 
   it('should not start on mount', () => {
     const callback = vi.fn();
-    renderHook(() => useInterval(callback, { timeout }));
+    renderHook(() => useInterval({ callback, timeout }));
 
     expect(callback).not.toHaveBeenCalled();
     act(() => vi.advanceTimersByTime(timeout));
@@ -25,32 +25,32 @@ describe('useInterval', () => {
   });
 
   it('should start and execute the handler', () => {
-    const handler = vi.fn();
+    const callback = vi.fn();
     const callTimes = 3;
-    renderHook(() => useInterval(handler, options));
+    renderHook(() => useInterval({ callback, ...options }));
 
-    expect(handler).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
     act(() => vi.advanceTimersByTime(timeout * callTimes));
 
-    expect(handler).toHaveBeenCalledTimes(callTimes);
+    expect(callback).toHaveBeenCalledTimes(callTimes);
   });
 
-  it('should start and execute the handler', () => {
-    const handler = vi.fn();
-    const { result } = renderHook(() => useInterval(handler, options));
+  it('should start and execute the callback', () => {
+    const callback = vi.fn();
+    const { result } = renderHook(() => useInterval({ callback, ...options }));
 
     expect(result.current.isRunning).toBe(true);
-    expect(handler).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
 
     act(() => result.current.start());
     act(() => vi.advanceTimersByTime(timeout));
 
-    expect(handler).toHaveBeenCalledOnce();
+    expect(callback).toHaveBeenCalledOnce();
   });
 
   it('should stop the interval', () => {
-    const handler = vi.fn();
-    const { result } = renderHook(() => useInterval(handler, options));
+    const callback = vi.fn();
+    const { result } = renderHook(() => useInterval({ callback, ...options }));
 
     act(() => result.current.start());
     act(() => result.current.stop());
@@ -58,6 +58,6 @@ describe('useInterval', () => {
 
     act(() => vi.advanceTimersByTime(timeout));
 
-    expect(handler).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
   });
 });

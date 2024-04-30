@@ -1,10 +1,10 @@
-import { RefObject, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { getPointerPosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
-  ref?: RefObject<T> | null
+  ref?: React.RefObject<T> | null
 ) => {
   const targetRef = useNewRef<T>(ref);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -31,9 +31,9 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
 
   const options = { target: () => targetRef.current ?? window };
 
-  useEventListener('mouseup', handleMouseUp, options);
-  useEventListener('mousedown', handleMouseDown, options);
-  useEventListener('contextmenu', handleRightClick, options);
+  useEventListener({ event: 'mouseup', handler: handleMouseUp, ...options });
+  useEventListener({ event: 'mousedown', handler: handleMouseDown, ...options });
+  useEventListener({ event: 'contextmenu', handler: handleRightClick, ...options });
 
   return { ref: targetRef, clientX: position.x, clientY: position.y, canShow, toggle };
 };

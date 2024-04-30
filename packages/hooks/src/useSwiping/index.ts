@@ -1,28 +1,24 @@
-import { RefObject, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useEventListener } from '../useEventListener';
 import { getPointerPosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
 export type SwipeAction = {
-  readonly type: 'start' | 'moving' | 'end';
-  readonly deltaX: number;
-  readonly deltaY: number;
-  readonly initialX: number;
-  readonly initialY: number;
-  readonly event: PointerEvent;
+  type: 'start' | 'moving' | 'end';
+  deltaX: number;
+  deltaY: number;
+  initialX: number;
+  initialY: number;
+  event: PointerEvent;
 };
 
 export type SwipeActionHandler = (action: SwipeAction) => any;
 
-export type SwipeOptions<T extends EventTarget> = {
-  ref?: RefObject<T> | null;
-};
-
-export const useSwiping = <T extends HTMLElement>(
-  handler: SwipeActionHandler,
-  options: SwipeOptions<T> = {}
-) => {
-  const targetRef = useNewRef<T>(options.ref);
+export const useSwiping = <T extends HTMLElement>(args: {
+  handler: SwipeActionHandler;
+  ref?: React.RefObject<T> | null;
+}) => {
+  const targetRef = useNewRef<T>(args.ref);
 
   const delta = useRef({ x: 0, y: 0 });
   const initialPosition = useRef<typeof delta.current>();
@@ -37,7 +33,7 @@ export const useSwiping = <T extends HTMLElement>(
         y: initialPosition.current.y - currentPosition.y
       };
 
-      handler({
+      args.handler({
         type,
         deltaX: delta.current.x,
         deltaY: delta.current.y,
@@ -46,7 +42,7 @@ export const useSwiping = <T extends HTMLElement>(
         event
       });
     },
-    [handler]
+    [args.handler]
   );
 
   const handleTouchStart = useCallback(
@@ -74,11 +70,13 @@ export const useSwiping = <T extends HTMLElement>(
     [callback]
   );
 
-  const eventOptions = { ref: targetRef };
-
-  useEventListener('pointermove', handleTouchMove, eventOptions);
-  useEventListener('pointerdown', handleTouchStart, eventOptions);
-  useEventListener(['pointerup', 'pointercancel'], handleTouchEnd, eventOptions);
+  useEventListener({ event: 'pointermove', handler: handleTouchMove, ref: targetRef });
+  useEventListener({ event: 'pointerdown', handler: handleTouchStart, ref: targetRef });
+  useEventListener({
+    event: ['pointerup', 'pointercancel'],
+    handler: handleTouchEnd,
+    ref: targetRef
+  });
 
   return targetRef;
 };

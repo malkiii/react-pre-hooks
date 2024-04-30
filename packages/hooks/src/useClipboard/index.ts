@@ -1,34 +1,28 @@
-import { useCallback, useState } from 'react';
+import { useMemo } from 'react';
 import { useTimeout } from '../useTimeout';
 
 export const useClipboard = ({ duration = 3000 } = {}) => {
-  const [error, setError] = useState<unknown>();
-  const statusTimer = useTimeout(() => {}, { timeout: duration });
+  const statusTimer = useTimeout({ timeout: duration });
 
-  const copy = useCallback(
-    async (text?: string) => {
-      try {
-        await navigator.clipboard.writeText(text || '');
-        statusTimer.start();
-      } catch (error) {
-        setError(error);
+  const controls = useMemo(
+    () => ({
+      isCopied: statusTimer.isRunning,
+      copy: async (text?: string | null) => {
+        navigator.clipboard.writeText(text || '').then(statusTimer.start);
+      },
+      paste: async () => {
+        try {
+          return await navigator.clipboard.readText();
+        } catch (error) {
+          return null;
+        }
+      },
+      reset: () => {
+        statusTimer.cancel();
       }
-    },
+    }),
     [statusTimer]
   );
 
-  const paste = useCallback(async () => {
-    try {
-      return await navigator.clipboard.readText();
-    } catch (error) {
-      setError(error);
-    }
-  }, []);
-
-  const reset = useCallback(() => {
-    statusTimer.cancel();
-    setError(undefined);
-  }, [statusTimer]);
-
-  return { copy, paste, reset, isCopied: statusTimer.isRunning, error } as const;
+  return controls;
 };

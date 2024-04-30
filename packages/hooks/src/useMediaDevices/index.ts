@@ -1,16 +1,14 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
-export type MediaDevicesOptions = MediaStreamConstraints & {
-  ref?: RefObject<HTMLVideoElement> | null;
-  startOnMount?: boolean;
-};
-
-export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
-  const { ref, startOnMount = false, ...globalConstraints } = options;
-
+export const useMediaDevices = (
+  args: MediaStreamConstraints & {
+    ref?: RefObject<HTMLVideoElement> | null;
+    startOnMount?: boolean;
+  } = {}
+) => {
   const streamRef = useRef<MediaStream>();
-  const videoRef = useNewRef<HTMLVideoElement>(options.ref);
+  const videoRef = useNewRef<HTMLVideoElement>(args.ref);
 
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [error, setError] = useState<unknown>();
@@ -20,9 +18,7 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
     streamRef.current?.getTracks().forEach(t => t.stop());
 
     try {
-      streamRef.current = await navigator.mediaDevices.getUserMedia(
-        constraints ?? globalConstraints
-      );
+      streamRef.current = await navigator.mediaDevices.getUserMedia(constraints ?? args);
 
       if (!videoRef.current) return;
       videoRef.current.muted = true;
@@ -44,12 +40,12 @@ export const useMediaDevices = (options: MediaDevicesOptions = {}) => {
   }, []);
 
   useEffect(() => {
-    if (startOnMount) start();
+    if (args.startOnMount) start();
     updateMediaDevices();
 
     navigator.mediaDevices.addEventListener('devicechange', updateMediaDevices);
     return () => navigator.mediaDevices.removeEventListener('devicechange', updateMediaDevices);
   }, []);
 
-  return { ref: videoRef, stream: streamRef, devices, start, stop, error };
+  return { ref: videoRef, streamRef, devices, start, stop, error };
 };

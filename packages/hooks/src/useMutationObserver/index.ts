@@ -1,25 +1,23 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
-export type MutationObserverOptions<T extends HTMLElement> = MutationObserverInit & {
-  ref?: RefObject<T> | null;
-};
-
 export const useMutationObserver = <T extends HTMLElement = HTMLDivElement>(
-  handler: MutationCallback,
-  options: MutationObserverOptions<T> = {}
+  args: MutationObserverInit & {
+    handler: MutationCallback;
+    ref?: React.RefObject<T> | null;
+  }
 ) => {
-  const targetRef = useNewRef<T>(options.ref);
-  const observer = useRef<MutationObserver>();
+  const targetRef = useNewRef<T>(args.ref);
+  const observerRef = useRef<MutationObserver>();
 
   useEffect(() => {
     if (!targetRef.current) return;
 
-    observer.current = new MutationObserver(handler);
-    observer.current.observe(targetRef.current, options);
+    observerRef.current = new MutationObserver(args.handler);
+    observerRef.current.observe(targetRef.current, args);
 
-    return () => observer.current?.disconnect();
-  }, [handler]);
+    return () => observerRef.current?.disconnect();
+  }, [args.handler]);
 
-  return { ref: targetRef, observer };
+  return { ref: targetRef, observerRef };
 };

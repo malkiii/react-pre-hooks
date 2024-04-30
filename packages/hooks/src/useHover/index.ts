@@ -1,24 +1,29 @@
-import { RefObject, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useTimeout } from '../useTimeout';
 import { useNewRef } from '../utils/useNewRef';
 
-export type HoverOptions<T extends HTMLElement> = {
-  ref?: RefObject<T> | null;
-  delay?: number | { hover?: number; unhover?: number };
-};
-
-export const useHover = <T extends HTMLElement = HTMLDivElement>(options: HoverOptions<T> = {}) => {
-  const targetRef = useNewRef<T>(options.ref);
+export const useHover = <T extends HTMLElement = HTMLDivElement>(
+  args: {
+    ref?: React.RefObject<T> | null;
+    delay?: number | { hover?: number; unhover?: number };
+  } = {}
+) => {
+  const targetRef = useNewRef<T>(args.ref);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const delay =
-    typeof options.delay === 'number'
-      ? { hover: options.delay, unhover: options.delay }
-      : options.delay ?? {};
+    typeof args.delay === 'number' ? { hover: args.delay, unhover: args.delay } : args.delay ?? {};
 
-  const hoverTimeout = useTimeout(() => setIsHovered(true), { timeout: delay.hover ?? 0 });
-  const unhoverTimeout = useTimeout(() => setIsHovered(false), { timeout: delay.unhover ?? 0 });
+  const hoverTimeout = useTimeout({
+    callback: () => setIsHovered(true),
+    timeout: delay.hover ?? 0
+  });
+
+  const unhoverTimeout = useTimeout({
+    callback: () => setIsHovered(false),
+    timeout: delay.unhover ?? 0
+  });
 
   const handleHover = useCallback(() => {
     hoverTimeout.start();
@@ -30,8 +35,8 @@ export const useHover = <T extends HTMLElement = HTMLDivElement>(options: HoverO
     hoverTimeout.cancel();
   }, [unhoverTimeout]);
 
-  useEventListener('mouseenter', handleHover, { ref: targetRef });
-  useEventListener('mouseleave', handleUnhover, { ref: targetRef });
+  useEventListener({ event: 'mouseenter', handler: handleHover, ref: targetRef });
+  useEventListener({ event: 'mouseleave', handler: handleUnhover, ref: targetRef });
 
   return { ref: targetRef, isHovered };
 };

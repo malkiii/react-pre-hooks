@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
-import { addEvents } from '../utils';
+import { useState } from 'react';
+import { useIsomorphicEffect } from '../useIsomorphicEffect';
 
 export const useOrientation = () => {
   const [orientation, setOrientation] = useState<OrientationType>();
 
-  useEffect(() => {
+  useIsomorphicEffect(() => {
     const getOrientation = () => setOrientation(screen.orientation.type);
+
     getOrientation();
 
-    return addEvents('change', getOrientation, { target: () => screen.orientation, passive: true });
+    window.addEventListener('orientationchange', getOrientation, { passive: true });
+    return () => window.removeEventListener('orientationchange', getOrientation);
   }, []);
 
   return orientation;

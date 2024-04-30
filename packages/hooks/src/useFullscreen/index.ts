@@ -3,8 +3,8 @@ import { useEventListener } from '../useEventListener';
 import { browserPrefixes, getPrefixedProperty } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
-const fullscreenChangeEvents = browserPrefixes.map(pref => pref + 'fullscreenchange') as any[];
-const fullscreenErrorEvents = browserPrefixes.map(pref => pref + 'fullscreenerror') as any[];
+const fullscreenChangeEvents = browserPrefixes.map(pref => pref + 'fullscreenchange');
+const fullscreenErrorEvents = browserPrefixes.map(pref => pref + 'fullscreenerror');
 
 export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
   ref?: RefObject<T> | null
@@ -13,8 +13,11 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
   const [isEnabled, setIsEnabled] = useState(false);
   const [isError, setIsError] = useState<boolean>(false);
 
-  const methods = useMemo(
+  const controls = useMemo(
     () => ({
+      ref: targetRef,
+      isEnabled,
+      isError,
       async enter(options: FullscreenOptions = {}) {
         if (!targetRef.current || isEnabled) return;
 
@@ -52,9 +55,17 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
     setIsError(true);
   }, []);
 
-  const eventOptions = { target: () => document };
-  useEventListener(fullscreenChangeEvents, handleFullScreenChange, eventOptions);
-  useEventListener(fullscreenErrorEvents, handleFullScreenError, eventOptions);
+  useEventListener({
+    event: fullscreenChangeEvents as any,
+    handler: handleFullScreenChange,
+    target: () => document
+  });
 
-  return { ref: targetRef, ...methods, isEnabled, isError };
+  useEventListener({
+    event: fullscreenErrorEvents as any,
+    handler: handleFullScreenError,
+    target: () => document
+  });
+
+  return controls;
 };

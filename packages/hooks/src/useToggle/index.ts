@@ -1,10 +1,10 @@
-import { SetStateAction, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export const useToggle = <T extends any>(values: T[]) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const toggle = useCallback(
-    (value?: SetStateAction<T>) => {
+    (value?: React.SetStateAction<T>) => {
       if (!values.length) return;
       setCurrentIndex(index => {
         const currentValue = values[index];

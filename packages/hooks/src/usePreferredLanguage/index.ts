@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useIsomorphicEffect } from '../useIsomorphicEffect';
-import { addEvents } from '../utils';
 
 export type PreferredLanguage = {
   code: string;
@@ -20,7 +19,8 @@ export const usePreferredLanguage = () => {
 
     updatePreferredLanguage();
 
-    return addEvents('languagechange', updatePreferredLanguage, { target: () => window });
+    window.addEventListener('languagechange', updatePreferredLanguage);
+    return () => window.removeEventListener('languagechange', updatePreferredLanguage);
   }, []);
 
   return language;
