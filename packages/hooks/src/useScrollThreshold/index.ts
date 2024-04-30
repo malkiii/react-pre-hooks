@@ -10,6 +10,9 @@ export type ScrollThresholdOffset = {
   right?: number;
 };
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useScrollThreshold | useScrollThreshold} hook.
+ */
 export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(args: {
   threshold: ScrollThresholdOffset | ScrollThresholdHandler;
   ref?: RefObject<T> | null;

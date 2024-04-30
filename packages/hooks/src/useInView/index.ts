@@ -6,6 +6,9 @@ type IntersectionObserverOptions<T extends HTMLElement> = Parameters<
   typeof useIntersectionObserver<T>
 >[0];
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useInView | useInView} hook.
+ */
 export const useInView = <T extends HTMLElement = HTMLDivElement>(
   args: IntersectionObserverOptions<T> & {
     once?: boolean;

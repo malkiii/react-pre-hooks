@@ -16,6 +16,9 @@ export type NetworkInformation = {
   saveData?: boolean;
 };
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useNetworkState | useNetworkState} hook.
+ */
 export const useNetworkState = () => {
   const connection = useRef<NetworkInformation>();
   const [isOnline, setIsOnline] = useState<boolean>(true);

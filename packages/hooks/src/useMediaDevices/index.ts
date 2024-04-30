@@ -1,6 +1,9 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaDevices | useMediaDevices} hook.
+ */
 export const useMediaDevices = (
   args: MediaStreamConstraints & {
     ref?: RefObject<HTMLVideoElement> | null;

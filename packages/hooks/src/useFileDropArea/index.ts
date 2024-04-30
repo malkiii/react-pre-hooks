@@ -8,6 +8,9 @@ const getFileInputElement = (label: HTMLElement): HTMLInputElement | null => {
   return label.querySelector('input[type="file"]') as any;
 };
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useFileDropArea | useFileDropArea} hook.
+ */
 export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
   args: {
     ref?: React.RefObject<T> | null;

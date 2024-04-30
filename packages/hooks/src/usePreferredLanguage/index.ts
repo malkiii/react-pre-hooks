@@ -6,6 +6,9 @@ export type PreferredLanguage = {
   name?: string;
 };
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/usePreferredLanguage | usePreferredLanguage} hook.
+ */
 export const usePreferredLanguage = () => {
   const [language, setLanguage] = useState<PreferredLanguage>();
 

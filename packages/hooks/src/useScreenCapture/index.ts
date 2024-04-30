@@ -5,6 +5,9 @@ export type ScreenCaptureOptions = MediaStreamConstraints & {
   ref?: RefObject<HTMLVideoElement> | null;
 };
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useScreenCapture | useScreenCapture} hook.
+ */
 export const useScreenCapture = (options: ScreenCaptureOptions = {}) => {
   const { ref, ...constraints } = options;
 

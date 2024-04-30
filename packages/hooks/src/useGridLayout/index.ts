@@ -2,6 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useResizeObserver } from '../useResizeObserver';
 import { useNewRef } from '../utils/useNewRef';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useGridLayout | useGridLayout} hook.
+ */
 export const useGridLayout = <T extends HTMLElement = HTMLDivElement>(
   ref?: React.RefObject<T> | null
 ) => {

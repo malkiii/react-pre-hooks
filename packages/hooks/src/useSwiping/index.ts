@@ -14,6 +14,9 @@ export type SwipeAction = {
 
 export type SwipeActionHandler = (action: SwipeAction) => any;
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useSwiping | useSwiping} hook.
+ */
 export const useSwiping = <T extends HTMLElement>(args: {
   handler: SwipeActionHandler;
   ref?: React.RefObject<T> | null;

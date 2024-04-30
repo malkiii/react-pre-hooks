@@ -1,5 +1,8 @@
 import { useMemo, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useCounter | useCounter} hook.
+ */
 export const useCounter = (args: { initial?: number; min?: number; max?: number } = {}) => {
   const initialValue = Math.floor(args.initial ?? 0);
   const [counter, setCounter] = useState<number>(initialValue);

@@ -2,6 +2,9 @@ import { useCallback } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useClickAway | useClickAway} hook.
+ */
 export const useClickAway = <T extends HTMLElement = HTMLDivElement>(args: {
   handler: (event: MouseEvent) => any;
   ref?: React.RefObject<T> | null;

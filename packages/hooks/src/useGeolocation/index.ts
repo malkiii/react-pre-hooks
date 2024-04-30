@@ -6,6 +6,9 @@ export type GeolocationState = Partial<GeolocationCoordinates> & {
   error?: GeolocationPositionError;
 };
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useGeolocation | useGeolocation} hook.
+ */
 export const useGeolocation = (options: PositionOptions = {}) => {
   const [state, setState] = useState<GeolocationState>({ isLoading: true });
 

@@ -17,6 +17,9 @@ const pointerEvents: PointerEventName[] = [
   'pointerout'
 ];
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/usePointers | usePointers} hook.
+ */
 export const usePointers = <T extends HTMLElement = HTMLDivElement>(args: {
   handler: PointerEventHandler;
   ref?: React.RefObject<T> | null;

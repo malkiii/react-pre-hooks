@@ -1,6 +1,9 @@
 import { useCallback } from 'react';
 import { useEventListener } from '../useEventListener';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useBeforeUnload | useBeforeUnload} hook.
+ */
 export const useBeforeUnload = (returnValue: unknown) => {
   const handleBeforeUnload = useCallback(
     async (event: BeforeUnloadEvent) => {

@@ -2,6 +2,9 @@ import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { getPrefixedProperty } from '../utils';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/usePageVisibility | usePageVisibility} hook.
+ */
 export const usePageVisibility = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
 

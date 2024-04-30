@@ -2,6 +2,9 @@ import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useIsomorphicEffect } from '../useIsomorphicEffect';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useHash | useHash} hook.
+ */
 export const useHash = (initial?: string) => {
   const [hash, setHash] = useState<string | undefined>(initial);
 

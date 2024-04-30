@@ -2,6 +2,9 @@ import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useSelection | useSelection} hook.
+ */
 export const useSelection = <T extends HTMLElement = HTMLDivElement>(
   ref?: React.RefObject<T> | null
 ) => {

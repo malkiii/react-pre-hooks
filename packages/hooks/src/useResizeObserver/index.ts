@@ -1,6 +1,9 @@
 import { RefObject, useEffect, useRef } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useResizeObserver | useResizeObserver} hook.
+ */
 export const useResizeObserver = <T extends HTMLElement = HTMLDivElement>(
   args: ResizeObserverOptions & {
     handler: ResizeObserverCallback;

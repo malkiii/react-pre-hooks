@@ -2,6 +2,9 @@ import { useMemo, useState } from 'react';
 
 type NonEmptyArray<T> = [T, ...T[]];
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useArray | useArray} hook.
+ */
 export const useArray = <T extends any = any>(initial: T[] = []) => {
   const [array, setArray] = useState<T[]>(initial);
   return useMemo(

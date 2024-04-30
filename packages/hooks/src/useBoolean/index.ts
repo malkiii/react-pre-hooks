@@ -1,5 +1,8 @@
 import { useCallback, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useBoolean | useBoolean} hook.
+ */
 export const useBoolean = (initial = false) => {
   const [value, setValue] = useState(initial);
 

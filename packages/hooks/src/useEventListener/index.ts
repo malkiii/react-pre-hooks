@@ -14,6 +14,9 @@ type EventHandler<T extends EventTarget, E extends keyof EventMap<T>> = (
 
 type Falsy = false | null | undefined;
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useEventListener | useEventListener} hook.
+ */
 export const useEventListener = <T extends EventTarget, E extends keyof EventMap<T> & string>(
   args: AddEventListenerOptions & {
     event: E | Array<E | Falsy>;

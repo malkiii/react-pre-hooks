@@ -6,6 +6,9 @@ import { useNewRef } from '../utils/useNewRef';
 const fullscreenChangeEvents = browserPrefixes.map(pref => pref + 'fullscreenchange');
 const fullscreenErrorEvents = browserPrefixes.map(pref => pref + 'fullscreenerror');
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useFullscreen | useFullscreen} hook.
+ */
 export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
   ref?: RefObject<T> | null
 ) => {

@@ -1,5 +1,8 @@
 import { useMemo, useRef, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaRecorder | useMediaRecorder} hook.
+ */
 export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
   const recorderRef = useRef<MediaRecorder>();
   const recorderBlobParts = useRef<BlobPart[]>([]);

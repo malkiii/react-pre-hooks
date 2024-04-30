@@ -1,5 +1,8 @@
 import { DependencyList, useEffect, useMemo, useRef, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useInterval | useInterval} hook.
+ */
 export const useInterval = (args: {
   callback: () => any;
   timeout: number;

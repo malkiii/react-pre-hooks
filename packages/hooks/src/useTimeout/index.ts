@@ -1,5 +1,8 @@
 import { DependencyList, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useTimeout | useTimeout} hook.
+ */
 export const useTimeout = (args: {
   callback?: () => any;
   timeout: number;

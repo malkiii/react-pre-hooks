@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 import { useTimeout } from '../useTimeout';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useClipboard | useClipboard} hook.
+ */
 export const useClipboard = ({ duration = 3000 } = {}) => {
   const statusTimer = useTimeout({ timeout: duration });
 

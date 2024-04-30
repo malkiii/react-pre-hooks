@@ -28,6 +28,9 @@ const getResolvedDate = (date?: Date | DateProps) => {
   return new Date(year, month - 1, day, hours + 1, minutes, seconds, milliseconds);
 };
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useTimer | useTimer} hook.
+ */
 export const useTimer = (
   args: {
     start?: DateProps;

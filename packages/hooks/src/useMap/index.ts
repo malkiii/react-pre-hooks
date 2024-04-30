@@ -1,5 +1,8 @@
 import { useMemo, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useMap | useMap} hook.
+ */
 export const useMap = <K = any, V = any>(initial?: Map<K, V> | Iterable<readonly [K, V]>) => {
   const [map, setMap] = useState(new Map(initial));
   return useMemo(

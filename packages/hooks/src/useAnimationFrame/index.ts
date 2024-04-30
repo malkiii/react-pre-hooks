@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useAnimationFrame | useAnimationFrame} hook.
+ */
 export const useAnimationFrame = (args: {
   callback: FrameRequestCallback;
   startOnMount?: boolean;

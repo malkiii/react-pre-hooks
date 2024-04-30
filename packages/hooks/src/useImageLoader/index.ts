@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useImageLoader | useImageLoader} hook.
+ */
 export const useImageLoader = (args: { src: string; handler?: EventListener }) => {
   const imageRef = useRef<HTMLImageElement>(new Image());
   const [isLoading, setIsLoading] = useState<boolean>(true);

@@ -1,5 +1,8 @@
 import { useCallback, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useAsync | useAsync} hook.
+ */
 export const useAsync = <T extends any>(callback: () => Promise<T>) => {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [error, setError] = useState<unknown>();

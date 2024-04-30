@@ -8,6 +8,9 @@ export type MediaSourceNode<T extends MediaSourceObject> = T extends MediaStream
 
 export type FrequencyDataHandler = (data: Uint8Array, node: AnalyserNode) => any;
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useAudioAnalyser | useAudioAnalyser} hook.
+ */
 export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?: number }) => {
   const context = useRef<AudioContext>();
   const analyserNode = useRef<AnalyserNode>();

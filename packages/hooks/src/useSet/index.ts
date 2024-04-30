@@ -2,6 +2,9 @@ import { useMemo, useState } from 'react';
 
 type IterationParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useSet | useSet} hook.
+ */
 export const useSet = <T extends any = any>(initial: T[] = []) => {
   const [set, setSet] = useState<Set<T>>(new Set(initial));
   return useMemo(

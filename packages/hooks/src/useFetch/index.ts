@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAsync } from '../useAsync';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useFetch | useFetch} hook.
+ */
 export const useFetch = <T extends any>(
   args: RequestInit & {
     url: string | URL;

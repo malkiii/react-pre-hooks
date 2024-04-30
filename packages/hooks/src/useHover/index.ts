@@ -3,6 +3,9 @@ import { useEventListener } from '../useEventListener';
 import { useTimeout } from '../useTimeout';
 import { useNewRef } from '../utils/useNewRef';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useHover | useHover} hook.
+ */
 export const useHover = <T extends HTMLElement = HTMLDivElement>(
   args: {
     ref?: React.RefObject<T> | null;

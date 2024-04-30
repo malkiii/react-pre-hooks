@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useMutationObserver | useMutationObserver} hook.
+ */
 export const useMutationObserver = <T extends HTMLElement = HTMLDivElement>(
   args: MutationObserverInit & {
     handler: MutationCallback;

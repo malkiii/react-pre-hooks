@@ -1,5 +1,8 @@
 import { useCallback, useState } from 'react';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useToggle | useToggle} hook.
+ */
 export const useToggle = <T extends any>(values: T[]) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 

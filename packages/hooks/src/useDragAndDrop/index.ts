@@ -15,6 +15,9 @@ export type DragAction = {
 
 export type DragActionHandler = (action: DragAction) => any;
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useDragAndDrop | useDragAndDrop} hook.
+ */
 export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(args: {
   handler: DragActionHandler;
   ref?: RefObject<T> | null;

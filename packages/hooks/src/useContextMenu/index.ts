@@ -3,6 +3,9 @@ import { useEventListener } from '../useEventListener';
 import { getPointerPosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useContextMenu | useContextMenu} hook.
+ */
 export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
   ref?: React.RefObject<T> | null
 ) => {

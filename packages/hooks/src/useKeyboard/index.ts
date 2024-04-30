@@ -29,6 +29,9 @@ const isPressed = (keyModifier: string, event: KeyboardEvent): boolean => {
   });
 };
 
+/**
+ * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useKeyboard | useKeyboard} hook.
+ */
 export const useKeyboard = <T extends EventTarget = Window>(args: {
   keys: KeysRecord;
   ref?: React.RefObject<T> | null;
