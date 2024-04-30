@@ -5,7 +5,7 @@ import { hooksFolders } from './utils.js';
 const indexFile = path.join(hooksFolders[0].path, 'index.ts');
 
 // Create or overwrite the index.ts file
-fs.writeFileSync(indexFile, '/** @run "pnpm prebuild" to modify this file */\n');
+fs.writeFileSync(indexFile, '');
 
 hooksFolders.forEach(folder => {
   const folderIndexFile = path.join(folder.path, folder.name, 'index.ts');
