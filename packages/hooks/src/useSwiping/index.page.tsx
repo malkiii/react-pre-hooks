@@ -1,1 +1,12 @@
-/** @description */
+import { useSwiping } from '.';
+
+/**
+ * @description
+ */
+
+/**
+ * @example
+ */
+export function Example() {
+  return <div></div>;
+}

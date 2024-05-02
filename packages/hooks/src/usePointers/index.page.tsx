@@ -1,1 +1,12 @@
-/** @description */
+import { usePointers } from '.';
+
+/**
+ * @description
+ */
+
+/**
+ * @example
+ */
+export function Example() {
+  return <div></div>;
+}
