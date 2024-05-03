@@ -8,8 +8,7 @@ Simplify and clean up your components with this react hooks collection.
 
 <a href="https://www.npmjs.com/package/react-pre-hooks"><img alt="version" src="https://img.shields.io/npm/v/react-pre-hooks?label=latest%20version&color=0086E0" /></a>
 <a href="https://malkiii.github.io/react-pre-hooks"><img alt="Documentation" src="https://img.shields.io/badge/documentation-website-0086E0" /></a>
-<a href="https://github.com/malkiii/react-pre-hooks/blob/master/.github/CONTRIBUTING.md"><img alt="Downloads" src="https://img.shields.io/npm/dm/react-pre-hooks?color=0086E0
-" /></a>
+<a href="https://www.npmjs.com/package/react-pre-hooks"><img alt="Downloads" src="https://img.shields.io/npm/dm/react-pre-hooks?color=0086E0" /></a>
 <a href="https://github.com/malkiii/react-pre-hooks/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/malkiii/react-pre-hooks?color=0086E0" /></a>
 <a href="https://github.com/malkiii/react-pre-hooks/actions/workflows/ci.yml"><img alt="Workflow" src="https://github.com/malkiii/react-pre-hooks/actions/workflows/ci.yml/badge.svg" /></a>
 
