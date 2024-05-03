@@ -1,7 +1,9 @@
+import React from 'react';
 import { useGamepad } from '.';
 
 /**
  * @description
+ * Handle the user gamepad connections and changes.
  */
 
 /**

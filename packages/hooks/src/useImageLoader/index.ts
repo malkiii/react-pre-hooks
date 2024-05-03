@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useImageLoader | useImageLoader} hook.
  */
-export const useImageLoader = (args: { src: string; handler?: EventListener }) => {
+export const useImageLoader = (args: { src: URL | string; handler?: EventListener }) => {
   const imageRef = useRef<HTMLImageElement>(new Image());
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
@@ -18,7 +18,7 @@ export const useImageLoader = (args: { src: string; handler?: EventListener }) =
     imageRef.current.onload = handleLoad;
     imageRef.current.onerror = handleLoad;
     imageRef.current.crossOrigin = 'anonymous';
-    imageRef.current.src = args.src;
+    imageRef.current.src = args.src.toString();
   }, []);
 
   return { ref: imageRef, isLoading, isError };

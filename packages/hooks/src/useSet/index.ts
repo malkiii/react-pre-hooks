@@ -1,7 +1,5 @@
 import { useMemo, useState } from 'react';
 
-type IterationParameters<T> = Parameters<Parameters<T[]['map']>[0]>;
-
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useSet | useSet} hook.
  */

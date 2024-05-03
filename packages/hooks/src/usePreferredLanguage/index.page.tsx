@@ -1,7 +1,9 @@
+import React from 'react';
 import { usePreferredLanguage } from '.';
 
 /**
  * @description
+ * Get the user's preferred language from the browser.
  */
 
 /**

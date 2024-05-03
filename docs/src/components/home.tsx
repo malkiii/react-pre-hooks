@@ -29,7 +29,7 @@ export default function Home({ children }: React.PropsWithChildren) {
           <a
             href={site.github}
             target="_blank"
-            className="border text-neutral-950 dark:text-neutral-50 dark:border-neutral-500 dark:hover:border-neutral-50 border-neutral-500 hover:border-neutral-950"
+            className="border text-neutral-950 dark:text-neutral-50 dark:border-slate-200/20 border-slate-950/20  hover:bg-slate-400/5"
           >
             View On GitHub
           </a>
@@ -45,7 +45,6 @@ function DemoCode({ tabs }: { tabs: React.ReactNode[] }) {
     <div className="dark touch-none mx-auto mb-24 flex bg-[rgb(14,14,14)] shadow-[0_0_250px_0] shadow-primary [--tw-text-opacity:0.3] hover:[--tw-text-opacity:0.5] lg:*:w-1/2 *:min-w-[33%] *:min-h-[15%] max-w-6xl border-solid border-[0.75rem] border-neutral-900 rounded-xl transition-shadow duration-300 max-lg:flex-col">
       <div className="relative max-lg:border-b overflow-hidden lg:border-r max-lg:border-white/30 lg:border-white/30">
         {tabs[0]}
-        <div className="absolute right-0 'max-lg:bottom-0 max-lg:translate-y-1/2 max-lg:h-2 max-lg:w-full max-lg:cursor-ns-resize lg:top-0 lg:translate-x-1/2 lg:w-2 lg:h-full lg:cursor-ew-resize"></div>
       </div>
       {tabs[1]}
     </div>

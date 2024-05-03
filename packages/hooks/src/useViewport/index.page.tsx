@@ -1,7 +1,9 @@
+import React from 'react';
 import { useViewport } from '.';
 
 /**
  * @description
+ * Track the current screen viewport (width and height).
  */
 
 /**

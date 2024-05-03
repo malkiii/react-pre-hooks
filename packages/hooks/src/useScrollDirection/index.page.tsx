@@ -1,7 +1,9 @@
+import React from 'react';
 import { useScrollDirection } from '.';
 
 /**
  * @description
+ * Detect the user scroll direction on the window or a target element.
  */
 
 /**

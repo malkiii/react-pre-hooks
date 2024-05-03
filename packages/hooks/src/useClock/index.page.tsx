@@ -1,7 +1,9 @@
+import React from 'react';
 import { useClock } from '.';
 
 /**
  * @description
+ * Get the current time with an updated Date state.
  */
 
 /**

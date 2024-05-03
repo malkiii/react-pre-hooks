@@ -1,7 +1,9 @@
+import React from 'react';
 import { useFileDropArea } from '.';
 
 /**
  * @description
+ * Handle the user file dropping and uploading to an area element.
  */
 
 /**

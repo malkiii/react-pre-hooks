@@ -1,7 +1,9 @@
+import React from 'react';
 import { useClipboard } from '.';
 
 /**
  * @description
+ * Copy and paste text using the clipboard with a `copied` state.
  */
 
 /**

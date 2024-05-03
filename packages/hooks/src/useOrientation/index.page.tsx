@@ -1,7 +1,9 @@
+import React from 'react';
 import { useOrientation } from '.';
 
 /**
  * @description
+ * Track the device's orientation state and its changes.
  */
 
 /**

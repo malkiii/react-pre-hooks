@@ -1,7 +1,9 @@
+import React from 'react';
 import { useCounter } from '.';
 
 /**
  * @description
+ * Use simple counter methods to update a number state.
  */
 
 /**

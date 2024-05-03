@@ -1,7 +1,9 @@
+import React from 'react';
 import { useSwiping } from '.';
 
 /**
  * @description
+ * Handle the user **swipe** actions on a container element.
  */
 
 /**
