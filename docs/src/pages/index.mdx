@@ -36,7 +36,7 @@ import { useCounter, useKeyboard } from 'react-pre-hooks';
 export function Counter() {
   const counter = useCounter();
 
-  useKeyboard({ 'space': () => counter.inc() });
+  useKeyboard({ keys: { 'space': () => counter.inc() }});
 
   return <div>{counter.value}</div>;
 }

@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "clean": "rimraf .next .turbo"
+    "clean": "rm src/pages/docs/hooks/*.mdx && rm -rf .next"
   },
   "dependencies": {
     "next": "^14.2.1",

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { DocsThemeConfig } from 'nextra-theme-docs';
 import ContactLink from './components/contact-link';
+import EditLink from './components/edit-link';
 import SourceCodeLink from './components/source-code-link';
 import { site } from './constants/site';
 
@@ -24,9 +25,8 @@ const config: DocsThemeConfig = {
     backToTop: true,
     extraContent: <SourceCodeLink />
   },
-  docsRepositoryBase: `${site.github}/blob/master/docs`,
   editLink: {
-    text: 'Edit this page on GitHub →'
+    component: EditLink
   },
   nextThemes: {
     defaultTheme: 'dark'
