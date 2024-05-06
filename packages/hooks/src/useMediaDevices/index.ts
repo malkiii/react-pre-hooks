@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
 /**
@@ -6,7 +6,7 @@ import { useNewRef } from '../utils/useNewRef';
  */
 export const useMediaDevices = (
   args: MediaStreamConstraints & {
-    ref?: RefObject<HTMLVideoElement> | null;
+    ref?: React.RefObject<HTMLVideoElement> | null;
     startOnMount?: boolean;
   } = {}
 ) => {
@@ -50,5 +50,5 @@ export const useMediaDevices = (
     return () => navigator.mediaDevices.removeEventListener('devicechange', updateMediaDevices);
   }, []);
 
-  return { ref: videoRef, streamRef, devices, start, stop, error };
+  return { videoRef, streamRef, devices, start, stop, error };
 };

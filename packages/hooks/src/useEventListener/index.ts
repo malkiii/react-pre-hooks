@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from 'react';
+import { useEffect } from 'react';
 
 type EventMap<T extends EventTarget> = T extends Window
   ? WindowEventMap
@@ -21,7 +21,7 @@ export const useEventListener = <T extends EventTarget, E extends keyof EventMap
   args: AddEventListenerOptions & {
     event: E | Array<E | Falsy>;
     handler: EventHandler<T, E>;
-    ref?: RefObject<T>;
+    ref?: React.RefObject<T>;
     target?: () => T | Falsy;
   }
 ) => {

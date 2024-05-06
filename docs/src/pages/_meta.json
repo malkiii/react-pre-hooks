@@ -7,14 +7,8 @@
     }
   },
   "docs": {
-    "title": "Docs",
+    "title": "Documentation",
     "type": "page"
-  },
-  "api": {
-    "title": "API References",
-    "type": "page",
-    "href": "https://tsdocs.dev/search/docs/react-pre-hooks",
-    "newWindow": true
   },
   "faq": {
     "title": "FAQ",
@@ -22,5 +16,11 @@
     "theme": {
       "layout": "raw"
     }
+  },
+  "contribution": {
+    "title": "Contribution",
+    "type": "page",
+    "href": "https://github.com/malkiii/react-pre-hooks/blob/master/.github/CONTRIBUTING.md",
+    "newWindow": true
   }
 }

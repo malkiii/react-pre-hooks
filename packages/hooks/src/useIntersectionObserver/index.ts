@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
 /**
@@ -8,7 +8,7 @@ export const useIntersectionObserver = <T extends HTMLElement = HTMLDivElement>(
   args: Omit<IntersectionObserverInit, 'root'> & {
     handler: IntersectionObserverCallback;
     root?: () => Element | Document | null;
-    ref?: RefObject<T> | null;
+    ref?: React.RefObject<T> | null;
   }
 ) => {
   const targetRef = useNewRef<T>(args.ref);

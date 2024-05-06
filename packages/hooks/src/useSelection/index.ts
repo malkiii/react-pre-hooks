@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -9,22 +9,25 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(
   ref?: React.RefObject<T> | null
 ) => {
   const targetRef = useNewRef<T>(ref);
-
-  const [text, setText] = useState<string>('');
-  const [rect, setRect] = useState<DOMRect>();
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  const [selection, setSelection] = useState<Selection | null>(null);
 
   const handleSelectionChange = useCallback(() => {
+    if (!targetRef.current) return;
+
     const currentSelection = document.getSelection();
     const target = currentSelection?.focusNode?.parentElement;
-    const isCollapsed = !!currentSelection?.isCollapsed;
 
-    if (targetRef.current && !targetRef.current.contains(target!)) return;
-
-    setIsCollapsed(isCollapsed);
-    setText(currentSelection?.toString() ?? '');
-    if (!isCollapsed) setRect(currentSelection?.getRangeAt(0).getBoundingClientRect());
+    setSelection(targetRef.current.contains(target!) ? currentSelection : null);
   }, [targetRef]);
+
+  const selectionData = useMemo(
+    () => ({
+      text: selection?.toString() ?? '',
+      rect: selection?.getRangeAt(0).getBoundingClientRect(),
+      isCollapsed: !!selection?.isCollapsed
+    }),
+    [selection]
+  );
 
   useEventListener({
     event: 'selectionchange',
@@ -36,5 +39,5 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(
     passive: true
   });
 
-  return { ref: targetRef, text, rect, isCollapsed };
+  return { ref: targetRef, selection, ...selectionData };
 };

@@ -17,7 +17,7 @@
 }
 
 @layer components {
-  main.demo {
+  .demo {
     @apply relative border border-[--border-color] rounded-xl min-h-40 p-5 overflow-hidden;
     --border-color: rgba(229, 229, 229, 0.7);
     .dark & {

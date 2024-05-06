@@ -1,6 +1,6 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-export const useNewRef = <T>(ref?: RefObject<T> | null) => {
+export const useNewRef = <T>(ref?: React.RefObject<T> | null) => {
   const newRef = useRef<T>(null);
 
   useEffect(() => {

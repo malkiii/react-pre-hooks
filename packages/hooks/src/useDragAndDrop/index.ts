@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useEventListener } from '../useEventListener';
 import { getPointerPosition } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
@@ -20,7 +20,7 @@ export type DragActionHandler = (action: DragAction) => any;
  */
 export const useDragAndDrop = <T extends HTMLElement = HTMLDivElement>(args: {
   handler: DragActionHandler;
-  ref?: RefObject<T> | null;
+  ref?: React.RefObject<T> | null;
 }) => {
   const targetRef = useNewRef<T>(args.ref);
 

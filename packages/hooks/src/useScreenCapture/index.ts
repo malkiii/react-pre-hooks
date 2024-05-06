@@ -1,8 +1,8 @@
-import { RefObject, useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
 export type ScreenCaptureOptions = MediaStreamConstraints & {
-  ref?: RefObject<HTMLVideoElement> | null;
+  ref?: React.RefObject<HTMLVideoElement> | null;
 };
 
 /**

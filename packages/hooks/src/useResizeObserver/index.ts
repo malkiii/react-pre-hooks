@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
 /**
@@ -7,7 +7,7 @@ import { useNewRef } from '../utils/useNewRef';
 export const useResizeObserver = <T extends HTMLElement = HTMLDivElement>(
   args: ResizeObserverOptions & {
     handler: ResizeObserverCallback;
-    ref?: RefObject<T> | null;
+    ref?: React.RefObject<T> | null;
   }
 ) => {
   const targetRef = useNewRef<T>(args.ref);

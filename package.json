@@ -6,15 +6,16 @@
     "build": "pnpm prebuild && cd packages/hooks && pnpm build",
     "format": "prettier --write packages/**/*.{ts,tsx}",
     "lint": "eslint --ext ts,tsx --cache --max-warnings 0",
-    "clean": "rimraf packages/**/dist docs/.next docs/out",
+    "clean": "rimraf packages/**/dist && pnpm --filter=docs clean",
     "typecheck": "cd packages/hooks && tsc --noEmit",
     "test": "cd packages/hooks && pnpm test",
     "test:watch": "cd packages/hooks && pnpm test:watch",
-    "docs:dev": "concurrently \"chokidar packages/hooks/src -c 'pnpm generate:pages' --initial\" \"pnpm --filter=docs dev\"",
+    "docs:dev": "concurrently \"pnpm generate:pages:watch\" \"pnpm --filter=docs dev\"",
     "docs:build": "cd docs && pnpm build",
     "generate:exports": "node scripts/export-hooks.js",
     "generate:readme": "node scripts/create-readme-table.js",
     "generate:pages": "node --no-warnings scripts/create-doc-pages.js",
+    "generate:pages:watch": "chokidar packages/hooks/src/**/*.page.tsx -c 'pnpm generate:pages' --initial --silent",
     "postversion": "pnpm test && pnpm build && pnpm generate:readme && bash scripts/post-version.sh"
   },
   "devDependencies": {

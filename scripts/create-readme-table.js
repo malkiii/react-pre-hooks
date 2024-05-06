@@ -24,6 +24,14 @@ function getHookPageURL(name) {
   return `${pkg.homepage}/docs/hooks/${name}`;
 }
 
+/**
+ * @param {string} content
+ */
+async function getHookDescription(content) {
+  const md = await marked(content);
+  return md.trim().replace(/\(\.\/(\w+)\)/g, `(${getHookPageURL('$1')})`);
+}
+
 function getHooksPages() {
   return hooksFolders.map(folder => {
     const pagePath = path.join(folder.path, folder.name, 'index.page.tsx');
@@ -47,9 +55,9 @@ function getHooksPages() {
 function convertToTableRows(data) {
   return data
     .map(
-      ({ title, description }) =>
+      async ({ title, description }) =>
         `<tr><td><a href="${getHookPageURL(title)}">${title}</a></td>` +
-        `<td>${marked(description).trim()}</td></tr>`
+        `<td>${await getHookDescription(description)}</td></tr>`
     )
     .join('\n');
 }

@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -15,7 +15,7 @@ export type ScrollThresholdOffset = {
  */
 export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(args: {
   threshold: ScrollThresholdOffset | ScrollThresholdHandler;
-  ref?: RefObject<T> | null;
+  ref?: React.RefObject<T> | null;
 }) => {
   const targetRef = useNewRef<T>(args.ref);
   const [isPassed, setIsPassed] = useState<boolean>(false);

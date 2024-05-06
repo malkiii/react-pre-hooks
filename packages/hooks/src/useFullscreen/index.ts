@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { browserPrefixes, getPrefixedProperty } from '../utils';
 import { useNewRef } from '../utils/useNewRef';
@@ -10,7 +10,7 @@ const fullscreenErrorEvents = browserPrefixes.map(pref => pref + 'fullscreenerro
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useFullscreen | useFullscreen} hook.
  */
 export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
-  ref?: RefObject<T> | null
+  ref?: React.RefObject<T> | null
 ) => {
   const targetRef = useNewRef<T>(ref);
   const [isEnabled, setIsEnabled] = useState(false);

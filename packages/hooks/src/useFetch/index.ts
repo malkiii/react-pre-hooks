@@ -37,10 +37,11 @@ export const useFetch = <T extends any>(
   }, [args]);
 
   const result = useAsync<T | undefined>(fetchData);
+  const abort = controller.current.abort as (reason?: any) => void;
 
   useEffect(() => {
     if (args.fetchOnMount) result.callback();
   }, []);
 
-  return { response, abort: controller.current.abort, ...result };
+  return { response, abort, ...result };
 };
