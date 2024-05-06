@@ -1,6 +1,6 @@
 # Contributing to `react-pre-hooks`
 
-Thank you for your contribution 🤝
+> Thank you for your contribution 🤝
 
 ## Reporting issues
 
@@ -40,26 +40,37 @@ Thank you for your contribution 🤝
    pnpm install && pnpm build
    ```
 
-3. Now you can import any hook with:
-
-   ```ts
-   import '/path/to/dist/directory'; /* hook */
-   ```
-
 ### To run the **documentation site** on local:
 
-```sh
-pnpm docs:dev
-```
+- start the development server:
+
+   ```sh
+   pnpm docs:dev
+   ```
+
+- to generate the hook pages (this process will be done automatically with `docs:dev`):
+
+   ```sh
+   pnpm build && pnpm generate:pages
+   ```
+
 
 ## Adding a new hook
 
-1. Before you add a new hook, please [open a request](<https://github.com/malkiii/react-pre-hooks/issues/new?labels=feature&template=feature-request.yml&title=feat(hook)%3A+>).
+> Before you add a new hook, please [open a request](<https://github.com/malkiii/react-pre-hooks/issues/new?labels=feature&template=feature-request.yml&title=feat(hook)%3A+>).
 
-2. Add the hook folder to [`package/src`](https://github.com/malkiii/react-pre-hooks/tree/master/package/src) folder, then create an `index.ts` file that includes the code, and then run:
+1. Add the hook folder to [`packages/hooks/src`](https://github.com/malkiii/react-pre-hooks/tree/master/packages/hooks/src) folder.
+2. Create an `index.ts` file that includes the code.
+3. Create an `index.page.tsx` file that includes the page content (see this [example](https://github.com/malkiii/react-pre-hooks/tree/master/packages/hooks/src/useArray/index.page.tsx)).
+
+- the folder structure should look like this:
 
    ```sh
-   pnpm prebuild
+   packages
+   ├── hooks
+   │   ├── src
+   │   │   ├── useHook
+   │   │   │   ├── index.ts
+   │   │   │   ├── index.page.tsx
    ```
 
-3. Add the hook name and description to the [list of hooks](https://github.com/malkiii/react-pre-hooks/#list-of-hooks) in README.md respecting the **alphabetical order**.
