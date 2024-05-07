@@ -1,11 +1,9 @@
 import { useMemo, useState } from 'react';
 
-type NonEmptyArray<T> = [T, ...T[]];
-
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useArray | useArray} hook.
  */
-export const useArray = <T extends any = any>(initial: T[] = []) => {
+export const useArray = <T>(initial: T[] = []) => {
   const [array, setArray] = useState<T[]>(initial);
   return useMemo(
     () => ({
@@ -23,7 +21,7 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
       count(element: T) {
         return array.reduce((acc, value) => (value === element ? acc + 1 : acc), 0);
       },
-      push(...elements: NonEmptyArray<T>) {
+      push(...elements: T[]) {
         setArray(arr => arr.toSpliced(arr.length, 0, ...elements));
       },
       pop(index: number = -1) {
@@ -33,10 +31,10 @@ export const useArray = <T extends any = any>(initial: T[] = []) => {
       shift() {
         return this.pop(0);
       },
-      unshift(...elements: NonEmptyArray<T>) {
+      unshift(...elements: T[]) {
         this.insert(0, ...elements);
       },
-      insert(index: number, ...elements: NonEmptyArray<T>) {
+      insert(index: number, ...elements: T[]) {
         setArray(arr => arr.toSpliced(index, 0, ...elements));
       },
       copy() {

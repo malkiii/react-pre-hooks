@@ -3,7 +3,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useStateHistory | useStateHistory} hook.
  */
-export const useStateHistory = <T extends any>(initial: T, { limit = 10 } = {}) => {
+export const useStateHistory = <T>(initial: T, { limit = 10 } = {}) => {
   if (limit <= 0) throw new Error(`useStateHistory: Limit must be grater than 0, got ${limit}`);
 
   const [value, setValue] = useState<T>(initial);

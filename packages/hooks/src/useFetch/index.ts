@@ -4,7 +4,7 @@ import { useAsync } from '../useAsync';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useFetch | useFetch} hook.
  */
-export const useFetch = <T extends any>(
+export const useFetch = <T>(
   args: RequestInit & {
     url: string | URL;
     params?: Record<string, string | number | null | undefined>;

@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useToggle | useToggle} hook.
  */
-export const useToggle = <T extends any>(values: T[]) => {
+export const useToggle = <T>(values: T[]) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const toggle = useCallback(
