@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAsync } from '.';
+import { useAsyncCallback } from '.';
 
 /**
  * @description

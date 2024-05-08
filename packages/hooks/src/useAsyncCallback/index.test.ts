@@ -1,11 +1,11 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useAsync } from '.';
+import { useAsyncCallback } from '.';
 
-describe('useAsync', () => {
+describe('useAsyncCallback', () => {
   it('should fetch data successfully', async () => {
     const asyncFunction = async () => 'Success';
-    const { result } = renderHook(() => useAsync(asyncFunction));
+    const { result } = renderHook(() => useAsyncCallback(asyncFunction));
     await act(() => result.current.callback());
 
     await waitFor(() => expect(result.current.isPending).toBeFalsy());
@@ -19,7 +19,7 @@ describe('useAsync', () => {
       throw new Error('Test Error');
     };
 
-    const { result } = renderHook(() => useAsync(asyncFunction));
+    const { result } = renderHook(() => useAsyncCallback(asyncFunction));
     await act(() => result.current.callback());
 
     await waitFor(() => expect(result.current.isPending).toBeFalsy());
