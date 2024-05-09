@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAsync } from '../useAsync';
+import { useAsyncCallback } from '../useAsyncCallback';
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useFetch | useFetch} hook.
@@ -36,7 +36,7 @@ export const useFetch = <T>(
     }
   }, [args]);
 
-  const result = useAsync<T | undefined>(fetchData);
+  const result = useAsyncCallback<T | undefined>(fetchData);
   const abort = controller.current.abort as (reason?: any) => void;
 
   useEffect(() => {
