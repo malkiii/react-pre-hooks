@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
  */
 export const useMap = <K = any, V = any>(initial?: Iterable<readonly [K, V]>) => {
   const [map, setMap] = useState(new Map(initial));
+
   return useMemo(
     () => ({
       value: map,

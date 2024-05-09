@@ -9,7 +9,7 @@ const pagesDir = path.join(rootDir, 'docs/src/pages/docs/hooks');
 hooksFolders.forEach(folder => {
   fs.writeFileSync(
     path.join(pagesDir, `${folder.name}.mdx`),
-    hookPageContent(folder.name, path.join(folder.path, folder.name, 'index.page.tsx'))
+    hookPageContent(folder.name, path.join(folder.path, folder.name, 'index.page.jsx'))
   );
 });
 

@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
  */
 export const useSet = <T>(initial: T[] = []) => {
   const [set, setSet] = useState<Set<T>>(new Set(initial));
+
   return useMemo(
     () => ({
       value: set,

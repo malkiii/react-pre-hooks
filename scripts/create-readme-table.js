@@ -34,7 +34,7 @@ async function getHookDescription(content) {
 
 function getHooksPages() {
   return hooksFolders.map(folder => {
-    const pagePath = path.join(folder.path, folder.name, 'index.page.tsx');
+    const pagePath = path.join(folder.path, folder.name, 'index.page.jsx');
 
     /** @type {{ value: string }[]} */
     const pageContent = extractComments(fs.readFileSync(pagePath, 'utf8'));

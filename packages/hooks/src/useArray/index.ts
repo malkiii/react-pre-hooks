@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
  */
 export const useArray = <T>(initial: T[] = []) => {
   const [array, setArray] = useState<T[]>(initial);
+
   return useMemo(
     () => ({
       values: array,
