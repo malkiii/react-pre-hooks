@@ -1,27 +1,19 @@
 import { useCallback, useRef, useState } from 'react';
-import { useNewRef } from '../utils/useNewRef';
-
-export type ScreenCaptureOptions = MediaStreamConstraints & {
-  ref?: React.RefObject<HTMLVideoElement> | null;
-};
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useScreenCapture | useScreenCapture} hook.
  */
-export const useScreenCapture = (options: ScreenCaptureOptions = {}) => {
-  const { ref, ...constraints } = options;
-
+export const useScreenCapture = (options: MediaStreamConstraints = {}) => {
   const streamRef = useRef<MediaStream>();
-  const videoRef = useNewRef<HTMLVideoElement>(options.ref);
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [error, setError] = useState<unknown>();
 
-  const start = useCallback(async () => {
+  const startStreaming = useCallback(async () => {
     streamRef.current?.getTracks().forEach(t => t.stop());
     setError(undefined);
 
     try {
-      streamRef.current = await navigator.mediaDevices.getDisplayMedia(constraints);
+      streamRef.current = await navigator.mediaDevices.getDisplayMedia(options);
       const videoTrack = streamRef.current.getVideoTracks().at(0);
       if (videoTrack) videoTrack.onended = () => setIsEnabled(false);
 
@@ -33,8 +25,7 @@ export const useScreenCapture = (options: ScreenCaptureOptions = {}) => {
     }
   }, []);
 
-  const stop = useCallback(() => {
-    if (videoRef.current) videoRef.current.srcObject = null;
+  const stopStreaming = useCallback(() => {
     streamRef.current?.getTracks().forEach(t => t.stop());
     setIsEnabled(false);
   }, []);
@@ -42,10 +33,10 @@ export const useScreenCapture = (options: ScreenCaptureOptions = {}) => {
   const toggle = useCallback(
     async (force?: boolean) => {
       const shouldStart = force ?? !isEnabled;
-      shouldStart ? await start() : stop();
+      shouldStart ? await startStreaming() : stopStreaming();
     },
     [isEnabled]
   );
 
-  return { ref: videoRef, streamRef, start, stop, toggle, isEnabled, error };
+  return { streamRef, start: startStreaming, stop: stopStreaming, toggle, isEnabled, error };
 };

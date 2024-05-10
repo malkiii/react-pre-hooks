@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNewRef } from '../utils/useNewRef';
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaDevices | useMediaDevices} hook.
@@ -14,9 +13,13 @@ export const useMediaDevices = (
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [error, setError] = useState<unknown>();
 
-  const start = useCallback(async (constraints?: MediaStreamConstraints) => {
-    // stop the current stream tracks so that the next tracks will start
+  const stopStreaming = useCallback(() => {
     streamRef.current?.getTracks().forEach(t => t.stop());
+  }, []);
+
+  const startStreaming = useCallback(async (constraints?: MediaStreamConstraints) => {
+    // stop the current stream tracks so that the next tracks will start
+    stopStreaming();
 
     try {
       streamRef.current = await navigator.mediaDevices.getUserMedia(constraints ?? args);
@@ -25,21 +28,17 @@ export const useMediaDevices = (
     }
   }, []);
 
-  const stop = useCallback(() => {
-    streamRef.current?.getTracks().forEach(t => t.stop());
-  }, []);
-
   const updateMediaDevices = useCallback(async () => {
     setDevices(await navigator.mediaDevices.enumerateDevices());
   }, []);
 
   useEffect(() => {
-    if (args.startOnMount) start();
+    if (args.startOnMount) startStreaming();
     updateMediaDevices();
 
     navigator.mediaDevices.addEventListener('devicechange', updateMediaDevices);
     return () => navigator.mediaDevices.removeEventListener('devicechange', updateMediaDevices);
   }, []);
 
-  return { streamRef, devices, start, stop, error };
+  return { streamRef, devices, start: startStreaming, stop: stopStreaming, error };
 };

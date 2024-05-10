@@ -40,12 +40,13 @@ export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
       async stop() {
         const state = recorderRef.current?.state ?? 'inactive';
         if (state === 'inactive') return;
+
         recorderRef.current?.resume();
         recorderRef.current?.stop();
 
         const blob = await new Promise<Blob>(resolve => {
           setTimeout(() => {
-            resolve(new Blob(recorderBlobParts.current, { type: options.mimeType }));
+            resolve(new Blob(recorderBlobParts.current, { type: recorderRef.current?.mimeType }));
           }, 0);
         });
 
