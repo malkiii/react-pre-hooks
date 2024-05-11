@@ -3,12 +3,17 @@ import { SetStateAction } from 'react';
 export const browserPrefixes = ['', 'moz', 'webkit', 'o', 'ms'] as const;
 
 export function getPrefixedProperty<T extends {}, K extends keyof T & string>(obj: T, prop: K) {
-  if (prop in obj) return obj[prop];
+  const property =
+    prop in obj
+      ? prop
+      : browserPrefixes
+          .map(pref => pref + prop.replace(/^\w/, l => l.toUpperCase()))
+          .find(p => p in obj);
 
-  const capitalizedProp = prop.charAt(0).toUpperCase() + prop.substring(1);
-  const prefixedProps = browserPrefixes.map(pref => pref + capitalizedProp);
-  const property = prefixedProps.find(p => p in obj);
-  if (property) return obj[property as K];
+  if (!property) return;
+
+  const resolvedValue = obj[property as K];
+  return resolvedValue instanceof Function ? resolvedValue.bind(obj) : resolvedValue;
 }
 
 export function getStateActionValue<T extends any>(state: SetStateAction<T>, value: T) {

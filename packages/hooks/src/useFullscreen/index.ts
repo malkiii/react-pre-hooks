@@ -28,7 +28,7 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
         if (!requestFullscreen) return;
         setIsError(false);
 
-        await requestFullscreen.bind(targetRef.current)(options);
+        await requestFullscreen(options);
         setIsEnabled(true);
       },
       async exit() {
@@ -38,7 +38,7 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
         if (!exitFullscreen) return;
         setIsError(false);
 
-        await exitFullscreen.bind(document)();
+        await exitFullscreen();
         setIsEnabled(false);
       },
       async toggle(enable?: boolean) {
