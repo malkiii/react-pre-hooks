@@ -4,18 +4,20 @@ import extractComments from 'extract-comments';
 import { marked } from 'marked';
 import { hooksFolders, pkg, rootDir } from './utils.js';
 
-const hooksDirectory = path.join(rootDir, 'docs/src/pages/docs/hooks');
-const readmeFilePath = path.join(rootDir, 'packages/hooks/README.md');
+main();
 
-const pages = getHooksPages(hooksDirectory);
+async function main() {
+  const hooksDirectory = path.join(rootDir, 'docs/src/pages/docs/hooks');
+  const readmeFilePath = path.join(rootDir, 'packages/hooks/README.md');
 
-const tableRows = convertToTableRows(pages);
+  const pages = getHooksPages(hooksDirectory);
 
-console.log(tableRows);
+  const tableRows = await convertToTableRows(pages);
 
-replaceTableContent(readmeFilePath, tableRows);
+  replaceTableContent(readmeFilePath, tableRows.join('\n'));
 
-console.log('✅ README table updated successfully!');
+  console.log('✅ README table updated successfully!');
+}
 
 /**
  * @param {string} name
@@ -52,14 +54,15 @@ function getHooksPages() {
 /**
  * @param {ReturnType<typeof getHooksPages>} data
  */
-function convertToTableRows(data) {
-  return data
-    .map(
-      async ({ title, description }) =>
-        `<tr><td><a href="${getHookPageURL(title)}">${title}</a></td>` +
-        `<td>${await getHookDescription(description)}</td></tr>`
-    )
-    .join('\n');
+async function convertToTableRows(data) {
+  return Promise.all(
+    data.map(async ({ title, description }) => {
+      const url = getHookPageURL(title);
+      const desc = await getHookDescription(description);
+
+      return `<tr><td><a href="${url}">${title}</a></td><td>${desc}</td></tr>`;
+    })
+  );
 }
 
 /**
@@ -68,10 +71,14 @@ function convertToTableRows(data) {
  */
 function replaceTableContent(filePath, tableRows) {
   const fileContent = fs.readFileSync(filePath, 'utf8');
-  const tableStartIndex = fileContent.indexOf('<table');
+  const tableStartIndex = fileContent.indexOf('<table id="hooks"');
   const tableEndIndex = fileContent.indexOf('</table>') + '</table>'.length;
 
-  const newTableContent = `<table align=center>\n<tr align=left><th>Name</th><th>Description</th></tr>${tableRows}\n</table>`;
+  const newTableContent = `\
+<table id="hooks" align=center>
+  <tr align=left><th>Name</th><th>Description</th></tr>
+  ${tableRows}
+</table>`;
 
   fs.writeFileSync(
     filePath,
