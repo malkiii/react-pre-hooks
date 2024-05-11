@@ -31,7 +31,7 @@ function getHookPageURL(name) {
  */
 async function getHookDescription(content) {
   const md = await marked(content);
-  return md.trim().replace(/\(\.\/(\w+)\)/g, `(${getHookPageURL('$1')})`);
+  return md.trim().replace(/\.\/(\w+)/g, getHookPageURL('$1'));
 }
 
 function getHooksPages() {

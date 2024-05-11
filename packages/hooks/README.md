@@ -18,7 +18,8 @@ Simplify and clean up your components with this react hooks collection.
 
 <!-- pnpm generate:readme -->
 <table id="hooks" align=center>
-<tr align=left><th>Name</th><th>Description</th></tr><tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useAnimationFrame">useAnimationFrame</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a>
+  <tr align=left><th>Name</th><th>Description</th></tr>
+  <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useAnimationFrame">useAnimationFrame</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a>
 API to call a function on every frame render.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useArray">useArray</a></td><td><p>Use an array state with some common and simple array methods.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useAsyncCallback">useAsyncCallback</a></td><td><p>Handle the execution of an async function with return data, error, and pending states.</p></td></tr>
@@ -32,7 +33,7 @@ API to call a function on every frame render.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useDebouncedState">useDebouncedState</a></td><td><p>Update a state after a specified delay.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useDragAndDrop">useDragAndDrop</a></td><td><p>Handle the user <strong>drag</strong> actions on a container element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useEventListener">useEventListener</a></td><td><p>Add an event listener with one or multiple events to an HTML element, <code>window</code>, or <code>document</code> object.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFetch">useFetch</a></td><td><p>Fetch data with a URL and search parameters using <a href="./useAsync">useAsync</a> hook.</p></td></tr>
+<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFetch">useFetch</a></td><td><p>Fetch data with a URL and search parameters using <a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useAsync">useAsync</a> hook.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFileDropArea">useFileDropArea</a></td><td><p>Handle the user file dropping and uploading to an area element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFocus">useFocus</a></td><td><p>Use a state to track the focus/blur event of a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFormData">useFormData</a></td><td><p>Handle your form data using some methods with
@@ -45,7 +46,7 @@ using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation"
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useHash">useHash</a></td><td><p>Track and update the window location <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/hash">#hash</a> value.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useHover">useHover</a></td><td><p>Use a state to track the hover event of a target element with an optional delay.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useImageLoader">useImageLoader</a></td><td><p>Load an image in the background using its URL with a loading state.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useInView">useInView</a></td><td><p>Track the visibility of a target element using <a href="./useIntersectionObserver">useIntersectionObserver</a> hook.</p></td></tr>
+<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useInView">useInView</a></td><td><p>Track the visibility of a target element using <a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useIntersectionObserver">useIntersectionObserver</a> hook.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useIntersectionObserver">useIntersectionObserver</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">IntersectionObserver</a> API.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useInterval">useInterval</a></td><td><p>Use a <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval">setInterval</a>
 state with some methods to control it.</p></td></tr>
