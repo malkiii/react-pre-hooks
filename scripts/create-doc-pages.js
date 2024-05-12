@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import doctrine from 'doctrine';
-import extractComments from 'extract-comments';
-import { hooksFolders, pkg, rootDir } from './utils.js';
+import { commentBlockPattern, hooksFolders, pkg, rootDir } from './utils.js';
 
 const pagesDir = path.join(rootDir, 'docs/src/pages/docs/hooks');
 
@@ -19,7 +18,7 @@ hooksFolders.forEach(folder => {
  * @returns {string}
  */
 function hookPageContent(title, pageFile) {
-  const fileContent = fs.readFileSync(pageFile, 'utf8').replace(/\r/g, '').trim();
+  const fileContent = fs.readFileSync(pageFile, 'utf8').replace(/\r/g, '');
   const parsed = parsePageFile(fileContent);
 
   const pageHead = `\
@@ -58,23 +57,18 @@ import Callout from '~/components/callout';
  * @param {string} fileContent
  */
 function parsePageFile(fileContent) {
-  /** @type {{ value: string; code?: Record<string, any> }[]} */
-  const comments = extractComments.block(fileContent);
+  const contentBlocks = fileContent.split(/\n+(?=\/\*\*)/);
 
-  const contentLines = fileContent.split('\n');
+  return contentBlocks
+    .filter(block => commentBlockPattern.test(block))
+    .map(block => {
+      const comment = commentBlockPattern.exec(block)[0];
 
-  return comments.map((comment, index) => {
-    const doc = doctrine.parse(comment.value, { unwrap: true });
+      const doc = doctrine.parse(comment, { unwrap: true });
+      const code = block.replace(comment, '').trim();
 
-    if (!comment.code?.value) return { doc, code: '' };
-
-    const startLine = comment.code.loc.start.line;
-    const endLine = comments[index + 1]?.loc.start.line ?? contentLines.length;
-
-    const code = contentLines.slice(startLine - 1, endLine + 1).join('\n');
-
-    return { doc, code: `${generateImports(code)}\n${code}` };
-  });
+      return { doc, code: code ? `${generateImports(code)}\n${code}` : '' };
+    });
 }
 
 /**
@@ -96,7 +90,7 @@ function generateImports(code) {
     imports += `import { ${importedHooks.join(', ')} } from '${pkg.name}';\n`;
   }
 
-  return imports;
+  return imports + '\n';
 }
 
 /**
@@ -115,8 +109,11 @@ function generateDemoComponent(code) {
   const basePath = new URL(pkg.homepage).pathname;
   const componentName = /export\s\w+\s(\w+)/.exec(code)?.[1] ?? 'hr';
 
-  const demoCode = code.replace(/[\t ]+className="[^"]*"\n*/g, '');
   const previewCode = code.replace(/src="(\/[^"]+)"/g, `src="${basePath}$1"`).trim();
+
+  const demoCode = code
+    .replace(/[\t ]+className="[^"]*"\n*/g, '')
+    .replace(/[\t ]+\/\/ prettier-ignore\n*/g, '');
 
   return `
 <Tabs items={['Demo', 'Code']}>

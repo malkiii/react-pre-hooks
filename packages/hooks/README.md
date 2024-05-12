@@ -26,7 +26,7 @@ API to call a function on every frame render.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useAudioAnalyser">useAudioAnalyser</a></td><td><p>Use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode">AnalyserNode</a> API to analyze audio data.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useBoolean">useBoolean</a></td><td><p>Toggle between <code>true</code> and <code>false</code> using a boolean state.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useClickAway">useClickAway</a></td><td><p>Execute a function when the user clicks outside a target element.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useClipboard">useClipboard</a></td><td><p>Copy and paste text using the clipboard with a <code>copied</code> state.</p></td></tr>
+<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useClipboard">useClipboard</a></td><td><p>Copy and paste text using the clipboard with a <strong>copied</strong> state.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useClock">useClock</a></td><td><p>Get the current time with an updated Date state.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useContextMenu">useContextMenu</a></td><td><p>Handle the user right clicks on a target element to show a context menu.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useCounter">useCounter</a></td><td><p>Use simple counter methods to update a number state.</p></td></tr>
@@ -44,7 +44,6 @@ the <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData
 using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation">Geolocation</a> API.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useGridLayout">useGridLayout</a></td><td><p>Track the number of rows and columns of an element with a <strong>grid</strong> layout.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useHash">useHash</a></td><td><p>Track and update the window location <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/hash">#hash</a> value.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useHover">useHover</a></td><td><p>Use a state to track the hover event of a target element with an optional delay.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useImageLoader">useImageLoader</a></td><td><p>Load an image in the background using its URL with a loading state.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useInView">useInView</a></td><td><p>Track the visibility of a target element using <a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useIntersectionObserver">useIntersectionObserver</a> hook.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useIntersectionObserver">useIntersectionObserver</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">IntersectionObserver</a> API.</p></td></tr>

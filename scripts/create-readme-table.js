@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import extractComments from 'extract-comments';
+import doctrine from 'doctrine';
 import { marked } from 'marked';
-import { hooksFolders, pkg, rootDir } from './utils.js';
+import { commentBlockPattern, hooksFolders, pkg, rootDir } from './utils.js';
 
 main();
 
@@ -37,15 +37,12 @@ async function getHookDescription(content) {
 function getHooksPages() {
   return hooksFolders.map(folder => {
     const pagePath = path.join(folder.path, folder.name, 'index.page.jsx');
+    const fileContent = fs.readFileSync(pagePath, 'utf8');
 
-    /** @type {{ value: string }[]} */
-    const pageContent = extractComments(fs.readFileSync(pagePath, 'utf8'));
+    const block = doctrine.parse(commentBlockPattern.exec(fileContent)[0] ?? '', { unwrap: true });
 
     const title = folder.name;
-    const description = pageContent
-      .find(({ value }) => value.includes('@description'))
-      ?.value.replace('@description', '')
-      .trim();
+    const description = block.tags[0]?.description?.trim() ?? '';
 
     return { title, description };
   });
