@@ -59,7 +59,7 @@ import Callout from '~/components/callout';
  */
 function parsePageFile(fileContent) {
   /** @type {{ value: string; code?: Record<string, any> }[]} */
-  const comments = extractComments(fileContent);
+  const comments = extractComments.block(fileContent);
 
   const contentLines = fileContent.split('\n');
 
@@ -82,7 +82,7 @@ function parsePageFile(fileContent) {
  */
 function generateImports(code) {
   const reactPattern = /\bReact\b/;
-  const hooksPattern = /\s+use\w+/g;
+  const hooksPattern = /\s+use[A-Z]\w+/g;
 
   let imports = '';
 
@@ -112,13 +112,16 @@ function codeBlock(code, ...attributes) {
  * @param {string} code
  */
 function generateDemoComponent(code) {
+  const basePath = new URL(pkg.homepage).pathname;
   const componentName = /export\s\w+\s(\w+)/.exec(code)?.[1] ?? 'hr';
-  const demoCode = code.replace(/\s+className="[^"]*"\n*/g, '');
+
+  const demoCode = code.replace(/[\t ]+className="[^"]*"\n*/g, '');
+  const previewCode = code.replace(/src="(\/[^"]+)"/g, `src="${basePath}$1"`).trim();
 
   return `
 <Tabs items={['Demo', 'Code']}>
 <Tab>
-${code.trim()}
+${previewCode}
 
 <${componentName} />
 </Tab>

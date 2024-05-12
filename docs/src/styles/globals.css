@@ -22,14 +22,11 @@
     @apply whitespace-nowrap;
   }
 
-  pre {
+  pre,
+  .demo {
     scrollbar-width: thin;
     scrollbar-color: rgba(115, 115, 115, 0.4) transparent;
     scrollbar-gutter: stable;
-  }
-
-  input[type='text'] {
-    @apply block w-full appearance-none rounded-lg px-3 py-2 transition-colors text-base leading-tight md:text-sm bg-black/[.05] dark:bg-gray-50/10 focus:bg-white dark:focus:bg-transparent placeholder:text-gray-500 dark:placeholder:text-gray-400 contrast-more:border contrast-more:border-current;
   }
 
   ::selection {
@@ -39,19 +36,19 @@
 
 @layer components {
   .demo {
-    @apply relative border border-[--border-color] rounded-xl min-h-40 p-5 overflow-hidden;
+    @apply border border-[--border-color] rounded-xl min-h-40 p-5 overflow-hidden;
     --border-color: rgba(229, 229, 229, 0.7);
     .dark & {
       --border-color: hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) 94%/0.1);
     }
 
     .wrapper {
-      @apply relative border border-[--border-color] rounded-lg p-3.5;
+      @apply relative border rounded-lg p-3.5 overflow-hidden;
     }
 
     button,
     a {
-      @apply inline-flex px-3 py-2 font-semibold text-sm rounded-md transition-colors;
+      @apply flex px-3 py-2 font-semibold text-sm rounded-md transition-colors;
       &.primary {
         @apply bg-slate-900 text-white hover:[--tw-bg-opacity:0.95];
         .dark & {
@@ -59,9 +56,23 @@
         }
       }
       &.outline {
-        @apply border border-[--border-color] dark:hover:bg-slate-600/5 hover:bg-slate-300/5;
+        @apply border dark:hover:bg-slate-600/5 hover:bg-slate-300/5;
       }
     }
+
+    input[type='text'] {
+      @apply block w-full appearance-none rounded-md px-3 py-2 transition-colors text-base leading-tight md:text-sm bg-black/[.05] dark:bg-gray-50/10 focus:bg-white dark:focus:bg-transparent placeholder:text-gray-500 dark:placeholder:text-gray-400 contrast-more:border contrast-more:border-current;
+    }
+
+    audio::-webkit-media-controls-panel {
+      @apply dark:bg-[#111] bg-white;
+    }
+  }
+}
+
+@layer utilities {
+  .border {
+    @apply border-[--border-color];
   }
 }
 

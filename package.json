@@ -15,7 +15,7 @@
     "generate:exports": "node scripts/export-hooks.js",
     "generate:readme": "node scripts/create-readme-table.js",
     "generate:pages": "node --no-warnings scripts/create-doc-pages.js",
-    "generate:pages:watch": "chokidar packages/hooks/src/**/*.page.tsx -c 'pnpm generate:pages' --initial --silent",
+    "generate:pages:watch": "chokidar packages/hooks/src/**/*.page.jsx -c 'pnpm generate:pages' --initial --silent",
     "postversion": "pnpm test && pnpm build && pnpm generate:readme && bash scripts/post-version.sh"
   },
   "devDependencies": {
