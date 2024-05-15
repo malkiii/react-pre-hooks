@@ -11,5 +11,23 @@ import { useGeolocation } from '.';
  * @example
  */
 export function Example() {
-  return <div></div>;
+  const { isLoading, error, ...coords } = useGeolocation();
+
+  // prettier-ignore
+  if (isLoading) return <div className="demo flex items-center justify-center font-bold">Loading...</div>;
+
+  if (error) return <div className="demo">{error.message}</div>;
+
+  return (
+    <div className="demo">
+      <div className="data-wrapper">
+        {Object.entries(coords).map(([name, value]) => (
+          <React.Fragment key={name}>
+            <span>{name}</span>
+            <p>{value ?? 'Unknown'}</p>
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
 }

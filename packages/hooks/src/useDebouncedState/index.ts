@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useDebouncedState | useDebouncedState} hook.
  */
-export const useDebouncedState = <T>(args: { initial: T; delay?: number }) => {
+export const useDebouncedState = <T>(args: { initial: T; delay: number }) => {
   const [value, setValue] = useState<T>(args.initial);
   const [debouncedValue, setDebouncedValue] = useState<T>(args.initial);
 
@@ -12,7 +12,7 @@ export const useDebouncedState = <T>(args: { initial: T; delay?: number }) => {
   }, [args.initial]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setDebouncedValue(value), args.delay ?? 500);
+    const timeout = setTimeout(() => setDebouncedValue(value), args.delay);
     return () => clearTimeout(timeout);
   }, [value]);
 

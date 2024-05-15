@@ -14,8 +14,8 @@ const getFileInputElement = (label: HTMLElement): HTMLInputElement | null => {
 export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
   args: {
     ref?: React.RefObject<T> | null;
+    handler?: (files: File[]) => any | Promise<any>;
     multiple?: boolean;
-    onUpload?: (files: File[]) => any | Promise<any>;
   } = {}
 ) => {
   const targetRef = useNewRef<T>(args.ref);
@@ -27,9 +27,9 @@ export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
       const files = Array.from(inputFiles as Iterable<File>);
       const resolvedFiles = args.multiple ? files : [files[0]];
 
-      await args.onUpload?.(resolvedFiles);
+      await args.handler?.(resolvedFiles);
     },
-    [args.onUpload]
+    [args.handler]
   );
 
   useEffect(() => {

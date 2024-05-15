@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { getStateActionValue } from '../utils';
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useCounter | useCounter} hook.
@@ -7,21 +8,21 @@ export const useCounter = (args: { initial?: number; min?: number; max?: number 
   const initialValue = Math.floor(args.initial ?? 0);
   const [counter, setCounter] = useState<number>(initialValue);
 
-  const counterMin = Math.min(counter, Math.floor(args.min ?? -Infinity));
-  const counterMax = Math.max(counter, Math.floor(args.max ?? Infinity));
+  const counterMin = Math.min(counter, args.min ?? -Infinity);
+  const counterMax = Math.max(counter, args.max ?? Infinity);
 
   const methods = useMemo(
     () => ({
       value: counter,
-      inc(step: number = 1) {
-        this.set(v => v + Math.abs(Math.floor(step)));
+      inc(step: React.SetStateAction<number> = 1) {
+        this.set(v => v + getStateActionValue(step, v));
       },
-      dec(step: number = 1) {
-        this.set(v => v - Math.abs(Math.floor(step)));
+      dec(step: React.SetStateAction<number> = 1) {
+        this.set(v => v - getStateActionValue(step, v));
       },
       set(value: React.SetStateAction<number>) {
         setCounter(v => {
-          const resolvedValue = value instanceof Function ? value(v) : value;
+          const resolvedValue = getStateActionValue(value, v);
           return resolvedValue > counterMax
             ? counterMax
             : resolvedValue < counterMin

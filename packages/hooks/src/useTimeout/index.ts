@@ -21,7 +21,7 @@ export const useTimeout = (args: {
     () => ({
       isRunning,
       start() {
-        this.cancel();
+        controls.cancel();
         timeoutRef.current = setTimeout(callback, args.timeout);
         setIsRunning(true);
       },
@@ -32,7 +32,7 @@ export const useTimeout = (args: {
       },
       toggle(force?: boolean) {
         const shouldStart = force ?? !isRunning;
-        shouldStart ? this.start() : this.cancel();
+        shouldStart ? controls.start() : controls.cancel();
       }
     }),
     [callback, isRunning]

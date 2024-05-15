@@ -10,5 +10,17 @@ import { useFullscreen } from '.';
  * @example
  */
 export function Example() {
-  return <div></div>;
+  const fullscreen = useFullscreen();
+
+  return (
+    <div className="demo flex items-center justify-center">
+      <button
+        ref={fullscreen.ref}
+        className="primary w-2/3 h-[240px] items-center justify-center"
+        onClick={() => fullscreen.toggle()}
+      >
+        {fullscreen.isEnabled ? 'Exit' : 'Enter'} fullscreen!
+      </button>
+    </div>
+  );
 }

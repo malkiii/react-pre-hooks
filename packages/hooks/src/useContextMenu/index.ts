@@ -23,20 +23,23 @@ export const useContextMenu = <T extends HTMLElement = HTMLDivElement>(
     setPosition(getPointerPosition(event));
   }, []);
 
-  const handleMouseDown = useCallback(() => {
+  const handleMouseDown = useCallback((event: MouseEvent) => {
     setCanShow(false);
+    if (event.button === 2) setPosition(getPointerPosition(event));
   }, []);
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
+    if (event.button !== 2) return;
     event.stopPropagation();
-    setCanShow(event.button === 2);
+    setCanShow(true);
   }, []);
 
-  const options = { target: () => targetRef.current ?? window };
+  const target = () => targetRef.current ?? window;
 
-  useEventListener({ event: 'mouseup', handler: handleMouseUp, ...options });
-  useEventListener({ event: 'mousedown', handler: handleMouseDown, ...options });
-  useEventListener({ event: 'contextmenu', handler: handleRightClick, ...options });
+  useEventListener({ event: 'mouseup', handler: handleMouseUp, target });
+  useEventListener({ event: 'mousedown', handler: handleMouseDown, target });
+  useEventListener({ event: 'contextmenu', handler: handleRightClick, target });
+  useEventListener({ event: 'scroll', handler: () => setCanShow(false), target: () => window });
 
   return { ref: targetRef, clientX: position.x, clientY: position.y, canShow, toggle };
 };

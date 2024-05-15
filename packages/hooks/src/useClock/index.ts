@@ -4,7 +4,7 @@ import { useInterval } from '../useInterval';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useClock | useClock} hook.
  */
-export const useClock = (args: { timeout?: number }) => {
+export const useClock = (args: { timeout?: number } = {}) => {
   const [clock, setClock] = useState<Date>(new Date());
 
   useInterval({

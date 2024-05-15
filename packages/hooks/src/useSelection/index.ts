@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useEventListener } from '../useEventListener';
 import { useNewRef } from '../utils/useNewRef';
 
@@ -9,25 +9,38 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(
   ref?: React.RefObject<T> | null
 ) => {
   const targetRef = useNewRef<T>(ref);
-  const [selection, setSelection] = useState<Selection | null>(null);
+  const [selection, setSelection] = useState({
+    text: '',
+    rect: undefined as DOMRect | undefined,
+    isCollapsed: true
+  });
 
   const handleSelectionChange = useCallback(() => {
-    if (!targetRef.current) return;
-
     const currentSelection = document.getSelection();
     const target = currentSelection?.focusNode?.parentElement;
 
-    setSelection(targetRef.current.contains(target!) ? currentSelection : null);
-  }, [targetRef]);
+    const text = currentSelection?.toString();
+    const isTarget = !!targetRef.current?.contains(target!);
 
-  const selectionData = useMemo(
-    () => ({
-      text: selection?.toString() ?? '',
-      rect: selection?.getRangeAt(0).getBoundingClientRect(),
-      isCollapsed: !!selection?.isCollapsed
-    }),
-    [selection]
-  );
+    if (!text || (targetRef.current && !isTarget)) {
+      return setSelection({ text: '', rect: undefined, isCollapsed: true });
+    }
+
+    const selectionRect = currentSelection?.getRangeAt(0).getBoundingClientRect();
+
+    setSelection({
+      text,
+      rect:
+        selectionRect &&
+        new DOMRect(
+          selectionRect.left + window.scrollX,
+          selectionRect.top + window.scrollY,
+          selectionRect.width,
+          selectionRect.height
+        ),
+      isCollapsed: !!currentSelection?.isCollapsed
+    });
+  }, [targetRef]);
 
   useEventListener({
     event: 'selectionchange',
@@ -39,5 +52,5 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(
     passive: true
   });
 
-  return { ref: targetRef, selection, ...selectionData };
+  return { ...selection, ref: targetRef };
 };

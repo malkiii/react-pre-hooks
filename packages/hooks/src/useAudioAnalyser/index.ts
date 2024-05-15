@@ -25,7 +25,7 @@ export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?
   });
 
   const connect = useCallback(
-    <T extends MediaSourceObject>(source: T): MediaSourceNode<T> | undefined => {
+    async <T extends MediaSourceObject>(source: T): Promise<MediaSourceNode<T> | undefined> => {
       if (!context.current || !analyserNode.current) return;
       const isStream = source instanceof MediaStream;
       setError(undefined);
@@ -42,22 +42,25 @@ export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?
         if (!isStream) sourceNode.connect(context.current.destination);
 
         // fix the AudioContext suspending in Chrome
-        if (context.current.state === 'suspended') {
-          const audioContextResume = () => context.current?.resume().then(frame.start);
+        if (context.current.state === 'suspended') await context.current?.resume();
 
-          if (isStream) navigator.mediaDevices.enumerateDevices().then(audioContextResume);
-          else source.addEventListener('play', audioContextResume, { passive: true, once: true });
-        } else {
-          frame.start();
-        }
+        frame.start();
 
         return sourceNode as any;
-      } catch (error) {
+      } catch (error: any) {
+        if (error.message.includes('already connected')) return;
+
         setError((curr: any) => curr ?? error);
+        console.error(error);
       }
     },
     []
   );
+
+  const disconnect = useCallback(() => {
+    analyserNode.current?.disconnect();
+    frame.cancel();
+  }, []);
 
   useEffect(() => {
     // @ts-ignore
@@ -67,11 +70,8 @@ export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?
 
     dataArray.current = new Uint8Array(analyserNode.current.frequencyBinCount);
 
-    return () => {
-      analyserNode.current?.disconnect();
-      frame.cancel();
-    };
+    return disconnect;
   }, []);
 
-  return { nodeRef: analyserNode, context, connect, error };
+  return { nodeRef: analyserNode, context, connect, disconnect, error };
 };
