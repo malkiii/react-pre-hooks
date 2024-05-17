@@ -16,7 +16,7 @@ Simplify and clean up your components with this react hooks collection.
 
 ## List Of Hooks
 
-<!-- pnpm generate:readme -->
+<!-- run pnpm generate:readme -->
 <table id="hooks" align=center>
   <tr align=left><th>Name</th><th>Description</th></tr>
   <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useAnimationFrame">useAnimationFrame</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a>
