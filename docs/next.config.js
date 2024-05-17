@@ -3,7 +3,8 @@ const { name, homepage } = require('../packages/hooks/package.json');
 /** @type {import('nextra').NextraConfig} */
 const nextraConfig = {
   theme: 'nextra-theme-docs',
-  themeConfig: './src/theme.config.tsx'
+  themeConfig: './src/theme.config.tsx',
+  staticImage: true
 };
 
 /** @type {import('next').NextConfig} */
