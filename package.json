@@ -11,7 +11,7 @@
     "test": "cd packages/hooks && pnpm test",
     "test:watch": "cd packages/hooks && pnpm test:watch",
     "docs:dev": "concurrently \"pnpm generate:pages:watch\" \"pnpm --filter=docs dev\"",
-    "docs:build": "cd docs && pnpm build",
+    "docs:build": "pnpm generate:pages && cd docs && pnpm build",
     "generate:exports": "node scripts/export-hooks.js",
     "generate:readme": "node scripts/create-readme-table.js",
     "generate:pages": "node --no-warnings scripts/create-doc-pages.js",
