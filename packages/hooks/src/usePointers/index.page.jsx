@@ -29,7 +29,6 @@ export function PointerSpace() {
 
       circle.style.top = pointer.y - rect.top + 'px';
       circle.style.left = pointer.x - rect.left + 'px';
-      circle.style.width = pointer.width + 'px';
 
       if (pointer.type === 'pointerdown') {
         ref.current.appendChild(circle);
@@ -43,7 +42,7 @@ export function PointerSpace() {
       <div
         ref={ref}
         style={{ touchAction: 'none' }}
-        className="absolute inset-0 *:aspect-square *:min-w-8 *:rounded-full *:-translate-x-1/2 *:-translate-y-1/2 *:absolute *:backdrop-invert *:pointer-events-none"
+        className="absolute inset-0 *:aspect-square *:min-w-12 *:rounded-full *:-translate-x-1/2 *:-translate-y-1/2 *:absolute *:backdrop-invert *:pointer-events-none"
       ></div>
     </div>
   );
