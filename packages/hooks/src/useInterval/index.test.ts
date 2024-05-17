@@ -39,7 +39,7 @@ describe('useInterval', () => {
     const callback = vi.fn();
     const { result } = renderHook(() => useInterval({ callback, ...options }));
 
-    expect(result.current.isRunning).toBe(true);
+    expect(result.current.isActive).toBe(true);
     expect(callback).not.toHaveBeenCalled();
 
     act(() => result.current.start());
@@ -54,7 +54,7 @@ describe('useInterval', () => {
 
     act(() => result.current.start());
     act(() => result.current.stop());
-    expect(result.current.isRunning).toBe(false);
+    expect(result.current.isActive).toBe(false);
 
     act(() => vi.advanceTimersByTime(timeout));
 

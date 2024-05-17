@@ -33,7 +33,7 @@ describe('useTimeout', () => {
     const callback = vi.fn();
     const { result } = renderHook(() => useTimeout({ callback, ...options }));
 
-    expect(result.current.isRunning).toBe(options.startOnMount);
+    expect(result.current.isActive).toBe(options.startOnMount);
     expect(callback).not.toHaveBeenCalled();
 
     act(() => result.current.start());
@@ -42,7 +42,7 @@ describe('useTimeout', () => {
 
     act(() => vi.advanceTimersByTime(timeout));
 
-    expect(result.current.isRunning).toBe(false);
+    expect(result.current.isActive).toBe(false);
     expect(callback).toHaveBeenCalledOnce();
   });
 
