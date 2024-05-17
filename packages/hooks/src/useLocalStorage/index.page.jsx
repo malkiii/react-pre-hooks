@@ -10,5 +10,14 @@ import { useLocalStorage } from '.';
  * @example
  */
 export function Example() {
-  return <div></div>;
+  const [text, setText] = useLocalStorage({ key: 'text', default: 'nothing' });
+
+  return (
+    <div className="demo">
+      <label className="text-center flex flex-col max-w-md gap-4 mx-auto">
+        This input will be saved in the local storage.
+        <input type="text" defaultValue={text} onChange={e => setText(e.target.value)} />
+      </label>
+    </div>
+  );
 }

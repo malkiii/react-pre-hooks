@@ -10,7 +10,7 @@ import { useGeolocation } from '.';
 /**
  * @example
  */
-export function Example() {
+export function GeolocationData() {
   const { isLoading, error, ...coords } = useGeolocation();
 
   // prettier-ignore

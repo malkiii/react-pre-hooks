@@ -10,5 +10,13 @@ import { useViewport } from '.';
  * @example
  */
 export function Example() {
-  return <div></div>;
+  const { width, height } = useViewport();
+
+  return (
+    <div className="demo flex items-center justify-center">
+      <p className="center">
+        {width} x {height}
+      </p>
+    </div>
+  );
 }

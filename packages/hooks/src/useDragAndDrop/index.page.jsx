@@ -9,15 +9,13 @@ import { useDragAndDrop } from '.';
 /**
  * @example
  */
-export function Example() {
+export function DragSpace() {
   const ref = useDragAndDrop({
     handler: action => {
       const target = action.target;
 
-      const rect = ref.current.getBoundingClientRect();
-
-      target.style.left = action.clientX - rect.left + 'px';
-      target.style.top = action.clientY - rect.top + 'px';
+      target.style.left = action.clientX + 'px';
+      target.style.top = action.clientY + 'px';
     }
   });
 

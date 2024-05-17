@@ -10,5 +10,13 @@ import { usePreferredLanguage } from '.';
  * @example
  */
 export function Example() {
-  return <div></div>;
+  const lang = usePreferredLanguage();
+
+  return (
+    <div className="demo flex items-center justify-center">
+      <p className="text-center text-balance">
+        Preferred language is <span className="underline underline-offset-4">{lang?.name}</span>.
+      </p>
+    </div>
+  );
 }

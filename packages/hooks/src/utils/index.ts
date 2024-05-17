@@ -21,7 +21,18 @@ export function getStateActionValue<T extends any>(state: SetStateAction<T>, val
 }
 
 export function getPointerPosition(event: MouseEvent | TouchEvent | PointerEvent) {
-  return event instanceof TouchEvent
-    ? { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }
-    : { x: event.clientX, y: event.clientY };
+  const position =
+    event instanceof TouchEvent
+      ? { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }
+      : { x: event.clientX, y: event.clientY };
+
+  const offset =
+    event.currentTarget instanceof HTMLElement
+      ? event.currentTarget.getBoundingClientRect()
+      : { left: 0, top: 0 };
+
+  return {
+    x: position.x - offset.left,
+    y: position.y - offset.top
+  };
 }

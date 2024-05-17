@@ -30,11 +30,14 @@ export const useSet = <T>(initial: T[] = []) => {
       find(callback: (value: T) => unknown, thisArg = set) {
         for (const value of thisArg) if (callback(value)) return value;
       },
-      clear() {
-        setSet(new Set<T>());
-      },
       copy() {
         return structuredClone(set);
+      },
+      toArray() {
+        return Array.from(set);
+      },
+      clear() {
+        setSet(new Set<T>());
       }
     }),
     [set]

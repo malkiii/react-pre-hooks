@@ -43,7 +43,7 @@ export const usePointers = <T extends HTMLElement = HTMLDivElement>(args: {
 
   const handlePointerEvents = useCallback(
     (event: PointerEvent) => {
-      if (event.type === 'pointerdown') addPointer(event);
+      if (['pointerdown', 'pointermove'].includes(event.type)) addPointer(event);
       if (['pointerup', 'pointercancel'].includes(event.type)) removePointer(event);
 
       args.handler(event, pointersList.current);

@@ -10,7 +10,7 @@ import { useFormData } from '.';
 /**
  * @example
  */
-export function Example() {
+export function LoginForm() {
   const formData = useFormData();
 
   return (

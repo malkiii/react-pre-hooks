@@ -9,7 +9,7 @@ import { useBoolean } from '.';
 /**
  * @example
  */
-export function Example() {
+export function ToggleButton() {
   const [isOpen, toggle] = useBoolean();
 
   return (

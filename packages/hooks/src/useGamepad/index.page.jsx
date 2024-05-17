@@ -9,10 +9,22 @@ import { useGamepad } from '.';
 /**
  * @example
  */
-export function Example() {
+export function Gamepad() {
   const isConnected = useGamepad({
     index: 0,
-    handler: gamepad => {}
+    handler: gamepad => {
+      Object.entries(gamepad).forEach(([key, value]) => {
+        const button = document.getElementById(key);
+        if (!button) return;
+
+        if (key === 'leftStick' || key === 'rightStick') {
+          const { x, y } = value;
+          button.style.translate = `${x * 50}% ${y * 50}%`;
+        } else {
+          button.classList.toggle('reverse', value.pressed);
+        }
+      });
+    }
   });
 
   return (
@@ -87,13 +99,13 @@ export function Example() {
         <div className="flex justify-between w-3/5 mx-auto *:aspect-square *:rounded-full *:border *:*:size-full *:*:border *:*:rounded-[inherit] lg:-mt-4 *:w-1/4">
           <div className="flex items-center justify-center *:size-[70%]">
             <div
-              id="left-stick"
+              id="leftStick"
               className="bg-[radial-gradient(var(--border-color)_1px,transparent_0)] [background-size:7px_7px]"
             ></div>
           </div>
           <div className="flex items-center justify-center *:size-[70%]">
             <div
-              id="right-stick"
+              id="rightStick"
               className="bg-[radial-gradient(var(--border-color)_1px,transparent_0)] [background-size:7px_7px]"
             ></div>
           </div>

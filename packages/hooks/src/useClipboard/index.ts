@@ -10,7 +10,7 @@ export const useClipboard = (args: { duration?: number } = {}) => {
 
   const controls = useMemo(
     () => ({
-      isCopied: statusTimer.isRunning,
+      isCopied: statusTimer.isActive,
       copy: async (data?: string | ClipboardItem | ClipboardItem[] | null) => {
         if (!data) return;
 
@@ -21,15 +21,15 @@ export const useClipboard = (args: { duration?: number } = {}) => {
 
         copyItems.then(statusTimer.start).catch(setError);
       },
-      past: async () => {
+      paste: async () => {
         try {
-          return navigator.clipboard.readText();
+          return await navigator.clipboard.readText();
         } catch (error) {
           setError(error);
           return '';
         }
       },
-      pastData: async (type: string): Promise<ClipboardItems> => {
+      pasteData: async (type: string): Promise<ClipboardItems> => {
         try {
           const data = await navigator.clipboard.read();
           return data.filter(item => item.types.some(t => t.startsWith(type)));

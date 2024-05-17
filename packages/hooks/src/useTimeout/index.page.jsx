@@ -11,5 +11,22 @@ import { useTimeout } from '.';
  * @example
  */
 export function Example() {
-  return <div></div>;
+  const timeout = useTimeout({
+    callback: () => alert('Hello!'),
+    timeout: 2000
+  });
+
+  return (
+    <div className="demo flex items-center justify-center">
+      {timeout.isActive ? (
+        <button className="border" onClick={timeout.cancel}>
+          Cancel the message
+        </button>
+      ) : (
+        <button className="primary" onClick={timeout.start}>
+          Send a message after 2 seconds
+        </button>
+      )}
+    </div>
+  );
 }

@@ -9,7 +9,7 @@ import { useGridLayout } from '.';
 /**
  * @example
  */
-export function Example() {
+export function GridLayout() {
   const { ref, rows, columns } = useGridLayout();
 
   // prettier-ignore

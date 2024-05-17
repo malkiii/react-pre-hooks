@@ -4,7 +4,6 @@ import { useIsomorphicEffect } from '../useIsomorphicEffect';
 import { getPrefixedProperty } from '../utils';
 
 /**
- * Network Information API
  * @see https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
  */
 export type NetworkInformation = {
@@ -19,7 +18,7 @@ export type NetworkInformation = {
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useNetworkState | useNetworkState} hook.
  */
-export const useNetworkState = () => {
+export const useNetworkState = (): NetworkInformation & { isOnline: boolean } => {
   const connection = useRef<NetworkInformation>();
   const [isOnline, setIsOnline] = useState<boolean>(true);
   const [networkInfo, setNetworkInfo] = useState<NetworkInformation>({});

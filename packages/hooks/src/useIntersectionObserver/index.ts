@@ -1,14 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { useNewRef } from '../utils/useNewRef';
 
+export type IntersectionObserverOptions<T extends HTMLElement> = Omit<
+  IntersectionObserverInit,
+  'root'
+> & {
+  root?: () => Element | Document | null;
+  ref?: React.RefObject<T> | null;
+};
+
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useIntersectionObserver | useIntersectionObserver} hook.
  */
 export const useIntersectionObserver = <T extends HTMLElement = HTMLDivElement>(
-  args: Omit<IntersectionObserverInit, 'root'> & {
+  args: IntersectionObserverOptions<T> & {
     handler: IntersectionObserverCallback;
-    root?: () => Element | Document | null;
-    ref?: React.RefObject<T> | null;
   }
 ) => {
   const targetRef = useNewRef<T>(args.ref);

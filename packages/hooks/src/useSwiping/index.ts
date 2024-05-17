@@ -59,7 +59,7 @@ export const useSwiping = <T extends HTMLElement>(args: {
   );
 
   const handleTouchMove = useCallback(
-    (event: SwipeAction['event']) => callback('end', event),
+    (event: SwipeAction['event']) => callback('moving', event),
     [callback]
   );
 

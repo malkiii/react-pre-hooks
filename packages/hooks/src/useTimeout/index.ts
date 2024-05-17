@@ -10,32 +10,32 @@ export const useTimeout = (args: {
   deps?: DependencyList;
 }) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-  const [isRunning, setIsRunning] = useState<boolean>(!!args.startOnMount);
+  const [isActive, setIsActive] = useState<boolean>(!!args.startOnMount);
 
   const callback = useCallback(() => {
     args.callback?.();
-    setIsRunning(false);
+    setIsActive(false);
   }, [args.callback]);
 
   const controls = useMemo(
     () => ({
-      isRunning,
+      isActive,
       start() {
         controls.cancel();
         timeoutRef.current = setTimeout(callback, args.timeout);
-        setIsRunning(true);
+        setIsActive(true);
       },
       cancel() {
         if (!timeoutRef.current) return;
-        setIsRunning(false);
+        setIsActive(false);
         clearTimeout(timeoutRef.current);
       },
       toggle(force?: boolean) {
-        const shouldStart = force ?? !isRunning;
+        const shouldStart = force ?? !isActive;
         shouldStart ? controls.start() : controls.cancel();
       }
     }),
-    [callback, isRunning]
+    [callback, isActive]
   );
 
   useEffect(() => {

@@ -9,7 +9,7 @@ import { useCounter } from '.';
 /**
  * @example
  */
-export function Example() {
+export function Counter() {
   const counter = useCounter({ min: -20, max: 20 });
 
   return (

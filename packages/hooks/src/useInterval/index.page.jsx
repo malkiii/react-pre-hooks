@@ -1,5 +1,6 @@
 import React from 'react';
 import { useInterval } from '.';
+import { useCounter } from '../useCounter';
 
 /**
  * @description
@@ -10,6 +11,23 @@ import { useInterval } from '.';
 /**
  * @example
  */
-export function Example() {
-  return <div></div>;
+export function Counter() {
+  const counter = useCounter();
+
+  const interval = useInterval({
+    callback: () => counter.inc(),
+    startOnMount: true,
+    timeout: 1000
+  });
+
+  return (
+    <div className="demo flex items-center justify-center">
+      <div className="wrapper flex items-center justify-between w-full max-w-[240px]">
+        <p>{counter.value}</p>
+        <button className="primary" onClick={() => interval.toggle()}>
+          {interval.isActive ? 'Stop' : 'Start'}
+        </button>
+      </div>
+    </div>
+  );
 }

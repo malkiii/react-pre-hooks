@@ -11,16 +11,19 @@ export const useMousePosition = <T extends HTMLElement = HTMLDivElement>(
 ) => {
   const targetRef = useNewRef<T>(ref);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isInside, setIsInside] = useState(false);
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
+    setIsInside(event.type !== 'mouseleave');
+
     setPosition(getPointerPosition(event));
   }, []);
 
   useEventListener({
-    event: 'mousemove',
+    event: ['mousemove', 'mouseenter', 'mouseleave'],
     handler: handleMouseMove,
     target: () => targetRef.current ?? window
   });
 
-  return { ref: targetRef, ...position };
+  return { ref: targetRef, isInside, ...position };
 };

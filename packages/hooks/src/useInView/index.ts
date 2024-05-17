@@ -1,10 +1,6 @@
 import { useCallback, useState } from 'react';
-import { useIntersectionObserver } from '../useIntersectionObserver';
+import { IntersectionObserverOptions, useIntersectionObserver } from '../useIntersectionObserver';
 import { useNewRef } from '../utils/useNewRef';
-
-type IntersectionObserverOptions<T extends HTMLElement> = Parameters<
-  typeof useIntersectionObserver<T>
->[0];
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useInView | useInView} hook.

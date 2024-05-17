@@ -9,7 +9,7 @@ import { useDebouncedState } from '.';
 /**
  * @example
  */
-export function Example() {
+export function DebouncedInput() {
   const [debounced, setValue, value] = useDebouncedState({ initial: '', delay: 400 });
 
   return (

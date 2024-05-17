@@ -11,10 +11,13 @@ export const useMediaDevices = (
   const streamRef = useRef<MediaStream>();
 
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
+  const [isActive, setIsActive] = useState<boolean>(!!args.startOnMount);
   const [error, setError] = useState<unknown>();
 
   const stopStreaming = useCallback(() => {
     streamRef.current?.getTracks().forEach(t => t.stop());
+    streamRef.current = undefined;
+    setIsActive(false);
   }, []);
 
   const startStreaming = useCallback(async (constraints?: MediaStreamConstraints) => {
@@ -23,8 +26,10 @@ export const useMediaDevices = (
 
     try {
       streamRef.current = await navigator.mediaDevices.getUserMedia(constraints ?? args);
+      setIsActive(true);
     } catch (error) {
       setError(error);
+      setIsActive(false);
     }
   }, []);
 
@@ -40,5 +45,5 @@ export const useMediaDevices = (
     return () => navigator.mediaDevices.removeEventListener('devicechange', updateMediaDevices);
   }, []);
 
-  return { streamRef, devices, start: startStreaming, stop: stopStreaming, error };
+  return { streamRef, devices, isActive, start: startStreaming, stop: stopStreaming, error };
 };

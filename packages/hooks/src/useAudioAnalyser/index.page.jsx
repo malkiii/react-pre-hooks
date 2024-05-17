@@ -9,10 +9,9 @@ import { useAudioAnalyser } from '.';
 /**
  * @example
  */
-export function Example() {
+export function BarVisualizer() {
   const analyser = useAudioAnalyser({
     handler: dataArray => {
-      // Draw a bar visualizer
       const canvas = document.querySelector('canvas');
       if (!canvas) return;
 

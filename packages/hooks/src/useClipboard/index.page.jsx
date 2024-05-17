@@ -9,7 +9,7 @@ import { useClipboard } from '.';
 /**
  * @example
  */
-export function Example() {
+export function TextBox() {
   const clipboard = useClipboard();
 
   return (

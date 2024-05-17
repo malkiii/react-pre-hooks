@@ -9,7 +9,7 @@ import { useEventListener } from '.';
 /**
  * @example
  */
-export function Example() {
+export function Box() {
   const [isInside, setIsInside] = React.useState(false);
 
   useEventListener({

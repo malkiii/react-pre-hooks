@@ -18,18 +18,18 @@ export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(args:
   ref?: React.RefObject<T> | null;
 }) => {
   const targetRef = useNewRef<T>(args.ref);
-  const [isPassed, setIsPassed] = useState<boolean>(false);
+  const [isPast, setIsPast] = useState<boolean>(false);
 
   const handleScrolling = useCallback(
     (event?: Event) => {
-      if (args.threshold instanceof Function) return setIsPassed(!!args.threshold(event));
+      if (args.threshold instanceof Function) return setIsPast(!!args.threshold(event));
 
       const x = targetRef.current?.scrollLeft ?? window.scrollX;
       const y = targetRef.current?.scrollTop ?? window.scrollY;
 
       const target = targetRef.current ?? document.body;
-      const { top = 0, bottom = 3, left = 0, right = 3 } = args.threshold;
       const { clientWidth, clientHeight, scrollWidth, scrollHeight } = target;
+      const { top = 0, bottom = scrollHeight, left = 0, right = scrollWidth } = args.threshold;
 
       const passedLeft = x >= left;
       const passedRight = x + clientWidth >= scrollWidth - right;
@@ -37,7 +37,7 @@ export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(args:
       const passedTop = y >= top;
       const passedBottom = y + clientHeight >= scrollHeight - bottom;
 
-      setIsPassed(passedLeft && passedRight && passedTop && passedBottom);
+      setIsPast(passedLeft && passedRight && passedTop && passedBottom);
     },
     [args.threshold]
   );
@@ -51,5 +51,5 @@ export const useScrollThreshold = <T extends HTMLElement = HTMLDivElement>(args:
     }
   });
 
-  return { ref: targetRef, isPassed };
+  return { ref: targetRef, isPast };
 };

@@ -10,7 +10,7 @@ import { useArray } from '../useArray';
 /**
  * @example
  */
-export function Example() {
+export function FileUploader() {
   const images = useArray([]);
 
   const ref = useFileDropArea({
@@ -30,7 +30,7 @@ export function Example() {
         {images.values.length ? (
           images.values.map((image, index) => <img key={index} src={image} className="block min-w-full rounded-lg" />)
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center flex-col">
+          <div className="absolute inset-0 flex items-center justify-center flex-col text-center">
             <p className="my-0 font-bold">Drop images to this box!</p>
             <div className="border btn mt-2">Browse files</div>
           </div>

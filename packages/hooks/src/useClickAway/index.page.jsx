@@ -10,7 +10,7 @@ import { useBoolean } from '../useBoolean';
 /**
  * @example
  */
-export function Example() {
+export function Menu() {
   const [isOpen, toggle] = useBoolean();
   const ref = useClickAway({ handler: () => toggle(false) });
 

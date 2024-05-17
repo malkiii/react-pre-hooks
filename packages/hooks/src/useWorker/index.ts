@@ -6,12 +6,11 @@ import { useIsomorphicEffect } from '../useIsomorphicEffect';
  */
 export const useWorker = <T extends any>(
   args: WorkerOptions & {
-    code: string | (() => any | Promise<any>);
+    script: string | (() => any | Promise<any>);
+    handler: (message: { data?: T; error?: unknown }) => any;
   }
 ) => {
-  const [data, setData] = useState<T>();
-  const [error, setError] = useState<unknown>();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const workerRef = useRef<Worker>();
 
@@ -19,10 +18,11 @@ export const useWorker = <T extends any>(
     () => ({
       postMessage<M extends any>(message: M, options?: StructuredSerializeOptions) {
         try {
-          setLoading(true);
+          setIsLoading(true);
           workerRef.current?.postMessage(message, options);
         } catch (error) {
-          setError(error);
+          setIsLoading(false);
+          console.error(error);
         }
       },
       terminate() {
@@ -33,24 +33,24 @@ export const useWorker = <T extends any>(
   );
 
   useIsomorphicEffect(() => {
-    const code = args.code instanceof Function ? `(${args.code.toString()})()` : args.code;
-    const workerScript = URL.createObjectURL(new Blob([code]));
+    const script = args.script instanceof Function ? `(${args.script.toString()})()` : args.script;
+    const workerScript = URL.createObjectURL(new Blob([script]));
 
     workerRef.current = new Worker(workerScript);
 
     workerRef.current.onmessage = event => {
-      setData(event.data);
-      setLoading(false);
+      args.handler({ data: event.data });
+      setIsLoading(false);
     };
 
     workerRef.current.onerror = event => {
-      setError(event.error);
-      setLoading(false);
+      args.handler({ error: event.error });
+      setIsLoading(false);
     };
 
     workerRef.current.onmessageerror = event => {
-      setError(event.data);
-      setLoading(false);
+      args.handler({ error: event.data });
+      setIsLoading(false);
     };
 
     return () => {
@@ -59,5 +59,5 @@ export const useWorker = <T extends any>(
     };
   }, []);
 
-  return { ...controls, data, error, loading };
+  return { ...controls, isLoading };
 };

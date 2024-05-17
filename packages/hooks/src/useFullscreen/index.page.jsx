@@ -9,7 +9,7 @@ import { useFullscreen } from '.';
 /**
  * @example
  */
-export function Example() {
+export function Box() {
   const fullscreen = useFullscreen();
 
   return (

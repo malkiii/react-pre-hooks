@@ -22,7 +22,7 @@ export function TodoList() {
     <div className="demo h-[350px] overflow-auto">
       <div className="max-w-xl mx-auto">
         <form className="flex gap-4 mb-4" onSubmit={addTask}>
-          <input type="text" id="task" placeholder="Add a task..." />
+          <input type="text" id="task" placeholder="Add a task..." required />
           <button className="primary">Add</button>
         </form>
         <ul className="*:list-none space-y-4">

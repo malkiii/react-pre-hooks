@@ -9,7 +9,7 @@ import { useClock } from '.';
 /**
  * @example
  */
-export function Example() {
+export function Clock() {
   const clock = useClock();
 
   return (

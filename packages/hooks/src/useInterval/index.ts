@@ -10,27 +10,27 @@ export const useInterval = (args: {
   deps?: DependencyList;
 }) => {
   const intervalRef = useRef<any>();
-  const [isRunning, setIsRunning] = useState<boolean>(!!args.startOnMount);
+  const [isActive, setIsActive] = useState<boolean>(!!args.startOnMount);
 
   const controls = useMemo(
     () => ({
-      isRunning,
+      isActive,
       start() {
         this.stop();
         intervalRef.current = setInterval(args.callback, args.timeout);
-        setIsRunning(true);
+        setIsActive(true);
       },
       stop() {
         if (!intervalRef.current) return;
-        setIsRunning(false);
+        setIsActive(false);
         window.clearInterval(intervalRef.current);
       },
       toggle(force?: boolean) {
-        const shouldStart = force ?? !isRunning;
+        const shouldStart = force ?? !isActive;
         shouldStart ? this.start() : this.stop();
       }
     }),
-    [args.callback, isRunning]
+    [args.callback, isActive]
   );
 
   useEffect(() => {

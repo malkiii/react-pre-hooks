@@ -3,7 +3,11 @@ import { useMemo, useRef, useState } from 'react';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaRecorder | useMediaRecorder} hook.
  */
-export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
+export const useMediaRecorder = (
+  args: MediaRecorderOptions & {
+    ref: React.RefObject<MediaStream>;
+  }
+) => {
   const recorderRef = useRef<MediaRecorder>();
   const recorderBlobParts = useRef<BlobPart[]>([]);
   const [recorderState, setRecorderState] = useState<RecordingState>('inactive');
@@ -16,11 +20,13 @@ export const useMediaRecorder = (options: MediaRecorderOptions = {}) => {
       isRecording: recorderState == 'recording',
       isPaused: recorderState == 'paused',
       error,
-      start(stream: MediaStream, timeslice?: number) {
+      start(timeslice?: number) {
+        if (!args.ref.current) return;
+
         const state = recorderRef.current?.state ?? 'inactive';
         if (state !== 'inactive') return;
 
-        recorderRef.current = new MediaRecorder(stream, options);
+        recorderRef.current = new MediaRecorder(args.ref.current, args);
         recorderRef.current.ondataavailable = event => {
           if (event.data.size > 0) recorderBlobParts.current.push(event.data);
         };
