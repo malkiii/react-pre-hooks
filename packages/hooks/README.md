@@ -28,14 +28,11 @@ API to call a function on every frame render.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useClickAway">useClickAway</a></td><td><p>Execute a function when the user clicks outside a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useClipboard">useClipboard</a></td><td><p>Copy and paste text using the clipboard with a <strong>copied</strong> state.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useClock">useClock</a></td><td><p>Get the current time with an updated Date state.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useContextMenu">useContextMenu</a></td><td><p>Handle the user right clicks on a target element to show a context menu.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useCounter">useCounter</a></td><td><p>Use simple counter methods to update a number state.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useDebouncedState">useDebouncedState</a></td><td><p>Update a state after a specified delay.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useDragAndDrop">useDragAndDrop</a></td><td><p>Handle the user <strong>drag</strong> actions on a container element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useEventListener">useEventListener</a></td><td><p>Add an event listener with one or multiple events to an HTML element, <code>window</code>, or <code>document</code> object.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFetch">useFetch</a></td><td><p>Fetch data with a URL and search parameters using <a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useAsync">useAsync</a> hook.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFileDropArea">useFileDropArea</a></td><td><p>Handle the user file dropping and uploading to an area element.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFocus">useFocus</a></td><td><p>Use a state to track the focus/blur event of a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFormData">useFormData</a></td><td><p>Handle your form data using some methods with
 the <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</a> API.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFullscreen">useFullscreen</a></td><td><p>Toggle the fullscreen mode on a target element.</p></td></tr>
@@ -43,8 +40,6 @@ the <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useGeolocation">useGeolocation</a></td><td><p>Track the current geolocation of the client
 using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation">Geolocation</a> API.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useGridLayout">useGridLayout</a></td><td><p>Track the number of rows and columns of an element with a <strong>grid</strong> layout.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useHash">useHash</a></td><td><p>Track and update the window location <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/hash">#hash</a> value.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useImageLoader">useImageLoader</a></td><td><p>Load an image in the background using its URL with a loading state.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useInView">useInView</a></td><td><p>Track the visibility of a target element using <a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useIntersectionObserver">useIntersectionObserver</a> hook.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useIntersectionObserver">useIntersectionObserver</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">IntersectionObserver</a> API.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useInterval">useInterval</a></td><td><p>Use a <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval">setInterval</a>
@@ -61,11 +56,13 @@ their media <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStrea
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMousePosition">useMousePosition</a></td><td><p>Track the user&#39;s mouse cursor position on the window or a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMutationObserver">useMutationObserver</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver">MutationObserver</a>
 to track changes being made to the DOM tree.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useNetworkState">useNetworkState</a></td><td><p>Track the network connection changes and get the current network state.</p></td></tr>
+<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useNetworkState">useNetworkState</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation">NetworkInformation</a> API
+and the user network connection changes.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useOrientation">useOrientation</a></td><td><p>Track the device&#39;s orientation state and its changes.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/usePageVisibility">usePageVisibility</a></td><td><p>Check if the current tab is visible or hidden to the user.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/usePointers">usePointers</a></td><td><p>Handle all the user <a href="https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events">pointer events</a> at once.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/usePreferredLanguage">usePreferredLanguage</a></td><td><p>Get the user&#39;s preferred language from the browser.</p></td></tr>
+<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useRect">useRect</a></td><td><p>Track the bounding <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMRect">DOMRect</a> of a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useResizeObserver">useResizeObserver</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">ResizeObserver</a> API.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useScreenCapture">useScreenCapture</a></td><td><p>Use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API">Screen Capture</a> API to capture the screen, window, or browser tab.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useScrollDirection">useScrollDirection</a></td><td><p>Detect the user scroll direction on the window or a target element.</p></td></tr>
@@ -76,7 +73,6 @@ to track changes being made to the DOM tree.</p></td></tr>
 in the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage">session storage</a>.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useSet">useSet</a></td><td><p>Use a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>
 state with some common and simple set methods.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useStateHistory">useStateHistory</a></td><td><p>Keep track of the state history with a limit and navigate through it.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useSwiping">useSwiping</a></td><td><p>Handle the user <strong>swipe</strong> actions on a container element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useTimeout">useTimeout</a></td><td><p>Use a <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout">setTimeout</a>
 state with some methods to control it.</p></td></tr>
