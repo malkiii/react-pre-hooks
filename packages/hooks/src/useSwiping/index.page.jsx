@@ -26,7 +26,8 @@ export function Slider() {
     <div className="demo select-none touch-none">
       <div
         ref={ref}
-        className="overflow-auto cursor-grab active:cursor-grabbing border rounded-md w-full p-2 min-w-0 max-w-lg mx-auto flex items-center justify-start gap-2 [scrollbar-width:none]"
+        style={{ touchAction: 'none' }}
+        className="overflow-hidden cursor-grab active:cursor-grabbing border rounded-md w-full p-2 min-w-0 max-w-lg mx-auto flex items-center justify-start gap-2"
       >
         {[...Array(10)].map((_, i) => (
           <span

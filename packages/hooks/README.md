@@ -50,7 +50,7 @@ state with some methods to control it.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMap">useMap</a></td><td><p>Use a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>
 state with some common and simple map methods.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaDevices">useMediaDevices</a></td><td><p>Use the user media devices (<strong>camera</strong> and <strong>microphone</strong>) with
-their media <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStream">stream</a> object.</p></td></tr>
+their <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStream">MediaStream</a> object.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaQuery">useMediaQuery</a></td><td><p>Track the user media query changes using a boolean state.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaRecorder">useMediaRecorder</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder">MediaRecorder</a> API to record media streams.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMousePosition">useMousePosition</a></td><td><p>Track the user&#39;s mouse cursor position on the window or a target element.</p></td></tr>
@@ -64,7 +64,8 @@ and the user network connection changes.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/usePreferredLanguage">usePreferredLanguage</a></td><td><p>Get the user&#39;s preferred language from the browser.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useRect">useRect</a></td><td><p>Track the bounding <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMRect">DOMRect</a> of a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useResizeObserver">useResizeObserver</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">ResizeObserver</a> API.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useScreenCapture">useScreenCapture</a></td><td><p>Use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API">Screen Capture</a> API to capture the screen, window, or browser tab.</p></td></tr>
+<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useScreenCapture">useScreenCapture</a></td><td><p>Use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API">Screen Capture</a> API
+to capture the screen, window, or browser tab.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useScrollDirection">useScrollDirection</a></td><td><p>Detect the user scroll direction on the window or a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useScrollPosition">useScrollPosition</a></td><td><p>Track the scroll <strong>position</strong> or <strong>progress</strong> of the window or a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useScrollThreshold">useScrollThreshold</a></td><td><p>Check if the user has scrolled past a certain threshold using a given offset or handler.</p></td></tr>

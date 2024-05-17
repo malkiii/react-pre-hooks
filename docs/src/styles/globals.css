@@ -23,11 +23,11 @@
   }
 
   article main > div:last-of-type {
-    @apply flex-wrap justify-between max-w-full gap-x-4;
+    @apply flex-wrap justify-between max-w-full;
     a {
       padding-left: 0 !important;
       padding-right: 0 !important;
-      @apply min-w-fit max-sm:mx-[auto!important];
+      @apply min-w-fit max-sm:text-sm;
     }
   }
 

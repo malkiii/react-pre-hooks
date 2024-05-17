@@ -4,7 +4,7 @@ import { useMediaDevices } from '.';
 /**
  * @description
  * Use the user media devices (**camera** and **microphone**) with
- * their media [stream](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream) object.
+ * their [MediaStream](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream) object.
  */
 
 /**
@@ -29,7 +29,7 @@ export function Camera() {
             Stop
           </button>
         ) : (
-          <button className="primary mt-4 min-w-[320px] w-full" onClick={() => media.start()}>
+          <button className="primary mt-4 w-full" onClick={() => media.start()}>
             Start
           </button>
         )}

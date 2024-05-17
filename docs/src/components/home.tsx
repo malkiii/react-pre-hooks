@@ -21,7 +21,7 @@ export default function Home({ children }: React.PropsWithChildren) {
         <div className="flex mt-4 mb-12 items-center font-semibold justify-center gap-4 *:px-4 *:p-2 *:rounded-full *:transition-colors *:whitespace-nowrap">
           <Link
             href="/docs"
-            className="flex items-center gap-1 text-white dark:text-white bg-[hsl(200_100_42%)] hover:bg-[hsl(200_100_35%)]"
+            className="flex items-center gap-1 text-white dark:text-white bg-[#008fd6] hover:bg-[#0077b3]"
           >
             Get Started
             <ArrowRightIcon className="inline-block w-6" />

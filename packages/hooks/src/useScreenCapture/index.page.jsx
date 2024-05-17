@@ -3,7 +3,8 @@ import { useScreenCapture } from '.';
 
 /**
  * @description
- * Use the [Screen Capture](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API) API to capture the screen, window, or browser tab.
+ * Use the [Screen Capture](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API) API
+ * to capture the screen, window, or browser tab.
  */
 
 /**
@@ -28,7 +29,7 @@ export function ScreenCapture() {
             Stop
           </button>
         ) : (
-          <button className="primary mt-4 min-w-[320px] w-full" onClick={() => capture.start()}>
+          <button className="primary mt-4 w-full" onClick={() => capture.start()}>
             Start
           </button>
         )}

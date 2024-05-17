@@ -12,7 +12,7 @@ import { usePointers } from '.';
 export function PointerSpace() {
   const ref = usePointers({
     handler: (event, list) => {
-      const pointer = list[list.length - 1];
+      const pointer = list.find(p => p.pointerId === event.pointerId);
       if (!pointer) {
         return document.getElementById(event.pointerId)?.remove();
       }
