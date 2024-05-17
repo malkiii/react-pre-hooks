@@ -1,6 +1,6 @@
 {
   "name": "react-pre-hooks",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Simplify and clean up your components with this react hooks collection.",
   "license": "MIT",
   "author": {
@@ -10,7 +10,6 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "exports": "./src/index.ts",
   "homepage": "https://malkiii.github.io/react-pre-hooks",
   "files": [
     "dist/"
