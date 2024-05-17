@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [master]
-    paths: ['packages/**']
+    paths: ['packages/**.ts', 'packages/**.js', 'packages/**.json']
   pull_request:
     types: [opened, reopened]
 
