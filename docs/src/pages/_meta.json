@@ -10,13 +10,6 @@
     "title": "Documentation",
     "type": "page"
   },
-  "faq": {
-    "title": "FAQ",
-    "type": "page",
-    "theme": {
-      "layout": "raw"
-    }
-  },
   "contribution": {
     "title": "Contribution",
     "type": "page",

@@ -22,11 +22,22 @@
     @apply whitespace-nowrap;
   }
 
+  article main > div:last-of-type {
+    @apply flex-wrap justify-between max-w-full gap-x-4;
+    a {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      @apply min-w-fit max-sm:mx-[auto!important];
+    }
+  }
+
   pre,
-  .demo {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(115, 115, 115, 0.4) transparent;
-    scrollbar-gutter: stable;
+  textarea {
+    @apply overflow-auto;
+  }
+
+  kbd {
+    @apply border px-1 p-0.5 rounded-md;
   }
 
   ::selection {
@@ -47,25 +58,56 @@
     }
 
     button,
-    a {
-      @apply flex px-3 py-2 font-semibold text-sm rounded-md transition-colors;
+    a,
+    .btn {
+      @apply flex cursor-pointer px-3 py-2 font-semibold text-sm rounded-md transition-colors dark:hover:bg-slate-600/5 hover:bg-slate-300/5;
       &.primary {
         @apply bg-slate-900 text-white hover:[--tw-bg-opacity:0.95];
         .dark & {
           @apply bg-slate-100 text-black hover:[--tw-bg-opacity:0.9];
         }
       }
-      &.outline {
-        @apply border dark:hover:bg-slate-600/5 hover:bg-slate-300/5;
+    }
+
+    .reverse {
+      @apply bg-slate-900 text-white;
+      .dark & {
+        @apply bg-slate-100 text-black;
       }
     }
 
-    input[type='text'] {
+    a {
+      @apply no-underline text-current;
+    }
+
+    .divider {
+      @apply flex items-center justify-center gap-2 border-[--border-color] before:flex-1 before:bg-[--border-color] after:flex-1 after:bg-[--border-color];
+      &.vertical {
+        @apply flex-row before:h-[0.5px] after:h-[0.5px] w-full;
+      }
+      &.horizontal {
+        @apply flex-col before:w-[0.5px] after:w-[0.5px] h-full;
+      }
+    }
+
+    textarea,
+    input[type='text'],
+    input[type='password'] {
       @apply block w-full appearance-none rounded-md px-3 py-2 transition-colors text-base leading-tight md:text-sm bg-black/[.05] dark:bg-gray-50/10 focus:bg-white dark:focus:bg-transparent placeholder:text-gray-500 dark:placeholder:text-gray-400 contrast-more:border contrast-more:border-current;
     }
 
     audio::-webkit-media-controls-panel {
       @apply dark:bg-[#111] bg-white;
+    }
+
+    .data-wrapper {
+      @apply grid grid-cols-[fit-content(0px)_1fr] rounded-md border last-of-type:*:[border-bottom:none];
+      span {
+        @apply block font-semibold border-r border-b border-inherit py-2 px-3 capitalize;
+      }
+      p {
+        @apply my-0 leading-normal border-b p-2 whitespace-nowrap overflow-hidden text-ellipsis max-w-full border-inherit;
+      }
     }
   }
 }
@@ -73,6 +115,11 @@
 @layer utilities {
   .border {
     @apply border-[--border-color];
+  }
+  .overflow-auto {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(115, 115, 115, 0.4) transparent;
+    scrollbar-gutter: stable;
   }
 }
 

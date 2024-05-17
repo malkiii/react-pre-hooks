@@ -14,7 +14,7 @@ export default function EditLink(props: EditLinkProps) {
     <a
       href={
         isHook
-          ? `${site.srcDirectory}/${title}/index.page.tsx`
+          ? `${site.srcDirectory}/${title}/index.page.jsx`
           : `${site.github}/blob/master/docs/${props.filePath}`
       }
       className={props.className}

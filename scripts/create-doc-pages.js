@@ -35,15 +35,15 @@ import Callout from '~/components/callout';
   const pageBody = parsed
     .map(({ doc, code }) => {
       const tagName = doc.tags[0]?.title;
-      const description = doc.tags[0]?.description?.trim() ?? '';
+      const description = doc.tags[0]?.description ?? '';
 
       switch (tagName) {
         case 'example':
-          return `${description}\n${generateDemoComponent(code)}`;
+          return `${description.trim()}\n${generateDemoComponent(code)}`;
         case 'info':
         case 'tip':
         case 'warning':
-          return `<Callout type="${tagName}">${description}</Callout>\n`;
+          return `<Callout type="${tagName}">\n${description}\n</Callout>\n`;
         default:
           return `${description}\n${codeBlock(code, 'copy')}\n`;
       }
@@ -90,7 +90,7 @@ function generateImports(code) {
     imports += `import { ${importedHooks.join(', ')} } from '${pkg.name}';\n`;
   }
 
-  return imports + '\n';
+  return imports;
 }
 
 /**
@@ -135,9 +135,8 @@ function getTypeDefinition(hookName) {
   const typeDefinition = fs
     .readFileSync(definitionFile, 'utf8')
     .replace(/\/\/.*|\/\*[^]*?\*\//g, '')
-    .replace(/export\s+(declare\s+)?/g, '')
+    .replace(/export\s+|declare\s+|\{\};/g, '')
     .replace(/import\("react"\)/g, 'React')
-    .replace(/export\s+\{\};/g, '')
     .trim();
 
   return codeBlock(typeDefinition);
