@@ -39,6 +39,7 @@ const config: DocsThemeConfig = {
   primarySaturation: 100,
   head: (
     <>
+      <link rel="icon" href={site.icon} />
       <meta name="description" content={site.description} />
       <meta property="og:url" content={site.url} />
       <meta property="og:title" content={site.title} />
@@ -48,7 +49,6 @@ const config: DocsThemeConfig = {
       <meta property="twitter:description" content={site.description} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content={site.og} />
-      <link rel="icon" href={site.icon} />
     </>
   ),
   footer: {
