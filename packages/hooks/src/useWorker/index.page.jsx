@@ -11,14 +11,7 @@ import { useWorker } from '.';
  */
 export function Example() {
   const worker = useWorker({
-    script: () => {
-      self.onmessage = message => {
-        let sum = 0;
-        for (let i = 1; i <= message.data; i++) sum += i;
-
-        self.postMessage(sum);
-      };
-    },
+    script: calculateSum,
     handler: (message, error) => {
       if (error) alert(`ERROR: ${error.message}`);
       else alert(`The sum is ${message.data}`);
@@ -36,4 +29,13 @@ export function Example() {
       )}
     </div>
   );
+}
+
+function calculateSum() {
+  self.onmessage = message => {
+    let sum = 0;
+    for (let i = 1; i <= message.data; i++) sum += i;
+
+    self.postMessage(sum);
+  };
 }
