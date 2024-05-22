@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@next/third-parties':
-        specifier: ^14.2.3
-        version: 14.2.3(next@14.2.1)(react@18.2.0)
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.1.0
@@ -78,6 +74,9 @@ importers:
 
   docs:
     dependencies:
+      '@next/third-parties':
+        specifier: ^14.2.3
+        version: 14.2.3(next@14.2.1)(react@18.2.0)
       next:
         specifier: ^14.2.1
         version: 14.2.1(@babel/core@7.24.4)(react-dom@18.2.0)(react@18.2.0)
