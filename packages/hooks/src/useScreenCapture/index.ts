@@ -3,7 +3,7 @@ import { useCallback, useRef, useState } from 'react';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useScreenCapture | useScreenCapture} hook.
  */
-export const useScreenCapture = (options: MediaStreamConstraints = {}) => {
+export const useScreenCapture = (options: DisplayMediaStreamOptions = {}) => {
   const streamRef = useRef<MediaStream>();
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [error, setError] = useState<unknown>();

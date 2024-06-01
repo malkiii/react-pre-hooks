@@ -11,7 +11,7 @@ export const useMousePosition = <T extends HTMLElement = HTMLDivElement>(
 ) => {
   const targetRef = useNewRef<T>(ref);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isInside, setIsInside] = useState(false);
+  const [isInside, setIsInside] = useState<boolean>();
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
     setIsInside(event.type !== 'mouseleave');
