@@ -52,7 +52,6 @@ state with some common and simple map methods.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaDevices">useMediaDevices</a></td><td><p>Use the user media devices (<strong>camera</strong> and <strong>microphone</strong>) with
 their <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStream">MediaStream</a> object.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaQuery">useMediaQuery</a></td><td><p>Track the user media query changes using a boolean state.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaRecorder">useMediaRecorder</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder">MediaRecorder</a> API to record media streams.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMousePosition">useMousePosition</a></td><td><p>Track the user&#39;s mouse cursor position on the window or a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMutationObserver">useMutationObserver</a></td><td><p>Handle the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver">MutationObserver</a>
 to track changes being made to the DOM tree.</p></td></tr>
