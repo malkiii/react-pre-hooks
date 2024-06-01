@@ -16,7 +16,7 @@
     "generate:readme": "node scripts/create-readme-table.js",
     "generate:pages": "node --no-warnings scripts/create-doc-pages.js",
     "generate:pages:watch": "chokidar packages/hooks/src/**/*.page.jsx -c 'pnpm generate:pages' --initial --silent",
-    "postversion": "pnpm test && pnpm build && pnpm generate:readme && bash scripts/post-version.sh"
+    "release": "pnpm test && pnpm build && pnpm generate:readme && bash scripts/release.sh"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
