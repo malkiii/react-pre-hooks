@@ -10,7 +10,7 @@ import { useToggle } from '.';
  * @example
  */
 export function Colors() {
-  const [value, toggle] = useToggle([0, 90, 180, 270]);
+  const [value, toggle] = useToggle({ values: [0, 90, 180, 270], startIndex: 0 });
 
   return (
     <div className="demo select-none">

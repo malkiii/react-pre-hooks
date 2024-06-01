@@ -3,23 +3,28 @@ import { useCallback, useState } from 'react';
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useToggle | useToggle} hook.
  */
-export const useToggle = <T>(values: T[]) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+export const useToggle = <T>(args: { values: T[]; startIndex?: number }) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(() => {
+    return Math.max(0, Math.min(args.startIndex ?? 0, args.values.length - 1));
+  });
 
   const toggle = useCallback(
     (value?: React.SetStateAction<T>) => {
-      if (!values.length) return;
-      setCurrentIndex(index => {
-        const currentValue = values[index];
-        const newValue = value instanceof Function ? value(currentValue) : value;
-        if (newValue !== undefined)
-          return values.includes(newValue) ? values.indexOf(newValue) : index;
+      if (!args.values.length) return;
 
-        return index === values.length - 1 ? 0 : index + 1;
+      setCurrentIndex(index => {
+        const currentValue = args.values[index];
+        const newValue = value instanceof Function ? value(currentValue) : value;
+
+        if (newValue !== undefined) {
+          return args.values.includes(newValue) ? args.values.indexOf(newValue) : index;
+        }
+
+        return index === args.values.length - 1 ? 0 : index + 1;
       });
     },
-    [values, currentIndex]
+    [args.values]
   );
 
-  return [values[currentIndex], toggle] as const;
+  return [args.values[currentIndex], toggle] as const;
 };
