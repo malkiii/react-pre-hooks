@@ -12,5 +12,5 @@ export const site = {
   },
   srcDirectory: `${pkg.repository.url}/blob/master/${pkg.repository.directory}/src`,
   icon: `${basePath}/logo.svg`,
-  og: `${basePath}/og.png`
+  og: `${pkg.homepage}/og.png`
 } as const;
