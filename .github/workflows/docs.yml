@@ -50,6 +50,7 @@ jobs:
         with:
           base-url-path: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           path-to-root: docs/out
+          include-pdf: false
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
