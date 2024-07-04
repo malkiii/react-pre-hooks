@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaDevices | useMediaDevices} hook.
@@ -25,22 +25,6 @@ export const useMediaDevices = (
     setStream(await navigator.mediaDevices.getUserMedia(constraints ?? args));
   }, []);
 
-  const video = useMemo(
-    () => ({
-      devices: devices.filter(d => d.kind === 'videoinput'),
-      isEnabled: stream?.getVideoTracks()[0]?.enabled
-    }),
-    [stream, devices]
-  );
-
-  const audio: typeof video = useMemo(
-    () => ({
-      devices: devices.filter(d => d.kind === 'audioinput'),
-      isEnabled: stream?.getAudioTracks()[0]?.enabled
-    }),
-    [stream, devices]
-  );
-
   const updateMediaDevices = useCallback(async () => {
     setDevices(await navigator.mediaDevices.enumerateDevices());
   }, []);
@@ -53,5 +37,5 @@ export const useMediaDevices = (
     return () => navigator.mediaDevices.removeEventListener('devicechange', updateMediaDevices);
   }, []);
 
-  return { stream, video, audio, devices, start: startStreaming, stop: stopStreaming };
+  return { stream, devices, start: startStreaming, stop: stopStreaming };
 };
