@@ -33,8 +33,6 @@ API to call a function on every frame render.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useDragAndDrop">useDragAndDrop</a></td><td><p>Handle the user <strong>drag</strong> actions on a container element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useEventListener">useEventListener</a></td><td><p>Add an event listener with one or multiple events to an HTML element, <code>window</code>, or <code>document</code> object.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFileDropArea">useFileDropArea</a></td><td><p>Handle the user file dropping and uploading to an area element.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFormData">useFormData</a></td><td><p>Handle your form data using some methods with
-the <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</a> API.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useFullscreen">useFullscreen</a></td><td><p>Toggle the fullscreen mode on a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useGamepad">useGamepad</a></td><td><p>Handle the user gamepad connections and changes.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useGeolocation">useGeolocation</a></td><td><p>Track the current geolocation of the client
