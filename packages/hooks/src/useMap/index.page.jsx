@@ -1,6 +1,5 @@
 import React from 'react';
 import { useMap } from '.';
-import { useFormData } from '../useFormData';
 
 /**
  * @description
@@ -12,8 +11,6 @@ import { useFormData } from '../useFormData';
  * @example
  */
 export function KeyValueList() {
-  const form = useFormData();
-
   const map = useMap([
     ['A', 1],
     ['B', 2],
@@ -24,11 +21,11 @@ export function KeyValueList() {
     <div className="demo h-[350px] overflow-auto">
       <div className="max-w-xl mx-auto">
         <form
-          ref={form.ref}
           className="flex gap-4 mb-4"
           onSubmit={e => {
             e.preventDefault();
-            map.set(form.get('key'), form.get('value'));
+            const data = new FormData(e.currentTarget);
+            map.set(data.get('key'), data.get('value'));
           }}
         >
           <input type="text" name="key" placeholder="Key" required className="flex-1" />
