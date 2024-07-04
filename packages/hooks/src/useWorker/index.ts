@@ -1,13 +1,15 @@
 import { useMemo, useRef, useState } from 'react';
 import { useIsomorphicEffect } from '../useIsomorphicEffect';
 
+export type WorkerHandler = (message: { data?: any; error?: unknown }) => any;
+
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useWorker | useWorker} hook.
  */
-export const useWorker = <T extends any>(
+export const useWorker = (
   args: WorkerOptions & {
     script: string | (() => any | Promise<any>);
-    handler: (message: { data?: T; error?: unknown }) => any;
+    handler: WorkerHandler;
   }
 ) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +35,7 @@ export const useWorker = <T extends any>(
   );
 
   useIsomorphicEffect(() => {
-    const script = args.script instanceof Function ? `(${args.script.toString()})()` : args.script;
+    const script = typeof args.script === 'string' ? args.script : `(${args.script.toString()})()`;
     const workerScript = URL.createObjectURL(new Blob([script]));
 
     workerRef.current = new Worker(workerScript);

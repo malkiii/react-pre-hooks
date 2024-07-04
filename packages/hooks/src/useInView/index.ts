@@ -14,7 +14,7 @@ export const useInView = <T extends HTMLElement = HTMLDivElement>(
   const [isInView, setIsInView] = useState<boolean>(false);
 
   const handleIntersecting: IntersectionObserverCallback = useCallback((entries, observer) => {
-    const { isIntersecting } = entries[0];
+    const { isIntersecting } = entries[0]!;
     if (isIntersecting && args.once) observer.unobserve(targetRef.current!);
     setIsInView(isIntersecting);
   }, []);

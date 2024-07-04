@@ -25,7 +25,7 @@ export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
       if (!inputFiles) return;
 
       const files = Array.from(inputFiles as Iterable<File>);
-      const resolvedFiles = args.multiple ? files : [files[0]];
+      const resolvedFiles = args.multiple ? files : [files[0]!];
 
       await args.handler?.(resolvedFiles);
     },

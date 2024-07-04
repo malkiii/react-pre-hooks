@@ -13,7 +13,7 @@ export const useToggle = <T>(args: { values: T[]; startIndex?: number }) => {
       if (!args.values.length) return;
 
       setCurrentIndex(index => {
-        const currentValue = args.values[index];
+        const currentValue = args.values[index]!;
         const newValue = value instanceof Function ? value(currentValue) : value;
 
         if (newValue !== undefined) {

@@ -8,7 +8,7 @@ export type KeysRecord = Record<string, KeyboardEventCallback>;
 const getKeyboardEventList = (record: KeysRecord = {}, sep = '|') => {
   return Object.keys(record).map(key => {
     const resolvedKeys = key.split(sep).map(k => k.trim().toLowerCase());
-    return [resolvedKeys, record[key]] as const;
+    return [resolvedKeys, record[key]!] as const;
   });
 };
 

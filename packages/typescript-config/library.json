@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noUncheckedIndexedAccess": true
   }
 }
