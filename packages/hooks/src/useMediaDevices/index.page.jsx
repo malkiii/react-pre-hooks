@@ -14,17 +14,15 @@ export function Camera() {
   const media = useMediaDevices({ video: true, audio: true });
 
   React.useEffect(() => {
-    if (media.isActive) {
-      const video = document.querySelector('video');
-      video.srcObject = media.streamRef.current;
-    }
-  }, [media.isActive]);
+    const video = document.querySelector('video');
+    video.srcObject = media.stream;
+  }, [media.stream]);
 
   return (
     <div className="demo">
       <div className="w-fit max-w-md mx-auto *:justify-center">
         <video autoPlay muted className="w-full min-h-60 rounded-md border" />
-        {media.isActive ? (
+        {media.stream ? (
           <button className="border mt-4 w-full justify-center" onClick={() => media.stop()}>
             Stop
           </button>

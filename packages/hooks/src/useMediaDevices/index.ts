@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaDevices | useMediaDevices} hook.
@@ -8,30 +8,38 @@ export const useMediaDevices = (
     startOnMount?: boolean;
   } = {}
 ) => {
-  const streamRef = useRef<MediaStream>();
-
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
-  const [isActive, setIsActive] = useState<boolean>(!!args.startOnMount);
-  const [error, setError] = useState<unknown>();
 
   const stopStreaming = useCallback(() => {
-    streamRef.current?.getTracks().forEach(t => t.stop());
-    streamRef.current = undefined;
-    setIsActive(false);
+    setStream(prev => {
+      prev?.getTracks().forEach(t => t.stop());
+      return null;
+    });
   }, []);
 
   const startStreaming = useCallback(async (constraints?: MediaStreamConstraints) => {
     // stop the current stream tracks so that the next tracks will start
     stopStreaming();
 
-    try {
-      streamRef.current = await navigator.mediaDevices.getUserMedia(constraints ?? args);
-      setIsActive(true);
-    } catch (error) {
-      setError(error);
-      setIsActive(false);
-    }
+    setStream(await navigator.mediaDevices.getUserMedia(constraints ?? args));
   }, []);
+
+  const video = useMemo(
+    () => ({
+      devices: devices.filter(d => d.kind === 'videoinput'),
+      isEnabled: stream?.getVideoTracks()[0]?.enabled
+    }),
+    [stream, devices]
+  );
+
+  const audio: typeof video = useMemo(
+    () => ({
+      devices: devices.filter(d => d.kind === 'audioinput'),
+      isEnabled: stream?.getAudioTracks()[0]?.enabled
+    }),
+    [stream, devices]
+  );
 
   const updateMediaDevices = useCallback(async () => {
     setDevices(await navigator.mediaDevices.enumerateDevices());
@@ -45,5 +53,5 @@ export const useMediaDevices = (
     return () => navigator.mediaDevices.removeEventListener('devicechange', updateMediaDevices);
   }, []);
 
-  return { streamRef, devices, isActive, start: startStreaming, stop: stopStreaming, error };
+  return { stream, video, audio, devices, start: startStreaming, stop: stopStreaming };
 };
