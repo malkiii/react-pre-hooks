@@ -3,8 +3,8 @@ name: Deploy to GitHub pages
 on:
   workflow_dispatch:
   push:
-    tags:
-      - 'v*'
+    branches: [master]
+    paths: ['docs/**', 'packages/hooks/**.jsx']
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
