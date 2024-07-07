@@ -15,7 +15,6 @@ export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?
   const context = useRef<AudioContext>();
   const analyserNode = useRef<AnalyserNode>();
   const dataArray = useRef(new Uint8Array());
-  const [error, setError] = useState<unknown>();
 
   const frame = useAnimationFrame({
     callback: () => {
@@ -28,7 +27,6 @@ export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?
     async <T extends MediaSourceObject>(source: T): Promise<MediaSourceNode<T> | undefined> => {
       if (!context.current || !analyserNode.current) return;
       const isStream = source instanceof MediaStream;
-      setError(undefined);
 
       // avoid the CORS access restrictions
       if (!isStream) source.crossOrigin = 'anonymous';
@@ -49,9 +47,7 @@ export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?
         return sourceNode as any;
       } catch (error: any) {
         if (error.message.includes('already connected')) return;
-
-        setError((curr: any) => curr ?? error);
-        console.error(error);
+        throw error;
       }
     },
     []
@@ -73,5 +69,5 @@ export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?
     return disconnect;
   }, []);
 
-  return { nodeRef: analyserNode, context, connect, disconnect, error };
+  return { nodeRef: analyserNode, context, connect, disconnect };
 };

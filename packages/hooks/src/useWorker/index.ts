@@ -24,7 +24,7 @@ export const useWorker = (
           workerRef.current?.postMessage(message, options);
         } catch (error) {
           setIsLoading(false);
-          console.error(error);
+          throw error;
         }
       },
       terminate() {

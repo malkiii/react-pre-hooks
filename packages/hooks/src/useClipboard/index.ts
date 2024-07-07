@@ -6,7 +6,6 @@ import { useTimeout } from '../useTimeout';
  */
 export const useClipboard = (args: { duration?: number } = {}) => {
   const statusTimer = useTimeout({ timeout: args.duration ?? 2500 });
-  const [error, setError] = useState<unknown>();
 
   const controls = useMemo(
     () => ({
@@ -14,29 +13,18 @@ export const useClipboard = (args: { duration?: number } = {}) => {
       copy: async (data?: string | ClipboardItem | ClipboardItem[] | null) => {
         if (!data) return;
 
-        const copyItems =
-          typeof data == 'string'
-            ? navigator.clipboard.writeText(data)
-            : navigator.clipboard.write(Array.isArray(data) ? data : [data]);
+        typeof data == 'string'
+          ? await navigator.clipboard.writeText(data)
+          : await navigator.clipboard.write(Array.isArray(data) ? data : [data]);
 
-        copyItems.then(statusTimer.start).catch(setError);
+        statusTimer.start();
       },
       paste: async () => {
-        try {
-          return await navigator.clipboard.readText();
-        } catch (error) {
-          setError(error);
-          return '';
-        }
+        return await navigator.clipboard.readText();
       },
       pasteData: async (type: string): Promise<ClipboardItems> => {
-        try {
-          const data = await navigator.clipboard.read();
-          return data.filter(item => item.types.some(t => t.startsWith(type)));
-        } catch (error) {
-          setError(error);
-          return [];
-        }
+        const data = await navigator.clipboard.read();
+        return data.filter(item => item.types.some(t => t.startsWith(type)));
       },
       reset: () => {
         statusTimer.cancel();
@@ -45,5 +33,5 @@ export const useClipboard = (args: { duration?: number } = {}) => {
     [statusTimer]
   );
 
-  return { error, ...controls };
+  return controls;
 };

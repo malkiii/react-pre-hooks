@@ -6,11 +6,9 @@ import { useCallback, useRef, useState } from 'react';
 export const useScreenCapture = (options: DisplayMediaStreamOptions = {}) => {
   const streamRef = useRef<MediaStream>();
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
-  const [error, setError] = useState<unknown>();
 
   const startStreaming = useCallback(async () => {
     streamRef.current?.getTracks().forEach(t => t.stop());
-    setError(undefined);
 
     try {
       streamRef.current = await navigator.mediaDevices.getDisplayMedia(options);
@@ -19,9 +17,8 @@ export const useScreenCapture = (options: DisplayMediaStreamOptions = {}) => {
 
       setIsEnabled(true);
     } catch (error) {
-      setError(error);
       setIsEnabled(false);
-      streamRef.current = undefined;
+      throw error;
     }
   }, []);
 
@@ -38,5 +35,5 @@ export const useScreenCapture = (options: DisplayMediaStreamOptions = {}) => {
     [isEnabled]
   );
 
-  return { streamRef, start: startStreaming, stop: stopStreaming, toggle, isEnabled, error };
+  return { streamRef, start: startStreaming, stop: stopStreaming, toggle, isEnabled };
 };
