@@ -16,15 +16,15 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
   const [isEnabled, setIsEnabled] = useState(false);
   const [isError, setIsError] = useState<boolean>(false);
 
+  const getTarget = useCallback(() => targetRef.current ?? document.body, [targetRef]);
+
   const controls = useMemo(
     () => ({
       ref: targetRef,
       isEnabled,
       isError,
       async enter(options: FullscreenOptions = {}) {
-        if (!targetRef.current || isEnabled) return;
-
-        const requestFullscreen = getPrefixedProperty(targetRef.current, 'requestFullscreen');
+        const requestFullscreen = getPrefixedProperty(getTarget(), 'requestFullscreen');
         if (!requestFullscreen) return;
         setIsError(false);
 
@@ -32,8 +32,6 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
         setIsEnabled(true);
       },
       async exit() {
-        if (!targetRef.current || !isEnabled) return;
-
         const exitFullscreen = getPrefixedProperty(document, 'exitFullscreen');
         if (!exitFullscreen) return;
         setIsError(false);
@@ -50,8 +48,8 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
   );
 
   const handleFullScreenChange = useCallback(() => {
-    if (!targetRef.current) return;
-    setIsEnabled(getPrefixedProperty(document, 'fullscreenElement') === targetRef.current);
+    const fullscreenElement = getPrefixedProperty(document, 'fullscreenElement');
+    setIsEnabled(fullscreenElement === getTarget());
   }, []);
 
   const handleFullScreenError = useCallback(() => {
@@ -61,7 +59,10 @@ export const useFullscreen = <T extends HTMLElement = HTMLDivElement>(
   useEventListener({
     event: fullscreenChangeEvents as any,
     handler: handleFullScreenChange,
-    target: () => document
+    target: () => {
+      handleFullScreenChange();
+      return document;
+    }
   });
 
   useEventListener({
