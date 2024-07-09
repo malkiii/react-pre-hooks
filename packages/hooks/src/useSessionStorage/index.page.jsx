@@ -15,9 +15,9 @@ export function Example() {
 
   return (
     <div className="demo">
-      <label className="text-center flex flex-col max-w-md gap-4 mx-auto">
+      <label className="text-center text-balance flex flex-col max-w-md gap-4 mx-auto">
         This input will be saved in the session storage.
-        <input type="text" defaultValue={text} onChange={e => setText(e.target.value)} />
+        <input type="text" value={text} onChange={e => setText(e.target.value)} />
       </label>
     </div>
   );

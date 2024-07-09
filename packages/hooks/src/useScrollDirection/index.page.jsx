@@ -20,7 +20,7 @@ export function Navbar() {
         }}
         className="sticky top-0 inset-x-0 transition-all duration-300 bg-primary p-4"
       >
-        <p className="mx-auto w-fit text-slate-50">This will apears scroll up.</p>
+        <p className="mx-auto w-fit text-slate-50">This will apears when you scroll up.</p>
       </div>
       <div className="h-[640px]"></div>
     </div>
