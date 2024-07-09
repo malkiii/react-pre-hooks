@@ -18,12 +18,25 @@ export const useMediaDevices = (
     });
   }, []);
 
-  const startStreaming = useCallback(async (constraints?: MediaStreamConstraints) => {
-    // stop the current stream tracks so that the next tracks will start
-    stopStreaming();
+  const startStreaming = useCallback(
+    async (constraints?: MediaStreamConstraints) => {
+      // stop the current stream tracks so that the next tracks will start
+      stream?.getTracks().forEach(t => t.stop());
 
-    setStream(await navigator.mediaDevices.getUserMedia(constraints ?? args));
-  }, []);
+      const newStream = await navigator.mediaDevices.getUserMedia(constraints ?? args);
+
+      // enable the tracks that were enabled in the previous stream
+      if (stream) {
+        for (const track of newStream.getTracks()) {
+          const newTrack = stream.getTracks().find(t => t.kind === track.kind);
+          if (newTrack) newTrack.enabled = track.enabled;
+        }
+      }
+
+      setStream(newStream);
+    },
+    [stream]
+  );
 
   const updateMediaDevices = useCallback(async () => {
     setDevices(await navigator.mediaDevices.enumerateDevices());
