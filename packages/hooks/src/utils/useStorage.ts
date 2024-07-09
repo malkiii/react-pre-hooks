@@ -8,39 +8,42 @@ export const useStorage = <T extends any>(args: {
   default?: T | null;
 }) => {
   const defaultValue = args.default ?? null;
-  const [storedValue, setStoredValue] = useState<T | null>(defaultValue);
-  const setCurrentStoredValue = () => setStoredValue(getStoredValue);
+  const [storedValue, setStoredValue] = useState<T | null>(() => defaultValue);
 
   const getStorage = useCallback(() => (args.type === 'local' ? localStorage : sessionStorage), []);
 
   const getStoredValue = useCallback(() => {
-    const storage = getStorage();
+    const item = getStorage().getItem(args.key);
 
-    const item = storage.getItem(args.key);
-    return item ? (item === 'undefined' ? null : JSON.parse(item ?? '')) : defaultValue;
+    if (!item) return defaultValue;
+
+    return item === 'undefined' ? null : JSON.parse(item ?? '');
   }, [args.key]);
 
   const updateStoredValue: typeof setStoredValue = useCallback(value => {
-    const storage = getStorage();
-
     const newValue = JSON.stringify(value instanceof Function ? value(storedValue) : value);
-    storage.setItem(args.key, newValue);
+
+    getStorage().setItem(args.key, newValue);
 
     window.dispatchEvent(new StorageEvent('storage', { key: args.key, newValue }));
   }, []);
 
   const handleStorageChange = useCallback(
     (event: StorageEvent) => {
-      if (event?.key === args.key) setCurrentStoredValue();
+      if (event?.key === args.key) setStoredValue(getStoredValue());
     },
     [args.key]
   );
 
   useIsomorphicEffect(() => {
-    setCurrentStoredValue();
+    setStoredValue(getStoredValue());
   }, []);
 
-  useEventListener({ event: 'storage', handler: handleStorageChange, target: () => window });
+  useEventListener({
+    event: 'storage',
+    handler: handleStorageChange,
+    target: () => window
+  });
 
   return [storedValue, updateStoredValue] as const;
 };
