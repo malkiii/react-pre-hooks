@@ -20,16 +20,17 @@ export const useMediaDevices = (
 
   const startStreaming = useCallback(
     async (constraints?: MediaStreamConstraints) => {
+      const currentTracks = stream?.getTracks();
+
       // stop the current stream tracks so that the next tracks will start
-      stream?.getTracks().forEach(t => t.stop());
+      currentTracks?.forEach(t => t.stop());
 
       const newStream = await navigator.mediaDevices.getUserMedia(constraints ?? args);
 
-      // enable the tracks that were enabled in the previous stream
-      if (stream) {
+      // disable the tracks that were enabled in the previous stream
+      if (currentTracks) {
         for (const track of newStream.getTracks()) {
-          const newTrack = stream.getTracks().find(t => t.kind === track.kind);
-          if (newTrack) newTrack.enabled = track.enabled;
+          track.enabled = currentTracks.find(t => t.kind === track.kind)?.enabled ?? true;
         }
       }
 
