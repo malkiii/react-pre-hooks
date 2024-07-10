@@ -30,7 +30,8 @@ export const useMediaDevices = (
       // disable the tracks that were enabled in the previous stream
       if (currentTracks) {
         for (const track of newStream.getTracks()) {
-          track.enabled = currentTracks.find(t => t.kind === track.kind)?.enabled ?? true;
+          const current = currentTracks.find(t => t.kind === track.kind);
+          if (current) track.enabled = current.enabled;
         }
       }
 
