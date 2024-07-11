@@ -5,7 +5,7 @@ import { useArray } from '.';
 describe('useArray', () => {
   it('should be [] by default', () => {
     const { result } = renderHook(() => useArray());
-    expect(result.current.values).toEqual([]);
+    expect(result.current.array).toEqual([]);
   });
 
   it('should get and set a value', () => {
@@ -27,12 +27,12 @@ describe('useArray', () => {
     const { result } = renderHook(() => useArray());
 
     act(() => result.current.push(0, 1, 2));
-    expect(result.current.values).toEqual([0, 1, 2]);
+    expect(result.current.array).toEqual([0, 1, 2]);
 
     act(() => result.current.pop());
-    expect(result.current.values).toEqual([0, 1]);
+    expect(result.current.array).toEqual([0, 1]);
     act(() => result.current.pop(0));
-    expect(result.current.values).toEqual([1]);
+    expect(result.current.array).toEqual([1]);
   });
 
   it('should insert values', () => {
@@ -40,20 +40,20 @@ describe('useArray', () => {
 
     act(() => result.current.insert(0, -1, 0));
     expect(result.current.has(2, 0)).toBe(true);
-    expect(result.current.values).toEqual([-1, 0, 1, 2, 3]);
+    expect(result.current.array).toEqual([-1, 0, 1, 2, 3]);
     act(() => result.current.insert(5, 4, 5));
-    expect(result.current.values).toEqual([-1, 0, 1, 2, 3, 4, 5]);
+    expect(result.current.array).toEqual([-1, 0, 1, 2, 3, 4, 5]);
   });
 
   it('should shift and unshift', () => {
     const { result } = renderHook(() => useArray([3]));
 
     act(() => result.current.unshift(1, 2));
-    expect(result.current.values).toEqual([1, 2, 3]);
+    expect(result.current.array).toEqual([1, 2, 3]);
 
     act(() => result.current.shift());
-    expect(result.current.values).toEqual([2, 3]);
+    expect(result.current.array).toEqual([2, 3]);
     act(() => result.current.shift());
-    expect(result.current.values).toEqual([3]);
+    expect(result.current.array).toEqual([3]);
   });
 });

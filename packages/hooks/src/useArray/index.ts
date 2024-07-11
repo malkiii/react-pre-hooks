@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { SetStateAction, useMemo, useState } from 'react';
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useArray | useArray} hook.
@@ -8,7 +8,7 @@ export const useArray = <T>(initial: T[] = []) => {
 
   return useMemo(
     () => ({
-      values: array,
+      array,
       length: array.length,
       get(index: number) {
         return array.at(index);
@@ -38,8 +38,8 @@ export const useArray = <T>(initial: T[] = []) => {
       insert(index: number, ...elements: T[]) {
         setArray(arr => arr.toSpliced(index, 0, ...elements));
       },
-      copy() {
-        return structuredClone(array);
+      reset(value: SetStateAction<T[]> = initial) {
+        setArray(value);
       }
     }),
     [array]
