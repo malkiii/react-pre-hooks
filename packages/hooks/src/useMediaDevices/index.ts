@@ -36,6 +36,8 @@ export const useMediaDevices = (
       }
 
       setStream(newStream);
+
+      return newStream;
     },
     [stream]
   );

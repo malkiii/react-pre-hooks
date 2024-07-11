@@ -6,7 +6,7 @@ export type MediaSourceNode<T extends MediaSourceObject> = T extends MediaStream
   ? MediaElementAudioSourceNode
   : MediaStreamAudioSourceNode;
 
-export type FrequencyDataHandler = (data: Uint8Array, node: AnalyserNode) => any;
+export type FrequencyDataHandler = (data: Uint8Array) => any;
 
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useAudioAnalyser | useAudioAnalyser} hook.
@@ -19,7 +19,7 @@ export const useAudioAnalyser = (args: { handler: FrequencyDataHandler; fftSize?
   const frame = useAnimationFrame({
     callback: () => {
       analyserNode.current?.getByteFrequencyData(dataArray.current);
-      args.handler(dataArray.current, analyserNode.current!);
+      args.handler(dataArray.current);
     }
   });
 
