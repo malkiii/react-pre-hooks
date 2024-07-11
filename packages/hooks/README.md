@@ -46,8 +46,6 @@ state with some methods to control it.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useIsomorphicEffect">useIsomorphicEffect</a></td><td><p>A replacement for <a href="https://react.dev/reference/react/useLayoutEffect">useLayoutEffect</a> that works on the browser and the server.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useKeyboard">useKeyboard</a></td><td><p>Bind any keyboard <strong>keys</strong> or <strong>hotkeys</strong> with handlers in a very simple way.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useLocalStorage">useLocalStorage</a></td><td><p>Get and Set a specific value in the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">local storage</a>.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMap">useMap</a></td><td><p>Use a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>
-state with some common and simple map methods.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaDevices">useMediaDevices</a></td><td><p>Use the user media devices (<strong>camera</strong> and <strong>microphone</strong>) with
 their <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStream">MediaStream</a> object.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useMediaQuery">useMediaQuery</a></td><td><p>Track the user media query changes using a boolean state.</p></td></tr>
@@ -70,8 +68,6 @@ to capture the screen, window, or browser tab.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useSelection">useSelection</a></td><td><p>Get the current selected text with its position on the window or a target element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useSessionStorage">useSessionStorage</a></td><td><p>Get and Set a specific value
 in the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage">session storage</a>.</p></td></tr>
-<tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useSet">useSet</a></td><td><p>Use a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>
-state with some common and simple set methods.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useSwiping">useSwiping</a></td><td><p>Handle the user <strong>swipe</strong> actions on a container element.</p></td></tr>
 <tr><td><a href="https://malkiii.github.io/react-pre-hooks/docs/hooks/useTimeout">useTimeout</a></td><td><p>Use a <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout">setTimeout</a>
 state with some methods to control it.</p></td></tr>
