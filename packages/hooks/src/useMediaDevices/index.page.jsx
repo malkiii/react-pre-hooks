@@ -21,7 +21,7 @@ export function Camera() {
   return (
     <div className="demo">
       <div className="w-fit max-w-md mx-auto *:justify-center">
-        <video autoPlay muted className="w-full min-h-60 rounded-md border" />
+        <video autoPlay playsInline muted className="w-full min-h-60 rounded-md border" />
         {media.stream ? (
           <button className="border mt-4 w-full justify-center" onClick={() => media.stop()}>
             Stop

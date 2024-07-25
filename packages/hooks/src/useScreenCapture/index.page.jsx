@@ -14,23 +14,26 @@ export function ScreenCapture() {
   const capture = useScreenCapture({ video: true });
 
   React.useEffect(() => {
-    if (capture.isEnabled) {
-      const video = document.querySelector('video');
-      video.srcObject = capture.streamRef.current;
-    }
-  }, [capture.isEnabled]);
+    const video = document.querySelector('video');
+    video.srcObject = capture.stream;
+  }, [capture.stream]);
 
   return (
     <div className="demo">
       <div className="w-fit max-w-lg mx-auto *:justify-center">
-        <video autoPlay muted className="w-full min-h-60 rounded-md border" />
-        {capture.isEnabled ? (
+        <video autoPlay playsInline muted className="w-full min-h-60 rounded-md border" />
+        {capture.stream ? (
           <button className="border mt-4 w-full justify-center" onClick={() => capture.stop()}>
             Stop
           </button>
         ) : (
-          <button className="primary mt-4 w-full" onClick={() => capture.start()}>
-            Start
+          <button
+            className="primary mt-4 w-full transition-all"
+            disabled={capture.isPending}
+            style={{ opacity: capture.isPending ? 0.5 : 1 }}
+            onClick={() => capture.start()}
+          >
+            {capture.isPending ? 'Loading...' : 'Start'}
           </button>
         )}
       </div>
