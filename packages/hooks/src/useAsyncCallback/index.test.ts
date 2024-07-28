@@ -14,7 +14,7 @@ describe('useAsyncCallback', () => {
     expect(result.current.error).toBe(undefined);
   });
 
-  it('should handle error', async () => {
+  it('should handle error and clear it', async () => {
     const asyncFunction = async () => {
       throw new Error('Test Error');
     };
@@ -26,5 +26,9 @@ describe('useAsyncCallback', () => {
 
     expect(result.current.data).toBe(undefined);
     expect(result.current.error).toBeInstanceOf(Error);
+
+    act(() => result.current.clear());
+
+    expect(result.current.error).toBe(undefined);
   });
 });

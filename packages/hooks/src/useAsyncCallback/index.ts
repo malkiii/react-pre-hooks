@@ -5,13 +5,15 @@ import { useCallback, useState } from 'react';
  */
 export const useAsyncCallback = <T>(callback: () => Promise<T>) => {
   const [isPending, setIsPending] = useState<boolean>(false);
-  const [error, setError] = useState<unknown>();
+  const [error, setError] = useState<any>();
   const [data, setData] = useState<T>();
 
   const callbackMemo = useCallback(async () => {
     if (isPending) return;
+
     setIsPending(true);
     setError(undefined);
+
     try {
       setData(await callback());
     } catch (error) {
@@ -21,5 +23,11 @@ export const useAsyncCallback = <T>(callback: () => Promise<T>) => {
     }
   }, [callback, isPending]);
 
-  return { data, isPending, error, callback: callbackMemo };
+  const clear = useCallback(() => {
+    setData(undefined);
+    setIsPending(false);
+    setError(undefined);
+  }, []);
+
+  return { data, isPending, error, callback: callbackMemo, clear };
 };
