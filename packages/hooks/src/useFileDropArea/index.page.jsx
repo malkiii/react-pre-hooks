@@ -16,11 +16,13 @@ export function FileUploader() {
   const ref = useFileDropArea({
     multiple: true,
     handler: files => {
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => images.push(reader.result);
-        reader.readAsDataURL(file);
-      });
+      files
+        .filter(file => file.type.startsWith('image/'))
+        .forEach(file => {
+          const reader = new FileReader();
+          reader.onload = () => images.push(reader.result);
+          reader.readAsDataURL(file);
+        });
     }
   });
 
