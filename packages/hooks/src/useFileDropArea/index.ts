@@ -11,7 +11,7 @@ const getFileInputElement = (label: HTMLElement): HTMLInputElement | null => {
 /**
  * @see {@link https://malkiii.github.io/react-pre-hooks/docs/hooks/useFileDropArea | useFileDropArea} hook.
  */
-export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
+export const useFileDropArea = <T extends HTMLElement = HTMLDivElement>(
   args: {
     ref?: React.RefObject<T> | null;
     handler?: (files: File[]) => any | Promise<any>;
@@ -25,6 +25,8 @@ export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
       if (!inputFiles) return;
 
       const files = Array.from(inputFiles as Iterable<File>);
+      if (!files.length) return;
+
       const resolvedFiles = args.multiple ? files : [files[0]!];
 
       await args.handler?.(resolvedFiles);
@@ -51,10 +53,17 @@ export const useFileDropArea = <T extends HTMLElement = HTMLLabelElement>(
 
   const handleFileDrop = useCallback(async (event: DragEvent) => {
     event.preventDefault();
-    await getDropperFiles(event.dataTransfer?.files);
+    getDropperFiles(event.dataTransfer?.files);
+  }, []);
+
+  const handleFilePaste = useCallback((event: ClipboardEvent) => {
+    event.preventDefault();
+    getDropperFiles(event.clipboardData?.files);
   }, []);
 
   useEventListener({ event: 'drop', handler: handleFileDrop, ref: targetRef });
+  useEventListener({ event: 'paste', handler: handleFilePaste, ref: targetRef });
+
   useEventListener({ event: 'dragover', handler: e => e.preventDefault(), ref: targetRef });
 
   return targetRef;
