@@ -26,7 +26,7 @@ export function TodoList() {
           <button className="primary">Add</button>
         </form>
         <ul className="*:list-none space-y-4">
-          {tasks.values.map((value, index) => (
+          {tasks.array.map((value, index) => (
             <li className="wrapper flex items-center justify-between" key={index}>
               <span className="block flex-grow whitespace-nowrap overflow-hidden text-ellipsis">
                 {value}
