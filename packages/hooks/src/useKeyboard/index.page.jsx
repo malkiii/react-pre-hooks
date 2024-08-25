@@ -19,15 +19,11 @@ export function Example() {
     separator: '|' // default
   });
 
-  // prettier-ignore
   return (
     <div className="demo flex items-center justify-center">
       <p>
-        Press <kbd>F</kbd>
-        , <kbd>1</kbd>
-        , <kbd>2</kbd>
-        , <kbd>3</kbd>
-        , or <kbd>Ctrl</kbd> + <kbd>C</kbd>
+        Press <kbd>F</kbd>, <kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>, or <kbd>Ctrl</kbd> +{' '}
+        <kbd>C</kbd>
       </p>
     </div>
   );

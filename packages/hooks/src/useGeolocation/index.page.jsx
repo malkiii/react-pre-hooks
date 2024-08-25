@@ -13,10 +13,13 @@ import { useGeolocation } from '.';
 export function GeolocationData() {
   const { isLoading, error, ...coords } = useGeolocation();
 
-  // prettier-ignore
-  if (isLoading) return <div className="demo flex items-center justify-center font-bold">Loading...</div>;
+  if (isLoading) {
+    return <div className="demo flex items-center justify-center font-bold">Loading...</div>;
+  }
 
-  if (error) return <div className="demo">{error.message}</div>;
+  if (error) {
+    return <div className="demo">{error.message}</div>;
+  }
 
   return (
     <div className="demo">
