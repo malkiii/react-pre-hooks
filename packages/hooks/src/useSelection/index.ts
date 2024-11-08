@@ -11,9 +11,10 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(
   const targetRef = useNewRef<T>(ref);
   const [selection, setSelection] = useState({
     text: '',
-    rect: undefined as DOMRect | undefined,
-    isCollapsed: true
+    rect: undefined as DOMRect | undefined
   });
+
+  const [isSelecting, setIsSelecting] = useState(false);
 
   const handleSelectionChange = useCallback(() => {
     const currentSelection = document.getSelection();
@@ -23,10 +24,14 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(
     const isTarget = !!targetRef.current?.contains(target!);
 
     if (!text || (targetRef.current && !isTarget)) {
-      return setSelection({ text: '', rect: undefined, isCollapsed: true });
+      setIsSelecting(false);
+      setSelection({ text: '', rect: undefined });
+      return;
     }
 
     const selectionRect = currentSelection?.getRangeAt(0).getBoundingClientRect();
+
+    setIsSelecting(!currentSelection?.isCollapsed);
 
     setSelection({
       text,
@@ -37,8 +42,7 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(
           selectionRect.top + window.scrollY,
           selectionRect.width,
           selectionRect.height
-        ),
-      isCollapsed: !!currentSelection?.isCollapsed
+        )
     });
   }, [targetRef]);
 
@@ -52,5 +56,11 @@ export const useSelection = <T extends HTMLElement = HTMLDivElement>(
     passive: true
   });
 
-  return { ...selection, ref: targetRef };
+  useEventListener({
+    event: 'pointerup',
+    handler: () => setIsSelecting(false),
+    target: () => document
+  });
+
+  return { ...selection, isSelecting, ref: targetRef };
 };
