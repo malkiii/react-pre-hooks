@@ -10,11 +10,11 @@ import { useSelection } from '.';
  * @example
  */
 export function Example() {
-  const { ref, text, rect } = useSelection();
+  const { ref, text, rect, isSelecting } = useSelection();
 
   return (
     <div ref={ref} className="demo">
-      {text && (
+      {!isSelecting && text && (
         <button
           className="primary shadow-xl rounded-md bg-primary [animation-duration:170ms] animate-in fade-in text-slate-50 px-2 py-1 before:absolute before:aspect-square before:w-5 before:bg-inherit before:top-full before:left-1/2 before:-translate-x-1/2 before:-translate-y-1 before:[clip-path:polygon(50%_50%,0_0,100%_0)]"
           onClick={() => alert(`"${text}"`)}
