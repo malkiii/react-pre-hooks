@@ -30,11 +30,11 @@ export function FileUploader() {
     <div className="demo">
       <div
         ref={ref}
-        className="wrapper [overflow-y:auto!important] h-[320px] border-dashed grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] max-w-2xl mx-auto gap-2"
+        className="wrapper overflow-y-auto [overflow-y:auto!important] h-[320px] border-dashed grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] max-w-2xl mx-auto gap-2"
       >
         {images.array.length ? (
           images.array.map((image, index) => (
-            <img key={index} src={image} className="block min-w-full rounded-lg" />
+            <img key={index} src={image} className="block min-w-full rounded-lg pointer-events-none" />
           ))
         ) : (
           <div className="absolute inset-0 flex items-center justify-center flex-col text-center">
