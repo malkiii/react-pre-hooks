@@ -8,7 +8,7 @@
     "clean": "rm src/pages/docs/hooks/*.mdx && rm -rf .next"
   },
   "dependencies": {
-    "@next/third-parties": "^14.2.3",
+    "@next/third-parties": "^15.1.6",
     "next": "^14.2.1",
     "nextra": "^2.13.4",
     "nextra-theme-docs": "^2.13.4",
