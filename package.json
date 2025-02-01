@@ -19,7 +19,7 @@
     "release": "pnpm test && pnpm build && pnpm generate:readme && bash scripts/release.sh"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@repo/typescript-config": "workspace:*",
     "@testing-library/react": "^14.0.0",
     "@types/doctrine": "^0.0.9",
