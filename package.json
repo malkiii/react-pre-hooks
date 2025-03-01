@@ -36,7 +36,7 @@
     "eslint-plugin-jsdoc": "^48.2.3",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jsdom": "^22.1.0",
-    "marked": "^15.0.4",
+    "marked": "^15.0.7",
     "prettier": "^3.0.3",
     "typescript": "^5.4.5",
     "vitest": "^0.32.2"
